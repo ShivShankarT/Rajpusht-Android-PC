@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white">
+
+        <include
+            tools:viewBindingIgnore="true"
+            android:id="@+id/toolbar_ly"
+            layout="@layout/toolbar_ly" />
+
+        <androidx.core.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                tools:context=".ui.lm_monitoring.LMMonitoringFragment">
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_child_immune"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="1. First cycle of immunization of child completed (as in Manta Card)"
+                    app:ff_required="true"
+                    app:ff_selections="@array/YES_NO" />
+
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_child_last_rec_muac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Weight"
+                    app:ff_label="2. Last recorded MUAC of child"
+                    app:ff_required="true" />
+
+
+                <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                    android:id="@+id/benf_child_last_rec_muac_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Date"
+                    app:ff_label="3. Date of last Last recorded pregnancy MUAC of child"
+                    app:ff_required="true" />
+
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_child_current_muac"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="MUAC"
+                    app:ff_label="4. Current MUAC of child"
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_birth_child_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Weight"
+                    app:ff_label="5. Birth Weight of Child (As in Manta Card)"
+                    app:ff_required="true" />
+
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_current_weight"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Weight"
+                    app:ff_label="6. Current Weight of child "
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                    android:id="@+id/benf_registered_programme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="7. Are you registered in"
+                    app:ff_required="true"
+                    app:ff_selections="@array/benf_registered_in" />
+
+
+                <TextView
+                    android:id="@+id/benfInstalLy"
+                    style="@style/FormTextMini"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="8. How many installments have you received?" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_pmmvvy_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="PMMVVY"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_3"
+                    app:ff_show_divider="false" />
+
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_igmpy_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="IGMPY"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_4"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_jsy_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="JSY"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_1"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_rajshri_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="RAJSHRI"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_2_more" />
+
+                <Button
+                    android:layout_gravity="center_horizontal"
+                    android:text="save"
+                    android:id="@+id/save_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>

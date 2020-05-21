@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:showIn="@layout/activity_home">
+
+    <group android:checkableBehavior="none">
+        <item
+            android:icon="@drawable/ic_home"
+            android:id="@+id/nav_home"
+            android:title="@string/menu_home" />
+
+        <item
+            android:id="@+id/nav_select_awc"
+            android:icon="@drawable/ic_location_city_white"
+            android:title="Change AWC" />
+
+        <item
+            android:id="@+id/nav_sync"
+            android:icon="@drawable/ic_sync"
+            android:title="Sync" />
+
+        <item
+            android:id="@+id/nav_changePassword"
+            android:icon="@drawable/ic_changepassword_black_24dp"
+            android:title="Change Password" />
+
+        <item
+            android:id="@+id/nav_Logout"
+            android:icon="@drawable/ic_logout_run_black_24dp"
+            android:title="Logout" />
+
+    </group>
+
+
+</menu>

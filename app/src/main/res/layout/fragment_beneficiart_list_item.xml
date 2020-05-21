@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginLeft="4dp"
+    android:layout_marginRight="4dp"
+    android:layout_marginBottom=".1dp"
+    android:elevation="2dp">
+
+
+    <RelativeLayout
+        android:id="@+id/item_holder"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?android:attr/selectableItemBackground"
+        android:clickable="true"
+        android:gravity="center_vertical"
+        android:paddingTop="5dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/benf_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginStart="14dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="Sulochana Devi"
+            android:textColor="#555555"
+            android:textSize="14dp" />
+
+        <TextView
+            android:id="@+id/benf_hus_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/date"
+            android:layout_alignStart="@+id/date"
+            android:text="(w/o) Mr. XYZ"
+            android:textSize="12dp" />
+
+
+        <TextView
+            android:id="@+id/date"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/benf_name"
+            android:layout_alignStart="@+id/benf_name"
+            android:layout_alignLeft="@+id/benf_name"
+            android:text="LMP Date : 10-06-2017"
+            android:textSize="12dp" />
+
+        <Button
+            android:id="@+id/buttonststus"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="13dp"
+            android:clickable="false"
+            android:elevation="5dp"
+            android:minWidth="20dp"
+            android:text="PW 3"
+            android:textColor="@color/white"
+            android:textSize="12dp" />
+
+
+        <TextView
+            android:id="@+id/pctsId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/benf_hus_name"
+            android:layout_alignStart="@+id/benf_hus_name"
+            android:text="ID: 12345678"
+            android:textSize="12dp" />
+
+
+        <RelativeLayout
+            android:id="@+id/sync_layout"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_marginEnd="8dp"
+            android:visibility="visible">
+
+            <ImageView
+                android:id="@+id/img_synced"
+                android:layout_width="18dp"
+                android:layout_height="18dp"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="8dp"
+                android:src="@drawable/ic_done_black_24dp"
+                android:visibility="visible" />
+
+
+        </RelativeLayout>
+
+
+        <ImageView
+            android:id="@+id/img_delete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="2dp"
+            android:layout_toLeftOf="@+id/buttonststus"
+            android:background="?selectableItemBackground"
+            android:clickable="true"
+            android:padding="10dp"
+            android:src="@drawable/ic_delete" />
+
+
+    </RelativeLayout>
+
+
+</androidx.cardview.widget.CardView>

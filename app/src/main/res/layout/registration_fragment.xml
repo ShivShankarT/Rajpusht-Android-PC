@@ -1,0 +1,274 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="">
+
+    <data>
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include
+            tools:viewBindingIgnore="true"
+            android:id="@+id/toolbar_ly"
+            layout="@layout/toolbar_ly" />
+
+        <androidx.core.widget.NestedScrollView
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+
+
+            <LinearLayout
+                android:id="@+id/ll"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
+                android:orientation="vertical"
+                tools:context=".ui.registration.RegistrationFragment">
+
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_child_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="1. How many living children Do you having ?"
+                    app:ff_required="true"
+                    app:ff_selections="@array/child_count" />
+
+
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                    android:id="@+id/benf_reg_stage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="2. Are you "
+                    app:ff_required="true"
+                    app:ff_selections="@array/benf_currently" />
+
+                <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                    android:id="@+id/benf_child_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="DOB"
+                    app:ff_label="3. Age of Child"
+                    app:ff_required="true" />
+
+
+                <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                    android:id="@+id/benf_registered_programme"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="4. Are you registered in"
+                    app:ff_required="true"
+                    app:ff_chbox_none_pos="4"
+                    app:ff_selections="@array/benf_registered_in" />
+
+
+                <TextView
+                    android:id="@+id/benf_instal_ly"
+                    style="@style/FormTextMini"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="5. How many installments have you received?" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_pmmvvy_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="PMMVVY"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_3"
+                    app:ff_show_divider="false" />
+
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_igmpy_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="IGMPY"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_4"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_jsy_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="JSY"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_1"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_rajshri_count"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="RAJSHRI"
+                    app:ff_label_text_appearance="@style/FormTextSmall"
+                    app:ff_required="true"
+                    app:ff_selections="@array/count_0_2_more" />
+
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Beneficiary Name"
+                    app:ff_label="6. Name of Beneficiary"
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_hus_name"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Name"
+                    app:ff_label="7. Beneficiary Husband/Father's Name"
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                    android:id="@+id/benf_age_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="8. Age Of beneficiary"
+                    app:ff_required="true"
+                    app:ff_selections="@array/benf_age"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                    android:id="@+id/benf_age_dob"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Enter DOB"
+                    app:ff_required="true"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_age"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Enter Age (e.g 25)"
+                    app:ff_required="true" />
+
+
+                <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                    android:id="@+id/benf_mobile_selector"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="9. Beneficiary Mobile Number"
+                    app:ff_required="true"
+                    app:ff_selections="@array/benf_sele_mobile"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_self_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Self Mobile"
+                    app:ff_required="true"
+                    app:ff_show_divider="false" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_hus_mobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Husband/Father's Mobile Number"
+                    app:ff_required="true" />
+
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_caste"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="10. CASTE"
+                    app:ff_required="true"
+                    app:ff_selections="@array/caste" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_econ"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="11. Economic Status"
+                    app:ff_required="true"
+                    app:ff_selections="@array/benf_econ" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_pctsid"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="12. PCTS ID"
+                    app:ff_label="Enter the PCTS ID"
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_bahamasha_id"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Bahamashah ID/ACK"
+                    app:ff_label="13. Enter the Bahamashah ID/ACK NO"
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_counseling"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="14.Counseling Provided by ASHA/ANM/AWW"
+                    app:ff_required="true"
+                    app:ff_selections="@array/YES_NO" />
+
+                <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                    android:id="@+id/benf_lmp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="LMP Date"
+                    app:ff_label="15. First Day of the Last Menstrual Period - DATE(LMP) "
+                    app:ff_required="true" />
+
+
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                    android:id="@+id/benf_child_delivery_place_type"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="16. Institutional Delivery or Home Delivery"
+                    app:ff_required="true"
+                    app:ff_selections="@array/benf_delivery_place" />
+
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/benf_child_delivery_place"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Place Name"
+                    app:ff_label="17. Place of Institutional Delivery"
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                    android:id="@+id/benf_cous_sms"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="17. Are you willing to receive counselling messages on mobile"
+                    app:ff_required="true"
+                    app:ff_selections="@array/benf_mobile_both" />
+
+                <Button
+                    android:id="@+id/save"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="save" />
+
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+
+</layout>

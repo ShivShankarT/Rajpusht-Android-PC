@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="FormField">
+        <attr name="ff_label" format="string" />
+        <attr name="ff_label_text_appearance" format="reference" />
+        <attr name="ff_hint" format="string" />
+        <attr name="ff_selections" format="reference" />
+        <attr name="ff_show_divider" format="boolean" />
+        <attr name="ff_required" format="boolean" />
+        <attr name="ff_chbox_none_pos" format="integer" />
+    </declare-styleable>
+
+</resources>
