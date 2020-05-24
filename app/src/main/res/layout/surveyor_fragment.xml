@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+    </data>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.surveyor.SurveyorFragment">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:text="SECTION 1 : Household Identification" />
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Name"
+                        app:ff_label="1. Name of Respondent"
+                        app:ff_required="true" />
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Name"
+                        app:ff_label="2. Age of Respondent"
+                        app:ff_required="true" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 2 :  Household Characteristics" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Religion"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Highest education completed"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="What type of fuel does your household most commonly use for cooking?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="What is the primary source of drinking water for your household/ family?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Type of toilet facility available in the household"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="How many months of pregnancy are you in currently?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="How many ANCs you have completed so far (or when you were pregnant). Enter actual number of ANCs completed from MAMTA Card"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 3: Service Assessment (PW, LM, MY - RESPONDENTS)" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="During your last ANC what all services did you receive? Check all that apply -Recall and Mamta Card verified"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Name"
+                        app:ff_input_type="number"
+                        app:ff_label="How many IFA tablets you were provided with at the last ANC/ visit?"
+                        app:ff_required="true" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Name"
+                        app:ff_input_type="number"
+                        app:ff_label="How many calcium tablets you were provided with at the last ANC/ visit?"
+                        app:ff_required="true" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Are you consuming (or did you consume) all the IFA and calcium tablets given to you regularly?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/YES_NO" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Are you consuming (or did you consume) all the IFA and calcium tablets given to you regularly?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/YES_NO" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="If no, what were the reasons why you do not/ did not consume the tablets regularly?(DO NOT PROMPT)"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="During your last ANC checkup/ or your attendence at MCHN days, did ANM or AWW give you any of the following information?  DO NOT PROMPT"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="In the last one month, did you receive the THR for the entire month from the AWC?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/YES_NO_PARTIALLY" />
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="During your last ANC checkup/ or your attendence at MCHN days, did ANM or AWW give you any of the following information?  DO NOT PROMPT"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="In the last one month, did you receive the THR for the entire month from the AWC?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/YES_NO_PARTIALLY" />
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="If No or partially received, why did you not receive the THR from the AWC?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="How did you use the THR?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="In the last one month, did any health worker (PC)/ ANM/ ASHA/ AWW visit your household?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="If yes, what did they do, or tell you during the visit?"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_count" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 2" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 2" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 2" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 2" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 2" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="2dp">
+
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="5dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:gravity="center"
+                        android:text="SECTION 2" />
+
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+
+        </LinearLayout>
+
+    </androidx.core.widget.NestedScrollView>
+</layout>

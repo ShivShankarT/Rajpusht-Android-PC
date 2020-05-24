@@ -3,6 +3,7 @@ package in.rajpusht.pc.di.builder;
 import dagger.Module;
 import dagger.android.ContributesAndroidInjector;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
+import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringFragment;
 import in.rajpusht.pc.ui.login.LoginFragment;
 import in.rajpusht.pc.ui.otp.OtpFragment;
@@ -35,6 +36,10 @@ public abstract class FragmentBuilderModule {
     @SuppressWarnings("unused")
     @ContributesAndroidInjector()
     abstract LMMonitoringFragment lmMonitoringFragment();
+
+    @SuppressWarnings("unused")
+    @ContributesAndroidInjector()
+    abstract ChangePasswordFragment changePasswordFragment();
 
 
 }

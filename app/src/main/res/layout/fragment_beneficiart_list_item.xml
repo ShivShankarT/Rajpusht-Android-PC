@@ -71,7 +71,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/benf_hus_name"
             android:layout_alignStart="@+id/benf_hus_name"
-            android:text="ID: 12345678"
+            android:text="PCTS ID: 12345678"
             android:textSize="12dp" />
 
 
@@ -90,7 +90,7 @@
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"
                 android:layout_marginEnd="8dp"
-                android:src="@drawable/ic_done_black_24dp"
+                android:src="@drawable/ic_done"
                 android:visibility="visible" />
 
 

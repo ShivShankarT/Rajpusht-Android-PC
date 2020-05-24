@@ -4,9 +4,11 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -22,6 +24,7 @@ import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringFragment;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
+import in.rajpusht.pc.utils.BottomDialogFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 
 
@@ -56,13 +59,22 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        getViewDataBinding().toolbarLy.toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        Toolbar toolbar = getViewDataBinding().toolbarLy.toolbar;
+        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 ((HomeActivity) requireActivity()).openDrawer();
             }
         });
-        getViewDataBinding().toolbarLy.toolbar.getMenu().add("info").setIcon(R.drawable.ic_info_outline).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        toolbar.getMenu().add("info").setIcon(R.drawable.ic_info_outline).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                showColorInfo();
+                return true;
+            }
+        });
+
 
         RecyclerView recyclerView = getViewDataBinding().list;
         Context context = view.getContext();
@@ -88,15 +100,24 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         list.add(beneficiaryEntity);
 
         beneficiaryEntity = new BeneficiaryEntity();
-        beneficiaryEntity.setName("Narva");
+        beneficiaryEntity.setName("Narmaha");
         beneficiaryEntity.setHusbandName("Bala");
         beneficiaryEntity.setLmpDate("20-05-2020");
         beneficiaryEntity.setStage("LM");
         beneficiaryEntity.setSubStage("LM1");
         beneficiaryEntity.setCurrentSubStage("LM1");
-
-
         list.add(beneficiaryEntity);
+
+        beneficiaryEntity = new BeneficiaryEntity();
+        beneficiaryEntity.setName("Sehla");
+        beneficiaryEntity.setHusbandName("Kala");
+        beneficiaryEntity.setLmpDate("20-05-2020");
+        beneficiaryEntity.setStage("PW");
+        beneficiaryEntity.setSubStage("PW2");
+        beneficiaryEntity.setCurrentSubStage("PW2");
+        list.add(beneficiaryEntity);
+
+
 
         recyclerView.setAdapter(new BeneficiaryAdapter(list, this));
         getViewDataBinding().addFab.setOnClickListener(new View.OnClickListener() {
@@ -106,6 +127,11 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
 
             }
         });
+    }
+
+    private void showColorInfo() {
+
+        BottomDialogFragment.newInstance().show(getChildFragmentManager(),"ss");
     }
 
     @Override

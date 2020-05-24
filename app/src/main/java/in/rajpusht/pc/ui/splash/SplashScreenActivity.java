@@ -11,6 +11,7 @@ import androidx.databinding.DataBindingUtil;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.databinding.ActivitySplashScreenBinding;
+import in.rajpusht.pc.ui.login.LoginActivity;
 
 public class SplashScreenActivity extends AppCompatActivity {
 
@@ -23,8 +24,8 @@ public class SplashScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 finish();
-                //Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
+                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                //Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
                 startActivity(intent);
             }
         },100);

@@ -87,6 +87,13 @@
         <item>NO</item>
     </string-array>
 
+
+    <string-array name="YES_NO_PARTIALLY">
+        <item>YES</item>
+        <item>NO</item>
+        <item>PARTIALLY</item>
+    </string-array>
+
     <string-array name="benf_delivery_place">
         <item>Institutional Delivery</item>
         <item>Home</item>

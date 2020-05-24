@@ -56,7 +56,8 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="DOB"
                     app:ff_label="3. Age of Child"
-                    app:ff_required="true" />
+                    app:ff_required="true"
+                    app:ff_input_type="number"/>
 
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
@@ -173,13 +174,15 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Self Mobile"
                     app:ff_required="true"
-                    app:ff_show_divider="false" />
+                    app:ff_show_divider="false"
+                    app:ff_input_type="phone_no"/>
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
                     android:id="@+id/benf_hus_mobile"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Husband/Father's Mobile Number"
+                    app:ff_input_type="phone_no"
                     app:ff_required="true" />
 
 

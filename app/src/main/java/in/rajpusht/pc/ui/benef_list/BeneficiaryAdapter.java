@@ -50,7 +50,9 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
         holder.buttonststus.setText(beneficiaryEntity.getCurrentSubStage());
 
         if (beneficiaryEntity.getCurrentSubStage().equals(beneficiaryEntity.getSubStage())) {
-            holder.buttonststus.setBackgroundColor(holder.itemView.getContext().getColor(R.color.green));
+            if (position == 3)
+                holder.img_synced.setImageResource(R.drawable.ic_done_all);
+            holder.buttonststus.setBackgroundColor(holder.itemView.getContext().getColor(R.color.dark_green));
             holder.img_delete.setVisibility(View.GONE);
         } else {
             holder.img_delete.setVisibility(View.VISIBLE);

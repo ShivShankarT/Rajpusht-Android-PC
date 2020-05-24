@@ -5,16 +5,15 @@ import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import javax.inject.Inject;
 
 import in.rajpusht.pc.BR;
-import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.home.HomeActivity;
 
 public class OtpFragment extends BaseFragment {
 
@@ -45,10 +44,11 @@ public class OtpFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        getViewModel()._navigateToHome.observe(getViewLifecycleOwner(), new Observer<Boolean>() {
-            @Override
-            public void onChanged(Boolean aBoolean) {
+        getViewModel()._navigateToHome.observe(getViewLifecycleOwner(), (d) -> {
+            if (d.getContentIfNotHandled() != null) {
+                requireActivity().finish();
                 startActivity(new Intent(requireContext(), HomeActivity.class));
+
             }
         });
 

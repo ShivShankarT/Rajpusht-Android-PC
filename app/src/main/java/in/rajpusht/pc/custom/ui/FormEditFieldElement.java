@@ -3,6 +3,7 @@ package in.rajpusht.pc.custom.ui;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
+import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
@@ -59,6 +60,7 @@ public class FormEditFieldElement extends FrameLayout {
         String hint = a.getString(R.styleable.FormField_ff_hint);
         required = a.getBoolean(R.styleable.FormField_ff_required, false);
         boolean isShowDivider = a.getBoolean(R.styleable.FormField_ff_show_divider, true);
+        int inputType = a.getInt(R.styleable.FormField_ff_input_type, -1);
         View divider = view.findViewById(R.id.divider);
         if (!isShowDivider) {
             divider.setVisibility(GONE);
@@ -66,6 +68,20 @@ public class FormEditFieldElement extends FrameLayout {
         a.recycle();
         TextView labelTv = view.findViewById(R.id.edf_lab);
         edf_text = view.findViewById(R.id.edf_text);
+
+        if (inputType == 0) {
+            edf_text.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
+        } else if (inputType == 1) {
+            edf_text.setInputType(InputType.TYPE_CLASS_PHONE);
+        }
+        else if (inputType == 2) {
+            edf_text.setInputType(InputType.TYPE_CLASS_NUMBER);
+        }
+        else if (inputType == 3) {
+            edf_text.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        }
+
+
         edf_text.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

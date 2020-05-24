@@ -43,6 +43,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
                     app:ff_label="2. Last recorded MUAC of child"
+                    app:ff_input_type="numberDecimal"
                     app:ff_required="true" />
 
 
@@ -61,6 +62,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="MUAC"
                     app:ff_label="4. Current MUAC of child"
+                    app:ff_input_type="numberDecimal"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
@@ -69,7 +71,8 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
                     app:ff_label="5. Birth Weight of Child (As in Manta Card)"
-                    app:ff_required="true" />
+                    app:ff_required="true"
+                    app:ff_input_type="numberDecimal"/>
 
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
@@ -78,7 +81,8 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
                     app:ff_label="6. Current Weight of child "
-                    app:ff_required="true" />
+                    app:ff_required="true"
+                    app:ff_input_type="numberDecimal"/>
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
                     android:id="@+id/benf_registered_programme"
@@ -86,6 +90,7 @@
                     android:layout_height="wrap_content"
                     app:ff_label="7. Are you registered in"
                     app:ff_required="true"
+                    app:ff_chbox_none_pos="4"
                     app:ff_selections="@array/benf_registered_in" />
 
 

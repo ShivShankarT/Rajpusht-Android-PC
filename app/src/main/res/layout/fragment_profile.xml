@@ -66,7 +66,7 @@
                         android:layout_height="wrap_content"
                         android:layout_below="@+id/profile_Photo_profile"
                         android:gravity="center"
-                        android:text="Fullname"
+                        android:text="Full Name"
                         android:textColor="@color/black" />
 
                     <TextView
@@ -76,7 +76,7 @@
                         android:layout_below="@+id/profileName"
                         android:layout_marginTop="3dp"
                         android:gravity="center"
-                        android:text="email"
+                        android:text="Email@gmail.com"
                         android:textColor="@color/black" />
 
                 </RelativeLayout>
