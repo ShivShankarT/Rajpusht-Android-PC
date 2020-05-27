@@ -16,18 +16,29 @@ import javax.inject.Inject;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
+import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
-import in.rajpusht.pc.databinding.LmMonitoringFragmentBindingImpl;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBinding, LMMonitoringViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
+    @Inject
+    DataRepository dataRepository;
+    @Inject
+    SchedulerProvider schedulerProvider;
+    private long childId;
     private LMMonitoringViewModel mViewModel;
 
-    public static LMMonitoringFragment newInstance() {
-        return new LMMonitoringFragment();
+    public static LMMonitoringFragment newInstance(long childId) {
+        LMMonitoringFragment lmMonitoringFragment = new LMMonitoringFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", childId);
+        lmMonitoringFragment.setArguments(args);
+        return lmMonitoringFragment;
     }
 
     @Override
@@ -46,6 +57,11 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         return mViewModel;
     }
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        childId = getArguments().getLong("id");
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -53,7 +69,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
 
         LmMonitoringFragmentBinding viewDataBinding = getViewDataBinding();
-        Toolbar toolbar=viewDataBinding.toolbarLy.toolbar;
+        Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
         toolbar.setTitle("LM Monitoring");
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
@@ -107,24 +123,69 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         viewDataBinding.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewDataBinding.benfChildImmune.validate();
-                viewDataBinding.benfChildLastRecMuac.validate();
-                viewDataBinding.benfChildLastRecMuacDate.validate();
-                viewDataBinding.benfChildCurrentMuac.validate();
-                viewDataBinding.benfBirthChildWeight.validate();
-                viewDataBinding.benfChildCurrentMuac.validate();
-                viewDataBinding.benfCurrentWeight.validate();
 
 
-                viewDataBinding.benfRegisteredProgramme.validate();
-                viewDataBinding.benfPmmvvyCount.validate();
-                viewDataBinding.benfIgmpyCount.validate();
-                viewDataBinding.benfJsyCount.validate();
-                viewDataBinding.benfRajshriCount.validate();
+                save();
 
             }
         });
 
+
+    }
+
+    private void save() {
+        LmMonitoringFragmentBinding vb = getViewDataBinding();
+
+
+        vb.benfChildImmune.validate();
+        vb.benfChildLastRecMuac.validate();
+        vb.benfChildLastRecMuacDate.validate();
+        vb.benfChildCurrentMuac.validate();
+        vb.benfBirthChildWeight.validate();
+        vb.benfChildCurrentMuac.validate();
+        vb.benfCurrentWeight.validate();
+
+
+        vb.benfRegisteredProgramme.validate();
+        vb.benfPmmvvyCount.validate();
+        vb.benfIgmpyCount.validate();
+        vb.benfJsyCount.validate();
+        vb.benfRajshriCount.validate();
+
+        LMMonitorEntity lmMonitorEntity = new LMMonitorEntity();
+        lmMonitorEntity.setChildId(childId);
+        lmMonitorEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
+        lmMonitorEntity.setLastMuac(Double.valueOf(vb.benfChildLastRecMuac.getText()));
+        lmMonitorEntity.setLastMuacCheckDate(vb.benfChildLastRecMuacDate.getDate());
+        lmMonitorEntity.setCurrentMuac(Double.valueOf(vb.benfChildCurrentMuac.getText()));
+        lmMonitorEntity.setBirthWeight(Double.valueOf(vb.benfBirthChildWeight.getText()));
+        lmMonitorEntity.setChildWeight(Double.valueOf(vb.benfCurrentWeight.getText()));
+
+        Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
+
+        if (data.contains(0)) {
+            lmMonitorEntity.setPmmvyInstallmentCt(vb.benfPmmvvyCount.getSelectedPos());
+        }
+
+        if (data.contains(1)) {
+            lmMonitorEntity.setIgmpyInstallmentCt(vb.benfIgmpyCount.getSelectedPos());
+        }
+
+        if (data.contains(2)) {
+            lmMonitorEntity.setJsyInstallmentCt(vb.benfJsyCount.getSelectedPos());
+        }
+
+        if (data.contains(3)) {
+            lmMonitorEntity.setRajshriInstallmentCt(vb.benfRajshriCount.getSelectedPos());
+        }
+
+        dataRepository.insertLmMonitor(lmMonitorEntity)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui()).subscribe(() -> {
+            showAlertDialog("Beneficiary Created Saved Successfully", () -> {
+                requireActivity().onBackPressed();
+            });
+        });
 
     }
 

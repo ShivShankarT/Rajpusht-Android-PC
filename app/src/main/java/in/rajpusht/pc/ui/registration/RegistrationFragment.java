@@ -9,7 +9,6 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +21,7 @@ import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.custom.utils.HUtil;
+import in.rajpusht.pc.custom.validator.FormValidatorUtils;
 import in.rajpusht.pc.custom.validator.ValidationStatus;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
@@ -32,7 +32,6 @@ import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.Disposable;
-import io.reactivex.functions.Consumer;
 
 public class RegistrationFragment extends BaseFragment<RegistrationFragmentBinding, RegistrationViewModel> {
 
@@ -79,6 +78,26 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         });
 
 
+        viewDataBinding.benfAgeDob.sethValidatorListener(new HValidatorListener<Date>() {
+            @Override
+            public ValidationStatus isValid(Date data) {
+                int age = HUtil.calcAge(data);
+                if (age < 13) {
+                    return new ValidationStatus(false, "Beneficiary age should be greater then 13");
+                } else {
+                    return new ValidationStatus(true);
+                }
+
+
+            }
+        });
+
+        viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, "Invalid Mobile No"));
+        viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, "Invalid Mobile No"));
+        viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, "Invalid Name"));
+        viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, "Invalid Name"));
+
+
         viewDataBinding.benfRegStage.sethValueChangedListener(new HValueChangedListener<Integer>() {
             @Override
             public void onValueChanged(Integer data) {
@@ -116,13 +135,16 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             }
         });
-        viewDataBinding.benfChildDob.sethValidatorListener(new HValidatorListener<String>() {
+        viewDataBinding.benfChildDob.sethValidatorListener(new HValidatorListener<Date>() {
             @Override
-            public ValidationStatus isValid(String data) {
-                if (data.isEmpty()) {
-                    return new ValidationStatus(false, "select counseling");
+            public ValidationStatus isValid(Date data) {
+
+                int age = HUtil.calcAge(data);
+                if (age > 1) {
+                    return new ValidationStatus(false, "Child age should be less then 1 year");
+                } else {
+                    return new ValidationStatus(true);
                 }
-                return new ValidationStatus(true);
             }
         });
 
@@ -186,10 +208,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.benfAgeDob.sethValueChangedListener(new HValueChangedListener<Date>() {
             @Override
             public void onValueChanged(Date data) {
-                Calendar calendar = Calendar.getInstance();
-                int nowYear = calendar.get(Calendar.YEAR);
-                calendar.setTime(data);
-                int age = nowYear - calendar.get(Calendar.YEAR);
+
+                int age = HUtil.calcAge(data);
                 viewDataBinding.benfAge.setText("" + age);
 
             }
@@ -240,7 +260,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setName(vb.benfName.getText());
         beneficiaryEntity.setHusbandName(vb.benfHusName.getText());
         beneficiaryEntity.setDOB(vb.benfAgeDob.getDate());
-        beneficiaryEntity.setAge(vb.benfAge.getText());
+        beneficiaryEntity.setAge(Integer.valueOf(vb.benfAge.getText()));
         beneficiaryEntity.setChildCount(vb.benfChildCount.getSelectedPos());
         beneficiaryEntity.setMobileNo(vb.benfSelfMobile.getText());
         beneficiaryEntity.setHusbandMobNo(vb.benfHusMobile.getText());
@@ -302,13 +322,11 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             Date date = vb.benfChildDob.getDate();
             childEntity = new ChildEntity();
-            childEntity.setChildId(beneficiaryId);
-            childEntity.setChildId(1);
+            childEntity.setChildId(Long.parseLong(beneficiaryId+"1"));
             childEntity.setStage("PW");
             int days = HUtil.daysBetween(date, new Date());
             String lmmySubStage = HUtil.getLMMYSubStage(days);
             childEntity.setSubStage(lmmySubStage);
-
 
             if (lmmySubStage.contains("LM")) {
                 childEntity.setStage("LM");
@@ -334,17 +352,19 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         Disposable sDisposable = dataRepository.insertBeneficiaryData(beneficiaryEntity, childEntity, pregnantEntity)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
-                .subscribe(new Consumer<Boolean>() {
-                    @Override
-                    public void accept(Boolean aBoolean) throws Exception {
-
+                .subscribe(aBoolean -> {
+                    if (!aBoolean.isEmpty()) {//todo check
+                        showAlertDialog("Beneficiary Created Saved Successfully", () -> {
+                            requireActivity().onBackPressed();
+                        });
                     }
+
                 });
 
     }
 
 
-    void validate() {
+    private void validate() {
         RegistrationFragmentBinding vb = getViewDataBinding();
 
         List<Pair<Boolean, View>> validateElement = new ArrayList<>();

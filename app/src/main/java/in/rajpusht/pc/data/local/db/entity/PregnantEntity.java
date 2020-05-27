@@ -1,17 +1,20 @@
 package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
+import java.util.List;
 
 import in.rajpusht.pc.model.DataStatus;
 
 
 @Entity(tableName = PregnantEntity.TABLE)
 public class PregnantEntity {
-    public static final String TABLE = "PregnantEntity";
-
+    public static final String TABLE = "pregnant";
+    @Ignore
+    List<PWMonitorEntity> pwMonitorEntities;
     @PrimaryKey(autoGenerate = true)
     private int id;
     private long beneficiaryId;
@@ -57,5 +60,13 @@ public class PregnantEntity {
 
     public void setDataStatus(DataStatus dataStatus) {
         this.dataStatus = dataStatus;
+    }
+
+    public List<PWMonitorEntity> getPwMonitorEntities() {
+        return pwMonitorEntities;
+    }
+
+    public void setPwMonitorEntities(List<PWMonitorEntity> pwMonitorEntities) {
+        this.pwMonitorEntities = pwMonitorEntities;
     }
 }

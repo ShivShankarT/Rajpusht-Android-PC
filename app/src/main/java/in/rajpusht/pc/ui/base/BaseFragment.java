@@ -11,13 +11,12 @@ import androidx.annotation.CallSuper;
 import androidx.annotation.LayoutRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
-
 import dagger.android.support.AndroidSupportInjection;
-
 
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
@@ -106,9 +105,15 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
 
-
     private void performDependencyInjection() {
         AndroidSupportInjection.inject(this);
     }
 
+
+    protected void showAlertDialog(String message, Runnable runnable) {
+        new AlertDialog.Builder(requireContext()).setTitle("Alert").setMessage(message).setPositiveButton("OK", (dialog, which) -> {
+            if (runnable != null)
+                runnable.run();
+        }).show();
+    }
 }

@@ -16,17 +16,29 @@ import javax.inject.Inject;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
+import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBinding, PWMonitoringViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
+    @Inject
+    DataRepository dataRepository;
+    @Inject
+    SchedulerProvider schedulerProvider;
     private PWMonitoringViewModel mViewModel;
+    private long pregnancyId;
 
-    public static PWMonitoringFragment newInstance() {
-        return new PWMonitoringFragment();
+    public static PWMonitoringFragment newInstance(long pregnancyId) {
+        PWMonitoringFragment pwMonitoringFragment = new PWMonitoringFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", pregnancyId);
+        pwMonitoringFragment.setArguments(args);
+        return pwMonitoringFragment;
     }
 
     @Override
@@ -45,6 +57,12 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         return mViewModel;
     }
 
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        pregnancyId = getArguments().getLong("id");
+    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -104,21 +122,62 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         viewDataBinding.saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                viewDataBinding.benfAncCount.validate();
-                viewDataBinding.benfAncDate.validate();
-                viewDataBinding.benfMamtaCdWeight.validate();
-                viewDataBinding.benfLastcheckupdate.validate();
-                viewDataBinding.benfCurrentWeight.validate();
-
-                viewDataBinding.benfRegisteredProgramme.validate();
-                viewDataBinding.benfPmmvvyCount.validate();
-                viewDataBinding.benfIgmpyCount.validate();
-                viewDataBinding.benfJsyCount.validate();
-                viewDataBinding.benfRajshriCount.validate();
+                save();
 
             }
         });
 
+
+    }
+
+    void save() {
+        PwMonitoringFragmentBinding vb = getViewDataBinding();
+        vb.benfAncCount.validate();
+        vb.benfAncDate.validate();
+        vb.benfMamtaCdWeight.validate();
+        vb.benfLastcheckupdate.validate();
+        vb.benfCurrentWeight.validate();
+        vb.benfRegisteredProgramme.validate();
+        vb.benfPmmvvyCount.validate();
+        vb.benfIgmpyCount.validate();
+        vb.benfJsyCount.validate();
+        vb.benfRajshriCount.validate();
+
+        PWMonitorEntity pwMonitorEntity = new PWMonitorEntity();
+
+        pwMonitorEntity.setPregnancyId(pregnancyId);
+        pwMonitorEntity.setAncCount(vb.benfAncCount.getSelectedPos());
+        pwMonitorEntity.setLastAnc(vb.benfAncDate.getDate());
+        pwMonitorEntity.setLastWeightInMamta(Double.valueOf(vb.benfMamtaCdWeight.getText()));
+        pwMonitorEntity.setLastWeightCheckDate(vb.benfLastcheckupdate.getDate());
+        pwMonitorEntity.setCurrentWeight(Double.valueOf(vb.benfCurrentWeight.getText()));
+
+
+        Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
+
+        if (data.contains(0)) {
+            pwMonitorEntity.setPmmvyInstallmentCt(vb.benfPmmvvyCount.getSelectedPos());
+        }
+
+        if (data.contains(1)) {
+            pwMonitorEntity.setIgmpyInstallmentCt(vb.benfIgmpyCount.getSelectedPos());
+        }
+
+        if (data.contains(2)) {
+            pwMonitorEntity.setJsyInstallmentCt(vb.benfJsyCount.getSelectedPos());
+        }
+
+        if (data.contains(3)) {
+            pwMonitorEntity.setRajshriInstallmentCt(vb.benfRajshriCount.getSelectedPos());
+        }
+
+        dataRepository.insertPwMonitor(pwMonitorEntity)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui()).subscribe(() -> {
+            showAlertDialog("Beneficiary Created Saved Successfully", () -> {
+                requireActivity().onBackPressed();
+            });
+        });
 
     }
 }

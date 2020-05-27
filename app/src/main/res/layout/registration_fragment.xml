@@ -13,15 +13,15 @@
         android:layout_height="match_parent">
 
         <include
-            tools:viewBindingIgnore="true"
             android:id="@+id/toolbar_ly"
-            layout="@layout/toolbar_ly" />
+            layout="@layout/toolbar_ly"
+            tools:viewBindingIgnore="true" />
 
         <androidx.core.widget.NestedScrollView
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/white">
+            android:background="@color/white"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
 
             <LinearLayout
@@ -55,18 +55,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="DOB"
+                    app:ff_input_type="number"
                     app:ff_label="3. Age of Child"
-                    app:ff_required="true"
-                    app:ff_input_type="number"/>
+                    app:ff_required="true" />
 
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
                     android:id="@+id/benf_registered_programme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:ff_chbox_none_pos="4"
                     app:ff_label="4. Are you registered in"
                     app:ff_required="true"
-                    app:ff_chbox_none_pos="4"
                     app:ff_selections="@array/benf_registered_in" />
 
 
@@ -124,6 +124,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Beneficiary Name"
                     app:ff_label="6. Name of Beneficiary"
+                    app:ff_maxLength="30"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
@@ -132,6 +133,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Name"
                     app:ff_label="7. Beneficiary Husband/Father's Name"
+                    app:ff_maxLength="30"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
@@ -156,6 +158,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Enter Age (e.g 25)"
+                    app:ff_input_type="number"
+                    app:ff_maxLength="2"
                     app:ff_required="true" />
 
 
@@ -163,6 +167,7 @@
                     android:id="@+id/benf_mobile_selector"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:ff_input_type="number"
                     app:ff_label="9. Beneficiary Mobile Number"
                     app:ff_required="true"
                     app:ff_selections="@array/benf_sele_mobile"
@@ -173,9 +178,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Self Mobile"
+                    app:ff_input_type="phone_no"
+                    app:ff_maxLength="10"
                     app:ff_required="true"
-                    app:ff_show_divider="false"
-                    app:ff_input_type="phone_no"/>
+                    app:ff_show_divider="false" />
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
                     android:id="@+id/benf_hus_mobile"
@@ -183,6 +189,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Husband/Father's Mobile Number"
                     app:ff_input_type="phone_no"
+                    app:ff_maxLength="10"
                     app:ff_required="true" />
 
 
@@ -208,6 +215,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="12. PCTS ID"
                     app:ff_label="Enter the PCTS ID"
+                    app:ff_maxLength="30"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
@@ -216,6 +224,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Bahamashah ID/ACK"
                     app:ff_label="13. Enter the Bahamashah ID/ACK NO"
+                    app:ff_maxLength="30"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
@@ -250,6 +259,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Place Name"
                     app:ff_label="17. Place of Institutional Delivery"
+                    app:ff_maxLength="130"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
@@ -271,7 +281,7 @@
         </androidx.core.widget.NestedScrollView>
 
 
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
 
 </layout>

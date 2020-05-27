@@ -1,9 +1,11 @@
 package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
+import java.util.List;
 
 import in.rajpusht.pc.model.DataStatus;
 
@@ -22,6 +24,9 @@ public class ChildEntity {
     private long motherId;
     private String deliveryPlace;
     private int deliveryHome;
+
+    @Ignore
+    private List<LMMonitorEntity> lmMonitorEntities;
 
     private DataStatus dataStatus;
 
@@ -103,5 +108,13 @@ public class ChildEntity {
 
     public void setDataStatus(DataStatus dataStatus) {
         this.dataStatus = dataStatus;
+    }
+
+    public List<LMMonitorEntity> getLmMonitorEntities() {
+        return lmMonitorEntities;
+    }
+
+    public void setLmMonitorEntities(List<LMMonitorEntity> lmMonitorEntities) {
+        this.lmMonitorEntities = lmMonitorEntities;
     }
 }

@@ -30,7 +30,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
 
     private EditText edf_text;
     private TextInputLayout edf_txt_inp_ly;
-    private HValidatorListener<String> hValidatorListener;
+    private HValidatorListener<Date> hValidatorListener;
     private HValueChangedListener<Date> hValueChangedListener;
     private boolean required;
     private Date mDate;
@@ -89,14 +89,14 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
     public boolean validate() {
 
         if (required) {
-            if (TextUtils.isEmpty(getText())) {
+            if (getDate() == null) {
                 edf_txt_inp_ly.setError("Please Enter *");
                 return false;
             }
         }
 
         if (hValidatorListener != null) {
-            ValidationStatus valid = hValidatorListener.isValid(getText());
+            ValidationStatus valid = hValidatorListener.isValid(getDate());
             if (valid.isInvalid()) {
                 edf_txt_inp_ly.setError(valid.getMsg());
                 return false;
@@ -156,7 +156,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         d.show();
     }
 
-    public void sethValidatorListener(HValidatorListener<String> hValidatorListener) {
+    public void sethValidatorListener(HValidatorListener<Date> hValidatorListener) {
         this.hValidatorListener = hValidatorListener;
     }
 

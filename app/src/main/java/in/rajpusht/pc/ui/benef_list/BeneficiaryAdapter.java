@@ -13,14 +13,14 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
+import in.rajpusht.pc.model.BefModel;
 
 public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.ViewHolder> {
 
-    private final List<BeneficiaryEntity> mValues;
+    private final List<BefModel> mValues;
     private final OnListFragmentInteractionListener mListener;
 
-    public BeneficiaryAdapter(List<BeneficiaryEntity> items, OnListFragmentInteractionListener listener) {
+    public BeneficiaryAdapter(List<BefModel> items, OnListFragmentInteractionListener listener) {
         mValues = items;
         mListener = listener;
     }
@@ -35,21 +35,21 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        BeneficiaryEntity beneficiaryEntity = mValues.get(position);
-        holder.mItem = beneficiaryEntity;
-        holder.benf_name.setText(beneficiaryEntity.getName());
+        BefModel BefModel = mValues.get(position);
+        holder.mItem = BefModel;
+        holder.benf_name.setText(BefModel.getName());
 
-        if (beneficiaryEntity.getStage().equals("PW")) {
-            holder.benf_hus_name.setText("w/o:" + beneficiaryEntity.getHusbandName());
-            holder.date.setText("LMP Date:" + beneficiaryEntity.getLmpDate());
+        if (BefModel.getStage().equals("PW")) {
+            holder.benf_hus_name.setText("w/o:" + BefModel.getName());
+            holder.date.setText("LMP Date:" + BefModel.getLmpDate());
         } else {
-            holder.benf_hus_name.setText("m/o:" + beneficiaryEntity.getHusbandName());
-            holder.date.setText("DOB:" + beneficiaryEntity.getLmpDate());
+            holder.benf_hus_name.setText("m/o:" + BefModel.getName());
+            holder.date.setText("DOB:" + BefModel.getDob());
         }
 
-        holder.buttonststus.setText(beneficiaryEntity.getCurrentSubStage());
+        holder.buttonststus.setText(BefModel.getCurrentSubStage());
 
-        if (beneficiaryEntity.getCurrentSubStage().equals(beneficiaryEntity.getSubStage())) {
+        if (BefModel.getCurrentSubStage().equals(BefModel.getSubStage())) {
             if (position == 3)
                 holder.img_synced.setImageResource(R.drawable.ic_done_all);
             holder.buttonststus.setBackgroundColor(holder.itemView.getContext().getColor(R.color.dark_green));
@@ -73,7 +73,7 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
     }
 
     public interface OnListFragmentInteractionListener {
-        void onListFragmentInteraction(BeneficiaryEntity item);
+        void onListFragmentInteraction(BefModel item);
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
@@ -85,7 +85,7 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
         private final ImageView img_synced;
         private final ImageView img_delete;
         private final Button buttonststus;
-        public BeneficiaryEntity mItem;
+        public BefModel mItem;
 
         public ViewHolder(View view) {
             super(view);

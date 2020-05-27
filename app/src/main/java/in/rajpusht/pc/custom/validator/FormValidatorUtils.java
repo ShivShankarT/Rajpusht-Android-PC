@@ -42,4 +42,42 @@ public class FormValidatorUtils {
         };
     }
 
+
+    public static HValidatorListener<String> textEqualValidator(int length, String message) {
+
+        return new HValidatorListener<String>() {
+            @Override
+            public ValidationStatus isValid(String value) {
+                if (value != null && value.length() > 0) {
+                    value = value.trim();
+                    if (length > -1) {
+                        if (length != value.length())
+                            return new ValidationStatus(false, message);
+                    }
+                    return new ValidationStatus(true, message);
+                }
+                return null;
+            }
+        };
+    }
+
+    public static HValidatorListener<String> textBwValidator(int min, int max, String message) {
+
+        return new HValidatorListener<String>() {
+            @Override
+            public ValidationStatus isValid(String value) {
+                if (value != null && value.length() > 0) {
+                    value = value.trim();
+
+                    int length = value.length();
+                    if (!(length >= min && length <= max))
+                        return new ValidationStatus(false, message);
+
+                    return new ValidationStatus(true, message);
+                }
+                return null;
+            }
+        };
+    }
+
 }

@@ -56,7 +56,9 @@ public class AppModule {
     @Provides
     @Singleton
     AppDatabase provideAppDatabase(@DatabaseInfo String dbName, Context context) {
-        return Room.databaseBuilder(context, AppDatabase.class, dbName).fallbackToDestructiveMigration()
+        return Room.databaseBuilder(context, AppDatabase.class, dbName).
+                allowMainThreadQueries().
+                fallbackToDestructiveMigration()//todo remove main , nig
                 .build();
     }
 

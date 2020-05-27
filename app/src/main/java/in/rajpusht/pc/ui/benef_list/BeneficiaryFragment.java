@@ -15,9 +15,13 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.inject.Inject;
+
 import in.rajpusht.pc.R;
+import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.databinding.FragmentBeneficiaryBinding;
+import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringFragment;
@@ -37,6 +41,8 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
     public BeneficiaryFragment() {
     }
 
+    @Inject
+    DataRepository dataRepository;
 
     @Override
     public int getBindingVariable() {
@@ -79,44 +85,8 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         Context context = view.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
-        List<BeneficiaryEntity> list = new ArrayList<>();
-        BeneficiaryEntity beneficiaryEntity = new BeneficiaryEntity();
-        beneficiaryEntity.setName("Mala");
-        beneficiaryEntity.setHusbandName("Ravi");
-        beneficiaryEntity.setLmpDate("20-05-2020");
-        beneficiaryEntity.setStage("PW");
-        beneficiaryEntity.setSubStage("PW3");
-        beneficiaryEntity.setCurrentSubStage("PW4");
-        list.add(beneficiaryEntity);
 
-        beneficiaryEntity = new BeneficiaryEntity();
-        beneficiaryEntity.setName("Nayan");
-        beneficiaryEntity.setHusbandName("Maveen");
-        beneficiaryEntity.setLmpDate("20-05-2020");
-        beneficiaryEntity.setStage("LM");
-        beneficiaryEntity.setSubStage("LM1");
-        beneficiaryEntity.setCurrentSubStage("LM2");
-        list.add(beneficiaryEntity);
-
-        beneficiaryEntity = new BeneficiaryEntity();
-        beneficiaryEntity.setName("Narmaha");
-        beneficiaryEntity.setHusbandName("Bala");
-        beneficiaryEntity.setLmpDate("20-05-2020");
-        beneficiaryEntity.setStage("LM");
-        beneficiaryEntity.setSubStage("LM1");
-        beneficiaryEntity.setCurrentSubStage("LM1");
-        list.add(beneficiaryEntity);
-
-        beneficiaryEntity = new BeneficiaryEntity();
-        beneficiaryEntity.setName("Sehla");
-        beneficiaryEntity.setHusbandName("Kala");
-        beneficiaryEntity.setLmpDate("20-05-2020");
-        beneficiaryEntity.setStage("PW");
-        beneficiaryEntity.setSubStage("PW2");
-        beneficiaryEntity.setCurrentSubStage("PW2");
-        list.add(beneficiaryEntity);
-
-
+        List<BefModel> list=dataRepository.getBefModels();
 
         recyclerView.setAdapter(new BeneficiaryAdapter(list, this));
         getViewDataBinding().addFab.setOnClickListener(new View.OnClickListener() {
@@ -130,16 +100,16 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
 
     private void showColorInfo() {
 
-        BottomDialogFragment.newInstance().show(getChildFragmentManager(),"ss");
+        BottomDialogFragment.newInstance().show(getChildFragmentManager(), "ss");
     }
 
     @Override
-    public void onListFragmentInteraction(BeneficiaryEntity item) {
+    public void onListFragmentInteraction(BefModel item) {
         if (item.getStage().equals("PW")) {
-            FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new PWMonitoringFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),  PWMonitoringFragment.newInstance(Long.parseLong(item.getPregnancyId())), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
 
         } else {
-            FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new LMMonitoringFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),  LMMonitoringFragment.newInstance(item.getBeneficiaryId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
 
         }
 

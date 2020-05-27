@@ -3,6 +3,7 @@ package in.rajpusht.pc.custom.ui;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.Editable;
+import android.text.InputFilter;
 import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
@@ -62,6 +63,8 @@ public class FormEditFieldElement extends FrameLayout {
         required = a.getBoolean(R.styleable.FormField_ff_required, false);
         boolean isShowDivider = a.getBoolean(R.styleable.FormField_ff_show_divider, true);
         int inputType = a.getInt(R.styleable.FormField_ff_input_type, -1);
+        int maxLength = a.getInt(R.styleable.FormField_ff_maxLength, -1);
+
         View divider = view.findViewById(R.id.divider);
         if (!isShowDivider) {
             divider.setVisibility(GONE);
@@ -69,6 +72,10 @@ public class FormEditFieldElement extends FrameLayout {
         a.recycle();
         TextView labelTv = view.findViewById(R.id.edf_lab);
         edf_text = view.findViewById(R.id.edf_text);
+        if (maxLength != -1) {
+            edf_text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+
+        }
 
         if (inputType == 0) {
             edf_text.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);

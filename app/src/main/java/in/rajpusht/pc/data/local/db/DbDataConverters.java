@@ -2,23 +2,18 @@ package in.rajpusht.pc.data.local.db;
 
 import androidx.room.TypeConverter;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 import in.rajpusht.pc.model.DataStatus;
 
 
 public class DbDataConverters {
 
-    @TypeConverter
-    public static Date toDate(long l) {
-        return new Date(l);
-    }
-
-    @TypeConverter
-    public static long fromDate(Date date) {
-        return date.getTime();
-    }
-
+    private DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
 
     @TypeConverter
     public static DataStatus dataStatus(Integer dataStatus) {
@@ -32,6 +27,24 @@ public class DbDataConverters {
         if (dataStatus == null)
             return null;
         return dataStatus.value;
+    }
+
+    @TypeConverter
+    public Date toDate(String date) {
+        if (date != null)
+            try {
+                return df.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        return null;
+    }
+
+    @TypeConverter
+    public String fromDate(Date date) {
+        if (date != null)
+            return df.format(date);
+        return null;
     }
 
 

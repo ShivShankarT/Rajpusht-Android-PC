@@ -9,6 +9,7 @@
         <attr name="ff_show_divider" format="boolean" />
         <attr name="ff_required" format="boolean" />
         <attr name="ff_chbox_none_pos" format="integer" />
+        <attr name="ff_maxLength" format="integer" />
         <attr name="ff_input_type" format="enum">
             <enum name="textPersonName" value="0"/>
             <enum name="phone_no" value="1"/>

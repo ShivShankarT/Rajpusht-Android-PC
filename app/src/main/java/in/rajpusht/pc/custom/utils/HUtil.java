@@ -10,6 +10,7 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 
 public class HUtil {
@@ -169,6 +170,14 @@ public class HUtil {
 
     public static int daysBetween(Date d1, Date d2) {
         return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+    public static int calcAge(Date date) {
+        Calendar calendar = Calendar.getInstance();
+        int nowYear = calendar.get(Calendar.YEAR);
+        calendar.setTime(date);
+        int age = nowYear - calendar.get(Calendar.YEAR);
+        return age;
     }
 
 

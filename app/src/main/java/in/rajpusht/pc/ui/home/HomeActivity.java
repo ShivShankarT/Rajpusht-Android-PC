@@ -14,17 +14,22 @@ import javax.inject.Inject;
 import in.rajpusht.pc.BR;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
+import in.rajpusht.pc.data.local.db.AppDatabase;
 import in.rajpusht.pc.databinding.ActivityHomeBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
+import in.rajpusht.pc.utils.SyncUtils;
 
 public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
+
+    @Inject
+    AppDatabase appDatabase;
 
     private HomeViewModel mViewModel;
 
@@ -72,12 +77,18 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 FragmentUtils.replaceFragment(this, new BeneficiaryFragment(), R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_changePassword) {
                 FragmentUtils.replaceFragment(HomeActivity.this, new ChangePasswordFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
-
+            } else if (item.getItemId() == R.id.nav_sync) {
+                syncData();
             }
             getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
             return false;
         });
 
+    }
+
+    private void syncData() {
+        SyncUtils syncUtils = new SyncUtils();
+        syncUtils.sync(appDatabase);
     }
 
     public void openDrawer() {

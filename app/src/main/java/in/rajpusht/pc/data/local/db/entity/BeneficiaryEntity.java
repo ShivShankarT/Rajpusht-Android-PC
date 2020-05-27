@@ -20,12 +20,11 @@ public class BeneficiaryEntity {
     private String husbandName;
     private String mobileNo;
     private String husbandMobNo;
-    private String lmpDate;
     private String stage;
     private String subStage;
     private Date DOB;
     private int childCount;
-    private String age;
+    private Integer age;
     private String caste;
     private String economic;
     private String pctsId;
@@ -81,13 +80,6 @@ public class BeneficiaryEntity {
         this.husbandMobNo = husbandMobNo;
     }
 
-    public String getLmpDate() {
-        return lmpDate;
-    }
-
-    public void setLmpDate(String lmpDate) {
-        this.lmpDate = lmpDate;
-    }
 
     public String getStage() {
         return stage;
@@ -121,11 +113,11 @@ public class BeneficiaryEntity {
         this.DOB = dob;
     }
 
-    public String getAge() {
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(String age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 
