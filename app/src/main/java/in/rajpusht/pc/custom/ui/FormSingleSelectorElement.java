@@ -3,6 +3,7 @@ package in.rajpusht.pc.custom.ui;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.FrameLayout;
@@ -92,6 +93,11 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
             }
         }
         return true;
+    }
+
+    // return validate, view for requestFocusAndScroll
+    public Pair<Boolean, View> validateWthView() {
+        return new Pair<>(validate(), this);
     }
 
     public void sethValidatorListener(HValidatorListener<Integer> hValidatorListener) {

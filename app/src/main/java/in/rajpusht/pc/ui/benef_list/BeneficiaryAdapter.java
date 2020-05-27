@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.List;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.data.local.entity.BeneficiaryEntity;
+import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 
 public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.ViewHolder> {
 

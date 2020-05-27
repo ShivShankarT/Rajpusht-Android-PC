@@ -1,4 +1,4 @@
-package in.rajpusht.pc.data.local.entity;
+package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;

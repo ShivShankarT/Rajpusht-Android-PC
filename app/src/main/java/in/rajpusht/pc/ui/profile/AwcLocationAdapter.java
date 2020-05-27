@@ -13,7 +13,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.data.local.entity.AssignedLocationEntity;
+import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.utils.ExpandableRecyclerAdapter;
 
 public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragment.AssignedLocationListItem> {

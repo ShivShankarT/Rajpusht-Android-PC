@@ -7,16 +7,18 @@ import com.google.gson.JsonObject;
 import java.util.List;
 
 import in.rajpusht.pc.model.ApiResponse;
+import io.reactivex.Single;
 import retrofit2.Call;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
+import retrofit2.http.GET;
 import retrofit2.http.POST;
 
 public interface ApiService {
 
     @POST("login")
     @FormUrlEncoded
-    Call<ApiResponse<List<JsonObject>>> login(@Field("user") String email, @Field("password") String password, @Field("mobile") String mobile);
+    Single<ApiResponse<JsonObject>> login(@Field("user") String email, @Field("password") String password);
 
     @POST("password/reset/otp")
     @FormUrlEncoded
@@ -31,7 +33,7 @@ public interface ApiService {
 
     @POST("login/otp")
     @FormUrlEncoded
-    Call<ApiResponse<List<JsonObject>>> verifyOtp(@Field("otp") String opt);
+    Single<ApiResponse<JsonObject>> verifyOtp(@Field("otp") String opt);
 
     @POST("password/reset")
     @FormUrlEncoded
@@ -47,5 +49,6 @@ public interface ApiService {
                                                           @Field("report_comment") String cmd,
                                                           @Field("submit_date") String submitDate);
 
-
+    @GET("assigned-location")
+    Single<ApiResponse<JsonObject>> assignedLocation();
 }

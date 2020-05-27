@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.DatePicker;
@@ -30,8 +31,10 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
     private EditText edf_text;
     private TextInputLayout edf_txt_inp_ly;
     private HValidatorListener<String> hValidatorListener;
-    private HValueChangedListener<java.util.Date> hValueChangedListener;
+    private HValueChangedListener<Date> hValueChangedListener;
     private boolean required;
+    private Date mDate;
+
 
     public FormDatePickerElement(Context context) {
         super(context);
@@ -104,9 +107,22 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         return true;
     }
 
+    // return validate, view for requestFocusAndScroll
+    public Pair<Boolean, View> validateWthView() {
+        return new Pair<>(validate(), this);
+    }
+
 
     public String getText() {
         return edf_text.getText().toString();
+    }
+
+    public Date getDate() {
+        return mDate;
+    }
+
+    public void setDate(Date mDate) {
+        this.mDate = mDate;
     }
 
     @Override
@@ -124,6 +140,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
                 calendar.set(Calendar.DATE, dayOfMonth);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.YEAR, year);
+                mDate = calendar.getTime();
                 if (hValueChangedListener != null)
                     hValueChangedListener.onValueChanged(calendar.getTime());
                 edf_txt_inp_ly.setError(null);
@@ -157,4 +174,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
     }
 
 
+    public boolean isVisible() {
+        return getVisibility() == VISIBLE;
+    }
 }

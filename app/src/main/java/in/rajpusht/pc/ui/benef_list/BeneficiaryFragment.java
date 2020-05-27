@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Bundle;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -17,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.data.local.entity.BeneficiaryEntity;
+import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.databinding.FragmentBeneficiaryBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.home.HomeActivity;

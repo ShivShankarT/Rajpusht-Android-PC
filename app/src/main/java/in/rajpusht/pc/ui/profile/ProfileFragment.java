@@ -17,7 +17,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.data.local.entity.AssignedLocationEntity;
+import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.ui.profile_edit.ProfileEditFragment;
 import in.rajpusht.pc.utils.ExpandableRecyclerAdapter;
 import in.rajpusht.pc.utils.FragmentUtils;

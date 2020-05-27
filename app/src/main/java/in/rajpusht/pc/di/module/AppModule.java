@@ -12,10 +12,12 @@ import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
-import in.rajpusht.pc.data.local.AppDatabase;
+import in.rajpusht.pc.data.local.db.AppDatabase;
 import in.rajpusht.pc.data.remote.ApiConstants;
 import in.rajpusht.pc.data.remote.ApiService;
+import in.rajpusht.pc.data.remote.RequestInterceptor;
 import in.rajpusht.pc.di.DatabaseInfo;
+import in.rajpusht.pc.di.PreferenceInfo;
 import in.rajpusht.pc.utils.rx.AppSchedulerProvider;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import okhttp3.OkHttpClient;
@@ -36,6 +38,13 @@ public class AppModule {
     @DatabaseInfo
     String dbName() {
         return "pc.db";
+    }
+
+
+    @Provides
+    @PreferenceInfo
+    String prefName() {
+        return "app-ref.db";
     }
 
     @Provides

@@ -7,6 +7,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -73,11 +74,9 @@ public class FormEditFieldElement extends FrameLayout {
             edf_text.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
         } else if (inputType == 1) {
             edf_text.setInputType(InputType.TYPE_CLASS_PHONE);
-        }
-        else if (inputType == 2) {
+        } else if (inputType == 2) {
             edf_text.setInputType(InputType.TYPE_CLASS_NUMBER);
-        }
-        else if (inputType == 3) {
+        } else if (inputType == 3) {
             edf_text.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
         }
 
@@ -130,6 +129,11 @@ public class FormEditFieldElement extends FrameLayout {
         return true;
     }
 
+    // return validate, view for requestFocusAndScroll
+    public Pair<Boolean, View> validateWthView() {
+        return new Pair<>(validate(), this);
+    }
+
     public void sethValidatorListener(HValidatorListener hValidatorListener) {
         this.hValidatorListener = hValidatorListener;
     }
@@ -137,6 +141,10 @@ public class FormEditFieldElement extends FrameLayout {
 
     public String getText() {
         return edf_text.getText().toString();
+    }
+
+    public void setText(String text) {
+        edf_text.setText(text);
     }
 
     public void requestFocusAndScroll() {
@@ -147,5 +155,11 @@ public class FormEditFieldElement extends FrameLayout {
     public void setEnableChild(boolean enable) {
         HUtil.recursiveSetEnabled(this, enable);
     }
+
+
+    public boolean isVisible() {
+        return getVisibility() == VISIBLE;
+    }
+
 
 }

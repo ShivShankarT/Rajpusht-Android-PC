@@ -51,7 +51,7 @@
                     app:ff_selections="@array/benf_currently" />
 
                 <in.rajpusht.pc.custom.ui.FormDatePickerElement
-                    android:id="@+id/benf_child_age"
+                    android:id="@+id/benf_child_dob"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="DOB"

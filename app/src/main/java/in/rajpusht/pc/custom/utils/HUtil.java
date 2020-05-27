@@ -112,4 +112,64 @@ public class HUtil {
         return selectedOutputPath;
     }
 
+    /*
+    PW1 => BETWEEN 0 and 98
+    PW2 => BETWEEN 99 and 196
+    PW3 => BETWEEN 197 and 252
+    PW4 => BETWEEN 253 and 280
+
+    LM1 => BETWEEN 0 and 91
+    LM2 => BETWEEN 92 and 182
+    LM3 => BETWEEN 183 and 365
+
+    MY1 => BETWEEN 366 and 547
+    MY2 => BETWEEN 548 and 730
+    MY3 => BETWEEN 731 and 912
+    MY4 => BETWEEN 913 and 1095
+    MY5 => BETWEEN 1096 and 1155
+    */
+
+
+    public static String getLMMYSubStage(int day) {
+
+        if (day <= 91) {
+            return "LM1";
+        } else if (day <= 182) {
+            return "LM2";
+        } else if (day <= 365) {
+            return "LM3";
+        } else if (day <= 547) {
+            return "MY1";
+        } else if (day <= 730) {
+            return "MY2";
+        } else if (day <= 912) {
+            return "MY3";
+        } else if (day <= 1095) {
+            return "MY4";
+        } else if (day <= 1155) {
+            return "MY5";
+        }
+        return "";
+    }
+
+    public static String getPWSubStage(int day) {
+
+        if (day <= 98) {
+            return "PW1";
+        } else if (day <= 196) {
+            return "PW2";
+        } else if (day <= 252) {
+            return "PW3";
+        } else if (day <= 280) {
+            return "PW4";
+        }
+        return "";
+    }
+
+
+    public static int daysBetween(Date d1, Date d2) {
+        return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
+    }
+
+
 }
