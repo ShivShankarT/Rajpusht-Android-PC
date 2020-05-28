@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.benef_list;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -8,12 +9,14 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.model.BefModel;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 
 public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.ViewHolder> {
 
@@ -35,28 +38,31 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
 
     @Override
     public void onBindViewHolder(final ViewHolder holder, int position) {
-        BefModel BefModel = mValues.get(position);
-        holder.mItem = BefModel;
-        holder.benf_name.setText(BefModel.getName());
+        BefModel befModel = mValues.get(position);
+        holder.mItem = befModel;
 
-        if (BefModel.getStage().equals("PW")) {
-            holder.benf_hus_name.setText("w/o:" + BefModel.getName());
-            holder.date.setText("LMP Date:" + BefModel.getLmpDate());
+
+        if (befModel.getStage().equals("PW")) {
+            holder.benf_name.setText(befModel.getName());
+            holder.benf_hus_name.setText("w/o:" + befModel.getHusbandName());
+            holder.date.setText("LMP Date:" + AppDateTimeUtils.convertLocalDate(befModel.getLmpDate()));
         } else {
-            holder.benf_hus_name.setText("m/o:" + BefModel.getName());
-            holder.date.setText("DOB:" + BefModel.getDob());
+            holder.benf_name.setText(befModel.getMotherName());
+            holder.benf_hus_name.setText("w/o:" + befModel.getHusbandName());
+            holder.date.setText("DOB:" + AppDateTimeUtils.convertLocalDate(befModel.getDob()));
         }
 
-        holder.buttonststus.setText(BefModel.getCurrentSubStage());
+        holder.buttonststus.setText(befModel.getCurrentSubStage());
 
-        if (BefModel.getCurrentSubStage().equals(BefModel.getSubStage())) {
+        Context context = holder.itemView.getContext();
+        if (befModel.getCurrentSubStage().equals(befModel.getSubStage())) {
             if (position == 3)
                 holder.img_synced.setImageResource(R.drawable.ic_done_all);
-            holder.buttonststus.setBackgroundColor(holder.itemView.getContext().getColor(R.color.dark_green));
+            holder.buttonststus.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_green));
             holder.img_delete.setVisibility(View.GONE);
         } else {
             holder.img_delete.setVisibility(View.VISIBLE);
-            holder.buttonststus.setBackgroundColor(holder.itemView.getContext().getColor(R.color.colorAccent));
+            holder.buttonststus.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 
         holder.item_holder.setOnClickListener(new View.OnClickListener() {

@@ -21,6 +21,8 @@ public class PregnantEntity {
     private long pregnancyId;
     private Date lmpDate;
     private DataStatus dataStatus;
+    private String createdAt;
+    private String updatedAt;
 
     public long getBeneficiaryId() {
         return beneficiaryId;
@@ -68,5 +70,21 @@ public class PregnantEntity {
 
     public void setPwMonitorEntities(List<PWMonitorEntity> pwMonitorEntities) {
         this.pwMonitorEntities = pwMonitorEntities;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

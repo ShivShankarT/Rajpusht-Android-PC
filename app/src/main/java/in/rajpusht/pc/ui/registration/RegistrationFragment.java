@@ -30,6 +30,7 @@ import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.Disposable;
 
@@ -271,23 +272,25 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setCounselingProv(vb.benfCounseling.getSelectedData());
         beneficiaryEntity.setCounselingSms(vb.benfCousSms.getSelectedPos());
         beneficiaryEntity.setDataStatus(DataStatus.NEW);
+        beneficiaryEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+        beneficiaryEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
         if (data.contains(0)) {
-            beneficiaryEntity.setPmmvyInstallmentCt(vb.benfPmmvvyCount.getSelectedPos());
+            beneficiaryEntity.setPmmvyInstallment(vb.benfPmmvvyCount.getSelectedPos());
         }
 
         if (data.contains(1)) {
-            beneficiaryEntity.setIgmpyInstallmentCt(vb.benfIgmpyCount.getSelectedPos());
+            beneficiaryEntity.setIgmpyInstallment(vb.benfIgmpyCount.getSelectedPos());
         }
 
         if (data.contains(2)) {
-            beneficiaryEntity.setJsyInstallmentCt(vb.benfJsyCount.getSelectedPos());
+            beneficiaryEntity.setJsyInstallment(vb.benfJsyCount.getSelectedPos());
         }
 
         if (data.contains(3)) {
-            beneficiaryEntity.setRajshriInstallmentCt(vb.benfRajshriCount.getSelectedPos());
+            beneficiaryEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
         }
 
 
@@ -312,6 +315,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             Date lmpdate = vb.benfLmp.getDate();
             pregnantEntity.setLmpDate(lmpdate);
             pregnantEntity.setDataStatus(DataStatus.NEW);
+            pregnantEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+            pregnantEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
             int days = HUtil.daysBetween(lmpdate, new Date());
             beneficiaryEntity.setStage("PW");
@@ -322,7 +327,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             Date date = vb.benfChildDob.getDate();
             childEntity = new ChildEntity();
-            childEntity.setChildId(Long.parseLong(beneficiaryId+"1"));
+            childEntity.setChildId(Long.parseLong(beneficiaryId + "1"));
             childEntity.setStage("PW");
             int days = HUtil.daysBetween(date, new Date());
             String lmmySubStage = HUtil.getLMMYSubStage(days);
@@ -345,6 +350,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             childEntity.setDeliveryHome(vb.benfChildDeliveryPlaceType.getSelectedPos());
             childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getText());
             childEntity.setDataStatus(DataStatus.NEW);
+            childEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+            childEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
 
         }

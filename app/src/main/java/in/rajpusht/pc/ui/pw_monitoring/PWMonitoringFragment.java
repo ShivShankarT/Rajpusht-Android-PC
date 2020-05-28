@@ -1,6 +1,7 @@
 package in.rajpusht.pc.ui.pw_monitoring;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -20,6 +24,7 @@ import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBinding, PWMonitoringViewModel> {
@@ -131,17 +136,35 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     }
 
     void save() {
+        List<Pair<Boolean, View>> validateElement = new ArrayList<>();
+
         PwMonitoringFragmentBinding vb = getViewDataBinding();
-        vb.benfAncCount.validate();
-        vb.benfAncDate.validate();
-        vb.benfMamtaCdWeight.validate();
-        vb.benfLastcheckupdate.validate();
-        vb.benfCurrentWeight.validate();
-        vb.benfRegisteredProgramme.validate();
-        vb.benfPmmvvyCount.validate();
-        vb.benfIgmpyCount.validate();
-        vb.benfJsyCount.validate();
-        vb.benfRajshriCount.validate();
+        validateElement.add(vb.benfAncCount.validateWthView());
+        validateElement.add(vb.benfAncDate.validateWthView());
+        validateElement.add(vb.benfMamtaCdWeight.validateWthView());
+        validateElement.add(vb.benfLastcheckupdate.validateWthView());
+        validateElement.add(vb.benfCurrentWeight.validateWthView());
+
+
+        validateElement.add(vb.benfRegisteredProgramme.validateWthView());
+        if (vb.benfPmmvvyCount.isVisible())
+            validateElement.add(vb.benfPmmvvyCount.validateWthView());
+        if (vb.benfIgmpyCount.isVisible())
+            validateElement.add(vb.benfIgmpyCount.validateWthView());
+        if (vb.benfJsyCount.isVisible())
+            validateElement.add(vb.benfJsyCount.validateWthView());
+        if (vb.benfRajshriCount.isVisible())
+            validateElement.add(vb.benfRajshriCount.validateWthView());
+
+
+        for (Pair<Boolean, View> viewPair : validateElement) {
+
+            if (!viewPair.first) {
+                View targetView = viewPair.second;
+                targetView.getParent().requestChildFocus(targetView, targetView);
+                return;
+            }
+        }
 
         PWMonitorEntity pwMonitorEntity = new PWMonitorEntity();
 
@@ -156,20 +179,23 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
         if (data.contains(0)) {
-            pwMonitorEntity.setPmmvyInstallmentCt(vb.benfPmmvvyCount.getSelectedPos());
+            pwMonitorEntity.setPmmvyInstallment(vb.benfPmmvvyCount.getSelectedPos());
         }
 
         if (data.contains(1)) {
-            pwMonitorEntity.setIgmpyInstallmentCt(vb.benfIgmpyCount.getSelectedPos());
+            pwMonitorEntity.setIgmpyInstallment(vb.benfIgmpyCount.getSelectedPos());
         }
 
         if (data.contains(2)) {
-            pwMonitorEntity.setJsyInstallmentCt(vb.benfJsyCount.getSelectedPos());
+            pwMonitorEntity.setJsyInstallment(vb.benfJsyCount.getSelectedPos());
         }
 
         if (data.contains(3)) {
-            pwMonitorEntity.setRajshriInstallmentCt(vb.benfRajshriCount.getSelectedPos());
+            pwMonitorEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
         }
+
+        pwMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+        pwMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
         dataRepository.insertPwMonitor(pwMonitorEntity)
                 .subscribeOn(schedulerProvider.io())

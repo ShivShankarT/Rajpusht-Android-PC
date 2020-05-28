@@ -21,12 +21,14 @@ public class PWMonitorEntity {
     private Double lastWeightInMamta;
     private Date lastWeightCheckDate;
     private Double currentWeight;
-    private Integer pmmvyInstallmentCt;
-    private Integer igmpyInstallmentCt;
-    private Integer jsyInstallmentCt;
-    private Integer rajshriInstallmentCt;
+    private Integer pmmvyInstallment;
+    private Integer igmpyInstallment;
+    private Integer jsyInstallment;
+    private Integer rajshriInstallment;
     private DataStatus dataStatus;
     private String timestamp;
+    private String createdAt;
+    private String updatedAt;
 
     public int getId() {
         return id;
@@ -100,36 +102,36 @@ public class PWMonitorEntity {
         this.currentWeight = currentWeight;
     }
 
-    public Integer getPmmvyInstallmentCt() {
-        return pmmvyInstallmentCt;
+    public Integer getPmmvyInstallment() {
+        return pmmvyInstallment;
     }
 
-    public void setPmmvyInstallmentCt(Integer pmmvyInstallmentCt) {
-        this.pmmvyInstallmentCt = pmmvyInstallmentCt;
+    public void setPmmvyInstallment(Integer pmmvyInstallment) {
+        this.pmmvyInstallment = pmmvyInstallment;
     }
 
-    public Integer getIgmpyInstallmentCt() {
-        return igmpyInstallmentCt;
+    public Integer getIgmpyInstallment() {
+        return igmpyInstallment;
     }
 
-    public void setIgmpyInstallmentCt(Integer igmpyInstallmentCt) {
-        this.igmpyInstallmentCt = igmpyInstallmentCt;
+    public void setIgmpyInstallment(Integer igmpyInstallment) {
+        this.igmpyInstallment = igmpyInstallment;
     }
 
-    public Integer getJsyInstallmentCt() {
-        return jsyInstallmentCt;
+    public Integer getJsyInstallment() {
+        return jsyInstallment;
     }
 
-    public void setJsyInstallmentCt(Integer jsyInstallmentCt) {
-        this.jsyInstallmentCt = jsyInstallmentCt;
+    public void setJsyInstallment(Integer jsyInstallment) {
+        this.jsyInstallment = jsyInstallment;
     }
 
-    public Integer getRajshriInstallmentCt() {
-        return rajshriInstallmentCt;
+    public Integer getRajshriInstallment() {
+        return rajshriInstallment;
     }
 
-    public void setRajshriInstallmentCt(Integer rajshriInstallmentCt) {
-        this.rajshriInstallmentCt = rajshriInstallmentCt;
+    public void setRajshriInstallment(Integer rajshriInstallment) {
+        this.rajshriInstallment = rajshriInstallment;
     }
 
     public DataStatus getDataStatus() {
@@ -146,5 +148,21 @@ public class PWMonitorEntity {
 
     public void setTimestamp(String timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

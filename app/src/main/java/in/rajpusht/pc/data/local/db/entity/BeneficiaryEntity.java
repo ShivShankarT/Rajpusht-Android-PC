@@ -1,7 +1,6 @@
 package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
-import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -31,13 +30,13 @@ public class BeneficiaryEntity {
     private String bahamashahId;
     private String counselingProv;
     private int counselingSms;
-    private Integer pmmvyInstallmentCt;
-    private Integer igmpyInstallmentCt;
-    private Integer jsyInstallmentCt;
-    private Integer rajshriInstallmentCt;
+    private Integer pmmvyInstallment;
+    private Integer igmpyInstallment;
+    private Integer jsyInstallment;
+    private Integer rajshriInstallment;
     private DataStatus dataStatus;
-    @Ignore
-    private String currentSubStage;
+    private String createdAt;
+    private String updatedAt;
 
 
     public int getId() {
@@ -95,14 +94,6 @@ public class BeneficiaryEntity {
 
     public void setSubStage(String subStage) {
         this.subStage = subStage;
-    }
-
-    public String getCurrentSubStage() {
-        return currentSubStage;
-    }
-
-    public void setCurrentSubStage(String currentSubStage) {
-        this.currentSubStage = currentSubStage;
     }
 
     public Date getDOB() {
@@ -185,36 +176,36 @@ public class BeneficiaryEntity {
         this.dataStatus = dataStatus;
     }
 
-    public Integer getPmmvyInstallmentCt() {
-        return pmmvyInstallmentCt;
+    public Integer getPmmvyInstallment() {
+        return pmmvyInstallment;
     }
 
-    public void setPmmvyInstallmentCt(Integer pmmvyInstallmentCt) {
-        this.pmmvyInstallmentCt = pmmvyInstallmentCt;
+    public void setPmmvyInstallment(Integer pmmvyInstallment) {
+        this.pmmvyInstallment = pmmvyInstallment;
     }
 
-    public Integer getIgmpyInstallmentCt() {
-        return igmpyInstallmentCt;
+    public Integer getIgmpyInstallment() {
+        return igmpyInstallment;
     }
 
-    public void setIgmpyInstallmentCt(Integer igmpyInstallmentCt) {
-        this.igmpyInstallmentCt = igmpyInstallmentCt;
+    public void setIgmpyInstallment(Integer igmpyInstallment) {
+        this.igmpyInstallment = igmpyInstallment;
     }
 
-    public Integer getJsyInstallmentCt() {
-        return jsyInstallmentCt;
+    public Integer getJsyInstallment() {
+        return jsyInstallment;
     }
 
-    public void setJsyInstallmentCt(Integer jsyInstallmentCt) {
-        this.jsyInstallmentCt = jsyInstallmentCt;
+    public void setJsyInstallment(Integer jsyInstallment) {
+        this.jsyInstallment = jsyInstallment;
     }
 
-    public Integer getRajshriInstallmentCt() {
-        return rajshriInstallmentCt;
+    public Integer getRajshriInstallment() {
+        return rajshriInstallment;
     }
 
-    public void setRajshriInstallmentCt(Integer rajshriInstallmentCt) {
-        this.rajshriInstallmentCt = rajshriInstallmentCt;
+    public void setRajshriInstallment(Integer rajshriInstallment) {
+        this.rajshriInstallment = rajshriInstallment;
     }
 
     public int getChildCount() {
@@ -223,5 +214,21 @@ public class BeneficiaryEntity {
 
     public void setChildCount(int childCount) {
         this.childCount = childCount;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

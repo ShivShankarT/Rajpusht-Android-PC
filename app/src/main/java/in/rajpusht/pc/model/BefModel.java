@@ -8,6 +8,9 @@ public class BefModel {
     private Date dob;
     private String stage;
     private String subStage;
+    private String motherId;
+    private String husbandName;
+    private String motherName;
     private String pregnancyId;
     private Date lmpDate;
     private String currentSubStage;
@@ -75,5 +78,29 @@ public class BefModel {
 
     public void setSubStage(String subStage) {
         this.subStage = subStage;
+    }
+
+    public String getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(String motherId) {
+        this.motherId = motherId;
+    }
+
+    public String getMotherName() {
+        return motherName;
+    }
+
+    public void setMotherName(String motherName) {
+        this.motherName = motherName;
+    }
+
+    public String getHusbandName() {
+        return husbandName;
+    }
+
+    public void setHusbandName(String husbandName) {
+        this.husbandName = husbandName;
     }
 }

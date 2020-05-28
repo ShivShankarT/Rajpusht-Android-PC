@@ -24,6 +24,8 @@ public class ChildEntity {
     private long motherId;
     private String deliveryPlace;
     private int deliveryHome;
+    private String createdAt;
+    private String updatedAt;
 
     @Ignore
     private List<LMMonitorEntity> lmMonitorEntities;
@@ -116,5 +118,21 @@ public class ChildEntity {
 
     public void setLmMonitorEntities(List<LMMonitorEntity> lmMonitorEntities) {
         this.lmMonitorEntities = lmMonitorEntities;
+    }
+
+    public String getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(String createdAt) {
+        this.createdAt = createdAt;
+    }
+
+    public String getUpdatedAt() {
+        return updatedAt;
+    }
+
+    public void setUpdatedAt(String updatedAt) {
+        this.updatedAt = updatedAt;
     }
 }

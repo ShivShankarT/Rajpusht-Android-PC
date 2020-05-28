@@ -1,6 +1,7 @@
 package in.rajpusht.pc.ui.lm_monitoring;
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -9,6 +10,9 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.Set;
 
 import javax.inject.Inject;
@@ -20,6 +24,7 @@ import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBinding, LMMonitoringViewModel> {
@@ -135,22 +140,36 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
     private void save() {
         LmMonitoringFragmentBinding vb = getViewDataBinding();
+        List<Pair<Boolean, View>> validateElement = new ArrayList<>();
+
+        validateElement.add(vb.benfChildImmune.validateWthView());
+        validateElement.add(vb.benfChildLastRecMuac.validateWthView());
+        validateElement.add(vb.benfChildLastRecMuacDate.validateWthView());
+        validateElement.add(vb.benfChildCurrentMuac.validateWthView());
+        validateElement.add(vb.benfBirthChildWeight.validateWthView());
+        validateElement.add(vb.benfChildCurrentMuac.validateWthView());
+        validateElement.add(vb.benfCurrentWeight.validateWthView());
 
 
-        vb.benfChildImmune.validate();
-        vb.benfChildLastRecMuac.validate();
-        vb.benfChildLastRecMuacDate.validate();
-        vb.benfChildCurrentMuac.validate();
-        vb.benfBirthChildWeight.validate();
-        vb.benfChildCurrentMuac.validate();
-        vb.benfCurrentWeight.validate();
+        validateElement.add(vb.benfRegisteredProgramme.validateWthView());
+        if (vb.benfPmmvvyCount.isVisible())
+            validateElement.add(vb.benfPmmvvyCount.validateWthView());
+        if (vb.benfIgmpyCount.isVisible())
+            validateElement.add(vb.benfIgmpyCount.validateWthView());
+        if (vb.benfJsyCount.isVisible())
+            validateElement.add(vb.benfJsyCount.validateWthView());
+        if (vb.benfRajshriCount.isVisible())
+            validateElement.add(vb.benfRajshriCount.validateWthView());
 
 
-        vb.benfRegisteredProgramme.validate();
-        vb.benfPmmvvyCount.validate();
-        vb.benfIgmpyCount.validate();
-        vb.benfJsyCount.validate();
-        vb.benfRajshriCount.validate();
+        for (Pair<Boolean, View> viewPair : validateElement) {
+
+            if (!viewPair.first) {
+                View targetView = viewPair.second;
+                targetView.getParent().requestChildFocus(targetView, targetView);
+                return;
+            }
+        }
 
         LMMonitorEntity lmMonitorEntity = new LMMonitorEntity();
         lmMonitorEntity.setChildId(childId);
@@ -164,21 +183,23 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
         if (data.contains(0)) {
-            lmMonitorEntity.setPmmvyInstallmentCt(vb.benfPmmvvyCount.getSelectedPos());
+            lmMonitorEntity.setPmmvyInstallment(vb.benfPmmvvyCount.getSelectedPos());
         }
 
         if (data.contains(1)) {
-            lmMonitorEntity.setIgmpyInstallmentCt(vb.benfIgmpyCount.getSelectedPos());
+            lmMonitorEntity.setIgmpyInstallment(vb.benfIgmpyCount.getSelectedPos());
         }
 
         if (data.contains(2)) {
-            lmMonitorEntity.setJsyInstallmentCt(vb.benfJsyCount.getSelectedPos());
+            lmMonitorEntity.setJsyInstallment(vb.benfJsyCount.getSelectedPos());
         }
 
         if (data.contains(3)) {
-            lmMonitorEntity.setRajshriInstallmentCt(vb.benfRajshriCount.getSelectedPos());
+            lmMonitorEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
         }
 
+        lmMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+        lmMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
         dataRepository.insertLmMonitor(lmMonitorEntity)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
