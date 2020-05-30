@@ -2,9 +2,11 @@ package in.rajpusht.pc.utils;
 
 
 
+import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -23,7 +25,7 @@ public class FragmentUtils {
         // Private constructor to hide the implicit one
     }
 
-    public static void replaceFragment(AppCompatActivity activity, Fragment fragment, int id, boolean addToBackStack, @FragmentAnimation int animationType) {
+    public static void replaceFragment(FragmentActivity activity, Fragment fragment, @IdRes int id, boolean addToBackStack, @FragmentAnimation int animationType) {
 
         if (null == activity)
             return;

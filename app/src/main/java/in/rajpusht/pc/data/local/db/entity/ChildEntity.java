@@ -24,13 +24,14 @@ public class ChildEntity {
     private long motherId;
     private String deliveryPlace;
     private int deliveryHome;
+    private List<String> collectedDataSubStage;
     private String createdAt;
     private String updatedAt;
+    private DataStatus dataStatus;
 
     @Ignore
     private List<LMMonitorEntity> lmMonitorEntities;
 
-    private DataStatus dataStatus;
 
     public long getChildId() {
         return childId;
@@ -134,5 +135,13 @@ public class ChildEntity {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<String> getCollectedDataSubStage() {
+        return collectedDataSubStage;
+    }
+
+    public void setCollectedDataSubStage(List<String> collectedDataSubStage) {
+        this.collectedDataSubStage = collectedDataSubStage;
     }
 }

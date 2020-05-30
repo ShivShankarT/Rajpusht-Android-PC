@@ -25,6 +25,7 @@ import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.custom.validator.ValidationStatus;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 
 public class FormDatePickerElement extends FrameLayout implements View.OnClickListener {
 
@@ -121,8 +122,10 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         return mDate;
     }
 
+
     public void setDate(Date mDate) {
         this.mDate = mDate;
+        edf_text.setText(AppDateTimeUtils.convertLocalDate(mDate));
     }
 
     @Override
@@ -133,14 +136,12 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
                                   int dayOfMonth) {
 
                 int month = monthOfYear + 1;
-                String a = dayOfMonth + "/" + month + "/" + year;
-                edf_text.setText(a);
-
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.DATE, dayOfMonth);
                 calendar.set(Calendar.MONTH, month);
                 calendar.set(Calendar.YEAR, year);
                 mDate = calendar.getTime();
+                edf_text.setText(AppDateTimeUtils.convertLocalDate(mDate));
                 if (hValueChangedListener != null)
                     hValueChangedListener.onValueChanged(calendar.getTime());
                 edf_txt_inp_ly.setError(null);

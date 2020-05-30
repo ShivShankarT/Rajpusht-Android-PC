@@ -2,10 +2,15 @@ package in.rajpusht.pc.data.local.db;
 
 import androidx.room.TypeConverter;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import in.rajpusht.pc.model.DataStatus;
@@ -14,6 +19,7 @@ import in.rajpusht.pc.model.DataStatus;
 public class DbDataConverters {
 
     private DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    private Gson gson = new Gson();
 
     @TypeConverter
     public static DataStatus dataStatus(Integer dataStatus) {
@@ -27,6 +33,25 @@ public class DbDataConverters {
         if (dataStatus == null)
             return null;
         return dataStatus.value;
+    }
+
+    @TypeConverter
+    public List<String> toListString(String data) {
+        if (data != null)
+            try {
+                return gson.fromJson(data, new TypeToken<List<String>>() {
+                }.getType());
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        return Collections.emptyList();
+    }
+
+    @TypeConverter
+    public String fromListString(List<String> data) {
+        if (data != null)
+            return gson.toJson(data);
+        return null;
     }
 
     @TypeConverter

@@ -1,6 +1,7 @@
 package in.rajpusht.pc.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class BefModel {
     private Long beneficiaryId;
@@ -11,9 +12,11 @@ public class BefModel {
     private String motherId;
     private String husbandName;
     private String motherName;
-    private String pregnancyId;
+    private long pregnancyId;
+    private String pctsId;
     private Date lmpDate;
     private String currentSubStage;
+    private List<String> collectedDataSubStage;
 
     public Long getBeneficiaryId() {
         return beneficiaryId;
@@ -48,11 +51,11 @@ public class BefModel {
     }
 
 
-    public String getPregnancyId() {
+    public long getPregnancyId() {
         return pregnancyId;
     }
 
-    public void setPregnancyId(String pregnancyId) {
+    public void setPregnancyId(long pregnancyId) {
         this.pregnancyId = pregnancyId;
     }
 
@@ -102,5 +105,21 @@ public class BefModel {
 
     public void setHusbandName(String husbandName) {
         this.husbandName = husbandName;
+    }
+
+    public String getPctsId() {
+        return pctsId;
+    }
+
+    public void setPctsId(String pctsId) {
+        this.pctsId = pctsId;
+    }
+
+    public List<String> getCollectedDataSubStage() {
+        return collectedDataSubStage;
+    }
+
+    public void setCollectedDataSubStage(List<String> collectedDataSubStage) {
+        this.collectedDataSubStage = collectedDataSubStage;
     }
 }

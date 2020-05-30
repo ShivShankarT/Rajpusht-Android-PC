@@ -1,15 +1,23 @@
 package in.rajpusht.pc.ui.registration;
 
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.google.gson.Gson;
+
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -29,6 +37,7 @@ import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
 import in.rajpusht.pc.model.DataStatus;
+import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
@@ -43,9 +52,24 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     @Inject
     SchedulerProvider schedulerProvider;
     private RegistrationViewModel mViewModel;
+    private long beneficiaryId;
 
-    public static RegistrationFragment newInstance() {
-        return new RegistrationFragment();
+
+    public static RegistrationFragment newInstance(long beneficiaryId) {
+        RegistrationFragment registrationFragment = new RegistrationFragment();
+        Bundle args = new Bundle();
+        args.putLong("id", beneficiaryId);
+        registrationFragment.setArguments(args);
+        return registrationFragment;
+    }
+
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        if (getArguments() != null) {
+            beneficiaryId = getArguments().getLong("id");
+        }
     }
 
     @Override
@@ -148,6 +172,11 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 }
             }
         });
+        viewDataBinding.benfPmmvvyCount.setVisibility(View.GONE);
+        viewDataBinding.benfIgmpyCount.setVisibility(View.GONE);
+        viewDataBinding.benfJsyCount.setVisibility(View.GONE);
+        viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
+        viewDataBinding.benfInstalLy.setVisibility(View.GONE);
 
         viewDataBinding.benfRegisteredProgramme.sethValueChangedListener(new HValueChangedListener<Set<Integer>>() {
             @Override
@@ -246,6 +275,15 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         });
 
+        if (beneficiaryId != 0)
+            dataRepository.getBeneficiaryData(beneficiaryId)
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe(data -> {
+                        if (data != null)
+                            beneficiaryEntityUiUpdate(data);
+                    });
+
     }
 
     void save() {
@@ -320,7 +358,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             int days = HUtil.daysBetween(lmpdate, new Date());
             beneficiaryEntity.setStage("PW");
-            beneficiaryEntity.setSubStage(HUtil.getPWSubStage(days));
+            // beneficiaryEntity.setSubStage(HUtil.getPWSubStage(days));
+            beneficiaryEntity.setSubStage("PW");//todo check
         }
 
         if (hasChild) {
@@ -331,16 +370,19 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             childEntity.setStage("PW");
             int days = HUtil.daysBetween(date, new Date());
             String lmmySubStage = HUtil.getLMMYSubStage(days);
-            childEntity.setSubStage(lmmySubStage);
+            //childEntity.setSubStage(lmmySubStage);//todo
+
 
             if (lmmySubStage.contains("LM")) {
                 childEntity.setStage("LM");
+                childEntity.setSubStage("LM");
             } else {
                 childEntity.setStage("MY");
+                childEntity.setSubStage("MY");
             }
 
             if (!isPregnant) {
-                beneficiaryEntity.setSubStage(childEntity.getSubStage());
+                beneficiaryEntity.setSubStage(childEntity.getStage());//todo
                 beneficiaryEntity.setStage(childEntity.getStage());
             }
 
@@ -361,7 +403,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 .observeOn(schedulerProvider.ui())
                 .subscribe(aBoolean -> {
                     if (!aBoolean.isEmpty()) {//todo check
-                        showAlertDialog("Beneficiary Created Saved Successfully", () -> {
+                        showAlertDialog("Beneficiary Registration Successfully", () -> {
                             requireActivity().onBackPressed();
                         });
                     }
@@ -457,6 +499,95 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
 
     }
+
+
+    private void beneficiaryEntityUiUpdate(Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> tuple) {
+
+        Log.i("ss", "beneficiaryEntityUiUpdate: " + new Gson().toJson(tuple));
+
+        BeneficiaryEntity beneficiaryEntity = tuple.getT1();
+        ChildEntity childEntity = tuple.getT3();
+        PregnantEntity pregnantEntity = tuple.getT2();
+
+        RegistrationFragmentBinding vh = getViewDataBinding();
+
+        vh.save.setEnabled(false);//todo
+        vh.benfChildCount.setSection(beneficiaryEntity.getChildCount());
+        if (pregnantEntity != null && childEntity != null)
+            vh.benfRegStage.setSection(2);
+        else if (childEntity != null)
+            vh.benfRegStage.setSection(1);
+        else if (pregnantEntity != null)
+            vh.benfRegStage.setSection(0);
+
+        if (childEntity != null) {
+            vh.benfChildDob.setDate(childEntity.getDOB());
+            vh.benfChildDeliveryPlace.setText(childEntity.getDeliveryPlace());
+            vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
+        }
+
+        if (pregnantEntity != null) {
+            vh.benfLmp.setDate(pregnantEntity.getLmpDate());
+        }
+
+        Set<Integer> regScheme = new HashSet<>();
+
+        if (beneficiaryEntity.getPmmvyInstallment() != null) {
+            vh.benfPmmvvyCount.setSection(beneficiaryEntity.getPmmvyInstallment());
+            regScheme.add(0);
+        }
+        if (beneficiaryEntity.getIgmpyInstallment() != null) {
+            vh.benfIgmpyCount.setSection(beneficiaryEntity.getIgmpyInstallment());
+            regScheme.add(1);
+        }
+        if (beneficiaryEntity.getJsyInstallment() != null) {
+            vh.benfJsyCount.setSection(beneficiaryEntity.getJsyInstallment());
+            regScheme.add(2);
+        }
+        if (beneficiaryEntity.getRajshriInstallment() != null) {
+            vh.benfRajshriCount.setSection(beneficiaryEntity.getRajshriInstallment());
+            regScheme.add(3);
+        }
+
+        if (regScheme.isEmpty()) {
+            regScheme.add(4);
+        }
+
+        vh.benfRegisteredProgramme.setSelectedIds(regScheme);
+
+        vh.benfName.setText(beneficiaryEntity.getName());
+        vh.benfHusName.setText(beneficiaryEntity.getHusbandName());
+
+        if (beneficiaryEntity.getDOB() != null) {
+            vh.benfAgeDob.setDate(beneficiaryEntity.getDOB());
+            vh.benfAgeType.setSection(0);
+        } else {
+            vh.benfAge.setText(String.valueOf(beneficiaryEntity.getAge()));
+            vh.benfAgeType.setSection(1);
+        }
+
+
+        vh.benfSelfMobile.setText(beneficiaryEntity.getMobileNo());
+        vh.benfHusMobile.setText(beneficiaryEntity.getHusbandMobNo());
+
+        if (TextUtils.isEmpty(beneficiaryEntity.getMobileNo()) && TextUtils.isEmpty(beneficiaryEntity.getHusbandMobNo())) {
+            vh.benfMobileSelector.setSelectedIds(new HashSet<>(Arrays.asList(0, 1)));
+        } else if (TextUtils.isEmpty(beneficiaryEntity.getMobileNo())) {
+            vh.benfMobileSelector.setSelectedIds(new HashSet<>(Collections.singletonList(0)));
+        } else if (TextUtils.isEmpty(beneficiaryEntity.getHusbandMobNo())) {
+            vh.benfMobileSelector.setSelectedIds(new HashSet<>(Collections.singletonList(1)));
+        }
+
+        vh.benfCaste.setSectionByData(beneficiaryEntity.getCaste());
+        vh.benfEcon.setSectionByData(beneficiaryEntity.getEconomic());
+        vh.benfBahamashaId.setText(beneficiaryEntity.getBahamashahId());
+        vh.benfPctsid.setText(beneficiaryEntity.getPctsId());
+        vh.benfCounseling.setSectionByData(beneficiaryEntity.getCounselingProv());
+        vh.benfCousSms.setSection(beneficiaryEntity.getCounselingSms());
+
+
+    }
+
 
 }
 

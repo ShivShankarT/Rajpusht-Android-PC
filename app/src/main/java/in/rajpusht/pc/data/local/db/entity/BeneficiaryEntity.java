@@ -4,6 +4,7 @@ import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
+import java.util.List;
 
 import in.rajpusht.pc.model.DataStatus;
 
@@ -34,6 +35,7 @@ public class BeneficiaryEntity {
     private Integer igmpyInstallment;
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
+    private List<String> collectedDataSubStage;
     private DataStatus dataStatus;
     private String createdAt;
     private String updatedAt;
@@ -230,5 +232,13 @@ public class BeneficiaryEntity {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public List<String> getCollectedDataSubStage() {
+        return collectedDataSubStage;
+    }
+
+    public void setCollectedDataSubStage(List<String> collectedDataSubStage) {
+        this.collectedDataSubStage = collectedDataSubStage;
     }
 }

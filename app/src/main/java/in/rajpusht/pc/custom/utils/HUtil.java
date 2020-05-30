@@ -6,12 +6,20 @@ import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
+
+import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
+import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
+import in.rajpusht.pc.model.Tuple;
 
 public class HUtil {
 
@@ -180,6 +188,23 @@ public class HUtil {
         return age;
     }
 
+    public static Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> staticData() {//todo rm
+
+        String j = "{\"t1\":{\"DOB\":\"Jun 30, 1984 12:00:00 AM\",\"age\":36,\"bahamashahId\":\"wr6688899\",\"beneficiaryId\":1590818137299,\"caste\":\"SC\",\"childCount\":2,\"collectedDataSubStage\":[],\"counselingProv\":\"YES\",\"counselingSms\":1,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"economic\":\"BPL\",\"husbandMobNo\":\"9736484543\",\"husbandName\":\"Ram Kumar\",\"id\":1,\"mobileNo\":\"9876543218\",\"name\":\"Shavani\",\"pctsId\":\"13466778\",\"pmmvyInstallment\":1,\"stage\":\"PW\",\"subStage\":\"PW\",\"updatedAt\":\"2020-05-30 11:25:37\"},\"t2\":{\"beneficiaryId\":1590818137299,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"id\":1,\"lmpDate\":\"Jun 4, 2020 12:00:00 AM\",\"pregnancyId\":1590818137299,\"updatedAt\":\"2020-05-30 11:25:37\"},\"t3\":{\"DOB\":\"Oct 8, 2019 12:00:00 AM\",\"childId\":15908181372991,\"childOrder\":1,\"collectedDataSubStage\":[],\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"deliveryHome\":0,\"deliveryPlace\":\"Bhavu\",\"id\":1,\"motherId\":1590818137299,\"stage\":\"LM\",\"subStage\":\"LM\",\"updatedAt\":\"2020-05-30 11:25:37\"}}";
+        String json = j.replace("1590818137299", System.currentTimeMillis() + "");
+        Date date = new Date();
+        json = json.replace("Shavani",  "Shavani "+ date.getMinutes()+date.getSeconds());
+         json = json.replace("13466778",  System.currentTimeMillis()+"" );
+
+        Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> tuple = new Gson().fromJson(json, new TypeToken<Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity>>() {
+        }.getType());
+        tuple.getT1().setId(0);
+        tuple.getT2().setId(0);
+        tuple.getT3().setId(0);
+
+        return tuple;
+
+    }
 
 
 }

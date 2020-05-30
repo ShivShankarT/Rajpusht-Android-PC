@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
@@ -23,8 +24,11 @@ import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
+import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
+import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBinding, LMMonitoringViewModel> {
@@ -37,11 +41,13 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     SchedulerProvider schedulerProvider;
     private long childId;
     private LMMonitoringViewModel mViewModel;
+    private String subStage;
 
-    public static LMMonitoringFragment newInstance(long childId) {
+    public static LMMonitoringFragment newInstance(long childId, String subStage) {
         LMMonitoringFragment lmMonitoringFragment = new LMMonitoringFragment();
         Bundle args = new Bundle();
         args.putLong("id", childId);
+        args.putString("subStage", subStage);
         lmMonitoringFragment.setArguments(args);
         return lmMonitoringFragment;
     }
@@ -66,6 +72,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         childId = getArguments().getLong("id");
+        subStage = getArguments().getString("subStage");
     }
 
     @Override
@@ -173,6 +180,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         LMMonitorEntity lmMonitorEntity = new LMMonitorEntity();
         lmMonitorEntity.setChildId(childId);
+        lmMonitorEntity.setStage("LM");
+        lmMonitorEntity.setSubStage(subStage);
         lmMonitorEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
         lmMonitorEntity.setLastMuac(Double.valueOf(vb.benfChildLastRecMuac.getText()));
         lmMonitorEntity.setLastMuacCheckDate(vb.benfChildLastRecMuacDate.getDate());
@@ -203,8 +212,16 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         dataRepository.insertLmMonitor(lmMonitorEntity)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
-            showAlertDialog("Beneficiary Created Saved Successfully", () -> {
-                requireActivity().onBackPressed();
+            showAlertDialog("Beneficiary Child Report Saved Successfully", () -> {
+                requireActivity().getSupportFragmentManager()
+                        .beginTransaction()
+                        .remove(LMMonitoringFragment.this)
+                        .commit();
+
+                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                        CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+
             });
         });
 

@@ -6,6 +6,7 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
@@ -21,10 +22,15 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
+import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphFragment;
+import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
+import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBinding, PWMonitoringViewModel> {
@@ -35,13 +41,18 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     DataRepository dataRepository;
     @Inject
     SchedulerProvider schedulerProvider;
+    BeneficiaryEntity beneficiaryEntity;
     private PWMonitoringViewModel mViewModel;
     private long pregnancyId;
+    private String subStage;
+    private long beneficiaryId;
 
-    public static PWMonitoringFragment newInstance(long pregnancyId) {
+    public static PWMonitoringFragment newInstance(long beneficiaryId, long pregnancyId, String subStage) {
         PWMonitoringFragment pwMonitoringFragment = new PWMonitoringFragment();
         Bundle args = new Bundle();
         args.putLong("id", pregnancyId);
+        args.putLong("beneficiaryId", beneficiaryId);
+        args.putString("subStage", subStage);
         pwMonitoringFragment.setArguments(args);
         return pwMonitoringFragment;
     }
@@ -67,6 +78,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         pregnancyId = getArguments().getLong("id");
+        beneficiaryId = getArguments().getLong("beneficiaryId");
+        subStage = getArguments().getString("subStage");
     }
 
     @Override
@@ -81,6 +94,25 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 requireActivity().onBackPressed();
             }
         });
+
+        viewDataBinding.benfDtLy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                        RegistrationFragment.newInstance(beneficiaryId), R.id.fragment_container,
+                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+            }
+        });
+
+        viewDataBinding.weightIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                        CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+            }
+        });
+
         viewDataBinding.benfRegisteredProgramme.sethValueChangedListener(new HValueChangedListener<Set<Integer>>() {
             @Override
             public void onValueChanged(Set<Integer> data) {
@@ -132,11 +164,25 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             }
         });
 
+        dataRepository.getBeneficiary(beneficiaryId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui()).subscribe((d) -> {
+            beneficiaryEntity = d;
+            setupUiData();
+        });
 
     }
 
-    void save() {
+    private void setupUiData() {
+        getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
+        getViewDataBinding().benfHusName.setText("w/o:"+beneficiaryEntity.getHusbandName());
+        getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
+        getViewDataBinding().pctsId.setText("PCTS ID: "+beneficiaryEntity.getPctsId());
+    }
+
+    private void save() {
         List<Pair<Boolean, View>> validateElement = new ArrayList<>();
+
 
         PwMonitoringFragmentBinding vb = getViewDataBinding();
         validateElement.add(vb.benfAncCount.validateWthView());
@@ -167,7 +213,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         }
 
         PWMonitorEntity pwMonitorEntity = new PWMonitorEntity();
-
+        pwMonitorEntity.setStage("PW");
+        pwMonitorEntity.setSubStage(subStage);
         pwMonitorEntity.setPregnancyId(pregnancyId);
         pwMonitorEntity.setAncCount(vb.benfAncCount.getSelectedPos());
         pwMonitorEntity.setLastAnc(vb.benfAncDate.getDate());
@@ -197,13 +244,37 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         pwMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
         pwMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
+        List<String> collectedDataSubStage = new ArrayList<>(beneficiaryEntity.getCollectedDataSubStage());
+
+        if (!collectedDataSubStage.contains(subStage)) {
+            collectedDataSubStage.add(subStage);
+            beneficiaryEntity.setCollectedDataSubStage(collectedDataSubStage);
+        }
+
+        dataRepository.updateBeneficiary(beneficiaryEntity)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe((d) -> {
+
+                });
+
         dataRepository.insertPwMonitor(pwMonitorEntity)
                 .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui()).subscribe(() -> {
-            showAlertDialog("Beneficiary Created Saved Successfully", () -> {
-                requireActivity().onBackPressed();
-            });
-        });
+                .observeOn(schedulerProvider.ui())
+                .subscribe(() -> {
+                    showAlertDialog("Beneficiary Report Saved Successfully", () -> {
+                        FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                                CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                                true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .remove(PWMonitoringFragment.this)
+                                .commit();
+                    });
+                });
 
     }
+
+
 }

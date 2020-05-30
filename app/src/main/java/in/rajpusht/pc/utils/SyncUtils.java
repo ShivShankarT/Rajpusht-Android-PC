@@ -27,7 +27,7 @@ public class SyncUtils {
 
         for (BeneficiaryEntity beneficiaryEntity : appDatabase.beneficiaryDao().getAllBeneficiaries()) {
 
-            List<PregnantEntity> pregnantEntities = appDatabase.pregnantDao().pregnant(beneficiaryEntity.getBeneficiaryId());
+            List<PregnantEntity> pregnantEntities = appDatabase.pregnantDao().getPregnantById(beneficiaryEntity.getBeneficiaryId());
 
 
             for (PregnantEntity pregnantEntity : pregnantEntities) {

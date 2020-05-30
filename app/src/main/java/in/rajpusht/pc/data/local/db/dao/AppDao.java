@@ -11,7 +11,7 @@ import in.rajpusht.pc.model.BefModel;
 public abstract class AppDao {
 
     @Query(value = "\n" +
-            "select u.beneficiaryId, u.name,u.dob,u.stage,u.subStage,u.motherId,b.husbandName, b.name as motherName,p.pregnancyId, CASE WHEN motherId IS NOT NULL\n" +
+            "select u.beneficiaryId, u.name,u.dob,u.stage,u.subStage,u.motherId,b.husbandName, b.name as motherName,p.pregnancyId,b.pctsId,b.collectedDataSubStage, CASE WHEN motherId IS NOT NULL\n" +
             "       THEN case when julianday('now') - julianday(u.dob) <=91 then 'LM1'\n" +
             "\t         when julianday('now') - julianday(u.dob) <=182 then 'LM2'\n" +
             "\t\t     when julianday('now') - julianday(u.dob) <=365 then 'LM3'\n" +

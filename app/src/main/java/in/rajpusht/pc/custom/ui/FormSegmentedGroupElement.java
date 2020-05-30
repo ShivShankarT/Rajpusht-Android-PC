@@ -34,6 +34,7 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
     private HValueChangedListener<Integer> hValueChangedListener;
     private boolean required;
     private List<String> sectionData = new ArrayList<>();
+    private SegmentedGroup edf_ch_gp;
 
     public FormSegmentedGroupElement(Context context) {
         super(context);
@@ -72,7 +73,7 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
         edf_txt_inp_ly = view.findViewById(R.id.edf_txt_inp_ly);
         labelTv.setText(label);
         CharSequence[] array = a.getTextArray(R.styleable.FormField_ff_selections);
-        SegmentedGroup edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
+        edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
         edf_ch_gp.removeAllViews();
 
 
@@ -132,6 +133,23 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
 
     public int getSelectedPos() {
         return mSelectedPos;
+    }
+
+    public void setSection(int pos) {
+
+        if (pos < edf_ch_gp.getChildCount()) {
+            mSelectedPos = pos;
+            RadioButton radioButton = (RadioButton) edf_ch_gp.getChildAt(pos);
+            radioButton.setChecked(true);
+        }
+    }
+
+    public void setSectionByData(String data) {
+        int pos = sectionData.indexOf(data);
+        if (pos != -1) {
+            setSection(pos);
+        }
+
     }
 
     public String getSelectedData() {

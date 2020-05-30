@@ -10,6 +10,6 @@ import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 
 @Dao
 public abstract class PregnantDao extends BaseDao<PregnantEntity> {
-    @Query("select * from pregnant where pregnancyId=:pregnancyId")
-    public abstract List<PregnantEntity> pregnant(long pregnancyId);
+    @Query("select * from pregnant where beneficiaryId=:beneficiaryId")
+    public abstract List<PregnantEntity> getPregnantById(long beneficiaryId);
 }

@@ -14,9 +14,9 @@
         android:background="#F1F1F1">
 
         <include
-            tools:viewBindingIgnore="true"
             android:id="@+id/toolbar_ly"
-            layout="@layout/toolbar_home" />
+            layout="@layout/toolbar_home"
+            tools:viewBindingIgnore="true" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
@@ -29,6 +29,15 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             tools:listitem="@layout/fragment_beneficiart_list_item" />
 
+        <TextView
+            style="@style/FormTextMiniBlack"
+            android:id="@+id/no_data"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center"
+            android:text="No Active Beneficiary " />
+
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_fab"
             android:layout_width="wrap_content"
@@ -37,6 +46,7 @@
             android:layout_marginRight="20dp"
             android:layout_marginBottom="20dp"
             app:srcCompat="@drawable/ic_add" />
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

@@ -15,6 +15,7 @@ import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.data.remote.AppApiHelper;
 import in.rajpusht.pc.model.BefModel;
+import in.rajpusht.pc.model.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Observable;
 import io.reactivex.Single;
@@ -46,6 +47,19 @@ public class DataRepository {
         return ob.toList();
     }
 
+    public Observable<Boolean> updateBeneficiary(final BeneficiaryEntity beneficiaryEntity) {
+
+        return appDbHelper.updateBeneficiary(beneficiaryEntity);
+    }
+
+    public Observable<Boolean> updatePregnant(final PregnantEntity pregnantEntity) {
+        return appDbHelper.updatePregnant(pregnantEntity);
+    }
+
+    public Observable<Boolean> updateChild(final ChildEntity childEntity) {
+        return appDbHelper.updateChild(childEntity);
+    }
+
 
     public Completable insertPwMonitor(PWMonitorEntity pwMonitorEntity) {
         return appDbHelper.insertPwMonitor(pwMonitorEntity);
@@ -55,9 +69,17 @@ public class DataRepository {
         return appDbHelper.insertLmMonitor(lmMonitorEntity);
     }
 
-    public  List<BefModel> getBefModels(){
+    public List<BefModel> getBefModels() {
 
-        return  appDbHelper.getBefModels();
+        return appDbHelper.getBefModels();
+    }
+
+    public Single<Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity>> getBeneficiaryData(long beneficiaryId) {
+        return appDbHelper.getBeneficiaryData(beneficiaryId);
+    }
+
+    public Single<BeneficiaryEntity> getBeneficiary(long beneficiaryId) {
+        return appDbHelper.getBeneficiary(beneficiaryId);
     }
 
 

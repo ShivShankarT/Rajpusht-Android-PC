@@ -1,6 +1,7 @@
 package in.rajpusht.pc.ui.benef_list;
 
 import android.content.Context;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,14 +55,21 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
 
         holder.buttonststus.setText(befModel.getCurrentSubStage());
 
+        if (!TextUtils.isEmpty(befModel.getPctsId())) {
+            holder.pctsId.setVisibility(View.VISIBLE);
+            holder.pctsId.setText("PCTS ID:" + befModel.getPctsId());
+        } else {
+            holder.pctsId.setVisibility(View.GONE);
+        }
+
         Context context = holder.itemView.getContext();
-        if (befModel.getCurrentSubStage().equals(befModel.getSubStage())) {
+        if (befModel.getCollectedDataSubStage().contains(befModel.getCurrentSubStage())) {
             if (position == 3)
                 holder.img_synced.setImageResource(R.drawable.ic_done_all);
             holder.buttonststus.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_green));
             holder.img_delete.setVisibility(View.GONE);
         } else {
-            holder.img_delete.setVisibility(View.VISIBLE);
+            holder.img_delete.setVisibility(View.GONE);//todo
             holder.buttonststus.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
         }
 

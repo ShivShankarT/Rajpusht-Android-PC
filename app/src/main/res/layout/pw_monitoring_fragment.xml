@@ -13,9 +13,9 @@
         android:background="@color/white">
 
         <include
-            tools:viewBindingIgnore="true"
             android:id="@+id/toolbar_ly"
-            layout="@layout/toolbar_ly" />
+            layout="@layout/toolbar_ly"
+            tools:viewBindingIgnore="true" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -25,8 +25,73 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:orientation="vertical"
-                tools:context=".ui.pw_monitoring.PWMonitoringFragment">
+                android:animateLayoutChanges="true"
+                android:orientation="vertical">
+
+
+                <androidx.cardview.widget.CardView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:cardElevation="5dp">
+
+                    <RelativeLayout
+                        android:id="@+id/benf_dt_ly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center_vertical"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/benf_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="14dp"
+                            android:fontFamily="@font/roboto_medium"
+                            android:text="Sulochana Devi"
+                            android:textColor="#555555"
+                            android:textSize="14dp" />
+
+                        <TextView
+                            android:id="@+id/benf_hus_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/benf_name"
+                            android:layout_alignStart="@+id/benf_name"
+                            android:text="(w/o) Mr. XYZ"
+                            android:textSize="12dp" />
+
+
+
+
+                        <ImageView
+                            android:id="@+id/weight_iv"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="13dp"
+                            android:background="@color/white"
+                            android:src="@drawable/ic_weighing_machine"
+                            android:tint="@color/colorAccent" />
+
+
+                        <TextView
+                            android:id="@+id/pctsId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/benf_hus_name"
+                            android:layout_alignStart="@+id/benf_hus_name"
+                            android:text="PCTS ID: 12345678"
+                            android:textSize="12dp" />
+
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
 
                 <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
                     android:id="@+id/benf_anc_count"
@@ -50,9 +115,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
+                    app:ff_input_type="numberDecimal"
                     app:ff_label="3. Last recorded pregnancy weight (As in Mamta Card)"
-                    app:ff_required="true"
-                    app:ff_input_type="numberDecimal"/>
+                    app:ff_maxLength="3"
+                    app:ff_required="true" />
 
 
                 <in.rajpusht.pc.custom.ui.FormDatePickerElement
@@ -69,17 +135,18 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
+                    app:ff_input_type="numberDecimal"
                     app:ff_label="5. Current pregnancy weight "
-                    app:ff_required="true"
-                    app:ff_input_type="numberDecimal"/>
+                    app:ff_maxLength="3"
+                    app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
                     android:id="@+id/benf_registered_programme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    app:ff_chbox_none_pos="4"
                     app:ff_label="4. Are you registered in"
                     app:ff_required="true"
-                    app:ff_chbox_none_pos="4"
                     app:ff_selections="@array/benf_registered_in" />
 
 

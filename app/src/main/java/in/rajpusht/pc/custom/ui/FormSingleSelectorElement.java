@@ -28,6 +28,7 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
     private HValidatorListener<Integer> hValidatorListener;
     private HValueChangedListener hValueChangedListener;
     private boolean required;
+    RadioGroup edf_ch_gp;
 
     public FormSingleSelectorElement(Context context) {
         super(context);
@@ -64,7 +65,7 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
         edf_txt_inp_ly = view.findViewById(R.id.edf_txt_inp_ly);
         labelTv.setText(label);
         CharSequence[] s = a.getTextArray(R.styleable.FormField_ff_selections);
-        RadioGroup edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
+         edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
         edf_ch_gp.removeAllViews();
         edf_ch_gp.setOnCheckedChangeListener(this);
         for (int i = 0; i < s.length; i++) {
@@ -130,4 +131,14 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
     }
 
 
-}
+    public void setSection(int pos) {
+
+        if (pos < edf_ch_gp.getChildCount()) {
+            mSelectedPos = pos;
+            RadioButton radioButton = (RadioButton) edf_ch_gp.getChildAt(pos);
+            radioButton.setChecked(true);
+        }
+
+    }
+
+   }

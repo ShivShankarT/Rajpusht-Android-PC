@@ -111,7 +111,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
 
     protected void showAlertDialog(String message, Runnable runnable) {
-        new AlertDialog.Builder(requireContext()).setTitle("Alert").setMessage(message).setPositiveButton("OK", (dialog, which) -> {
+        new AlertDialog.Builder(requireContext()).setTitle("Alert").setMessage(message).setCancelable(false).setPositiveButton("OK", (dialog, which) -> {
             if (runnable != null)
                 runnable.run();
         }).show();

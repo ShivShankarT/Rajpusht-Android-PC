@@ -1,10 +1,12 @@
 package in.rajpusht.pc.ui.home;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
+import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
@@ -19,7 +21,9 @@ import in.rajpusht.pc.databinding.ActivityHomeBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
+import in.rajpusht.pc.ui.login.LoginActivity;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
+import in.rajpusht.pc.ui.splash.SplashScreenActivity;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.SyncUtils;
 
@@ -53,7 +57,10 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        FragmentUtils.replaceFragment(this, new BeneficiaryFragment(), R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
+        Fragment fragment = new BeneficiaryFragment();
+        //fragment= PregnancyGraphFragment.newInstance();
+        //fragment=new TestAnimationFragment();
+        FragmentUtils.replaceFragment(this, fragment, R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
 
         View.OnClickListener profileClick = new View.OnClickListener() {
             @Override
@@ -79,6 +86,9 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 FragmentUtils.replaceFragment(HomeActivity.this, new ChangePasswordFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_sync) {
                 syncData();
+            } else if (item.getItemId() == R.id.nav_Logout) {
+                SplashScreenActivity.isFirst = true;//todo
+                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             }
             getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
             return false;

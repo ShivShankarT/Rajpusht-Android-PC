@@ -10,7 +10,8 @@ import androidx.lifecycle.ViewModelProvider;
 
 import javax.inject.Inject;
 
-import in.rajpusht.pc.BR;
+import in.rajpusht.pc
+        .BR;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.databinding.LoginFragmentBinding;

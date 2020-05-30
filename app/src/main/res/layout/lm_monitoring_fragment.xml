@@ -23,6 +23,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
+                android:animateLayoutChanges="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="vertical"
@@ -42,6 +43,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
+                    app:ff_maxLength="3"
                     app:ff_label="2. Last recorded MUAC of child"
                     app:ff_input_type="numberDecimal"
                     app:ff_required="true" />
@@ -72,6 +74,7 @@
                     app:ff_hint="Weight"
                     app:ff_label="5. Birth Weight of Child (As in Manta Card)"
                     app:ff_required="true"
+                    app:ff_maxLength="5"
                     app:ff_input_type="numberDecimal"/>
 
 
@@ -82,6 +85,7 @@
                     app:ff_hint="Weight"
                     app:ff_label="6. Current Weight of child "
                     app:ff_required="true"
+                    app:ff_maxLength="5"
                     app:ff_input_type="numberDecimal"/>
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement

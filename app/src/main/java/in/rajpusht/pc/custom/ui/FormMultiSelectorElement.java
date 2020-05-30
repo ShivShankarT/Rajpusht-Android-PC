@@ -127,6 +127,18 @@ public class FormMultiSelectorElement extends FrameLayout implements CompoundBut
         return selectedId;
     }
 
+    public void setSelectedIds(Set<Integer> selectedPos) {
+
+        for (Integer pos : selectedPos) {
+
+            if (pos < edf_ch_gp.getChildCount()) {
+                CheckBox checkBox = (CheckBox) edf_ch_gp.getChildAt(pos);
+                checkBox.setChecked(true);
+                selectedId.add(pos);
+            }
+        }
+    }
+
     @Override
     public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
 
@@ -167,4 +179,6 @@ public class FormMultiSelectorElement extends FrameLayout implements CompoundBut
         View targetView = this;
         targetView.getParent().requestChildFocus(targetView, targetView);
     }
+
+
 }
