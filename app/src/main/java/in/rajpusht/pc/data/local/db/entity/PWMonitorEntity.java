@@ -27,6 +27,7 @@ public class PWMonitorEntity {
     private Integer rajshriInstallment;
     private DataStatus dataStatus;
     private String timestamp;
+    private String createdBy;
     private String createdAt;
     private String updatedAt;
 
@@ -164,5 +165,13 @@ public class PWMonitorEntity {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }

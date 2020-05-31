@@ -298,7 +298,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setBeneficiaryId(beneficiaryId);
         beneficiaryEntity.setName(vb.benfName.getText());
         beneficiaryEntity.setHusbandName(vb.benfHusName.getText());
-        beneficiaryEntity.setDOB(vb.benfAgeDob.getDate());
+        beneficiaryEntity.setDob(vb.benfAgeDob.getDate());
         beneficiaryEntity.setAge(Integer.valueOf(vb.benfAge.getText()));
         beneficiaryEntity.setChildCount(vb.benfChildCount.getSelectedPos());
         beneficiaryEntity.setMobileNo(vb.benfSelfMobile.getText());
@@ -387,7 +387,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
 
             childEntity.setChildOrder(1);
-            childEntity.setDOB(date);
+            childEntity.setDob(date);
             childEntity.setMotherId(beneficiaryId);
             childEntity.setDeliveryHome(vb.benfChildDeliveryPlaceType.getSelectedPos());
             childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getText());
@@ -521,7 +521,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             vh.benfRegStage.setSection(0);
 
         if (childEntity != null) {
-            vh.benfChildDob.setDate(childEntity.getDOB());
+            vh.benfChildDob.setDate(childEntity.getDob());
             vh.benfChildDeliveryPlace.setText(childEntity.getDeliveryPlace());
             vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
         }
@@ -558,8 +558,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         vh.benfName.setText(beneficiaryEntity.getName());
         vh.benfHusName.setText(beneficiaryEntity.getHusbandName());
 
-        if (beneficiaryEntity.getDOB() != null) {
-            vh.benfAgeDob.setDate(beneficiaryEntity.getDOB());
+        if (beneficiaryEntity.getDob() != null) {
+            vh.benfAgeDob.setDate(beneficiaryEntity.getDob());
             vh.benfAgeType.setSection(0);
         } else {
             vh.benfAge.setText(String.valueOf(beneficiaryEntity.getAge()));

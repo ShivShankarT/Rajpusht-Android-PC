@@ -20,7 +20,7 @@ public class ChildEntity {
     private String stage;
     private String subStage;
     private int childOrder;
-    private Date DOB;
+    private Date dob;
     private long motherId;
     private String deliveryPlace;
     private int deliveryHome;
@@ -65,12 +65,12 @@ public class ChildEntity {
         this.childOrder = childOrder;
     }
 
-    public Date getDOB() {
-        return DOB;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setDOB(Date dob) {
-        this.DOB = dob;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public long getMotherId() {

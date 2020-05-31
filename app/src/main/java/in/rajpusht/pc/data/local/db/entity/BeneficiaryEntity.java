@@ -22,7 +22,7 @@ public class BeneficiaryEntity {
     private String husbandMobNo;
     private String stage;
     private String subStage;
-    private Date DOB;
+    private Date dob;
     private int childCount;
     private Integer age;
     private String caste;
@@ -37,6 +37,8 @@ public class BeneficiaryEntity {
     private Integer rajshriInstallment;
     private List<String> collectedDataSubStage;
     private DataStatus dataStatus;
+    private String awcCode;
+    private String createdBy;
     private String createdAt;
     private String updatedAt;
 
@@ -98,12 +100,12 @@ public class BeneficiaryEntity {
         this.subStage = subStage;
     }
 
-    public Date getDOB() {
-        return DOB;
+    public Date getDob() {
+        return dob;
     }
 
-    public void setDOB(Date dob) {
-        this.DOB = dob;
+    public void setDob(Date dob) {
+        this.dob = dob;
     }
 
     public Integer getAge() {
@@ -240,5 +242,21 @@ public class BeneficiaryEntity {
 
     public void setCollectedDataSubStage(List<String> collectedDataSubStage) {
         this.collectedDataSubStage = collectedDataSubStage;
+    }
+
+    public String getAwcCode() {
+        return awcCode;
+    }
+
+    public void setAwcCode(String awcCode) {
+        this.awcCode = awcCode;
+    }
+
+    public String getCreatedBy() {
+        return createdBy;
+    }
+
+    public void setCreatedBy(String createdBy) {
+        this.createdBy = createdBy;
     }
 }

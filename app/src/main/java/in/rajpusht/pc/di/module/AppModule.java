@@ -37,7 +37,7 @@ public class AppModule {
     @Provides
     @DatabaseInfo
     String dbName() {
-        return "pc1.db";
+        return "pc-test.db";
     }
 
 
