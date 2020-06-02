@@ -135,13 +135,17 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
         return mSelectedPos;
     }
 
-    public void setSection(int pos) {
+    public void setSection(Integer pos) {
 
+        if (pos == null)
+            return;
+        edf_ch_gp.setOnCheckedChangeListener(null);
         if (pos < edf_ch_gp.getChildCount()) {
             mSelectedPos = pos;
             RadioButton radioButton = (RadioButton) edf_ch_gp.getChildAt(pos);
             radioButton.setChecked(true);
         }
+        edf_ch_gp.setOnCheckedChangeListener(this);
     }
 
     public void setSectionByData(String data) {

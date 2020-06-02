@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -26,10 +27,10 @@ import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
-import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.functions.Consumer;
 
 public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBinding, LMMonitoringViewModel> {
 
@@ -42,12 +43,15 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     private long childId;
     private LMMonitoringViewModel mViewModel;
     private String subStage;
+    private Long lmFormId;
+    private LMMonitorEntity mLmMonitorEntity;
 
-    public static LMMonitoringFragment newInstance(long childId, String subStage) {
+    public static LMMonitoringFragment newInstance(long childId, String subStage, Long lmFormId) {
         LMMonitoringFragment lmMonitoringFragment = new LMMonitoringFragment();
         Bundle args = new Bundle();
         args.putLong("id", childId);
         args.putString("subStage", subStage);
+        args.putSerializable("lmFormId", lmFormId);
         lmMonitoringFragment.setArguments(args);
         return lmMonitoringFragment;
     }
@@ -73,6 +77,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         super.onCreate(savedInstanceState);
         childId = getArguments().getLong("id");
         subStage = getArguments().getString("subStage");
+        lmFormId = (Long) getArguments().getSerializable("lmFormId");
     }
 
     @Override
@@ -141,8 +146,62 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
             }
         });
+        if (lmFormId != null)
+            fetchFormUiData();
 
 
+    }
+
+    private void fetchFormUiData() {
+
+        dataRepository.lmMonitorById(lmFormId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui()).subscribe(new Consumer<LMMonitorEntity>() {
+            @Override
+            public void accept(LMMonitorEntity lmMonitorEntity) throws Exception {
+
+                if (lmMonitorEntity != null) {
+                    LMMonitoringFragment.this.mLmMonitorEntity = lmMonitorEntity;
+                    setFormUiData(lmMonitorEntity);
+                }
+            }
+        });
+    }
+
+    private void setFormUiData(LMMonitorEntity lmMonitorEntity) {
+
+        LmMonitoringFragmentBinding vb = getViewDataBinding();
+        vb.benfChildImmune.setSectionByData(lmMonitorEntity.getIsFirstImmunizationComplete());
+        vb.benfChildLastRecMuac.setText(String.valueOf(lmMonitorEntity.getLastMuac()));
+        vb.benfChildLastRecMuacDate.setDate(lmMonitorEntity.getLastMuacCheckDate());
+        vb.benfChildCurrentMuac.setText(String.valueOf(lmMonitorEntity.getCurrentMuac()));
+        vb.benfBirthChildWeight.setText(String.valueOf(lmMonitorEntity.getBirthWeight()));
+        vb.benfCurrentWeight.setText(String.valueOf(lmMonitorEntity.getChildWeight()));
+
+        Set<Integer> regScheme = new HashSet<>();
+
+        if (lmMonitorEntity.getPmmvyInstallment() != null) {
+            vb.benfPmmvvyCount.setSection(lmMonitorEntity.getPmmvyInstallment());
+            regScheme.add(0);
+        }
+        if (lmMonitorEntity.getIgmpyInstallment() != null) {
+            vb.benfIgmpyCount.setSection(lmMonitorEntity.getIgmpyInstallment());
+            regScheme.add(1);
+        }
+        if (lmMonitorEntity.getJsyInstallment() != null) {
+            vb.benfJsyCount.setSection(lmMonitorEntity.getJsyInstallment());
+            regScheme.add(2);
+        }
+        if (lmMonitorEntity.getRajshriInstallment() != null) {
+            vb.benfRajshriCount.setSection(lmMonitorEntity.getRajshriInstallment());
+            regScheme.add(3);
+        }
+
+        if (regScheme.isEmpty()) {
+            regScheme.add(4);
+        }
+
+        vb.benfRegisteredProgramme.setSelectedIds(regScheme);
     }
 
     private void save() {
@@ -178,7 +237,12 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             }
         }
 
-        LMMonitorEntity lmMonitorEntity = new LMMonitorEntity();
+        LMMonitorEntity lmMonitorEntity;
+        if (mLmMonitorEntity == null)
+            lmMonitorEntity = new LMMonitorEntity();
+        else
+            lmMonitorEntity = mLmMonitorEntity;
+
         lmMonitorEntity.setChildId(childId);
         lmMonitorEntity.setStage("LM");
         lmMonitorEntity.setSubStage(subStage);
@@ -209,7 +273,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         lmMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
         lmMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
-        dataRepository.insertLmMonitor(lmMonitorEntity)
+
+        dataRepository.insertOrUpdateLmMonitor(lmMonitorEntity)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
             showAlertDialog("Beneficiary Child Report Saved Successfully", () -> {

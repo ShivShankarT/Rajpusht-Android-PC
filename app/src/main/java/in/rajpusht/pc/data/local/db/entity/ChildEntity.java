@@ -24,7 +24,6 @@ public class ChildEntity {
     private long motherId;
     private String deliveryPlace;
     private int deliveryHome;
-    private List<String> collectedDataSubStage;
     private String createdAt;
     private String updatedAt;
     private DataStatus dataStatus;
@@ -137,11 +136,4 @@ public class ChildEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<String> getCollectedDataSubStage() {
-        return collectedDataSubStage;
-    }
-
-    public void setCollectedDataSubStage(List<String> collectedDataSubStage) {
-        this.collectedDataSubStage = collectedDataSubStage;
-    }
 }

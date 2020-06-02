@@ -63,7 +63,7 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
         }
 
         Context context = holder.itemView.getContext();
-        if (befModel.getCollectedDataSubStage().contains(befModel.getCurrentSubStage())) {
+        if (befModel.getPwFormId() != null || befModel.getLmFormId() != null) {
             if (position == 3)
                 holder.img_synced.setImageResource(R.drawable.ic_done_all);
             holder.buttonststus.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_green));

@@ -35,7 +35,6 @@ public class BeneficiaryEntity {
     private Integer igmpyInstallment;
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
-    private List<String> collectedDataSubStage;
     private DataStatus dataStatus;
     private String awcCode;
     private String createdBy;
@@ -236,13 +235,6 @@ public class BeneficiaryEntity {
         this.updatedAt = updatedAt;
     }
 
-    public List<String> getCollectedDataSubStage() {
-        return collectedDataSubStage;
-    }
-
-    public void setCollectedDataSubStage(List<String> collectedDataSubStage) {
-        this.collectedDataSubStage = collectedDataSubStage;
-    }
 
     public String getAwcCode() {
         return awcCode;

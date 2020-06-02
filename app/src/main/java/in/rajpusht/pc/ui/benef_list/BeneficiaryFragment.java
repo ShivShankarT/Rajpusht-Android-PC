@@ -6,7 +6,6 @@ import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -28,7 +27,6 @@ import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringFragment;
-import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.BottomDialogFragment;
@@ -87,7 +85,7 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
                 showColorInfo();
                 else  if (item.getItemId()==2){
                     Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> tuple = HUtil.staticData();
-                    dataRepository.insertBeneficiaryData(tuple.getT1(),tuple.getT3(),tuple.getT2())
+                    dataRepository.insertOrUpdateBeneficiaryData(tuple.getT1(),tuple.getT3(),tuple.getT2())
                     .subscribeOn(schedulerProvider.io())
                             .observeOn(schedulerProvider.ui())
                             .subscribe(aBoolean -> {
@@ -119,7 +117,7 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         getViewDataBinding().addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new RegistrationFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+                FragmentUtils.replaceFragment(requireActivity(), new RegistrationFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
 
             }
         });
@@ -133,10 +131,10 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
     @Override
     public void onListFragmentInteraction(BefModel item) {
         if (item.getStage().equals("PW")) {
-            FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage(),item.getPwFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
 
         } else {
-            FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), LMMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getCurrentSubStage()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), LMMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getCurrentSubStage(),item.getLmFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
 
         }
 

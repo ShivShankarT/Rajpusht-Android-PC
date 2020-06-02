@@ -14,6 +14,7 @@ import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.Tuple;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Action;
@@ -29,9 +30,12 @@ public class AppDbHelper {
     }
 
 
-    public Observable<Boolean> insertBeneficiary(final BeneficiaryEntity beneficiaryEntity) {
+    public Observable<Boolean> insertOrUpdateBeneficiary(final BeneficiaryEntity beneficiaryEntity) {
         return Observable.fromCallable(() -> {
-            mAppDatabase.beneficiaryDao().insert(beneficiaryEntity);
+            if (beneficiaryEntity.getId() == 0)
+                mAppDatabase.beneficiaryDao().insert(beneficiaryEntity);
+            else
+                mAppDatabase.beneficiaryDao().update(beneficiaryEntity);
             return true;
         });
     }
@@ -43,9 +47,12 @@ public class AppDbHelper {
         });
     }
 
-    public Observable<Boolean> insertPregnant(final PregnantEntity pregnantEntity) {
+    public Observable<Boolean> insertOrUpdatePregnant(final PregnantEntity pregnantEntity) {
         return Observable.fromCallable(() -> {
-            mAppDatabase.pregnantDao().insert(pregnantEntity);
+            if (pregnantEntity.getId() == 0)
+                mAppDatabase.pregnantDao().insert(pregnantEntity);
+            else
+                mAppDatabase.pregnantDao().update(pregnantEntity);
             return true;
         });
     }
@@ -57,9 +64,12 @@ public class AppDbHelper {
         });
     }
 
-    public Observable<Boolean> insertChild(final ChildEntity childEntity) {
+    public Observable<Boolean> insertOrUpdateChild(final ChildEntity childEntity) {
         return Observable.fromCallable(() -> {
-            mAppDatabase.childDao().insert(childEntity);
+            if (childEntity.getId() == 0)
+                mAppDatabase.childDao().insert(childEntity);
+            else
+                mAppDatabase.childDao().update(childEntity);
             return true;
         });
     }
@@ -71,23 +81,44 @@ public class AppDbHelper {
         });
     }
 
+    //-------------------pwMonitor-----------------------
 
-    public Completable insertPwMonitor(PWMonitorEntity pwMonitorEntity) {
+    public Maybe<PWMonitorEntity> pwMonitorByID(long id) {
+        return mAppDatabase.pwMonitorDao().pwMonitorByID(id);
+    }
+
+
+    public Completable insertOrUpdatePwMonitor(PWMonitorEntity pwMonitorEntity) {
 
         return Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
-                mAppDatabase.pwMonitorDao().insert(pwMonitorEntity);
+                if (pwMonitorEntity.getId() == 0)
+                    mAppDatabase.pwMonitorDao().insert(pwMonitorEntity);
+                else
+                    mAppDatabase.pwMonitorDao().update(pwMonitorEntity);
             }
         });
     }
 
-    public Completable insertLmMonitor(LMMonitorEntity lmMonitorEntity) {
+
+    //-------------------LmMonitor-----------------------
+
+    public Maybe<LMMonitorEntity> lmMonitorById(long id) {
+
+        return mAppDatabase.lmMonitorDao().lmMonitorById(id);
+    }
+
+    // update based on primary key
+    public Completable insertOrUpdateLmMonitor(LMMonitorEntity lmMonitorEntity) {
 
         return Completable.fromAction(new Action() {
             @Override
             public void run() throws Exception {
-                mAppDatabase.lmMonitorDao().insert(lmMonitorEntity);
+                if (lmMonitorEntity.getId() == 0)
+                    mAppDatabase.lmMonitorDao().insert(lmMonitorEntity);
+                else
+                    mAppDatabase.lmMonitorDao().update(lmMonitorEntity);
             }
         });
     }

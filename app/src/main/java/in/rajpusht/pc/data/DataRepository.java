@@ -21,6 +21,7 @@ import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.Tuple;
 import io.reactivex.Completable;
+import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 
@@ -37,16 +38,16 @@ public class DataRepository {
         this.appApiHelper = appApiHelper;
     }
 
-    public Single<List<Boolean>> insertBeneficiaryData(BeneficiaryEntity beneficiaryEntity, @Nullable ChildEntity childEntity, @Nullable PregnantEntity pregnantEntity) {
+    public Single<List<Boolean>> insertOrUpdateBeneficiaryData(BeneficiaryEntity beneficiaryEntity, @Nullable ChildEntity childEntity, @Nullable PregnantEntity pregnantEntity) {
 
         Observable<Boolean> ob = null;
         if (childEntity != null && pregnantEntity != null)
-            ob = Observable.merge(appDbHelper.insertBeneficiary(beneficiaryEntity), appDbHelper.insertPregnant(pregnantEntity), appDbHelper.insertChild(childEntity));
+            ob = Observable.merge(appDbHelper.insertOrUpdateBeneficiary(beneficiaryEntity), appDbHelper.insertOrUpdatePregnant(pregnantEntity), appDbHelper.insertOrUpdateChild(childEntity));
         else if (pregnantEntity != null)
-            ob = Observable.merge(appDbHelper.insertBeneficiary(beneficiaryEntity), appDbHelper.insertPregnant(pregnantEntity));
+            ob = Observable.merge(appDbHelper.insertOrUpdateBeneficiary(beneficiaryEntity), appDbHelper.insertOrUpdatePregnant(pregnantEntity));
 
         else if (childEntity != null)
-            ob = Observable.merge(appDbHelper.insertBeneficiary(beneficiaryEntity), appDbHelper.insertChild(childEntity));
+            ob = Observable.merge(appDbHelper.insertOrUpdateBeneficiary(beneficiaryEntity), appDbHelper.insertOrUpdateChild(childEntity));
 
         return ob.toList();
     }
@@ -65,12 +66,23 @@ public class DataRepository {
     }
 
 
-    public Completable insertPwMonitor(PWMonitorEntity pwMonitorEntity) {
-        return appDbHelper.insertPwMonitor(pwMonitorEntity);
+    public Maybe<PWMonitorEntity> pwMonitorByID(long id) {
+
+        return appDbHelper.pwMonitorByID(id);
     }
 
-    public Completable insertLmMonitor(LMMonitorEntity lmMonitorEntity) {
-        return appDbHelper.insertLmMonitor(lmMonitorEntity);
+    public Completable insertOrUpdatePwMonitor(PWMonitorEntity pwMonitorEntity) {
+
+        return appDbHelper.insertOrUpdatePwMonitor(pwMonitorEntity);
+    }
+
+    public Maybe<LMMonitorEntity> lmMonitorById(long id) {
+
+        return appDbHelper.lmMonitorById(id);
+    }
+
+    public Completable insertOrUpdateLmMonitor(LMMonitorEntity lmMonitorEntity) {
+        return appDbHelper.insertOrUpdateLmMonitor(lmMonitorEntity);
     }
 
     public List<BefModel> getBefModels() {

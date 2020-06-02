@@ -132,12 +132,13 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
 
 
     public void setSection(int pos) {
-
+        edf_ch_gp.setOnCheckedChangeListener(null);
         if (pos < edf_ch_gp.getChildCount()) {
             mSelectedPos = pos;
             RadioButton radioButton = (RadioButton) edf_ch_gp.getChildAt(pos);
             radioButton.setChecked(true);
         }
+        edf_ch_gp.setOnCheckedChangeListener(this);
 
     }
 

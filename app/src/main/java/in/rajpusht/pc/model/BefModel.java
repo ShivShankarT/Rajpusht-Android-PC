@@ -16,7 +16,8 @@ public class BefModel {
     private String pctsId;
     private Date lmpDate;
     private String currentSubStage;
-    private List<String> collectedDataSubStage;
+    private Long lmFormId;
+    private Long pwFormId;
 
     public Long getBeneficiaryId() {
         return beneficiaryId;
@@ -115,11 +116,20 @@ public class BefModel {
         this.pctsId = pctsId;
     }
 
-    public List<String> getCollectedDataSubStage() {
-        return collectedDataSubStage;
+
+    public Long getLmFormId() {
+        return lmFormId;
     }
 
-    public void setCollectedDataSubStage(List<String> collectedDataSubStage) {
-        this.collectedDataSubStage = collectedDataSubStage;
+    public void setLmFormId(Long lmFormId) {
+        this.lmFormId = lmFormId;
+    }
+
+    public Long getPwFormId() {
+        return pwFormId;
+    }
+
+    public void setPwFormId(Long pwFormId) {
+        this.pwFormId = pwFormId;
     }
 }

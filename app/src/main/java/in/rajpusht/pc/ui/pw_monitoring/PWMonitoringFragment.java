@@ -13,6 +13,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -27,11 +28,11 @@ import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
-import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.functions.Consumer;
 
 public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBinding, PWMonitoringViewModel> {
 
@@ -46,13 +47,16 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     private long pregnancyId;
     private String subStage;
     private long beneficiaryId;
+    private Long pwFormId;
+    private PWMonitorEntity mPwMonitorEntity;
 
-    public static PWMonitoringFragment newInstance(long beneficiaryId, long pregnancyId, String subStage) {
+    public static PWMonitoringFragment newInstance(long beneficiaryId, long pregnancyId, String subStage, Long pwFormId) {
         PWMonitoringFragment pwMonitoringFragment = new PWMonitoringFragment();
         Bundle args = new Bundle();
         args.putLong("id", pregnancyId);
         args.putLong("beneficiaryId", beneficiaryId);
         args.putString("subStage", subStage);
+        args.putSerializable("pwFormId", pwFormId);
         pwMonitoringFragment.setArguments(args);
         return pwMonitoringFragment;
     }
@@ -80,6 +84,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         pregnancyId = getArguments().getLong("id");
         beneficiaryId = getArguments().getLong("beneficiaryId");
         subStage = getArguments().getString("subStage");
+        pwFormId = (Long) getArguments().getSerializable("pwFormId");
     }
 
     @Override
@@ -170,15 +175,67 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             beneficiaryEntity = d;
             setupUiData();
         });
-
+        if (pwFormId != null)
+            fetchFormUiData();
     }
 
     private void setupUiData() {
         getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
-        getViewDataBinding().benfHusName.setText("w/o:"+beneficiaryEntity.getHusbandName());
+        getViewDataBinding().benfHusName.setText("w/o:" + beneficiaryEntity.getHusbandName());
         getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
-        getViewDataBinding().pctsId.setText("PCTS ID: "+beneficiaryEntity.getPctsId());
+        getViewDataBinding().pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
     }
+
+    private void fetchFormUiData() {
+
+        dataRepository.pwMonitorByID(pwFormId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui()).subscribe(new Consumer<PWMonitorEntity>() {
+            @Override
+            public void accept(PWMonitorEntity pwMonitorEntity) throws Exception {
+
+                if (pwMonitorEntity != null) {
+                    PWMonitoringFragment.this.mPwMonitorEntity = pwMonitorEntity;
+                    setFormUiData(pwMonitorEntity);
+                }
+            }
+        });
+    }
+
+    private  void setFormUiData(PWMonitorEntity pwMonitorEntity) {
+        PwMonitoringFragmentBinding vb = getViewDataBinding();
+        vb.benfAncCount.setSection(pwMonitorEntity.getAncCount());
+        vb.benfAncDate.setDate(pwMonitorEntity.getLastAnc());
+        vb.benfMamtaCdWeight.setText(String.valueOf(pwMonitorEntity.getLastWeightInMamta()));
+        vb.benfLastcheckupdate.setDate(pwMonitorEntity.getLastWeightCheckDate());
+        vb.benfCurrentWeight.setText(String.valueOf(pwMonitorEntity.getCurrentWeight()));
+
+        Set<Integer> regScheme = new HashSet<>();
+
+        if (pwMonitorEntity.getPmmvyInstallment() != null) {
+            vb.benfPmmvvyCount.setSection(pwMonitorEntity.getPmmvyInstallment());
+            regScheme.add(0);
+        }
+        if (pwMonitorEntity.getIgmpyInstallment() != null) {
+            vb.benfIgmpyCount.setSection(pwMonitorEntity.getIgmpyInstallment());
+            regScheme.add(1);
+        }
+        if (pwMonitorEntity.getJsyInstallment() != null) {
+            vb.benfJsyCount.setSection(pwMonitorEntity.getJsyInstallment());
+            regScheme.add(2);
+        }
+        if (pwMonitorEntity.getRajshriInstallment() != null) {
+            vb.benfRajshriCount.setSection(pwMonitorEntity.getRajshriInstallment());
+            regScheme.add(3);
+        }
+
+        if (regScheme.isEmpty()) {
+            regScheme.add(4);
+        }
+
+        vb.benfRegisteredProgramme.setSelectedIds(regScheme);
+    }
+
 
     private void save() {
         List<Pair<Boolean, View>> validateElement = new ArrayList<>();
@@ -212,7 +269,12 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             }
         }
 
-        PWMonitorEntity pwMonitorEntity = new PWMonitorEntity();
+        PWMonitorEntity pwMonitorEntity ;
+        if (mPwMonitorEntity==null)
+            pwMonitorEntity=new PWMonitorEntity();
+        else
+            pwMonitorEntity=mPwMonitorEntity;
+
         pwMonitorEntity.setStage("PW");
         pwMonitorEntity.setSubStage(subStage);
         pwMonitorEntity.setPregnancyId(pregnancyId);
@@ -244,12 +306,6 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         pwMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
         pwMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
-        List<String> collectedDataSubStage = new ArrayList<>(beneficiaryEntity.getCollectedDataSubStage());
-
-        if (!collectedDataSubStage.contains(subStage)) {
-            collectedDataSubStage.add(subStage);
-            beneficiaryEntity.setCollectedDataSubStage(collectedDataSubStage);
-        }
 
         dataRepository.updateBeneficiary(beneficiaryEntity)
                 .subscribeOn(schedulerProvider.io())
@@ -258,7 +314,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
                 });
 
-        dataRepository.insertPwMonitor(pwMonitorEntity)
+        dataRepository.insertOrUpdatePwMonitor(pwMonitorEntity)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
