@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.animation;
 
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -7,17 +8,21 @@ import android.os.Handler;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.MediaController;
 import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.transition.TransitionManager;
 
-import com.squareup.picasso.Picasso;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.target.Target;
+import com.bumptech.glide.request.transition.Transition;
 
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.databinding.FragmentTestAnimationBinding;
@@ -30,6 +35,8 @@ import in.rajpusht.pc.utils.FragmentUtils;
 public class CounsellingAnimationFragment extends Fragment {
 
 
+    private static int finalHeight = Target.SIZE_ORIGINAL;
+    private static int finalWidth = Target.SIZE_ORIGINAL;
     private Handler handler = new Handler();
     private CounsellingMedia counsellingMedia;
     private int mediaPos = 0;
@@ -39,7 +46,19 @@ public class CounsellingAnimationFragment extends Fragment {
         @Override
         public void run() {
             if (mediaPos < counsellingMedia.getMediaImage().size()) {
-                Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
+                // Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
+                Glide.with(getContext()).asBitmap()
+                        .load(counsellingMedia.getMediaImage().get(mediaPos))
+                        .diskCacheStrategy(DiskCacheStrategy.NONE)
+                        .skipMemoryCache(true)
+                        .dontAnimate()
+                        .into(new SimpleTarget<Bitmap>(finalWidth, finalHeight) {
+
+                            @Override
+                            public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
+                                vb.imageview.setImageBitmap(resource);
+                            }
+                        });
                 mediaPos++;
                 handler.postDelayed(runnable, 2000);
             } else {
@@ -48,6 +67,7 @@ public class CounsellingAnimationFragment extends Fragment {
             }
         }
     };
+    private int videoCurrentPos = 0;
 
 
     public CounsellingAnimationFragment() {
@@ -85,7 +105,20 @@ public class CounsellingAnimationFragment extends Fragment {
 
         vb.toolbarLy.toolbar.setTitle("PW Women Counselling");
         vb.nxtBtn.setVisibility(View.INVISIBLE);
+        ViewTreeObserver vto = vb.imageview.getViewTreeObserver();
+        vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
+            public boolean onPreDraw() {
+
+                vb.imageview.getViewTreeObserver().removeOnPreDrawListener(this);
+                finalHeight = vb.imageview.getMeasuredHeight();
+                finalWidth = vb.imageview.getMeasuredWidth();
+                return true;
+            }
+        });
         if (counsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
+
+            vb.nxtBtn.setVisibility(View.GONE);
+            //vb.toolbarLy.appBarLy.setVisibility(View.GONE);
             VideoView videoView = vb.videoView;
             videoView.setVisibility(View.VISIBLE);
             vb.imageview.setVisibility(View.GONE);
@@ -93,11 +126,13 @@ public class CounsellingAnimationFragment extends Fragment {
             MediaController mediaController = new MediaController(requireContext());
             mediaController.setAnchorView(videoView);
             //specify the location of media file
-            Uri uri = Uri.parse("android.resource://" + requireContext().getPackageName() + "/" +counsellingMedia.getMediaImage().get(0));
+            Uri uri = Uri.parse("android.resource://" + requireContext().getPackageName() + "/" + counsellingMedia.getMediaImage().get(0));
             //Setting MediaController and URI, then starting the videoView
             videoView.setMediaController(mediaController);
             videoView.setVideoURI(uri);
             videoView.requestFocus();
+            if (videoCurrentPos > 0)
+                videoView.seekTo(videoCurrentPos);
             videoView.start();
             videoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                 @Override
@@ -107,7 +142,8 @@ public class CounsellingAnimationFragment extends Fragment {
                 }
             });
 
-        }else {
+
+        } else {
             handler.postDelayed(runnable, 10);
         }
 
@@ -145,6 +181,24 @@ public class CounsellingAnimationFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        if (counsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
+            videoCurrentPos = vb.videoView.getCurrentPosition();
+        }
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (counsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
+            if (videoCurrentPos > 0) {
+                vb.videoView.seekTo(videoCurrentPos);
+            }
+        }
     }
 
     protected void showAlertDialog(String message, Runnable runnable) {//todo add basefragment impl

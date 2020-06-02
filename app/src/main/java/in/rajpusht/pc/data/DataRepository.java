@@ -2,6 +2,9 @@ package in.rajpusht.pc.data;
 
 import androidx.annotation.Nullable;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
+
 import java.util.List;
 
 import javax.inject.Inject;
@@ -14,6 +17,7 @@ import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.data.remote.AppApiHelper;
+import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.Tuple;
 import io.reactivex.Completable;
@@ -82,5 +86,18 @@ public class DataRepository {
         return appDbHelper.getBeneficiary(beneficiaryId);
     }
 
+
+    public Single<ApiResponse<JsonObject>> login(String email, String password) {
+        return appApiHelper.login(email, password).doOnSuccess(jsonObjectApiResponse -> {
+            if (jsonObjectApiResponse != null && jsonObjectApiResponse.isStatus()) {
+                JsonObject data = jsonObjectApiResponse.getData();
+                String token = data.get("token").getAsString();
+                JsonElement otpjsonElement = data.get("otp");
+                String otp = otpjsonElement != null && !otpjsonElement.isJsonNull() ? otpjsonElement.getAsString() : null;
+                appPreferencesHelper.setAccessToken(token);
+                appPreferencesHelper.putString("otp", otp);
+            }
+        });
+    }
 
 }

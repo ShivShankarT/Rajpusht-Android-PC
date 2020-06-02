@@ -1,9 +1,11 @@
 package in.rajpusht.pc.ui.home;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.View;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
@@ -60,7 +62,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         Fragment fragment = new BeneficiaryFragment();
         //fragment= PregnancyGraphFragment.newInstance();
         //fragment=new TestAnimationFragment();
-        FragmentUtils.replaceFragment(this, fragment, R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
+        if (savedInstanceState == null)
+            FragmentUtils.replaceFragment(this, fragment, R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
 
         View.OnClickListener profileClick = new View.OnClickListener() {
             @Override
@@ -103,5 +106,10 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
 
     public void openDrawer() {
         getViewDataBinding().drawerLayout.openDrawer(GravityCompat.START);
+    }
+
+    @Override
+    public void onConfigurationChanged(@NonNull Configuration newConfig) {
+        super.onConfigurationChanged(newConfig);
     }
 }

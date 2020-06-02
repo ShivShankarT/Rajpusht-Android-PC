@@ -224,9 +224,12 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.benfAgeType.sethValueChangedListener(new HValueChangedListener<Integer>() {
             @Override
             public void onValueChanged(Integer value) {
+                viewDataBinding.benfAgeDob.setDate(null);
+                viewDataBinding.benfAge.setText(null);
                 if (value == 0) {
                     viewDataBinding.benfAgeDob.setEnableChild(true);
                     viewDataBinding.benfAge.setEnableChild(false);
+                    viewDataBinding.benfAgeDob.setDate(null);
                 } else {
                     viewDataBinding.benfAgeDob.setEnableChild(false);
                     viewDataBinding.benfAge.setEnableChild(true);
@@ -271,6 +274,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                hideKeyboard();
                 validate();
             }
         });
@@ -452,7 +456,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
 
         validateElement.add(vb.benfAgeType.validateWthView());
-        if (vb.benfAgeDob.isVisible())
+        if (vb.benfAgeDob.isVisibleAndEnable())
             validateElement.add(vb.benfAgeDob.validateWthView());
 
         if (vb.benfAge.isVisible())

@@ -27,9 +27,61 @@ public class AppApiHelper {
         return apiService.verifyOtp(otp);
     }
 
-    public Single<ApiResponse<JsonObject>> assignedLocation() {
-        return apiService.assignedLocation();
+
+    Single<ApiResponse<JsonObject>> changePassword(String oldPassword,
+                                                   String newPassword) {
+        return apiService.changePassword(oldPassword, newPassword);
     }
+
+    ;
+
+
+    Single<ApiResponse<JsonObject>> forgotPassword(String oldPassword) {
+        return apiService.forgotPassword(oldPassword);
+    }
+
+    ;
+
+
+    Single<ApiResponse<JsonObject>> setPassword(String resetOtp, String newPassword) {
+        return apiService.setPassword(resetOtp, newPassword);
+    }
+
+    ;
+
+
+    Single<ApiResponse<JsonObject>> resendOtp() {
+        return apiService.resendOtp();
+    }
+
+    ;
+
+
+    Single<ApiResponse<JsonObject>> profileDetail() {
+        return apiService.profileDetail();
+    }
+
+    ;
+
+
+    Single<ApiResponse<JsonObject>> logout() {
+        return apiService.logout();
+    }
+
+    ;
+
+
+    Single<ApiResponse<JsonObject>> bulkDownload() {
+        return apiService.bulkDownload();
+    }
+
+    ;
+
+    Single<ApiResponse<JsonObject>> bulkUpload(JsonObject jsonObject) {
+        return apiService.bulkUpload(jsonObject);
+    }
+
+    ;
 
 
 }

@@ -152,6 +152,7 @@ public class FormEditFieldElement extends FrameLayout {
 
     public void setText(String text) {
         edf_text.setText(text);
+        edf_txt_inp_ly.setError(null);
     }
 
     public void requestFocusAndScroll() {

@@ -88,5 +88,13 @@ public class AppPreferencesHelper {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_NAME, userName).apply();
     }
 
+    public void putString(String key, String value) {
+        mPrefs.edit().putString(key, value).apply();
+    }
+
+    public String getString(String key) {
+        return mPrefs.getString(key, null);
+    }
+
 
 }

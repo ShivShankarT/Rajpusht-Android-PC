@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.login;
 
 
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -10,8 +11,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import javax.inject.Inject;
 
-import in.rajpusht.pc
-        .BR;
+import in.rajpusht.pc.BR;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.databinding.LoginFragmentBinding;
@@ -51,8 +51,12 @@ public class LoginFragment extends BaseFragment<LoginFragmentBinding, LoginViewM
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mLoginViewModel._navigateToHome.observe(getViewLifecycleOwner(), evt -> {
-            if (evt.getContentIfNotHandled() != null)
-                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new OtpFragment(), R.id.container, true, FragmentUtils.TRANSITION_NONE);
+            Pair<Boolean, String> login = evt.getContentIfNotHandled();
+            if (login != null)
+                if (login.first)
+                    FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new OtpFragment(), R.id.container, true, FragmentUtils.TRANSITION_NONE);
+                else
+                    getViewDataBinding().passwordFra.setError(login.second);
         });
     }
 }

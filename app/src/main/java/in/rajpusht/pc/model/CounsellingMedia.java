@@ -57,8 +57,53 @@ public class CounsellingMedia implements Parcelable {
 
 
     public static List<CounsellingMedia> counsellingMediaData() {
+
         List<CounsellingMedia> counsellingMedia = new ArrayList<>();
 
+        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/0.1.webp")));
+        counsellingMedia.add(new CounsellingMedia(2, Collections.singletonList("file:///android_asset/counseling/wg/5.webp")));
+        counsellingMedia.add(new CounsellingMedia(3, CounsellingMedia.GRAPH_MEDIA));
+        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/2.webp")));
+        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/1.webp")));
+        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/3.webp")));
+        counsellingMedia.add(new CounsellingMedia(13, Collections.singletonList(R.raw.film + ""), VIDEO_MEDIA));
+        counsellingMedia.add(new CounsellingMedia(6, Collections.singletonList("file:///android_asset/counseling/wg/6.webp")));
+        counsellingMedia.add(new CounsellingMedia(7, Collections.singletonList("file:///android_asset/counseling/wg/7.webp")));
+        counsellingMedia.add(new CounsellingMedia(8,
+                Arrays.asList(
+                        "file:///android_asset/counseling/an/1.webp",
+                        "file:///android_asset/counseling/an/2.webp",
+                        "file:///android_asset/counseling/an/3.webp",
+                        "file:///android_asset/counseling/an/4.webp",
+                        "file:///android_asset/counseling/an/5.webp",
+                        "file:///android_asset/counseling/an/6.webp"
+                )));
+
+        counsellingMedia.add(new CounsellingMedia(9, Collections.singletonList("file:///android_asset/counseling/wg/8.webp")));
+        counsellingMedia.add(new CounsellingMedia(10, Collections.singletonList("file:///android_asset/counseling/wg/9.webp")));
+        counsellingMedia.add(new CounsellingMedia(11, Collections.singletonList("file:///android_asset/counseling/wg/10.webp")));
+        counsellingMedia.add(new CounsellingMedia(12, Collections.singletonList("file:///android_asset/counseling/wg/4.webp")));
+        counsellingMedia.add(new CounsellingMedia(13, Collections.singletonList("file:///android_asset/counseling/ifa/1.webp")));
+        counsellingMedia.add(new CounsellingMedia(14, Collections.singletonList("file:///android_asset/counseling/ifa/6.webp")));
+        counsellingMedia.add(new CounsellingMedia(15, Collections.singletonList("file:///android_asset/counseling/ifa/7.webp")));
+        counsellingMedia.add(new CounsellingMedia(16, Collections.singletonList("file:///android_asset/counseling/ifa/2.webp")));
+        counsellingMedia.add(new CounsellingMedia(17, Collections.singletonList("file:///android_asset/counseling/ifa/5.webp")));
+        counsellingMedia.add(new CounsellingMedia(18, Collections.singletonList("file:///android_asset/counseling/ifa/3.webp")));
+        counsellingMedia.add(new CounsellingMedia(19, Collections.singletonList("file:///android_asset/counseling/ifa/4.webp")));
+        counsellingMedia.add(new CounsellingMedia(20, Collections.singletonList("file:///android_asset/counseling/ifa/15.webp")));
+        counsellingMedia.add(new CounsellingMedia(21, Collections.singletonList("file:///android_asset/counseling/ifa/13.webp")));//todo check
+        counsellingMedia.add(new CounsellingMedia(22, Collections.singletonList("file:///android_asset/counseling/ifa/14.webp")));
+        counsellingMedia.add(new CounsellingMedia(23, Collections.singletonList("file:///android_asset/counseling/ifa/13.webp")));
+        counsellingMedia.add(new CounsellingMedia(24, Collections.singletonList("file:///android_asset/counseling/ifa/8.webp")));
+        counsellingMedia.add(new CounsellingMedia(25, Collections.singletonList("file:///android_asset/counseling/ifa/11.webp")));
+        counsellingMedia.add(new CounsellingMedia(26, Collections.singletonList("file:///android_asset/counseling/ifa/14.webp")));
+        counsellingMedia.add(new CounsellingMedia(27, Collections.singletonList("file:///android_asset/counseling/ifa/10.webp")));
+        counsellingMedia.add(new CounsellingMedia(28, Collections.singletonList("file:///android_asset/counseling/ifa/12.webp")));
+
+
+
+/*
+// anain
         counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/pw/1.webp")));
         counsellingMedia.add(new CounsellingMedia(2, Collections.singletonList("file:///android_asset/pw/2.webp")));
         counsellingMedia.add(new CounsellingMedia(3, CounsellingMedia.GRAPH_MEDIA));
@@ -67,7 +112,7 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(4, Collections.singletonList("file:///android_asset/pw/4.webp")));
         counsellingMedia.add(new CounsellingMedia(5, Collections.singletonList("file:///android_asset/pw/5.webp")));
 
-        counsellingMedia.add(new CounsellingMedia(13, Collections.singletonList(R.raw.dinosaur+""),VIDEO_MEDIA));
+        counsellingMedia.add(new CounsellingMedia(13, Collections.singletonList(R.raw.dinosaur + ""), VIDEO_MEDIA));
 
         counsellingMedia.add(new CounsellingMedia(6, Collections.singletonList("file:///android_asset/pw/6.webp")));
         counsellingMedia.add(new CounsellingMedia(7, Collections.singletonList("file:///android_asset/pw/7.webp")));
@@ -81,7 +126,7 @@ public class CounsellingMedia implements Parcelable {
                         "file:///android_asset/pw/8.5.webp",
                         "file:///android_asset/pw/8.6.webp"
                 )));
-      //  counsellingMedia.add(new CounsellingMedia(8, Collections.singletonList("file:///android_asset/pw/8.webp")));
+        //  counsellingMedia.add(new CounsellingMedia(8, Collections.singletonList("file:///android_asset/pw/8.webp")));
         counsellingMedia.add(new CounsellingMedia(9, Collections.singletonList("file:///android_asset/pw/9.webp")));
         counsellingMedia.add(new CounsellingMedia(10, Collections.singletonList("file:///android_asset/pw/10.webp")));
         counsellingMedia.add(new CounsellingMedia(11, Collections.singletonList("file:///android_asset/pw/11.webp")));
@@ -102,6 +147,7 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(26, Collections.singletonList("file:///android_asset/pw/26.webp")));
         counsellingMedia.add(new CounsellingMedia(27, Collections.singletonList("file:///android_asset/pw/27.webp")));
         counsellingMedia.add(new CounsellingMedia(28, Collections.singletonList("file:///android_asset/pw/28.webp")));
+*/
 
 
         return counsellingMedia;

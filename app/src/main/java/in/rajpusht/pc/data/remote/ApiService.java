@@ -1,14 +1,11 @@
 package in.rajpusht.pc.data.remote;
 
 
-import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import java.util.List;
 
 import in.rajpusht.pc.model.ApiResponse;
 import io.reactivex.Single;
-import retrofit2.Call;
+import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
@@ -18,37 +15,48 @@ public interface ApiService {
 
     @POST("login")
     @FormUrlEncoded
-    Single<ApiResponse<JsonObject>> login(@Field("user") String email, @Field("password") String password);
-
-    @POST("password/reset/otp")
-    @FormUrlEncoded
-    Call<ApiResponse<List<JsonObject>>> forgotPassword(@Field("user") String user);
+    Single<ApiResponse<JsonObject>> login(@Field("email") String email, @Field("password") String password);
 
 
-    @POST("/password")
-    @FormUrlEncoded
-    Call<ApiResponse<Object>> changePassword(@Field("curr_password") String curr_password,
-                                             @Field("password") String password,
-                                             @Field("cnfrm_password") String cnfrm_password);
-
-    @POST("login/otp")
+    @POST("verifyOtp")
     @FormUrlEncoded
     Single<ApiResponse<JsonObject>> verifyOtp(@Field("otp") String opt);
 
-    @POST("password/reset")
+
+    @POST("/changePassword")
     @FormUrlEncoded
-    Call<ApiResponse<Object>> setPassword(@Field("cnfrm_password") String cnfrm_password,
-                                          @Field("otp") String otp, @Field("password") String password,
-                                          @Field("user") String user);
+    Single<ApiResponse<JsonObject>> changePassword(@Field("oldPassword") String oldPassword,
+                                                   @Field("newPassword") String newPassword);
 
 
-    @POST("report/milestone/update")
+    @POST("/forgotPassword")
     @FormUrlEncoded
-    Call<ApiResponse<JsonElement>> updateMilestoneComment(@Field("plan_id") int planId,
-                                                          @Field("progress") int planProgress,
-                                                          @Field("report_comment") String cmd,
-                                                          @Field("submit_date") String submitDate);
+    Single<ApiResponse<JsonObject>> forgotPassword(@Field("email") String oldPassword);
 
-    @GET("assigned-location")
-    Single<ApiResponse<JsonObject>> assignedLocation();
+
+    @POST("/setPassword")
+    @FormUrlEncoded
+    Single<ApiResponse<JsonObject>> setPassword(@Field("resetOtp") String resetOtp,
+                                                @Field("newPassword") String newPassword);
+
+
+    @POST("/resendOtp")
+    @FormUrlEncoded
+    Single<ApiResponse<JsonObject>> resendOtp();
+
+
+    @GET("/profileDetail")
+    Single<ApiResponse<JsonObject>> profileDetail();
+
+
+    @POST("/logout")
+    Single<ApiResponse<JsonObject>> logout();
+
+    @GET("/bulkDownload")
+    Single<ApiResponse<JsonObject>> bulkDownload();
+
+    @POST("/bulkUpload")
+    Single<ApiResponse<JsonObject>> bulkUpload(@Body JsonObject jsonObject);
+
+
 }

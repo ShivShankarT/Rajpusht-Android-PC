@@ -1,11 +1,13 @@
 package in.rajpusht.pc.ui.base;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.LayoutRes;
@@ -116,4 +118,5 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
                 runnable.run();
         }).show();
     }
+
 }

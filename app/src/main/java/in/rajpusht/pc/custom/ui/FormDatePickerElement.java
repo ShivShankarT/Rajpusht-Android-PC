@@ -126,6 +126,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
     public void setDate(Date mDate) {
         this.mDate = mDate;
         edf_text.setText(AppDateTimeUtils.convertLocalDate(mDate));
+        edf_txt_inp_ly.setError(null);
     }
 
     @Override
@@ -177,5 +178,9 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
 
     public boolean isVisible() {
         return getVisibility() == VISIBLE;
+    }
+
+    public boolean isVisibleAndEnable() {
+        return getVisibility() == VISIBLE && isEnabled();
     }
 }
