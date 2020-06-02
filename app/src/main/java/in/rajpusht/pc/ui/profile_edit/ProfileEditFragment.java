@@ -91,32 +91,32 @@ public class ProfileEditFragment extends Fragment {
 
         if (firstName.length() < 5) {
             isInvalid = true;
-            first_name_tly.setError("Invalid First Name");
+            first_name_tly.setError(getResources().getString(R.string.error_firstname));
         } else
             first_name_tly.setError(null);
 
         if (lastName.length() < 1) {
             isInvalid = true;
-            last_name_tly.setError("Invalid Last Name");
+            last_name_tly.setError(getResources().getString(R.string.error_lastname));
 
         } else
             last_name_tly.setError(null);
 
         if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
             isInvalid = true;
-            email_tly.setError("Invalid Email");
+            email_tly.setError(getResources().getString(R.string.error_email));
         } else
             email_tly.setError(null);
 
         if (userName.length() < 5) {
             isInvalid = true;
-            username_tly.setError("Invalid UserName");
+            username_tly.setError(getResources().getString(R.string.error_username));
         } else
             username_tly.setError(null);
 
         if (phone.length() < 10) {
             isInvalid = true;
-            phone_tly.setError("Invalid Phone Number");
+            phone_tly.setError(getResources().getString(R.string.error_phoneno));
         } else
             phone_tly.setError(null);
 
