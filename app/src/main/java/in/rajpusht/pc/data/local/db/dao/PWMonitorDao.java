@@ -5,6 +5,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import io.reactivex.Maybe;
 import io.reactivex.Single;
@@ -19,6 +20,12 @@ public abstract class PWMonitorDao extends BaseDao<PWMonitorEntity> {
 
     @Query("select * from pw_monitor where id=:id")
     public abstract Maybe<PWMonitorEntity> pwMonitorByID(long id);
+
+
+
+    @Query("select * from pw_monitor where isNew is not null")
+    public  abstract List<PWMonitorEntity> getPWDataNotSync();
+
 
 
 }

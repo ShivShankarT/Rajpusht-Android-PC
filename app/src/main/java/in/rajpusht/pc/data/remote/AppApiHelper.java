@@ -71,13 +71,13 @@ public class AppApiHelper {
     ;
 
 
-    Single<ApiResponse<JsonObject>> bulkDownload() {
+    public  Single<ApiResponse<JsonObject>> bulkDownload() {
         return apiService.bulkDownload();
     }
 
     ;
 
-    Single<ApiResponse<JsonObject>> bulkUpload(JsonObject jsonObject) {
+    public Single<ApiResponse<JsonObject>> bulkUpload(JsonObject jsonObject) {
         return apiService.bulkUpload(jsonObject);
     }
 

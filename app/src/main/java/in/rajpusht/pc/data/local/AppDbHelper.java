@@ -148,4 +148,20 @@ public class AppDbHelper {
         return Single.fromCallable(() -> mAppDatabase.beneficiaryDao().getBeneficiariesById(beneficiaryId));
     }
 
+    public List<BeneficiaryEntity> getBeneficiaryNotSyncData(){
+        return mAppDatabase.beneficiaryDao().getBeneficiaryDataNotSync();
+    }
+    public List<ChildEntity> getChildNotSyncData(){
+        return mAppDatabase.childDao().getChildDataNotSync();
+    }
+    public List<LMMonitorEntity> getLMNotSyncData(){
+        return mAppDatabase.lmMonitorDao().getLMDataNotSync();
+    }
+    public List<PWMonitorEntity> getPWNotSyncData(){
+        return mAppDatabase.pwMonitorDao().getPWDataNotSync();
+    }
+    public List<PregnantEntity> getPregnantNotSyncData(){
+        return mAppDatabase.pregnantDao().getPregnantDataNotSync();
+    }
+
 }

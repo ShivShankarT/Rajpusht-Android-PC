@@ -30,6 +30,8 @@ public class PWMonitorEntity {
     private String createdBy;
     private String createdAt;
     private String updatedAt;
+    private boolean isNew;
+
 
     public int getId() {
         return id;
@@ -173,5 +175,13 @@ public class PWMonitorEntity {
 
     public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 }

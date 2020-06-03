@@ -3,8 +3,9 @@ package in.rajpusht.pc.data.local.db.entity;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
+import com.google.gson.JsonElement;
+
 import java.util.Date;
-import java.util.List;
 
 import in.rajpusht.pc.model.DataStatus;
 
@@ -40,7 +41,15 @@ public class BeneficiaryEntity {
     private String createdBy;
     private String createdAt;
     private String updatedAt;
+    private boolean isNew;
 
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
 
     public int getId() {
         return id;

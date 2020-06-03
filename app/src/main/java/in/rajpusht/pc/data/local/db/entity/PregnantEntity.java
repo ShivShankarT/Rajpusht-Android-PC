@@ -23,6 +23,8 @@ public class PregnantEntity {
     private DataStatus dataStatus;
     private String createdAt;
     private String updatedAt;
+    private boolean isNew;
+
 
     public long getBeneficiaryId() {
         return beneficiaryId;
@@ -86,5 +88,13 @@ public class PregnantEntity {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
+    }
+
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
     }
 }

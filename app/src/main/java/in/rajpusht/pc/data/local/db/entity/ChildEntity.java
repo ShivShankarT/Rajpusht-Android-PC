@@ -27,6 +27,9 @@ public class ChildEntity {
     private String createdAt;
     private String updatedAt;
     private DataStatus dataStatus;
+    private boolean isNew;
+    private int age;
+
 
     @Ignore
     private List<LMMonitorEntity> lmMonitorEntities;
@@ -136,4 +139,19 @@ public class ChildEntity {
         this.updatedAt = updatedAt;
     }
 
+    public boolean isNew() {
+        return isNew;
+    }
+
+    public void setNew(boolean aNew) {
+        isNew = aNew;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
 }

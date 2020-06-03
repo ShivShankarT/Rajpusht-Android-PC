@@ -102,6 +102,8 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         });
 
 
+       // dataRepository.bulkdownloadTest();
+
         RecyclerView recyclerView = getViewDataBinding().list;
         Context context = view.getContext();
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
