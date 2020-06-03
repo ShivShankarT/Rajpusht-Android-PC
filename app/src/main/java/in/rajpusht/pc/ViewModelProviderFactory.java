@@ -14,6 +14,7 @@ import in.rajpusht.pc.ui.login.LoginViewModel;
 import in.rajpusht.pc.ui.otp.OtpViewModel;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringViewModel;
 import in.rajpusht.pc.ui.registration.RegistrationViewModel;
+import in.rajpusht.pc.ui.splash.SplashScreenViewModel;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 
@@ -34,6 +35,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
     @NonNull
     @Override
     public <T extends ViewModel> T create(Class<T> modelClass) {
+        if (modelClass.isAssignableFrom(SplashScreenViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SplashScreenViewModel(dataManager, schedulerProvider);
+        }
         if (modelClass.isAssignableFrom(LoginViewModel.class)) {
             //noinspection unchecked
             return (T) new LoginViewModel(dataManager, schedulerProvider);
@@ -53,6 +58,7 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
             //noinspection unchecked
             return (T) new LMMonitoringViewModel(dataManager, schedulerProvider);
         }
+
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());
     }
 }

@@ -5,36 +5,55 @@ import android.os.Bundle;
 import android.os.Handler;
 
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.databinding.DataBindingUtil;
+import androidx.lifecycle.ViewModelProvider;
 
+import javax.inject.Inject;
+
+import in.rajpusht.pc.BR;
 import in.rajpusht.pc.R;
+import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.databinding.ActivitySplashScreenBinding;
+import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.login.LoginActivity;
 
-public class SplashScreenActivity extends AppCompatActivity {
-   public static boolean isFirst = true;//todo remove
+public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBinding, SplashScreenViewModel> {
+    public static boolean isFirst = true;//todo remove
+
+    @Inject
+    ViewModelProviderFactory factory;
+    private SplashScreenViewModel screenViewModel;
+
+    @Override
+    public int getBindingVariable() {
+        return BR.viewModel;
+    }
+
+    @Override
+    public int getLayoutId() {
+        return R.layout.activity_splash_screen;
+    }
+
+    @Override
+    public SplashScreenViewModel getViewModel() {
+        screenViewModel = new ViewModelProvider(this, factory).get(SplashScreenViewModel.class);
+        return screenViewModel;
+    }
 
     @Override
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        ActivitySplashScreenBinding viewDataBinding = DataBindingUtil.setContentView(this, R.layout.activity_splash_screen);
-        new Handler().postDelayed(new Runnable() {
-
-            @Override
-            public void run() {
-                finish();
-                Intent intent;
-
-                if (isFirst)
-                    intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                else
-                    intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
-                startActivity(intent);
-                isFirst = false;
-            }
+        new Handler().postDelayed(() -> {
+            finish();
+            Intent intent;
+            if (isFirst)
+                intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+            else
+                intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
+            startActivity(intent);
+            isFirst = false;
         }, 100);
     }
+
 }

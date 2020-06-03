@@ -30,6 +30,8 @@ import in.rajpusht.pc.di.PreferenceInfo;
 public class AppPreferencesHelper {
     public static final long NULL_INDEX = -1L;
 
+    private static final String PREF_LOGIN = "login";
+
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
 
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
@@ -46,6 +48,13 @@ public class AppPreferencesHelper {
         mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
     }
 
+    public boolean getLogin() {
+        return mPrefs.getBoolean(PREF_LOGIN, false);
+    }
+
+    public void setLogin(boolean login) {
+        mPrefs.edit().putBoolean(PREF_LOGIN, login).apply();
+    }
 
     public String getAccessToken() {
         return mPrefs.getString(PREF_KEY_ACCESS_TOKEN, null);
