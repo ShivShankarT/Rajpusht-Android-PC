@@ -95,7 +95,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         super.onViewCreated(view, savedInstanceState);
         RegistrationFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
-        toolbar.setTitle("Registration");
+        toolbar.setTitle(getResources().getString(R.string.registration_title));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -109,7 +109,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             public ValidationStatus isValid(Date data) {
                 int age = HUtil.calcAge(data);
                 if (age < 13) {
-                    return new ValidationStatus(false, "Beneficiary age should be greater then 13");
+                    return new ValidationStatus(false, getResources().getString(R.string.beneficiary_age_limit));
                 } else {
                     return new ValidationStatus(true);
                 }
@@ -118,10 +118,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         });
 
-        viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, "Invalid Mobile No"));
-        viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, "Invalid Mobile No"));
-        viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, "Invalid Name"));
-        viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, "Invalid Name"));
+        viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
+        viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
+        viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
+        viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
 
 
         viewDataBinding.benfRegStage.sethValueChangedListener(new HValueChangedListener<Integer>() {
@@ -167,7 +167,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
                 int age = HUtil.calcAge(data);
                 if (age > 1) {
-                    return new ValidationStatus(false, "Child age should be less then 1 year");
+                    return new ValidationStatus(false, getResources().getString(R.string.child_age_limit));
                 } else {
                     return new ValidationStatus(true);
                 }
@@ -419,7 +419,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 .observeOn(schedulerProvider.ui())
                 .subscribe(aBoolean -> {
                     if (!aBoolean.isEmpty()) {//todo check
-                        showAlertDialog("Beneficiary Registration Successfully", () -> {
+                        showAlertDialog(getResources().getString(R.string.benf_success_reg), () -> {
                             requireActivity().onBackPressed();
                         });
                     }

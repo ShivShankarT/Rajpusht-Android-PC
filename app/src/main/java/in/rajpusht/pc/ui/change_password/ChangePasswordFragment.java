@@ -39,7 +39,7 @@ public class ChangePasswordFragment extends BaseFragment<ChangePasswordFragmentB
         super.onViewCreated(view, savedInstanceState);
         ChangePasswordFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
-        toolbar.setTitle("Change Password");
+        toolbar.setTitle(getResources().getString(R.string.change_pass));
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

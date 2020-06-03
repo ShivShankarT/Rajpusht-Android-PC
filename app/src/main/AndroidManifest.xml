@@ -14,8 +14,7 @@
         <activity
             android:screenOrientation="portrait"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".ui.login.LoginActivity"
-            android:label="@string/title_activity_login" />
+            android:name=".ui.login.LoginActivity" />
         <activity android:name=".ui.splash.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

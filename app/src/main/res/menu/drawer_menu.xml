@@ -12,22 +12,22 @@
         <item
             android:id="@+id/nav_select_awc"
             android:icon="@drawable/ic_location_city_white"
-            android:title="Change AWC" />
+            android:title="@string/change_awc" />
 
         <item
             android:id="@+id/nav_sync"
             android:icon="@drawable/ic_sync"
-            android:title="Sync" />
+            android:title="@string/sync" />
 
         <item
             android:id="@+id/nav_changePassword"
             android:icon="@drawable/ic_changepassword_black_24dp"
-            android:title="Change Password" />
+            android:title="@string/change_password" />
 
         <item
             android:id="@+id/nav_Logout"
             android:icon="@drawable/ic_logout_run_black_24dp"
-            android:title="Logout" />
+            android:title="@string/nav_logout" />
 
     </group>
 
