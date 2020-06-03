@@ -52,6 +52,15 @@ public class DataRepository {
         return ob.toList();
     }
 
+
+    public boolean getLogin() {
+        return appPreferencesHelper.getLogin();
+    }
+
+    public void setLogin(boolean login) {
+        appPreferencesHelper.setLogin(login);
+    }
+
     public Observable<Boolean> updateBeneficiary(final BeneficiaryEntity beneficiaryEntity) {
 
         return appDbHelper.updateBeneficiary(beneficiaryEntity);
