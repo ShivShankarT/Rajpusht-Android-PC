@@ -6,7 +6,6 @@ import androidx.room.Query;
 import java.util.List;
 
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
-import in.rajpusht.pc.model.BeneficiaryModel;
 
 @Dao
 public abstract class BeneficiaryDao extends BaseDao<BeneficiaryEntity> {

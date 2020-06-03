@@ -1,6 +1,7 @@
 package in.rajpusht.pc.utils;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
@@ -24,6 +25,19 @@ public class AppDateTimeUtils {
             return serverDf.format(date);
         else
             return null;
+    }
+
+    public static Date convertDateFromServer(String date) {
+
+        if (date != null) {
+            try {
+                return serverDf.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+
+        return null;
     }
 
     public static String convertServerTimeStampDate(Date date) {

@@ -28,7 +28,7 @@ public class LMMonitorEntity {
     private Integer rajshriInstallment;
     private String timestamp;
     private DataStatus dataStatus;
-    private String createdBy;
+    int createdBy;
     private String createdAt;
     private String updatedAt;
     private boolean isNew;
@@ -177,11 +177,11 @@ public class LMMonitorEntity {
         this.updatedAt = updatedAt;
     }
 
-    public String getCreatedBy() {
+    public int getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(int createdBy) {
         this.createdBy = createdBy;
     }
 

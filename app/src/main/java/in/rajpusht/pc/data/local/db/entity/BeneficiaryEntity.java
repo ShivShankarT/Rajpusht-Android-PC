@@ -38,7 +38,7 @@ public class BeneficiaryEntity {
     private Integer rajshriInstallment;
     private DataStatus dataStatus;
     private String awcCode;
-    private String createdBy;
+    private int createdBy;
     private String createdAt;
     private String updatedAt;
     private boolean isNew;
@@ -253,11 +253,11 @@ public class BeneficiaryEntity {
         this.awcCode = awcCode;
     }
 
-    public String getCreatedBy() {
+    public int getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(int createdBy) {
         this.createdBy = createdBy;
     }
 }
