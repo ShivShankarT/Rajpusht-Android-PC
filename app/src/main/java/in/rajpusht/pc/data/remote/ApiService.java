@@ -52,8 +52,7 @@ public interface ApiService {
     @POST("/logout")
     Single<ApiResponse<JsonObject>> logout();
 
-  //  @GET("/bulkDownload")
-    @GET("https://jsoneditoronline.org/#left=cloud.8b7c7a25fe09481da9cbf056d180d0c4")
+    @GET("/bulkDownload")
     Single<ApiResponse<JsonObject>> bulkDownload();
 
     @POST("/bulkUpload")

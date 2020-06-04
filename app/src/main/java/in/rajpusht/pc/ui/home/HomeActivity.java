@@ -91,6 +91,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {
                 SplashScreenActivity.isFirst = true;//todo
+                syncData();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             }
             getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
@@ -101,7 +102,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
 
     private void syncData() {
         SyncUtils syncUtils = new SyncUtils();
-        syncUtils.sync(appDatabase);
+        syncUtils.syncToServer(appDatabase);
     }
 
     public void openDrawer() {

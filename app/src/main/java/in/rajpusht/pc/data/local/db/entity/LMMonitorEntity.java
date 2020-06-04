@@ -31,7 +31,6 @@ public class LMMonitorEntity {
     int createdBy;
     private String createdAt;
     private String updatedAt;
-    private boolean isNew;
 
     public int getId() {
         return id;
@@ -185,11 +184,4 @@ public class LMMonitorEntity {
         this.createdBy = createdBy;
     }
 
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew(boolean aNew) {
-        isNew = aNew;
-    }
 }
