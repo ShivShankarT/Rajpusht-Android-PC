@@ -13,11 +13,13 @@ import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
 import com.github.mikephil.charting.charts.BarLineChartBase;
+import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
@@ -75,10 +77,12 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
     }
 
     private void setWeightGainGraph() {
-        BarLineChartBase chart = pregnancyGraphFragmentBinding.chart1;
+        LineChart chart = pregnancyGraphFragmentBinding.chart1;
         chart.setOnChartValueSelectedListener(this);
         chart.getDescription().setEnabled(false);
         chart.setDrawGridBackground(false);
+
+
 
         XAxis xAxis = chart.getXAxis();
         xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
@@ -98,22 +102,23 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
 
 
         ArrayList<Entry> values1 = new ArrayList<>();
-        values1.add(new Entry(1, 10));
-        values1.add(new Entry(2, 14));
-        values1.add(new Entry(3, 18));
-        values1.add(new Entry(4, 22));
+        values1.add(new Entry(4, 1.5f));
+        values1.add(new Entry(5, 1.5f));
+        values1.add(new Entry(6, 2));
+        values1.add(new Entry(7, 2));
+        values1.add(new Entry(8, 2));
+        values1.add(new Entry(9, 1.5f));
 
-        LineDataSet d1 = new LineDataSet(values1, "Avg Pregnancy  Weight");
+        LineDataSet d1 = new LineDataSet(values1, "Ideal Weight Gain");
         d1.setLineWidth(2.5f);
         d1.setCircleRadius(4.5f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
         d1.setDrawValues(false);
 
         ArrayList<Entry> values2 = new ArrayList<>();
-        values2.add(new Entry(1, 8));
-        values2.add(new Entry(2, 10));
-        values2.add(new Entry(3, 12));
-        LineDataSet d2 = new LineDataSet(values2, "Mala Weight Gain");
+        values2.add(new Entry(4, 1));
+        values2.add(new Entry(5, 1));
+        LineDataSet d2 = new LineDataSet(values2, "Women Weight Gain");
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4.5f);
         d2.setHighLightColor(Color.rgb(244, 117, 117));
@@ -127,6 +132,13 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
 
         LineData data = new LineData(sets);
         chart.setData(data);
+        chart.getXAxis().setValueFormatter(new ValueFormatter() {
+            @Override
+            public String getFormattedValue(float value) {
+                return String.valueOf((int) value);
+            }
+        });
+        xAxis.setLabelCount(values1.size(),true);
         chart.invalidate();
         chart.animateXY(2000, 2000);
     }

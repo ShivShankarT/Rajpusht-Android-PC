@@ -149,6 +149,7 @@
     <string name="change_awc">Change AWC</string>
     <string name="sync">Sync</string>
     <string name="change_password">Change Password</string>
+    <string name="how_many_anc_comp">1. How Many ANCs Completed</string>
 
 
 </resources>

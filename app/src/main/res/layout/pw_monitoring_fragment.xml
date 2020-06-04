@@ -97,7 +97,7 @@
                     android:id="@+id/benf_anc_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="1. How Many ANCs Completed "
+                    app:ff_label="@string/how_many_anc_comp"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_4" />
 

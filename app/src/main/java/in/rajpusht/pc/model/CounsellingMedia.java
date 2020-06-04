@@ -91,7 +91,7 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(18, Collections.singletonList("file:///android_asset/counseling/ifa/3.webp")));
         counsellingMedia.add(new CounsellingMedia(19, Collections.singletonList("file:///android_asset/counseling/ifa/4.webp")));
         counsellingMedia.add(new CounsellingMedia(20, Collections.singletonList("file:///android_asset/counseling/ifa/15.webp")));
-        counsellingMedia.add(new CounsellingMedia(21, Collections.singletonList("file:///android_asset/counseling/ifa/13.webp")));//todo check
+        counsellingMedia.add(new CounsellingMedia(21, Collections.singletonList("file:///android_asset/counseling/wg/16.webp")));//todo check
         counsellingMedia.add(new CounsellingMedia(22, Collections.singletonList("file:///android_asset/counseling/ifa/14.webp")));
         counsellingMedia.add(new CounsellingMedia(23, Collections.singletonList("file:///android_asset/counseling/ifa/13.webp")));
         counsellingMedia.add(new CounsellingMedia(24, Collections.singletonList("file:///android_asset/counseling/ifa/8.webp")));

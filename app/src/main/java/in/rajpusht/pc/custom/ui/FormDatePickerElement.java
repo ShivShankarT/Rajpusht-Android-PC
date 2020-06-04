@@ -1,5 +1,6 @@
 package in.rajpusht.pc.custom.ui;
 
+import android.app.Activity;
 import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -8,6 +9,7 @@ import android.util.AttributeSet;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
@@ -131,6 +133,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
+        hideKeyboard();
         DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear,
@@ -182,5 +185,18 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
 
     public boolean isVisibleAndEnable() {
         return getVisibility() == VISIBLE && isEnabled();
+    }
+
+
+    public void hideKeyboard() {
+        Activity activity= (Activity) getContext();
+
+        View view = activity.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) activity.getSystemService(Context.INPUT_METHOD_SERVICE);
+            if (imm != null) {
+                imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+            }
+        }
     }
 }
