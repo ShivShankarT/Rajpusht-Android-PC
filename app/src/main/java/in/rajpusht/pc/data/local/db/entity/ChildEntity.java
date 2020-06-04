@@ -27,7 +27,6 @@ public class ChildEntity {
     private String createdAt;
     private String updatedAt;
     private DataStatus dataStatus;
-    private boolean isNew;
     private int age;
 
 
@@ -137,14 +136,6 @@ public class ChildEntity {
 
     public void setUpdatedAt(String updatedAt) {
         this.updatedAt = updatedAt;
-    }
-
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew(boolean aNew) {
-        isNew = aNew;
     }
 
     public int getAge() {

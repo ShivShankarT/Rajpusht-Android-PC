@@ -41,15 +41,7 @@ public class BeneficiaryEntity {
     private int createdBy;
     private String createdAt;
     private String updatedAt;
-    private boolean isNew;
 
-    public boolean isNew() {
-        return isNew;
-    }
-
-    public void setNew(boolean aNew) {
-        isNew = aNew;
-    }
 
     public int getId() {
         return id;

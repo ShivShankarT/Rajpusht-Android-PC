@@ -23,9 +23,6 @@ public abstract class PWMonitorDao extends BaseDao<PWMonitorEntity> {
 
 
 
-    @Query("select * from pw_monitor where isNew is not null")
-    public  abstract List<PWMonitorEntity> getPWDataNotSync();
-
 
 
 }

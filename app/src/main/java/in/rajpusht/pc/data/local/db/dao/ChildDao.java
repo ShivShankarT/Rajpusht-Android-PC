@@ -15,7 +15,5 @@ public abstract class ChildDao extends BaseDao<ChildEntity> {
     public abstract List<ChildEntity> childEntities(long motherId);
 
 
-    @Query("select * from child where isNew is not null")
-    public  abstract List<ChildEntity> getChildDataNotSync();
 
 }

@@ -16,7 +16,4 @@ public abstract class PregnantDao extends BaseDao<PregnantEntity> {
 
 
 
-    @Query("select * from pregnant where isNew is not null")
-    public  abstract List<PregnantEntity> getPregnantDataNotSync();
-
 }

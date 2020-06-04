@@ -25,7 +25,9 @@ import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.data.remote.AppApiHelper;
 import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.BefModel;
+import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Tuple;
+import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
@@ -151,6 +153,7 @@ public class DataRepository {
                     List<PWMonitorEntity> pwMonitorModels = new ArrayList<>();
                     List<ChildEntity> childModel = new ArrayList<>();
                     List<LMMonitorEntity> lmMonitorModel = new ArrayList<>();
+
 
                     for (int i = 0; i < beneficiarylist.size(); i++) {
 
@@ -334,152 +337,7 @@ public class DataRepository {
         });
     }
 
-    public void bulkupload() {
 
-
-        JsonObject mainJsonObject = new JsonObject();
-
-        JsonArray beneficiaryArray = new JsonArray();
-        JsonArray pregnantArray = new JsonArray();
-        JsonArray pwMonitorArray = new JsonArray();
-        JsonArray childArray = new JsonArray();
-        JsonArray lmMonitorArray = new JsonArray();
-
-
-        for (BeneficiaryEntity beneficiaryEntity : appDbHelper.getBeneficiaryNotSyncData()) {
-            try {
-                beneficiaryArray.add(getBeneficiaryJson(beneficiaryEntity));
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-        ;
-
-        for (PregnantEntity pregnantEntity : appDbHelper.getPregnantNotSyncData()) {
-            pregnantArray.add(getPregnantJson(pregnantEntity));
-
-        }
-        ;
-
-        for (PWMonitorEntity pwMonitorEntity : appDbHelper.getPWNotSyncData()) {
-            pwMonitorArray.add(getPwJson(pwMonitorEntity));
-        }
-        ;
-
-        for (ChildEntity childEntity : appDbHelper.getChildNotSyncData()) {
-            childArray.add(getChildJson(childEntity));
-        }
-        ;
-
-        for (LMMonitorEntity lmMonitorEntity : appDbHelper.getLMNotSyncData()) {
-            lmMonitorArray.add(getLmJson(lmMonitorEntity));
-        }
-        ;
-
-        mainJsonObject.add("beneficiary", beneficiaryArray);
-        mainJsonObject.add("pregnant", pregnantArray);
-        mainJsonObject.add("pw_monitor", pwMonitorArray);
-        mainJsonObject.add("child", childArray);
-        mainJsonObject.add("lm_monitor", lmMonitorArray);
-
-        appApiHelper.bulkUpload(mainJsonObject);
-    }
-
-    private JsonObject getLmJson(LMMonitorEntity lmMonitorEntity) {
-        JsonObject lmObject = new JsonObject();
-
-
-        lmObject.addProperty("child_id", lmMonitorEntity.getChildId());
-        lmObject.addProperty("is_first_immunization_complete", lmMonitorEntity.getIsFirstImmunizationComplete());
-        lmObject.addProperty("last_muac", lmMonitorEntity.getLastMuac());
-        lmObject.addProperty("last_muac_check_date", AppDateTimeUtils.convertServerDate(lmMonitorEntity.getLastMuacCheckDate()));
-        lmObject.addProperty("current_muac", lmMonitorEntity.getCurrentMuac());
-        lmObject.addProperty("birth_weight", lmMonitorEntity.getBirthWeight());
-        lmObject.addProperty("child_weight", lmMonitorEntity.getChildWeight());
-        lmObject.addProperty("pmmvy_installment", lmMonitorEntity.getPmmvyInstallment());
-        lmObject.addProperty("igmpy_installment", lmMonitorEntity.getIgmpyInstallment());
-        lmObject.addProperty("jsy_installment", lmMonitorEntity.getJsyInstallment());
-        lmObject.addProperty("rajshri_installment", lmMonitorEntity.getRajshriInstallment());
-        lmObject.addProperty("created_by", lmMonitorEntity.getCreatedBy());
-        lmObject.addProperty("stage", lmMonitorEntity.getStage());
-        lmObject.addProperty("sub_stage", lmMonitorEntity.getSubStage());
-
-
-        return lmObject;
-    }
-
-    private JsonObject getChildJson(ChildEntity childEntity) {
-        JsonObject childobject = new JsonObject();
-
-        childobject.addProperty("dob", AppDateTimeUtils.convertServerDate(childEntity.getDob()));
-        childobject.addProperty("age", childEntity.getAge());
-        childobject.addProperty("stage", childEntity.getSubStage());
-        childobject.addProperty("sub_stage", childEntity.getSubStage());
-        childobject.addProperty("mother_id", childEntity.getMotherId());
-        childobject.addProperty("delivery_home", childEntity.getDeliveryHome());
-        childobject.addProperty("delivery_place", childEntity.getDeliveryPlace());
-        childobject.addProperty("child_order", childEntity.getChildOrder());
-
-
-        return childobject;
-    }
-
-    private JsonObject getPwJson(PWMonitorEntity pwMonitorEntity) {
-        JsonObject pwobject = new JsonObject();
-        pwobject.addProperty("pregnancy_id", pwMonitorEntity.getPregnancyId());
-        pwobject.addProperty("stage", pwMonitorEntity.getStage());
-        pwobject.addProperty("sub_stage", pwMonitorEntity.getSubStage());
-        pwobject.addProperty("anc_count", pwMonitorEntity.getAncCount());
-        pwobject.addProperty("last_anc", AppDateTimeUtils.convertServerDate(pwMonitorEntity.getLastAnc()));
-        pwobject.addProperty("last_weight_in_mamta", pwMonitorEntity.getLastWeightInMamta());
-        pwobject.addProperty("last_weight_check_date", AppDateTimeUtils.convertServerDate(pwMonitorEntity.getLastWeightCheckDate()));
-        pwobject.addProperty("current_weight", pwMonitorEntity.getCurrentWeight());
-        pwobject.addProperty("pmmvy_installment", pwMonitorEntity.getPmmvyInstallment());
-        pwobject.addProperty("igmpy_installment", pwMonitorEntity.getIgmpyInstallment());
-        pwobject.addProperty("jsy_installment", pwMonitorEntity.getJsyInstallment());
-        pwobject.addProperty("rajshri_installment", pwMonitorEntity.getRajshriInstallment());
-        pwobject.addProperty("created_by", pwMonitorEntity.getCreatedBy());
-
-
-        return pwobject;
-    }
-
-    private JsonObject getPregnantJson(PregnantEntity pregnantEntity) {
-        JsonObject pregnantobject = new JsonObject();
-
-        pregnantobject.addProperty("lmp_date", AppDateTimeUtils.convertServerDate(pregnantEntity.getLmpDate()));
-        pregnantobject.addProperty("beneficiary_id", pregnantEntity.getBeneficiaryId());
-
-        return pregnantobject;
-    }
-
-    private JsonObject getBeneficiaryJson(BeneficiaryEntity beneficiaryEntity) throws JSONException {
-        JsonObject beneficiaryobject = new JsonObject();
-
-        beneficiaryobject.addProperty("awc_code", beneficiaryEntity.getAwcCode());
-        beneficiaryobject.addProperty("name", beneficiaryEntity.getName());
-        beneficiaryobject.addProperty("age", beneficiaryEntity.getAge());
-        beneficiaryobject.addProperty("dob", AppDateTimeUtils.convertServerDate(beneficiaryEntity.getDob()));
-        beneficiaryobject.addProperty("stage", beneficiaryEntity.getStage());
-        beneficiaryobject.addProperty("sub_stage", beneficiaryEntity.getSubStage());
-        beneficiaryobject.addProperty("no_of_child", beneficiaryEntity.getChildCount());
-        beneficiaryobject.addProperty("pmmvy_installment", beneficiaryEntity.getPmmvyInstallment());
-        beneficiaryobject.addProperty("igmpy_installment", beneficiaryEntity.getIgmpyInstallment());
-        beneficiaryobject.addProperty("jsy_installment", beneficiaryEntity.getJsyInstallment());
-        beneficiaryobject.addProperty("rajshri_installment", beneficiaryEntity.getRajshriInstallment());
-        beneficiaryobject.addProperty("husband_father_name", beneficiaryEntity.getHusbandName());
-        beneficiaryobject.addProperty("mobile_no", beneficiaryEntity.getMobileNo());
-        beneficiaryobject.addProperty("husband_mobile_no", beneficiaryEntity.getHusbandMobNo());
-        beneficiaryobject.addProperty("caste", beneficiaryEntity.getCaste());
-        beneficiaryobject.addProperty("economic_status", beneficiaryEntity.getEconomic());
-        beneficiaryobject.addProperty("pcts_id", beneficiaryEntity.getPctsId());
-        beneficiaryobject.addProperty("bahamashah_or_ack_id", beneficiaryEntity.getBahamashahId());
-        beneficiaryobject.addProperty("is_counseling_prov", beneficiaryEntity.getCounselingProv());
-        beneficiaryobject.addProperty("counseling_sms", beneficiaryEntity.getCounselingSms());
-        beneficiaryobject.addProperty("created_by", beneficiaryEntity.getCreatedBy());
-        return beneficiaryobject;
-    }
 
 
 }

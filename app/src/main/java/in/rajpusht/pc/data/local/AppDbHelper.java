@@ -12,6 +12,7 @@ import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.model.BefModel;
+import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Tuple;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
@@ -148,20 +149,6 @@ public class AppDbHelper {
         return Single.fromCallable(() -> mAppDatabase.beneficiaryDao().getBeneficiariesById(beneficiaryId));
     }
 
-    public List<BeneficiaryEntity> getBeneficiaryNotSyncData(){
-        return mAppDatabase.beneficiaryDao().getBeneficiaryDataNotSync();
-    }
-    public List<ChildEntity> getChildNotSyncData(){
-        return mAppDatabase.childDao().getChildDataNotSync();
-    }
-    public List<LMMonitorEntity> getLMNotSyncData(){
-        return mAppDatabase.lmMonitorDao().getLMDataNotSync();
-    }
-    public List<PWMonitorEntity> getPWNotSyncData(){
-        return mAppDatabase.pwMonitorDao().getPWDataNotSync();
-    }
-    public List<PregnantEntity> getPregnantNotSyncData(){
-        return mAppDatabase.pregnantDao().getPregnantDataNotSync();
-    }
+
 
 }

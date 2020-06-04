@@ -23,8 +23,4 @@ public abstract class LMMonitorDao extends BaseDao<LMMonitorEntity> {
 
 
 
-    @Query("select * from lm_monitor where isNew is not null")
-    public  abstract List<LMMonitorEntity> getLMDataNotSync();
-
-
 }
