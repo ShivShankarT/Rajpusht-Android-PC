@@ -17,6 +17,4 @@ public abstract class BeneficiaryDao extends BaseDao<BeneficiaryEntity> {
     @Query("select * from beneficiary where beneficiaryId=:beneficiaryId")
     public abstract BeneficiaryEntity getBeneficiariesById(long beneficiaryId);
 
-    @Query("select * from beneficiary where dataStatus=:status")
-    public abstract List<BeneficiaryEntity> getBeneficiaryNotSync(DataStatus status);
 }

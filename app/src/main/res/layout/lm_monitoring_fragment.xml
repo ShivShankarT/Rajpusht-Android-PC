@@ -33,7 +33,7 @@
                     android:id="@+id/benf_child_immune"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="1. First cycle of immunization of child completed (as in Manta Card)"
+                    app:ff_label="@string/first_cycle_immunization"
                     app:ff_required="true"
                     app:ff_selections="@array/YES_NO" />
 
@@ -44,7 +44,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
                     app:ff_maxLength="3"
-                    app:ff_label="2. Last recorded MUAC of child"
+                    app:ff_label="@string/last_record_muac_child"
                     app:ff_input_type="numberDecimal"
                     app:ff_required="true" />
 
@@ -54,7 +54,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Date"
-                    app:ff_label="3. Date of last Last recorded pregnancy MUAC of child"
+                    app:ff_label="@string/date_muac_child"
                     app:ff_required="true" />
 
 
@@ -63,7 +63,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="MUAC"
-                    app:ff_label="4. Current MUAC of child"
+                    app:ff_label="@string/current_muac_child"
                     app:ff_input_type="numberDecimal"
                     app:ff_required="true" />
 
@@ -72,7 +72,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
-                    app:ff_label="5. Birth Weight of Child (As in Manta Card)"
+                    app:ff_label="@string/birth_weight_child"
                     app:ff_required="true"
                     app:ff_maxLength="5"
                     app:ff_input_type="numberDecimal"/>
@@ -83,7 +83,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
-                    app:ff_label="6. Current Weight of child "
+                    app:ff_label="@string/current_weight_child"
                     app:ff_required="true"
                     app:ff_maxLength="5"
                     app:ff_input_type="numberDecimal"/>
@@ -92,7 +92,7 @@
                     android:id="@+id/benf_registered_programme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="7. Are you registered in"
+                    app:ff_label="@string/are_you_register_in"
                     app:ff_required="true"
                     app:ff_chbox_none_pos="4"
                     app:ff_selections="@array/benf_registered_in" />
@@ -103,13 +103,13 @@
                     style="@style/FormTextMini"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="8. How many installments have you received?" />
+                    android:text="@string/installment_received" />
 
                 <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
                     android:id="@+id/benf_pmmvvy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="PMMVVY"
+                    app:ff_label="@string/pmmvvy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_3"
@@ -120,7 +120,7 @@
                     android:id="@+id/benf_igmpy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="IGMPY"
+                    app:ff_label="@string/igmpy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_4"
@@ -130,7 +130,7 @@
                     android:id="@+id/benf_jsy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="JSY"
+                    app:ff_label="@string/jsy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_1"
@@ -140,7 +140,7 @@
                     android:id="@+id/benf_rajshri_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="RAJSHRI"
+                    app:ff_label="@string/rajshri"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_2_more" />

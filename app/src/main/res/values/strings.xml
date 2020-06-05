@@ -33,6 +33,7 @@
     <string name="pmmvvy">PMMVVY</string>
     <string name="igmpy">IGMPY</string>
     <string name="rajshri">RAJSHRI</string>
+    <string name="jsy">JSY</string>
     <string name="benef_husband_name">7. Beneficiary Husband/Father\'s Name</string>
     <string name="benef_age">8. Age Of beneficiary"</string>
     <string name="benef_dob">Enter DOB</string>
@@ -49,6 +50,26 @@
     <string name="delivery">16. Institutional Delivery or Home Delivery</string>
     <string name="institutional_delivery">17. Place of Institutional Delivery</string>
     <string name="receive_counselling">18. Are you willing to receive counselling messages on mobile</string>
+
+
+    <string name="first_cycle_immunization">1. First cycle of immunization of child completed (as in Manta Card)</string>
+    <string name="last_record_muac_child">2. Last recorded MUAC of child </string>
+    <string name="date_muac_child">3. Date of Last recorded pregnancy MUAC of child </string>
+    <string name="current_muac_child">4. Current MUAC of child </string>
+    <string name="birth_weight_child">5. Birth Weight of Child (As in Manta Card) </string>
+    <string name="current_weight_child">6. Current Weight of child  </string>
+    <string name="are_you_register_in">7. Are you registered in </string>
+    <string name="installment_received">8. How many installments have you received? </string>
+
+
+    <string name="number_anc_completed">1. How Many ANCs Completed  </string>
+    <string name="last_anc_date">2. Enter Last ANC Date </string>
+    <string name="last_pregnancy_weight">3. Last recorded pregnancy weight (As in Mamta Card) </string>
+    <string name="date_recorded_pregnancy_weight">4. Date of last recorded pregnancy weight (As in Mamta Card) </string>
+    <string name="current_preg_weight">4. Current pregnancy weight  </string>
+    <string name="you_register_in">5. Are you registered in </string>
+    <string name="installment_received_till">6. How many installments have you received? </string>
+
 
     <string name="set_location">Select AWC </string>
     <string name="set_language">Select Language</string>
