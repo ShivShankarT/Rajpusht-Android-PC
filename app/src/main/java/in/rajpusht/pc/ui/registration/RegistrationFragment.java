@@ -36,10 +36,8 @@ import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
-import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
-import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.Disposable;
 
@@ -279,7 +277,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 validate();
             }
         });
-
+        Log.i("s", "onViewCreated: "+beneficiaryId);
         if (beneficiaryId != 0)
             dataRepository.getBeneficiaryData(beneficiaryId)
                     .subscribeOn(schedulerProvider.io())
@@ -314,7 +312,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setName(vb.benfName.getText());
         beneficiaryEntity.setHusbandName(vb.benfHusName.getText());
         beneficiaryEntity.setDob(vb.benfAgeDob.getDate());
-        beneficiaryEntity.setAge(Integer.valueOf(vb.benfAge.getText()));
+        if (!TextUtils.isEmpty(vb.benfAge.getText()))
+            beneficiaryEntity.setAge(Integer.valueOf(vb.benfAge.getText()));
         beneficiaryEntity.setChildCount(vb.benfChildCount.getSelectedPos());
         beneficiaryEntity.setMobileNo(vb.benfSelfMobile.getText());
         beneficiaryEntity.setHusbandMobNo(vb.benfHusMobile.getText());
@@ -324,9 +323,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setBahamashahId(vb.benfBahamashaId.getText());
         beneficiaryEntity.setCounselingProv(vb.benfCounseling.getSelectedData());
         beneficiaryEntity.setCounselingSms(vb.benfCousSms.getSelectedPos());
-        beneficiaryEntity.setDataStatus(DataStatus.NEW);
-        beneficiaryEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
-        beneficiaryEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+        beneficiaryEntity.setAwcCode(dataRepository.getSelectedAwcCode());
+
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
@@ -367,9 +365,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             pregnantEntity.setPregnancyId(beneficiaryId);
             Date lmpdate = vb.benfLmp.getDate();
             pregnantEntity.setLmpDate(lmpdate);
-            pregnantEntity.setDataStatus(DataStatus.NEW);
-            pregnantEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
-            pregnantEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
             int days = HUtil.daysBetween(lmpdate, new Date());
             beneficiaryEntity.setStage("PW");
@@ -407,9 +402,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             childEntity.setMotherId(beneficiaryId);
             childEntity.setDeliveryHome(vb.benfChildDeliveryPlaceType.getSelectedPos());
             childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getText());
-            childEntity.setDataStatus(DataStatus.NEW);
-            childEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
-            childEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
 
         }
@@ -471,7 +463,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (vb.benfAgeDob.isVisibleAndEnable())
             validateElement.add(vb.benfAgeDob.validateWthView());
 
-        if (vb.benfAge.isVisible())
+        if (vb.benfAge.isVisibleAndEnable())
             validateElement.add(vb.benfAge.validateWthView());
 
         validateElement.add(vb.benfMobileSelector.validateWthView());
@@ -535,13 +527,14 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             vh.benfRegStage.setSection(1);
         else if (pregnantEntity != null)
             vh.benfRegStage.setSection(0);
-
+        vh.benfRegStage.sendChangedListenerValue();//ui hide
         vh.benfRegStage.setEnableChild(false);//will create conflict
 
         if (childEntity != null) {
             vh.benfChildDob.setDate(childEntity.getDob());
             vh.benfChildDeliveryPlace.setText(childEntity.getDeliveryPlace());
-            vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
+            if (childEntity.getDeliveryHome() != null)
+                vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
         }
 
         if (pregnantEntity != null) {

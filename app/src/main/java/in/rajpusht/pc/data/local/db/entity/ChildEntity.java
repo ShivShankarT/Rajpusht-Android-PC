@@ -19,15 +19,15 @@ public class ChildEntity {
     private long childId;
     private String stage;
     private String subStage;
-    private int childOrder;
+    private Integer childOrder;
     private Date dob;
     private long motherId;
     private String deliveryPlace;
-    private int deliveryHome;
+    private Integer deliveryHome;
     private String createdAt;
     private String updatedAt;
     private DataStatus dataStatus;
-    private int age;
+    private Integer age;
 
 
     @Ignore
@@ -58,11 +58,11 @@ public class ChildEntity {
         this.subStage = subStage;
     }
 
-    public int getChildOrder() {
+    public Integer getChildOrder() {
         return childOrder;
     }
 
-    public void setChildOrder(int childOrder) {
+    public void setChildOrder(Integer childOrder) {
         this.childOrder = childOrder;
     }
 
@@ -88,14 +88,6 @@ public class ChildEntity {
 
     public void setDeliveryPlace(String deliveryPlace) {
         this.deliveryPlace = deliveryPlace;
-    }
-
-    public int getDeliveryHome() {
-        return deliveryHome;
-    }
-
-    public void setDeliveryHome(int deliveryHome) {
-        this.deliveryHome = deliveryHome;
     }
 
     public int getId() {
@@ -138,11 +130,19 @@ public class ChildEntity {
         this.updatedAt = updatedAt;
     }
 
-    public int getAge() {
+    public Integer getDeliveryHome() {
+        return deliveryHome;
+    }
+
+    public void setDeliveryHome(Integer deliveryHome) {
+        this.deliveryHome = deliveryHome;
+    }
+
+    public Integer getAge() {
         return age;
     }
 
-    public void setAge(int age) {
+    public void setAge(Integer age) {
         this.age = age;
     }
 }

@@ -3,12 +3,16 @@ package in.rajpusht.pc.ui.home;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Pair;
 import android.view.View;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
@@ -18,25 +22,30 @@ import javax.inject.Inject;
 import in.rajpusht.pc.BR;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
-import in.rajpusht.pc.data.local.db.AppDatabase;
+import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.databinding.ActivityHomeBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
 import in.rajpusht.pc.ui.login.LoginActivity;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
-import in.rajpusht.pc.ui.splash.SplashScreenActivity;
+import in.rajpusht.pc.utils.Event;
 import in.rajpusht.pc.utils.FragmentUtils;
-import in.rajpusht.pc.utils.SyncUtils;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 
 public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
-
     @Inject
-    AppDatabase appDatabase;
-
+    AppPreferencesHelper appPreferencesHelper;
+    @Inject
+    DataRepository dataRepository;
+    @Inject
+    SchedulerProvider schedulerProvider;
     private HomeViewModel mViewModel;
 
     @Override
@@ -76,9 +85,16 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         NavigationView navigationView1 = getViewDataBinding().navigationView;
         View navigationView = navigationView1.getHeaderView(0);
         navigationView.findViewById(R.id.profile_iv).setOnClickListener(profileClick);
-        navigationView.findViewById(R.id.pc_name_tv).setOnClickListener(profileClick);
-        navigationView.findViewById(R.id.pc_email_tv).setOnClickListener(profileClick);
-        navigationView.findViewById(R.id.pc_sele_awc).setOnClickListener(profileClick);
+        TextView name = navigationView.findViewById(R.id.pc_name_tv);
+        TextView awcName = navigationView.findViewById(R.id.pc_sele_awc);
+        TextView email = navigationView.findViewById(R.id.pc_email_tv);
+        name.setOnClickListener(profileClick);
+        email.setOnClickListener(profileClick);
+        awcName.setOnClickListener(profileClick);
+
+        name.setText(appPreferencesHelper.getCurrentUserName());
+        email.setText(appPreferencesHelper.getCurrentUserEmail());
+        awcName.setText(appPreferencesHelper.getString("awc_name"));
 
         navigationView1.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_select_awc) {
@@ -90,19 +106,43 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             } else if (item.getItemId() == R.id.nav_sync) {
                 syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {
-                SplashScreenActivity.isFirst = true;//todo
                 syncData();
                 startActivity(new Intent(HomeActivity.this, LoginActivity.class));
+            } else if (item.getItemId() == R.id.nav_download) {
+                dataRepository.profileAndBulkDownload().subscribeOn(schedulerProvider.io()).subscribe(new Action() {
+                    @Override
+                    public void run() throws Exception {
+
+                    }
+                }, new Consumer<Throwable>() {
+                    @Override
+                    public void accept(Throwable throwable) throws Exception {
+
+                    }
+                });
             }
             getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
             return false;
         });
 
+        mViewModel.progressLive.observe(this, pairEvent -> {
+            Pair<Boolean, String> progWithdata = pairEvent.getContentIfNotHandled();
+            if (progWithdata != null) {
+                if (progWithdata.first)
+                    showDialog();
+                else
+                    dismissDialog();
+                if (!TextUtils.isEmpty(progWithdata.second)) {
+                    showMessage(getViewDataBinding().fragmentContainer, progWithdata.second);
+                }
+
+            }
+        });
+
     }
 
     private void syncData() {
-        SyncUtils syncUtils = new SyncUtils();
-        syncUtils.syncToServer(appDatabase);
+        mViewModel.syncData();
     }
 
     public void openDrawer() {

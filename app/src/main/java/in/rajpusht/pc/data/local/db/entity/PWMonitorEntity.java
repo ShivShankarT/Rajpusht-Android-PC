@@ -14,6 +14,7 @@ public class PWMonitorEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private long pregnancyId;
+    private long beneficiaryId;
     private String stage;
     private String subStage;
     private Integer ancCount;
@@ -26,8 +27,7 @@ public class PWMonitorEntity {
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
     private DataStatus dataStatus;
-    private String timestamp;
-    private int createdBy;
+    private long createdBy;
     private String createdAt;
     private String updatedAt;
 
@@ -144,13 +144,6 @@ public class PWMonitorEntity {
         this.dataStatus = dataStatus;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
 
     public String getCreatedAt() {
         return createdAt;
@@ -168,12 +161,19 @@ public class PWMonitorEntity {
         this.updatedAt = updatedAt;
     }
 
-    public int getCreatedBy() {
+    public long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(long createdBy) {
         this.createdBy = createdBy;
     }
 
+    public long getBeneficiaryId() {
+        return beneficiaryId;
+    }
+
+    public void setBeneficiaryId(long beneficiaryId) {
+        this.beneficiaryId = beneficiaryId;
+    }
 }

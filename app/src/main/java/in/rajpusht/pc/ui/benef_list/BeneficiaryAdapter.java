@@ -46,18 +46,18 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
         if (befModel.getStage().equals("PW")) {
             holder.benf_name.setText(befModel.getName());
             holder.benf_hus_name.setText("w/o:" + befModel.getHusbandName());
-            holder.date.setText(R.string.lmp_date + AppDateTimeUtils.convertLocalDate(befModel.getLmpDate()));
+            holder.date.setText("LMP Date :" + AppDateTimeUtils.convertLocalDate(befModel.getLmpDate()));
         } else {
             holder.benf_name.setText(befModel.getMotherName());
             holder.benf_hus_name.setText("w/o:" + befModel.getHusbandName());
-            holder.date.setText(R.string.dob + AppDateTimeUtils.convertLocalDate(befModel.getDob()));
+            holder.date.setText("DOB :"+ AppDateTimeUtils.convertLocalDate(befModel.getDob()));
         }
 
         holder.buttonststus.setText(befModel.getCurrentSubStage());
 
         if (!TextUtils.isEmpty(befModel.getPctsId())) {
             holder.pctsId.setVisibility(View.VISIBLE);
-            holder.pctsId.setText(R.string.pcts_id + befModel.getPctsId());
+            holder.pctsId.setText("PCTS ID :"+ befModel.getPctsId());
         } else {
             holder.pctsId.setVisibility(View.GONE);
         }

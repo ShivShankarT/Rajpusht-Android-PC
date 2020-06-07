@@ -19,4 +19,7 @@ public abstract class BeneficiaryDao extends BaseDao<BeneficiaryEntity> {
 
     @Query("select * from beneficiary where dataStatus=:status")
     public abstract List<BeneficiaryEntity> getBeneficiaryNotSync(DataStatus status);
+
+    @Query("Delete FROM beneficiary")
+    public abstract void deleteAll();
 }

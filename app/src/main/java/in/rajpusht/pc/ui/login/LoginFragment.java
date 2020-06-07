@@ -56,7 +56,7 @@ public class LoginFragment extends BaseFragment<LoginFragmentBinding, LoginViewM
                 if (login.first)
                     FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new OtpFragment(), R.id.container, true, FragmentUtils.TRANSITION_NONE);
                 else
-                    getViewDataBinding().passwordFra.setError(login.second);
+                    getViewDataBinding().passwordLayout.setError(login.second);
         });
     }
 }

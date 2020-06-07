@@ -12,16 +12,18 @@ import javax.inject.Inject;
 import in.rajpusht.pc.BR;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
+import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.databinding.ActivitySplashScreenBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.login.LoginActivity;
 
 public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBinding, SplashScreenViewModel> {
-    public static boolean isFirst = true;//todo remove
 
     @Inject
     ViewModelProviderFactory factory;
+    @Inject
+    DataRepository dataRepository;
     private SplashScreenViewModel screenViewModel;
 
     @Override
@@ -47,12 +49,11 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
         new Handler().postDelayed(() -> {
             finish();
             Intent intent;
-            if (isFirst)
+            if (!dataRepository.getLogin())
                 intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
             else
                 intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
             startActivity(intent);
-            isFirst = false;
         }, 100);
     }
 

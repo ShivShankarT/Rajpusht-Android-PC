@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.benef_list;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -27,11 +28,14 @@ import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringFragment;
+import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.BottomDialogFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.functions.Action;
+import io.reactivex.functions.Consumer;
 
 
 public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding, BeneficiaryViewModel> implements BeneficiaryAdapter.OnListFragmentInteractionListener {
@@ -81,12 +85,12 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
-                if (item.getItemId()==1)
-                showColorInfo();
-                else  if (item.getItemId()==2){
+                if (item.getItemId() == 1)
+                    showColorInfo();
+                else if (item.getItemId() == 2) {
                     Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> tuple = HUtil.staticData();
-                    dataRepository.insertOrUpdateBeneficiaryData(tuple.getT1(),tuple.getT3(),tuple.getT2())
-                    .subscribeOn(schedulerProvider.io())
+                    dataRepository.insertOrUpdateBeneficiaryData(tuple.getT1(), tuple.getT3(), tuple.getT2())
+                            .subscribeOn(schedulerProvider.io())
                             .observeOn(schedulerProvider.ui())
                             .subscribe(aBoolean -> {
                                 if (!aBoolean.isEmpty()) {//todo check
@@ -102,7 +106,7 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         });
 
 
-       // dataRepository.bulkdownloadTest();
+        // dataRepository.bulkdownloadTest();
 
         RecyclerView recyclerView = getViewDataBinding().list;
         Context context = view.getContext();
@@ -123,6 +127,24 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
 
             }
         });
+        if (TextUtils.isEmpty(dataRepository.getSelectedAwcCode())) {
+            FragmentUtils.replaceFragment(requireActivity(), new ProfileFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+
+        }
+
+        if (false)
+            dataRepository.profileAndBulkDownload()
+                    .subscribeOn(schedulerProvider.io()).subscribe(new Action() {
+                @Override
+                public void run() throws Exception {
+
+                }
+            }, new Consumer<Throwable>() {
+                @Override
+                public void accept(Throwable throwable) throws Exception {
+
+                }
+            });
     }
 
     private void showColorInfo() {
@@ -133,10 +155,10 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
     @Override
     public void onListFragmentInteraction(BefModel item) {
         if (item.getStage().equals("PW")) {
-            FragmentUtils.replaceFragment(requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage(),item.getPwFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage(), item.getPwFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
 
         } else {
-            FragmentUtils.replaceFragment(requireActivity(), LMMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getCurrentSubStage(),item.getLmFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), LMMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getMotherId(), item.getCurrentSubStage(), item.getLmFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
 
         }
 

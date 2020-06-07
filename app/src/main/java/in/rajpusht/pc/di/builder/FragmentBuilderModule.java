@@ -7,6 +7,7 @@ import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringFragment;
 import in.rajpusht.pc.ui.login.LoginFragment;
 import in.rajpusht.pc.ui.otp.OtpFragment;
+import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
 
@@ -40,6 +41,10 @@ public abstract class FragmentBuilderModule {
     @SuppressWarnings("unused")
     @ContributesAndroidInjector()
     abstract ChangePasswordFragment changePasswordFragment();
+
+    @SuppressWarnings("unused")
+    @ContributesAndroidInjector()
+    abstract ProfileFragment profileFragment();
 
 
 }

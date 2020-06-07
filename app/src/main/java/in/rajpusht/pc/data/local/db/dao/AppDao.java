@@ -6,11 +6,13 @@ import androidx.room.Query;
 import java.util.List;
 
 import in.rajpusht.pc.model.BefModel;
+import in.rajpusht.pc.model.BefRel;
+import io.reactivex.Maybe;
 
 @Dao
 public abstract class AppDao {
 
-    @Query(value ="select u.beneficiaryId, u.name,u.dob,u.stage,u.subStage,u.motherId,b.husbandName, b.name as motherName,p.pregnancyId,b.pctsId, CASE WHEN motherId IS NOT NULL                                                                                                             \n" +
+    @Query(value ="select u.beneficiaryId, u.name,u.dob,u.stage,u.subStage,u.motherId,b.husbandName, b.name as motherName,p.pregnancyId,b.pctsId, CASE WHEN u.motherId IS NOT NULL                                                                                                             \n" +
             "       THEN case when julianday('now') - julianday(u.dob) <=91 then 'LM1'                                                                         \n" +
             "                 when julianday('now') - julianday(u.dob) <=182 then 'LM2'                                                                        \n" +
             "                     when julianday('now') - julianday(u.dob) <=365 then 'LM3'                                                                    \n" +
@@ -37,4 +39,11 @@ public abstract class AppDao {
             "left join pw_monitor pw on pw.pregnancyId=p.pregnancyId and currentSubStage=pw.substage\n" +
             "left join lm_monitor lm on lm.childId=u.beneficiaryId and u.motherId is NOT NULL and currentSubStage=lm.substage")
     public abstract List<BefModel> befModels();
+
+    @Query("select * from beneficiary")
+    public  abstract Maybe<List<BefRel>> befRels();
+
 }
+
+
+

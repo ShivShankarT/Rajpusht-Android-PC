@@ -1,213 +1,220 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <include
-        tools:viewBindingIgnore="true"
-        android:id="@+id/toolbar_ly"
-        layout="@layout/toolbar_ly" />
+    <data>
 
-    <androidx.core.widget.NestedScrollView
-        android:id="@+id/scroll"
+    </data>
+
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/layoutLanguage"
-        android:layout_alignParentTop="true"
-        android:layout_marginTop="?actionBarSize"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+        android:background="@color/white">
 
-        <LinearLayout
+        <include
+            tools:viewBindingIgnore="true"
+            android:id="@+id/toolbar_ly"
+            layout="@layout/toolbar_ly" />
+
+        <androidx.core.widget.NestedScrollView
+            android:id="@+id/scroll"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:layout_above="@+id/layoutLanguage"
+            android:layout_alignParentTop="true"
+            android:layout_marginTop="?actionBarSize"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/white"
-                android:elevation="1dp"
                 android:orientation="vertical">
 
-                <RelativeLayout
-                    android:id="@+id/profile_relative_layout"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:gravity="center">
+                    android:background="@color/white"
+                    android:elevation="1dp"
+                    android:orientation="vertical">
 
-                    <Button
-                        android:id="@+id/edit_btn"
-                        style="@style/Widget.MaterialComponents.Button.TextButton"
-                        android:layout_width="wrap_content"
+                    <RelativeLayout
+                        android:id="@+id/profile_relative_layout"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_alignParentRight="true"
-                        android:layout_marginTop="5dp"
-                        android:minHeight="5dp"
+                        android:gravity="center">
+
+                        <Button
+                            android:id="@+id/edit_btn"
+                            style="@style/Widget.MaterialComponents.Button.TextButton"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentRight="true"
+                            android:layout_marginTop="5dp"
+                            android:minHeight="5dp"
+                            android:padding="3dp"
+                            android:text="Edit"
+                            android:textAllCaps="false"
+                            android:textColor="@color/colorTextGray"
+                            android:textSize="13sp" />
+
+
+                        <ImageView
+                            android:id="@+id/profile_Photo_profile"
+                            android:layout_width="70dp"
+                            android:layout_height="70dp"
+                            android:layout_centerHorizontal="true"
+                            app:srcCompat="@drawable/ic_account" />
+
+                        <TextView
+                            android:id="@+id/profile_name"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/profile_Photo_profile"
+                            android:gravity="center"
+                            tools:text="Full Name"
+                            android:textColor="@color/black" />
+
+                        <TextView
+                            android:id="@+id/profile_email"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/profile_name"
+                            android:layout_marginTop="3dp"
+                            android:gravity="center"
+                            tools:text="Email@gmail.com"
+                            android:textColor="@color/black" />
+
+                    </RelativeLayout>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:fontFamily="@font/roboto_medium"
                         android:padding="3dp"
-                        android:text="Edit"
-                        android:textAllCaps="false"
-                        android:textColor="@color/colorTextGray"
-                        android:textSize="13sp" />
+                        android:text="@string/set_location"
+                        android:textColor="@color/black"
+                        android:textSize="15sp" />
 
+                </LinearLayout>
 
-                    <ImageView
-                        android:id="@+id/profile_Photo_profile"
-                        android:layout_width="70dp"
-                        android:layout_height="70dp"
-                        android:layout_centerHorizontal="true"
-                        app:srcCompat="@drawable/ic_account" />
-
-                    <TextView
-                        android:id="@+id/profileName"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/profile_Photo_profile"
-                        android:gravity="center"
-                        android:text="Full Name"
-                        android:textColor="@color/black" />
-
-                    <TextView
-                        android:id="@+id/profilename"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_below="@+id/profileName"
-                        android:layout_marginTop="3dp"
-                        android:gravity="center"
-                        android:text="Email@gmail.com"
-                        android:textColor="@color/black" />
-
-                </RelativeLayout>
-
-                <TextView
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:fontFamily="@font/roboto_medium"
-                    android:padding="3dp"
-                    android:text="@string/set_location"
-                    android:textColor="@color/black"
-                    android:textSize="15sp" />
+                    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                    tools:listitem="@layout/assigned_location_awc_list_item" />
 
             </LinearLayout>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                tools:listitem="@layout/assigned_location_awc_list_item" />
+        </androidx.core.widget.NestedScrollView>
 
-        </LinearLayout>
-
-    </androidx.core.widget.NestedScrollView>
-
-    <RelativeLayout
-        android:id="@+id/layoutLanguage"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@color/white"
-        android:padding="3dp">
-
-        <LinearLayout
+        <RelativeLayout
+            android:id="@+id/layoutLanguage"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="8dp"
-            android:layout_marginRight="8dp"
-            android:orientation="vertical">
+            android:layout_alignParentBottom="true"
+            android:background="@color/white"
+            android:padding="3dp">
 
-            <TextView
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="7dp"
-                android:text="@string/set_language"
-                android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
-                android:textColor="@color/black"
-                android:textSize="12sp" />
-
-            <View
-                android:layout_width="match_parent"
-                android:layout_height="0.1dp"
-                android:layout_marginLeft="7dp"
-                android:layout_marginTop="5dp"
-                android:layout_marginRight="7dp"
-                android:background="@color/view2" />
-
-
-            <RadioGroup
-                android:id="@+id/languageRadiogroup"
-                android:layout_width="wrap_content"
-                android:layout_height="50dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginLeft="20dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <RadioButton
-                    android:id="@+id/english"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.5"
-                    android:gravity="center"
-                    android:text="@string/radioselecteng" />
-
-                <Space
-                    android:layout_width="33dp"
-                    android:layout_height="2dp" />
-
-                <RadioButton
-                    android:id="@+id/hindi"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:alpha="0.5"
-                    android:gravity="center"
-                    android:text="@string/radioselecthin" />
-            </RadioGroup>
-
-
-            <RelativeLayout
-                android:id="@+id/footer"
-                android:layout_width="match_parent"
-                android:layout_height="55dp"
-                android:background="@color/white"
-                android:elevation="5dp">
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp"
+                android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/logout"
-                    android:layout_width="100dp"
-                    android:layout_height="match_parent"
-                    android:layout_alignParentStart="true"
-                    android:layout_margin="10dp"
-                    android:background="?android:selectableItemBackground"
-                    android:clickable="true"
-                    android:gravity="center_vertical|center_horizontal"
-                    android:text="@string/nav_logout"
-                    android:textColor="@color/colorPrimary" />
-
-                <Button
-                    android:id="@+id/save"
-                    android:layout_width="100dp"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentEnd="true"
-                    android:layout_centerVertical="true"
-                    android:layout_marginEnd="8dp"
-                    android:clickable="true"
-                    android:gravity="center"
-                    android:minWidth="0dp"
-                    android:minHeight="0dp"
-                    android:paddingLeft="8dp"
-                    android:paddingTop="10dp"
-                    android:paddingRight="8dp"
-                    android:paddingBottom="10dp"
-                    android:text="save"
-                    android:textColor="@color/white" />
+                    android:layout_marginLeft="7dp"
+                    android:text="@string/set_language"
+                    android:textAppearance="@style/Base.TextAppearance.AppCompat.Medium"
+                    android:textColor="@color/black"
+                    android:textSize="12sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="0.1dp"
+                    android:layout_marginLeft="7dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginRight="7dp"
+                    android:background="@color/view2" />
 
 
-            </RelativeLayout>
-        </LinearLayout>
+                <RadioGroup
+                    android:id="@+id/languageRadiogroup"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginLeft="20dp"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/english"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:gravity="center"
+                        android:text="@string/radioselecteng" />
+
+                    <Space
+                        android:layout_width="33dp"
+                        android:layout_height="2dp" />
+
+                    <RadioButton
+                        android:id="@+id/hindi"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:alpha="0.5"
+                        android:gravity="center"
+                        android:text="@string/radioselecthin" />
+                </RadioGroup>
+
+
+                <RelativeLayout
+                    android:id="@+id/footer"
+                    android:layout_width="match_parent"
+                    android:layout_height="55dp"
+                    android:background="@color/white"
+                    android:elevation="5dp">
+
+                    <TextView
+                        android:id="@+id/logout"
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentStart="true"
+                        android:layout_margin="10dp"
+                        android:background="?android:selectableItemBackground"
+                        android:clickable="true"
+                        android:gravity="center_vertical|center_horizontal"
+                        android:text="@string/nav_logout"
+                        android:textColor="@color/colorPrimary" />
+
+                    <Button
+                        android:id="@+id/save_btn"
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginEnd="8dp"
+                        android:clickable="true"
+                        android:gravity="center"
+                        android:minWidth="0dp"
+                        android:minHeight="0dp"
+                        android:paddingLeft="8dp"
+                        android:paddingTop="10dp"
+                        android:paddingRight="8dp"
+                        android:paddingBottom="10dp"
+                        android:text="save"
+                        android:textColor="@color/white" />
+
+
+                </RelativeLayout>
+            </LinearLayout>
+        </RelativeLayout>
+
+
     </RelativeLayout>
-
-
-</RelativeLayout>
+</layout>

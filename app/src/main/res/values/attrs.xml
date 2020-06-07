@@ -11,10 +11,15 @@
         <attr name="ff_chbox_none_pos" format="integer" />
         <attr name="ff_maxLength" format="integer" />
         <attr name="ff_input_type" format="enum">
-            <enum name="textPersonName" value="0"/>
-            <enum name="phone_no" value="1"/>
-            <enum name="number" value="2"/>
-            <enum name="numberDecimal" value="3"/>
+            <enum name="textPersonName" value="0" />
+            <enum name="phone_no" value="1" />
+            <enum name="number" value="2" />
+            <enum name="numberDecimal" value="3" />
+        </attr>
+
+        <attr name="ff_measurement_type" format="enum">
+            <enum name="weight" value="0" />
+            <enum name="length" value="1" />
         </attr>
     </declare-styleable>
 

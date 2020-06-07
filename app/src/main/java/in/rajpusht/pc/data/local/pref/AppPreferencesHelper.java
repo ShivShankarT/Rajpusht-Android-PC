@@ -17,11 +17,13 @@
 package in.rajpusht.pc.data.local.pref;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 
 import javax.inject.Inject;
 
 import in.rajpusht.pc.di.PreferenceInfo;
+import in.rajpusht.pc.ui.login.LoginActivity;
 
 /**
  * Created by amitshekhar on 07/07/17.
@@ -42,9 +44,11 @@ public class AppPreferencesHelper {
 
 
     private final SharedPreferences mPrefs;
+    private final Context context;
 
     @Inject
     public AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName) {
+        this.context=context.getApplicationContext();
         mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
     }
 
@@ -97,6 +101,33 @@ public class AppPreferencesHelper {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_NAME, userName).apply();
     }
 
+
+    public String getCurrentUserMob() {
+        return mPrefs.getString("mob", null);
+    }
+
+    public void setCurrentUserMob(String userName) {
+        mPrefs.edit().putString("mob", userName).apply();
+    }
+
+    public String getSelectedAwcCode() {
+        return mPrefs.getString("awc_code", null);
+    }
+
+    public void setAwcCode(String userName) {
+        mPrefs.edit().putString("awc_code", userName).apply();
+    }
+
+
+    public boolean isEnglish() {
+        return mPrefs.getBoolean("is_eng_language", true);
+    }
+
+    public void setLanguage(boolean isEng) {
+        mPrefs.edit().putBoolean("is_eng_language", isEng).apply();
+    }
+
+
     public void putString(String key, String value) {
         mPrefs.edit().putString(key, value).apply();
     }
@@ -106,4 +137,13 @@ public class AppPreferencesHelper {
     }
 
 
+    public void logout() {
+        mPrefs.edit().clear().apply();
+        Intent intent = new Intent(context, LoginActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |
+                Intent.FLAG_ACTIVITY_CLEAR_TASK |
+                Intent.FLAG_ACTIVITY_NEW_TASK);
+        context.startActivity(intent);
+
+    }
 }

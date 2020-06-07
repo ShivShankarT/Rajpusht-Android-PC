@@ -19,11 +19,17 @@ import in.rajpusht.pc.utils.ExpandableRecyclerAdapter;
 public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragment.AssignedLocationListItem> {
 
 
-    private int selectedPos = -1;
+    private String selectedAWC = null;
 
+    private AWCChangeLister awcChangeLister;
 
-    public AwcLocationAdapter(Context context) {
+    public AwcLocationAdapter(Context context, AWCChangeLister awcChangeLister) {
         super(context);
+        this.awcChangeLister = awcChangeLister;
+    }
+
+    public void setSelectedAWC(String selectedAWC) {
+        this.selectedAWC = selectedAWC;
     }
 
     @NonNull
@@ -48,10 +54,10 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
         } else if (holder instanceof AwcViewHolder) {
             AssignedLocationEntity locationEntity = visibleItems.get(position).assignedLocationEntity;
             AwcViewHolder holder1 = (AwcViewHolder) holder;
-            holder1.textviewLocation.setText(locationEntity.getAwcEng());
+            holder1.textviewLocation.setText(locationEntity.getAwcEnglishName());
             holder1.textviewSector.setText(locationEntity.getSectorName());
 
-            if (selectedPos == position) {
+            if (locationEntity.getAwcCode().equals(selectedAWC)) {
                 holder1.radiobutton.setChecked(true);
             } else {
                 holder1.radiobutton.setChecked(false);
@@ -60,7 +66,11 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
 
     }
 
-    public class AwcViewHolder extends ExpandableRecyclerAdapter.ViewHolder implements CompoundButton.OnCheckedChangeListener {
+    public interface AWCChangeLister {
+        void onAwcChange(String awcCode, String awcName);
+    }
+
+    public class AwcViewHolder extends ExpandableRecyclerAdapter.ViewHolder implements CompoundButton.OnCheckedChangeListener, View.OnClickListener {
         private final TextView textviewLocation;
         private final TextView textviewSector;
         private final RadioButton radiobutton;
@@ -77,17 +87,24 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
             txt_lm_count = view.findViewById(R.id.txt_lm_count);
             txt_my_count = view.findViewById(R.id.txt_my_count);
             radiobutton.setOnCheckedChangeListener(this);
+            this.itemView.setOnClickListener(this);
 
         }
 
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            if (buttonView.getId() == R.id.radiobutton) {
-                selectedPos = getLayoutPosition();
+            onClick(null);//todo check
+
+        }
+
+        @Override
+        public void onClick(View v) {
+                AssignedLocationEntity locationEntity = visibleItems.get(getLayoutPosition()).assignedLocationEntity;
+                selectedAWC = locationEntity.getAwcCode();
+                awcChangeLister.onAwcChange(locationEntity.getAwcCode(), locationEntity.getAwcEnglishName());
                 new Handler().postDelayed(AwcLocationAdapter.this::notifyDataSetChanged, 500);
 
-            }
 
         }
     }
@@ -109,5 +126,6 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
             name.setText(title);
         }
     }
+
 
 }

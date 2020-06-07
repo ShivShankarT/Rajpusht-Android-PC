@@ -1,6 +1,10 @@
 package in.rajpusht.pc.data.local.db.entity;
+
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
+
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
 @Entity(tableName = AssignedLocationEntity.TABLE_NAME)
 public class AssignedLocationEntity {
@@ -8,20 +12,42 @@ public class AssignedLocationEntity {
 
     @PrimaryKey(autoGenerate = true)
     private Integer id;
-    private String distCode;
+    @SerializedName("projectCode")
+    @Expose
     private String projectCode;
-    private String sectorCode;
-    private String villageCode;
-    private String villageEng;
-    private String villageHindi;
+    @SerializedName("projectEnglishName")
+    @Expose
+    private String projectEnglishName;
+    @SerializedName("projectHindiName")
+    @Expose
+    private String projectHindiName;
+    @SerializedName("districtCode")
+    @Expose
+    private String districtCode;
+    @SerializedName("districtEnglishName")
+    @Expose
+    private String districtEnglishName;
+    @SerializedName("districtHindiName")
+    @Expose
+    private String districtHindiName;
+    @SerializedName("awcCode")
+    @Expose
     private String awcCode;
-    private String surveyorName;
-    private String surveyorId;
+    @SerializedName("awcEnglishName")
+    @Expose
+    private String awcEnglishName;
+    @SerializedName("awcHindiName")
+    @Expose
+    private String awcHindiName;
+    @SerializedName("sectorCode")
+    @Expose
+    private String sectorCode;
+    @SerializedName("sectorName")
+    @Expose
     private String sectorName;
-    private String projectName;
-    private String awcHindi;
-    private String awcEng;
-    private String login;
+    @SerializedName("sectorHindiName")
+    @Expose
+    private String sectorHindiName;
 
     public Integer getId() {
         return id;
@@ -29,14 +55,6 @@ public class AssignedLocationEntity {
 
     public void setId(Integer id) {
         this.id = id;
-    }
-
-    public String getDistCode() {
-        return distCode;
-    }
-
-    public void setDistCode(String distCode) {
-        this.distCode = distCode;
     }
 
     public String getProjectCode() {
@@ -47,36 +65,44 @@ public class AssignedLocationEntity {
         this.projectCode = projectCode;
     }
 
-    public String getSectorCode() {
-        return sectorCode;
+    public String getProjectEnglishName() {
+        return projectEnglishName;
     }
 
-    public void setSectorCode(String sectorCode) {
-        this.sectorCode = sectorCode;
+    public void setProjectEnglishName(String projectEnglishName) {
+        this.projectEnglishName = projectEnglishName;
     }
 
-    public String getVillageCode() {
-        return villageCode;
+    public String getProjectHindiName() {
+        return projectHindiName;
     }
 
-    public void setVillageCode(String villageCode) {
-        this.villageCode = villageCode;
+    public void setProjectHindiName(String projectHindiName) {
+        this.projectHindiName = projectHindiName;
     }
 
-    public String getVillageEng() {
-        return villageEng;
+    public String getDistrictCode() {
+        return districtCode;
     }
 
-    public void setVillageEng(String villageEng) {
-        this.villageEng = villageEng;
+    public void setDistrictCode(String districtCode) {
+        this.districtCode = districtCode;
     }
 
-    public String getVillageHindi() {
-        return villageHindi;
+    public String getDistrictEnglishName() {
+        return districtEnglishName;
     }
 
-    public void setVillageHindi(String villageHindi) {
-        this.villageHindi = villageHindi;
+    public void setDistrictEnglishName(String districtEnglishName) {
+        this.districtEnglishName = districtEnglishName;
+    }
+
+    public String getDistrictHindiName() {
+        return districtHindiName;
+    }
+
+    public void setDistrictHindiName(String districtHindiName) {
+        this.districtHindiName = districtHindiName;
     }
 
     public String getAwcCode() {
@@ -87,20 +113,28 @@ public class AssignedLocationEntity {
         this.awcCode = awcCode;
     }
 
-    public String getSurveyorName() {
-        return surveyorName;
+    public String getAwcEnglishName() {
+        return awcEnglishName;
     }
 
-    public void setSurveyorName(String surveyorName) {
-        this.surveyorName = surveyorName;
+    public void setAwcEnglishName(String awcEnglishName) {
+        this.awcEnglishName = awcEnglishName;
     }
 
-    public String getSurveyorId() {
-        return surveyorId;
+    public String getAwcHindiName() {
+        return awcHindiName;
     }
 
-    public void setSurveyorId(String surveyorId) {
-        this.surveyorId = surveyorId;
+    public void setAwcHindiName(String awcHindiName) {
+        this.awcHindiName = awcHindiName;
+    }
+
+    public String getSectorCode() {
+        return sectorCode;
+    }
+
+    public void setSectorCode(String sectorCode) {
+        this.sectorCode = sectorCode;
     }
 
     public String getSectorName() {
@@ -111,35 +145,11 @@ public class AssignedLocationEntity {
         this.sectorName = sectorName;
     }
 
-    public String getProjectName() {
-        return projectName;
+    public String getSectorHindiName() {
+        return sectorHindiName;
     }
 
-    public void setProjectName(String projectName) {
-        this.projectName = projectName;
-    }
-
-    public String getAwcHindi() {
-        return awcHindi;
-    }
-
-    public void setAwcHindi(String awcHindi) {
-        this.awcHindi = awcHindi;
-    }
-
-    public String getAwcEng() {
-        return awcEng;
-    }
-
-    public void setAwcEng(String awcEng) {
-        this.awcEng = awcEng;
-    }
-
-    public String getLogin() {
-        return login;
-    }
-
-    public void setLogin(String login) {
-        this.login = login;
+    public void setSectorHindiName(String sectorHindiName) {
+        this.sectorHindiName = sectorHindiName;
     }
 }

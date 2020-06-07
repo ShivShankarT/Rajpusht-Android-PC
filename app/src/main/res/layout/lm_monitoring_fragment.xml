@@ -13,9 +13,9 @@
         android:background="@color/white">
 
         <include
-            tools:viewBindingIgnore="true"
             android:id="@+id/toolbar_ly"
-            layout="@layout/toolbar_ly" />
+            layout="@layout/toolbar_ly"
+            tools:viewBindingIgnore="true" />
 
         <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
@@ -23,11 +23,18 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
-                android:animateLayoutChanges="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical"
                 tools:context=".ui.lm_monitoring.LMMonitoringFragment">
+                <TextView
+                    android:layout_gravity="right"
+                    android:padding="10dp"
+                    android:text="Edit"
+                    android:id="@+id/edit_btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"/>
 
                 <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
                     android:id="@+id/benf_child_immune"
@@ -38,14 +45,15 @@
                     app:ff_selections="@array/YES_NO" />
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
                     android:id="@+id/benf_child_last_rec_muac"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
-                    app:ff_maxLength="3"
-                    app:ff_label="2. Last recorded MUAC of child"
                     app:ff_input_type="numberDecimal"
+                    app:ff_label="2. Last recorded MUAC of child"
+                    app:ff_maxLength="3"
+                    app:ff_measurement_type="length"
                     app:ff_required="true" />
 
 
@@ -58,43 +66,55 @@
                     app:ff_required="true" />
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
                     android:id="@+id/benf_child_current_muac"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="MUAC"
-                    app:ff_label="4. Current MUAC of child"
                     app:ff_input_type="numberDecimal"
+                    app:ff_label="4. Current MUAC of child"
+                    app:ff_measurement_type="length"
                     app:ff_required="true" />
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
                     android:id="@+id/benf_birth_child_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
+                    app:ff_input_type="numberDecimal"
                     app:ff_label="5. Birth Weight of Child (As in Manta Card)"
-                    app:ff_required="true"
                     app:ff_maxLength="5"
-                    app:ff_input_type="numberDecimal"/>
+                    app:ff_required="true" />
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
                     android:id="@+id/benf_current_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
+                    app:ff_input_type="numberDecimal"
                     app:ff_label="6. Current Weight of child "
-                    app:ff_required="true"
                     app:ff_maxLength="5"
-                    app:ff_input_type="numberDecimal"/>
+                    app:ff_required="true" />
+
+                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
+                    android:id="@+id/benf_current_height"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_hint="Height"
+                    app:ff_input_type="numberDecimal"
+                    app:ff_label="7. Current Height of child "
+                    app:ff_maxLength="5"
+                    app:ff_measurement_type="length"
+                    app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
                     android:id="@+id/benf_registered_programme"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="7. Are you registered in"
-                    app:ff_required="true"
                     app:ff_chbox_none_pos="4"
+                    app:ff_label="8. Are you registered in"
+                    app:ff_required="true"
                     app:ff_selections="@array/benf_registered_in" />
 
 
@@ -103,7 +123,7 @@
                     style="@style/FormTextMini"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="8. How many installments have you received?" />
+                    android:text="9. How many installments have you received?" />
 
                 <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
                     android:id="@+id/benf_pmmvvy_count"
@@ -146,11 +166,11 @@
                     app:ff_selections="@array/count_0_2_more" />
 
                 <Button
-                    android:layout_gravity="center_horizontal"
-                    android:text="save"
                     android:id="@+id/save_btn"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"/>
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="save" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

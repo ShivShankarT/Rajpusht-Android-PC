@@ -20,6 +20,11 @@
             android:title="@string/sync" />
 
         <item
+            android:id="@+id/nav_download"
+            android:icon="@drawable/ic_account"
+            android:title="Download(tesing)" />
+
+        <item
             android:id="@+id/nav_changePassword"
             android:icon="@drawable/ic_changepassword_black_24dp"
             android:title="@string/change_password" />

@@ -1,10 +1,12 @@
 package in.rajpusht.pc.custom.utils;
 
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -194,8 +196,8 @@ public class HUtil {
         String j = "{\"t1\":{\"dob\":\"Jun 30, 1984 12:00:00 AM\",\"age\":36,\"bahamashahId\":\"wr6688899\",\"beneficiaryId\":1590818137299,\"caste\":\"SC\",\"childCount\":2,\"collectedDataSubStage\":[],\"counselingProv\":\"YES\",\"counselingSms\":1,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"economic\":\"BPL\",\"husbandMobNo\":\"9736484543\",\"husbandName\":\"Ram Kumar\",\"id\":1,\"mobileNo\":\"9876543218\",\"name\":\"Shavani\",\"pctsId\":\"13466778\",\"pmmvyInstallment\":1,\"stage\":\"PW\",\"subStage\":\"PW\",\"updatedAt\":\"2020-05-30 11:25:37\"},\"t2\":{\"beneficiaryId\":1590818137299,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"id\":1,\"lmpDate\":\"Jun 4, 2020 12:00:00 AM\",\"pregnancyId\":1590818137299,\"updatedAt\":\"2020-05-30 11:25:37\"},\"t3\":{\"dob\":\"Oct 8, 2019 12:00:00 AM\",\"childId\":15908181372991,\"childOrder\":1,\"collectedDataSubStage\":[],\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"deliveryHome\":0,\"deliveryPlace\":\"Bhavu\",\"id\":1,\"motherId\":1590818137299,\"stage\":\"LM\",\"subStage\":\"LM\",\"updatedAt\":\"2020-05-30 11:25:37\"}}";
         String json = j.replace("1590818137299", System.currentTimeMillis() + "");
         Date date = new Date();
-        json = json.replace("Shavani",  "Shavani "+ date.getMinutes()+date.getSeconds());
-         json = json.replace("13466778",  System.currentTimeMillis()+"" );
+        json = json.replace("Shavani", "Shavani " + date.getMinutes() + date.getSeconds());
+        json = json.replace("13466778", System.currentTimeMillis() + "");
 
         Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> tuple = new Gson().fromJson(json, new TypeToken<Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity>>() {
         }.getType());
@@ -205,6 +207,29 @@ public class HUtil {
 
         return tuple;
 
+    }
+
+    public static String convYestoY(@Nullable String text) {
+        if (!TextUtils.isEmpty(text))
+            switch (text) {
+                case "YES":
+                    return "Y";
+                case "NO":
+                    return "N";
+            }
+        return null;
+    }
+
+
+    public static String convYtoYes(@Nullable String text) {
+        if (!TextUtils.isEmpty(text))
+            switch (text) {
+                case "Y":
+                    return "YES";
+                case "N":
+                    return "NO";
+            }
+        return null;
     }
 
 

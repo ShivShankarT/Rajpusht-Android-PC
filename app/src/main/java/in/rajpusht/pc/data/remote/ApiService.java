@@ -1,9 +1,14 @@
 package in.rajpusht.pc.data.remote;
 
 
+import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import org.json.JSONArray;
+
 import in.rajpusht.pc.model.ApiResponse;
+import in.rajpusht.pc.model.ProfileDetail;
 import io.reactivex.Single;
 import retrofit2.http.Body;
 import retrofit2.http.Field;
@@ -20,43 +25,43 @@ public interface ApiService {
 
     @POST("verifyOtp")
     @FormUrlEncoded
-    Single<ApiResponse<JsonObject>> verifyOtp(@Field("otp") String opt);
+    Single<ApiResponse<JsonElement>> verifyOtp(@Field("otp") String opt);
 
 
-    @POST("/changePassword")
+    @POST("changePassword")
     @FormUrlEncoded
     Single<ApiResponse<JsonObject>> changePassword(@Field("oldPassword") String oldPassword,
                                                    @Field("newPassword") String newPassword);
 
 
-    @POST("/forgotPassword")
+    @POST("forgotPassword")
     @FormUrlEncoded
     Single<ApiResponse<JsonObject>> forgotPassword(@Field("email") String oldPassword);
 
 
-    @POST("/setPassword")
+    @POST("setPassword")
     @FormUrlEncoded
     Single<ApiResponse<JsonObject>> setPassword(@Field("resetOtp") String resetOtp,
                                                 @Field("newPassword") String newPassword);
 
 
-    @POST("/resendOtp")
+    @POST("resendOtp")
     @FormUrlEncoded
     Single<ApiResponse<JsonObject>> resendOtp();
 
 
-    @GET("/profileDetail")
-    Single<ApiResponse<JsonObject>> profileDetail();
+    @GET("profileDetail")
+    Single<ApiResponse<ProfileDetail>> profileDetail();
 
 
-    @POST("/logout")
+    @POST("logout")
     Single<ApiResponse<JsonObject>> logout();
 
-    @GET("/bulkDownload")
+    @GET("bulkDownload")
     Single<ApiResponse<JsonObject>> bulkDownload();
 
-    @POST("/bulkUpload")
-    Single<ApiResponse<JsonObject>> bulkUpload(@Body JsonObject jsonObject);
+    @POST("bulkUpload")
+    Single<ApiResponse<JsonObject>> bulkUpload(@Body JsonArray jsonArray);
 
 
 }

@@ -14,6 +14,7 @@ public abstract class PregnantDao extends BaseDao<PregnantEntity> {
     @Query("select * from pregnant where beneficiaryId=:beneficiaryId")
     public abstract List<PregnantEntity> getPregnantById(long beneficiaryId);
 
-
+    @Query("Delete FROM pregnant")
+    public abstract void deleteAll();
 
 }

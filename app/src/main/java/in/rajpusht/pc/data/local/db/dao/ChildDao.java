@@ -15,5 +15,8 @@ public abstract class ChildDao extends BaseDao<ChildEntity> {
     public abstract List<ChildEntity> childEntities(long motherId);
 
 
+    @Query("Delete FROM child")
+    public abstract void deleteAll();
+
 
 }

@@ -1,6 +1,7 @@
 package in.rajpusht.pc.ui.lm_monitoring;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
@@ -12,7 +13,6 @@ import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -23,13 +23,18 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
+import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
+import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
+import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
-import in.rajpusht.pc.utils.AppDateTimeUtils;
+import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.Completable;
 import io.reactivex.functions.Consumer;
 
 public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBinding, LMMonitoringViewModel> {
@@ -45,11 +50,14 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     private String subStage;
     private Long lmFormId;
     private LMMonitorEntity mLmMonitorEntity;
+    private long motherId;
+    private Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> beneficiaryEntityPregnantEntityChildEntityTuple;
 
-    public static LMMonitoringFragment newInstance(long childId, String subStage, Long lmFormId) {
+    public static LMMonitoringFragment newInstance(long childId, long motherId, String subStage, Long lmFormId) {
         LMMonitoringFragment lmMonitoringFragment = new LMMonitoringFragment();
         Bundle args = new Bundle();
         args.putLong("id", childId);
+        args.putLong("motherId", motherId);
         args.putString("subStage", subStage);
         args.putSerializable("lmFormId", lmFormId);
         lmMonitoringFragment.setArguments(args);
@@ -76,8 +84,10 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         childId = getArguments().getLong("id");
+        motherId = getArguments().getLong("motherId");
         subStage = getArguments().getString("subStage");
         lmFormId = (Long) getArguments().getSerializable("lmFormId");
+        Log.i("motherId", "newInstance: motherIddd"+motherId);
     }
 
     @Override
@@ -92,6 +102,14 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             @Override
             public void onClick(View v) {
                 requireActivity().onBackPressed();
+            }
+        });
+        viewDataBinding.editBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentUtils.replaceFragment(requireActivity(),
+                        RegistrationFragment.newInstance(motherId), R.id.fragment_container,
+                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
             }
         });
         viewDataBinding.benfRegisteredProgramme.sethValueChangedListener(new HValueChangedListener<Set<Integer>>() {
@@ -146,37 +164,46 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
             }
         });
-        if (lmFormId != null)
-            fetchFormUiData();
+        fetchFormUiData();
 
 
     }
 
     private void fetchFormUiData() {
-
-        dataRepository.lmMonitorById(lmFormId)
+        dataRepository.getBeneficiaryData(motherId)
                 .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui()).subscribe(new Consumer<LMMonitorEntity>() {
-            @Override
-            public void accept(LMMonitorEntity lmMonitorEntity) throws Exception {
+                .observeOn(schedulerProvider.ui())
+                .subscribe((tuple, throwable) -> {
+                    if (throwable != null)
+                        throwable.printStackTrace();
+                    beneficiaryEntityPregnantEntityChildEntityTuple = tuple;
+                });
 
-                if (lmMonitorEntity != null) {
-                    LMMonitoringFragment.this.mLmMonitorEntity = lmMonitorEntity;
-                    setFormUiData(lmMonitorEntity);
+        if (lmFormId != null)
+            dataRepository.lmMonitorById(lmFormId)
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui()).subscribe(new Consumer<LMMonitorEntity>() {
+                @Override
+                public void accept(LMMonitorEntity lmMonitorEntity) throws Exception {
+
+                    if (lmMonitorEntity != null) {
+                        LMMonitoringFragment.this.mLmMonitorEntity = lmMonitorEntity;
+                        setFormUiData(lmMonitorEntity);
+                    }
                 }
-            }
-        });
+            });
     }
 
     private void setFormUiData(LMMonitorEntity lmMonitorEntity) {
 
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         vb.benfChildImmune.setSectionByData(lmMonitorEntity.getIsFirstImmunizationComplete());
-        vb.benfChildLastRecMuac.setText(String.valueOf(lmMonitorEntity.getLastMuac()));
+        vb.benfChildLastRecMuac.setText(lmMonitorEntity.getLastMuac());
         vb.benfChildLastRecMuacDate.setDate(lmMonitorEntity.getLastMuacCheckDate());
-        vb.benfChildCurrentMuac.setText(String.valueOf(lmMonitorEntity.getCurrentMuac()));
-        vb.benfBirthChildWeight.setText(String.valueOf(lmMonitorEntity.getBirthWeight()));
-        vb.benfCurrentWeight.setText(String.valueOf(lmMonitorEntity.getChildWeight()));
+        vb.benfChildCurrentMuac.setText(lmMonitorEntity.getCurrentMuac());
+        vb.benfBirthChildWeight.setText(lmMonitorEntity.getBirthWeight());
+        vb.benfCurrentWeight.setText(lmMonitorEntity.getChildWeight());
+        vb.benfCurrentHeight.setText(lmMonitorEntity.getChildHeight());
 
         Set<Integer> regScheme = new HashSet<>();
 
@@ -215,6 +242,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         validateElement.add(vb.benfBirthChildWeight.validateWthView());
         validateElement.add(vb.benfChildCurrentMuac.validateWthView());
         validateElement.add(vb.benfCurrentWeight.validateWthView());
+        validateElement.add(vb.benfCurrentHeight.validateWthView());
 
 
         validateElement.add(vb.benfRegisteredProgramme.validateWthView());
@@ -247,11 +275,12 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         lmMonitorEntity.setStage("LM");
         lmMonitorEntity.setSubStage(subStage);
         lmMonitorEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
-        lmMonitorEntity.setLastMuac(Double.valueOf(vb.benfChildLastRecMuac.getText()));
+        lmMonitorEntity.setLastMuac(vb.benfChildLastRecMuac.getMeasValue());
         lmMonitorEntity.setLastMuacCheckDate(vb.benfChildLastRecMuacDate.getDate());
-        lmMonitorEntity.setCurrentMuac(Double.valueOf(vb.benfChildCurrentMuac.getText()));
-        lmMonitorEntity.setBirthWeight(Double.valueOf(vb.benfBirthChildWeight.getText()));
-        lmMonitorEntity.setChildWeight(Double.valueOf(vb.benfCurrentWeight.getText()));
+        lmMonitorEntity.setCurrentMuac(vb.benfChildCurrentMuac.getMeasValue());
+        lmMonitorEntity.setBirthWeight(vb.benfBirthChildWeight.getMeasValue());
+        lmMonitorEntity.setChildWeight(vb.benfCurrentWeight.getMeasValue());
+        lmMonitorEntity.setChildHeight(vb.benfCurrentHeight.getMeasValue());
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
@@ -270,11 +299,24 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         if (data.contains(3)) {
             lmMonitorEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
         }
+        lmMonitorEntity.setMotherId(motherId);
 
-        lmMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
-        lmMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+        BeneficiaryEntity beneficiaryEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT1();
+        PregnantEntity pregnantEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT2();
+        ChildEntity childEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT3();
 
-        dataRepository.insertOrUpdateLmMonitor(lmMonitorEntity)
+        if (pregnantEntity == null) {
+            beneficiaryEntity.setStage(lmMonitorEntity.getStage());
+            beneficiaryEntity.setSubStage(lmMonitorEntity.getSubStage());
+            dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity);
+        }
+
+        childEntity.setStage(lmMonitorEntity.getStage());
+        childEntity.setSubStage(lmMonitorEntity.getSubStage());
+
+        Completable.concatArray(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements(),
+                dataRepository.insertOrUpdateChild(childEntity).ignoreElements(),
+                dataRepository.insertOrUpdateLmMonitor(lmMonitorEntity))
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
             showAlertDialog("Beneficiary Child Report Saved Successfully", () -> {
@@ -283,7 +325,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                         .remove(LMMonitoringFragment.this)
                         .commit();
 
-                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                FragmentUtils.replaceFragment(requireActivity(),
                         CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
                         true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
 

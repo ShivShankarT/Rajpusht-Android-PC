@@ -1,22 +1,26 @@
 package in.rajpusht.pc.ui.base;
 
 
-
 import android.annotation.TargetApi;
 import android.content.Context;
 import android.content.pm.PackageManager;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import dagger.android.AndroidInjection;
 import dagger.android.support.DaggerAppCompatActivity;
+import in.rajpusht.pc.utils.MyProgressDialogFragment;
 import in.rajpusht.pc.utils.NetworkUtils;
 
 public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseViewModel> extends DaggerAppCompatActivity {
@@ -26,6 +30,7 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     // since its going to be common for all the activities
     private T mViewDataBinding;
     private V mViewModel;
+    private MyProgressDialogFragment myDialogFragment;
 
     /**
      * Override for set binding variable
@@ -47,7 +52,6 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
      * @return view model instance
      */
     public abstract V getViewModel();
-
 
 
     @Override
@@ -100,6 +104,37 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         this.mViewModel = mViewModel == null ? getViewModel() : mViewModel;
         mViewDataBinding.setVariable(getBindingVariable(), mViewModel);
         mViewDataBinding.executePendingBindings();
+    }
+
+    public void showDialog() {
+        dismissDialog();
+        myDialogFragment = new MyProgressDialogFragment(this);
+        myDialogFragment.show();
+        myDialogFragment.setCancelable(false);
+
+    }
+
+    public void dismissDialog() {
+
+        if (myDialogFragment != null) {
+            myDialogFragment.dismiss();
+            myDialogFragment = null;
+        }
+    }
+    public void showMessage( View view,String message) {
+        if (isFinishing())
+            return;
+        Snackbar snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        view = snack.getView();
+        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snack.show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        dismissDialog();
+        super.onDestroy();
     }
 }
 

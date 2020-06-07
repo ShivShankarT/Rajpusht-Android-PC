@@ -1,7 +1,6 @@
 package in.rajpusht.pc.model;
 
 import java.util.Date;
-import java.util.List;
 
 public class BefModel {
     private Long beneficiaryId;
@@ -9,7 +8,7 @@ public class BefModel {
     private Date dob;
     private String stage;
     private String subStage;
-    private String motherId;
+    private long motherId;
     private String husbandName;
     private String motherName;
     private long pregnancyId;
@@ -84,11 +83,11 @@ public class BefModel {
         this.subStage = subStage;
     }
 
-    public String getMotherId() {
+    public long getMotherId() {
         return motherId;
     }
 
-    public void setMotherId(String motherId) {
+    public void setMotherId(long motherId) {
         this.motherId = motherId;
     }
 

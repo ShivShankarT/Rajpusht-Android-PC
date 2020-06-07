@@ -103,7 +103,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         viewDataBinding.benfDtLy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                FragmentUtils.replaceFragment(requireActivity(),
                         RegistrationFragment.newInstance(beneficiaryId), R.id.fragment_container,
                         true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
             }
@@ -112,7 +112,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         viewDataBinding.weightIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                FragmentUtils.replaceFragment(requireActivity(),
                         CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
                         true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
             }
@@ -206,9 +206,9 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         PwMonitoringFragmentBinding vb = getViewDataBinding();
         vb.benfAncCount.setSection(pwMonitorEntity.getAncCount());
         vb.benfAncDate.setDate(pwMonitorEntity.getLastAnc());
-        vb.benfMamtaCdWeight.setText(String.valueOf(pwMonitorEntity.getLastWeightInMamta()));
+        vb.benfMamtaCdWeight.setText(pwMonitorEntity.getLastWeightInMamta());
         vb.benfLastcheckupdate.setDate(pwMonitorEntity.getLastWeightCheckDate());
-        vb.benfCurrentWeight.setText(String.valueOf(pwMonitorEntity.getCurrentWeight()));
+        vb.benfCurrentWeight.setText(pwMonitorEntity.getCurrentWeight());
 
         Set<Integer> regScheme = new HashSet<>();
 
@@ -278,11 +278,12 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         pwMonitorEntity.setStage("PW");
         pwMonitorEntity.setSubStage(subStage);
         pwMonitorEntity.setPregnancyId(pregnancyId);
+        pwMonitorEntity.setBeneficiaryId(beneficiaryId);
         pwMonitorEntity.setAncCount(vb.benfAncCount.getSelectedPos());
         pwMonitorEntity.setLastAnc(vb.benfAncDate.getDate());
-        pwMonitorEntity.setLastWeightInMamta(Double.valueOf(vb.benfMamtaCdWeight.getText()));
+        pwMonitorEntity.setLastWeightInMamta(vb.benfMamtaCdWeight.getMeasValue());
         pwMonitorEntity.setLastWeightCheckDate(vb.benfLastcheckupdate.getDate());
-        pwMonitorEntity.setCurrentWeight(Double.valueOf(vb.benfCurrentWeight.getText()));
+        pwMonitorEntity.setCurrentWeight(vb.benfCurrentWeight.getMeasValue());
 
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
@@ -303,11 +304,9 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             pwMonitorEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
         }
 
-        pwMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
-        pwMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
 
 
-        dataRepository.updateBeneficiary(beneficiaryEntity)
+        dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe((d) -> {
@@ -319,7 +318,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
                     showAlertDialog("Beneficiary Report Saved Successfully", () -> {
-                        FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
+                        FragmentUtils.replaceFragment(requireActivity(),
                                 CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
                                 true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
 

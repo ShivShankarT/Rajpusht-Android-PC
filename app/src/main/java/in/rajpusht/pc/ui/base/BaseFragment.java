@@ -3,11 +3,13 @@ package in.rajpusht.pc.ui.base;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
+import android.widget.TextView;
 
 import androidx.annotation.CallSuper;
 import androidx.annotation.LayoutRes;
@@ -17,6 +19,8 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
+
+import com.google.android.material.snackbar.Snackbar;
 
 import dagger.android.support.AndroidSupportInjection;
 
@@ -117,6 +121,17 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
             if (runnable != null)
                 runnable.run();
         }).show();
+    }
+
+    public void showMessage(String message) {
+        if (isDetached() || getContext() == null ||getView() == null)
+            return;
+        View view = getView();
+        Snackbar snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
+        view = snack.getView();
+        TextView tv = (TextView) view.findViewById(com.google.android.material.R.id.snackbar_text);
+        tv.setTextColor(Color.WHITE);
+        snack.show();
     }
 
 }

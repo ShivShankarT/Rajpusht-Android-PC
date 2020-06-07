@@ -110,12 +110,12 @@
                     app:ff_required="true" />
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
                     android:id="@+id/benf_mamta_cd_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
-                    app:ff_input_type="numberDecimal"
+                    app:ff_measurement_type="weight"
                     app:ff_label="3. Last recorded pregnancy weight (As in Mamta Card)"
                     app:ff_maxLength="3"
                     app:ff_required="true" />
@@ -130,11 +130,12 @@
                     app:ff_required="true" />
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
                     android:id="@+id/benf_current_weight"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
+                    app:ff_measurement_type="weight"
                     app:ff_input_type="numberDecimal"
                     app:ff_label="5. Current pregnancy weight "
                     app:ff_maxLength="3"

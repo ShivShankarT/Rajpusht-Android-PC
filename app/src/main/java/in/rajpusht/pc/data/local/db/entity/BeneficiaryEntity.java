@@ -1,5 +1,6 @@
 package in.rajpusht.pc.data.local.db.entity;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
 
@@ -10,9 +11,9 @@ import java.util.Date;
 import in.rajpusht.pc.model.DataStatus;
 
 
-@Entity(tableName = BeneficiaryEntity.TABLE)
+@Entity(tableName = BeneficiaryEntity.TABLE_NAME)
 public class BeneficiaryEntity {
-    public static final String TABLE = "beneficiary";
+    public static final String TABLE_NAME = "beneficiary";
 
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -24,24 +25,23 @@ public class BeneficiaryEntity {
     private String stage;
     private String subStage;
     private Date dob;
-    private int childCount;
+    private Integer childCount;
     private Integer age;
     private String caste;
     private String economic;
     private String pctsId;
     private String bahamashahId;
     private String counselingProv;
-    private int counselingSms;
+    private Integer counselingSms;
     private Integer pmmvyInstallment;
     private Integer igmpyInstallment;
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
     private DataStatus dataStatus;
     private String awcCode;
-    private int createdBy;
+    private long createdBy;
     private String createdAt;
     private String updatedAt;
-
 
     public int getId() {
         return id;
@@ -156,11 +156,11 @@ public class BeneficiaryEntity {
         this.counselingProv = counselingProv;
     }
 
-    public int getCounselingSms() {
+    public Integer getCounselingSms() {
         return counselingSms;
     }
 
-    public void setCounselingSms(int counselingSms) {
+    public void setCounselingSms(Integer counselingSms) {
         this.counselingSms = counselingSms;
     }
 
@@ -212,11 +212,11 @@ public class BeneficiaryEntity {
         this.rajshriInstallment = rajshriInstallment;
     }
 
-    public int getChildCount() {
+    public Integer getChildCount() {
         return childCount;
     }
 
-    public void setChildCount(int childCount) {
+    public void setChildCount(Integer childCount) {
         this.childCount = childCount;
     }
 
@@ -245,11 +245,12 @@ public class BeneficiaryEntity {
         this.awcCode = awcCode;
     }
 
-    public int getCreatedBy() {
+    public long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(long createdBy) {
         this.createdBy = createdBy;
     }
+
 }

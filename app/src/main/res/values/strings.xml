@@ -141,7 +141,7 @@
 
     <string-array name="benf_mobile_both">
         <item>Self</item>
-        <item>Husband/Father\'s</item>
+        <item>Husband</item>
         <item>Both</item>
     </string-array>
 

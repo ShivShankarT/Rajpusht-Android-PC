@@ -26,7 +26,7 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
     private int mSelectedPos = -1;
     private TextInputLayout edf_txt_inp_ly;
     private HValidatorListener<Integer> hValidatorListener;
-    private HValueChangedListener hValueChangedListener;
+    private HValueChangedListener<Integer> hValueChangedListener;
     private boolean required;
     RadioGroup edf_ch_gp;
 
@@ -131,7 +131,9 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
     }
 
 
-    public void setSection(int pos) {
+    public void setSection(Integer pos) {
+        if (pos == null)
+            return;
         edf_ch_gp.setOnCheckedChangeListener(null);
         if (pos < edf_ch_gp.getChildCount()) {
             mSelectedPos = pos;
@@ -140,6 +142,11 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
         }
         edf_ch_gp.setOnCheckedChangeListener(this);
 
+    }
+
+    public  void sendChangedListenerValue(){
+        if (hValueChangedListener!=null&&mSelectedPos!=-1)
+            hValueChangedListener.onValueChanged(mSelectedPos);
     }
 
    }

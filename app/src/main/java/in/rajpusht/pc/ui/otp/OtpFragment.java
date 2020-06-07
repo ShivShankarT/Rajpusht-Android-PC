@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.otp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -12,13 +13,18 @@ import javax.inject.Inject;
 import in.rajpusht.pc.BR;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
+import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
+import in.rajpusht.pc.databinding.OtpFragmentBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.home.HomeActivity;
 
-public class OtpFragment extends BaseFragment {
+public class OtpFragment extends BaseFragment<OtpFragmentBinding, OtpViewModel> {
 
     @Inject
     ViewModelProviderFactory factory;
+
+    @Inject
+    AppPreferencesHelper appPreferencesHelper;
 
     public static OtpFragment newInstance() {
         return new OtpFragment();
@@ -44,10 +50,14 @@ public class OtpFragment extends BaseFragment {
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        getViewDataBinding().optEt.setText(appPreferencesHelper.getString("otp"));
         getViewModel()._navigateToHome.observe(getViewLifecycleOwner(), (d) -> {
-            if (d.getContentIfNotHandled() != null) {
-                requireActivity().finish();
-                startActivity(new Intent(requireContext(), HomeActivity.class));
+            Pair<Boolean, String> contentIfNotHandled = d.getContentIfNotHandled();
+            if (contentIfNotHandled != null) {
+                if(contentIfNotHandled.first) {
+                    requireActivity().finish();
+                    startActivity(new Intent(requireContext(), HomeActivity.class));
+                }
 
             }
         });

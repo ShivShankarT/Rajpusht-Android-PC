@@ -165,10 +165,7 @@ public class CounsellingAnimationFragment extends Fragment {
                     } else {
                         FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(), R.id.fragment_container, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
                     }
-                    requireActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .remove(CounsellingAnimationFragment.this)
-                            .commit();
+
 
                 } else {
 

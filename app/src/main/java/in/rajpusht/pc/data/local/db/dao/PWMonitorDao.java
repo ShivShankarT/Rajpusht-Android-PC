@@ -22,6 +22,8 @@ public abstract class PWMonitorDao extends BaseDao<PWMonitorEntity> {
     public abstract Maybe<PWMonitorEntity> pwMonitorByID(long id);
 
 
+    @Query("Delete FROM pw_monitor")
+    public abstract void deleteAll();
 
 
 

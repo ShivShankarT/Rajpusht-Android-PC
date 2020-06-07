@@ -215,7 +215,8 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="PCTS ID"
                     app:ff_label="@string/benef_pcts_id"
-                    app:ff_maxLength="30"
+                    app:ff_input_type="phone_no"
+                    app:ff_maxLength="15"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
@@ -224,7 +225,8 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Bahamashah ID/ACK"
                     app:ff_label="@string/bahamashah_id"
-                    app:ff_maxLength="30"
+                    app:ff_input_type="phone_no"
+                    app:ff_maxLength="15"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement

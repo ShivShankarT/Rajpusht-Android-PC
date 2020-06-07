@@ -25,36 +25,37 @@ import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.custom.validator.ValidationStatus;
 
-public class FormEditFieldElement extends FrameLayout {
+public class FormEditFieldMeasElement extends FrameLayout {
 
-    HValidatorListener<String>  hValidatorListener;
+    private HValidatorListener<Double> hValidatorListener;
     private EditText edf_text;
+    private EditText edf_text2;
     private TextInputLayout edf_txt_inp_ly;
-    private HValueChangedListener<String> hValueChangedListener;
+    private HValueChangedListener<Double> hValueChangedListener;
     private boolean required;
 
-    public FormEditFieldElement(Context context) {
+    public FormEditFieldMeasElement(Context context) {
         super(context);
         init(null);
     }
 
-    public FormEditFieldElement(Context context, @Nullable AttributeSet attrs) {
+    public FormEditFieldMeasElement(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
         init(attrs);
     }
 
-    public FormEditFieldElement(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
+    public FormEditFieldMeasElement(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         init(attrs);
     }
 
-    public FormEditFieldElement(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public FormEditFieldMeasElement(Context context, @Nullable AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         init(attrs);
     }
 
     private void init(AttributeSet attrs) {
-        View view = LayoutInflater.from(getContext()).inflate(R.layout.form_edit_text_with_label, this, true);
+        View view = LayoutInflater.from(getContext()).inflate(R.layout.form_edit_text_measurement, this, true);
 
 
         TypedArray a = getContext().obtainStyledAttributes(attrs, R.styleable.FormField, 0, 0);
@@ -62,7 +63,7 @@ public class FormEditFieldElement extends FrameLayout {
         String hint = a.getString(R.styleable.FormField_ff_hint);
         required = a.getBoolean(R.styleable.FormField_ff_required, false);
         boolean isShowDivider = a.getBoolean(R.styleable.FormField_ff_show_divider, true);
-        int inputType = a.getInt(R.styleable.FormField_ff_input_type, -1);
+        int measurement_type = a.getInt(R.styleable.FormField_ff_measurement_type, 0);//weight==0 height ==1
         int maxLength = a.getInt(R.styleable.FormField_ff_maxLength, -1);
 
         View divider = view.findViewById(R.id.divider);
@@ -71,25 +72,13 @@ public class FormEditFieldElement extends FrameLayout {
         }
         a.recycle();
         TextView labelTv = view.findViewById(R.id.edf_lab);
+
+        TextInputLayout edf_sub1 = view.findViewById(R.id.edf_sub1);
         edf_text = view.findViewById(R.id.edf_text);
-        if (maxLength != -1) {
-            edf_text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+        TextInputLayout edf_sub2 = view.findViewById(R.id.edf_sub2);
+        edf_text2 = view.findViewById(R.id.edf_text2);
 
-        }
-
-        if (inputType == 0) {
-            edf_text.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
-            edf_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
-        } else if (inputType == 1) {
-            edf_text.setInputType(InputType.TYPE_CLASS_PHONE);
-        } else if (inputType == 2) {
-            edf_text.setInputType(InputType.TYPE_CLASS_NUMBER);
-        } else if (inputType == 3) {
-            edf_text.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-        }
-
-
-        edf_text.addTextChangedListener(new TextWatcher() {
+        TextWatcher watcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -103,30 +92,53 @@ public class FormEditFieldElement extends FrameLayout {
             @Override
             public void afterTextChanged(Editable s) {
                 if (hValueChangedListener != null)
-                    hValueChangedListener.onValueChanged(s.toString());
+                    hValueChangedListener.onValueChanged(getMeasValue());
                 edf_txt_inp_ly.setError(null);
             }
-        });
+        };
+        edf_text.addTextChangedListener(watcher);
+        edf_text2.addTextChangedListener(watcher);
+
         edf_txt_inp_ly = view.findViewById(R.id.edf_txt_inp_ly);
+
+
+        edf_text.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        edf_text2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+
+        if (maxLength != -1) {
+            edf_text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+            edf_text2.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
+
+        }
+
         labelTv.setText(label);
         if (TextUtils.isEmpty(label)) {
             labelTv.setVisibility(GONE);
         }
         edf_txt_inp_ly.setHint(hint);
+
+        if (measurement_type == 0) {
+            edf_sub1.setHint("KG");
+            edf_sub2.setHint("GM");
+        } else {
+            edf_sub1.setHint("CM");
+            edf_sub2.setHint("MM");
+        }
     }
 
     public boolean validate() {
 
 
+        Double measValue = getMeasValue();
         if (required) {
-            if (TextUtils.isEmpty(getText())) {
+            if (measValue == null || measValue == 0) {
                 edf_txt_inp_ly.setError("Please Enter *");
                 return false;
             }
         }
 
         if (hValidatorListener != null) {
-            ValidationStatus valid = hValidatorListener.isValid(getText());
+            ValidationStatus valid = hValidatorListener.isValid(measValue);
             if (valid.isInvalid()) {
                 edf_txt_inp_ly.setError(valid.getMsg());
                 return false;
@@ -142,19 +154,53 @@ public class FormEditFieldElement extends FrameLayout {
         return new Pair<>(validate(), this);
     }
 
-    public void sethValidatorListener(HValidatorListener<String>  hValidatorListener) {
+    public void sethValidatorListener(HValidatorListener<Double> hValidatorListener) {
         this.hValidatorListener = hValidatorListener;
     }
 
 
-    public String getText() {
-        return edf_text.getText().toString();
+    public Double getMeasValue() {
+        String n1 = edf_text.getText().toString();
+        String n2 = edf_text2.getText().toString();
+
+        String num = null;
+        if (!TextUtils.isEmpty(n1) & !TextUtils.isEmpty(n2)) {
+            num = n1 + "." + n2;
+        } else if (!TextUtils.isEmpty(n1)) {
+            num = n1 + "." + n2;
+        } else if (!TextUtils.isEmpty(n2)) {
+            num = "0." + n2;
+        } else return null;
+
+        try {
+            return Double.valueOf(num);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 
-    public void setText(String text) {
-        edf_text.setText(text);
+    public void setText(Double text) {
         edf_txt_inp_ly.setError(null);
+        if (text == null)
+            return;
+
+        String[] arr = String.valueOf(text).split("\\.");
+        if (arr.length > 0) {
+            int v1 = Integer.parseInt(arr[0]);
+            edf_text.setText(String.valueOf(v1));
+        }
+
+        if (arr.length > 1) {
+            int v1 = Integer.parseInt(arr[1]);
+            if (v1 != 0)
+                edf_text2.setText(String.valueOf(v1));
+        }
+
+
     }
+
 
     public void requestFocusAndScroll() {
         View targetView = this;
@@ -171,8 +217,4 @@ public class FormEditFieldElement extends FrameLayout {
     }
 
 
-
-    public boolean isVisibleAndEnable() {
-        return getVisibility() == VISIBLE && isEnabled();
-    }
 }

@@ -32,7 +32,7 @@
             android:imeOptions="actionNext"
             android:maxLines="1"
             android:inputType="textPersonName"
-            android:nextFocusForward="@+id/b_husband" />
+             />
 
     </com.google.android.material.textfield.TextInputLayout>
 

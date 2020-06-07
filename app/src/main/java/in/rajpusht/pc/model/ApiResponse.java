@@ -34,6 +34,7 @@ public class ApiResponse<T> {
         this.message = message;
     }
 
+
     public boolean isStatus() {
         return status;
     }
@@ -42,4 +43,12 @@ public class ApiResponse<T> {
         this.status = status;
     }
 
+    @Override
+    public String toString() {
+        return "ApiResponse{" +
+                "data=" + data +
+                ", message='" + message + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

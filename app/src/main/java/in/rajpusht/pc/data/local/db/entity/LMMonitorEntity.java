@@ -10,10 +10,11 @@ import in.rajpusht.pc.model.DataStatus;
 @Entity(tableName = LMMonitorEntity.TABLE)
 public class LMMonitorEntity {
     public static final String TABLE = "lm_monitor";
-
+    long createdBy;
     @PrimaryKey(autoGenerate = true)
     private int id;
     private long childId;
+    private long motherId;
     private String stage;
     private String subStage;
     private String isFirstImmunizationComplete;
@@ -22,15 +23,15 @@ public class LMMonitorEntity {
     private Double currentMuac;
     private Double birthWeight;
     private Double childWeight;
+    private Double childHeight;
     private Integer pmmvyInstallment;
     private Integer igmpyInstallment;
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
-    private String timestamp;
     private DataStatus dataStatus;
-    int createdBy;
     private String createdAt;
     private String updatedAt;
+
 
     public int getId() {
         return id;
@@ -144,13 +145,6 @@ public class LMMonitorEntity {
         this.rajshriInstallment = rajshriInstallment;
     }
 
-    public String getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(String timestamp) {
-        this.timestamp = timestamp;
-    }
 
     public DataStatus getDataStatus() {
         return dataStatus;
@@ -176,12 +170,27 @@ public class LMMonitorEntity {
         this.updatedAt = updatedAt;
     }
 
-    public int getCreatedBy() {
+    public long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(int createdBy) {
+    public void setCreatedBy(long createdBy) {
         this.createdBy = createdBy;
     }
 
+    public long getMotherId() {
+        return motherId;
+    }
+
+    public void setMotherId(long motherId) {
+        this.motherId = motherId;
+    }
+
+    public Double getChildHeight() {
+        return childHeight;
+    }
+
+    public void setChildHeight(Double childHeight) {
+        this.childHeight = childHeight;
+    }
 }

@@ -17,10 +17,9 @@ public abstract class LMMonitorDao extends BaseDao<LMMonitorEntity> {
     @Query("select * from lm_monitor where childId=:childId")
     public abstract List<LMMonitorEntity> lmMonitor(long childId);
 
-
     @Query("select * from lm_monitor where id=:id")
     public abstract Maybe<LMMonitorEntity> lmMonitorById(long id);
 
-
-
+    @Query("Delete FROM lm_monitor")
+    public abstract void deleteAll();
 }
