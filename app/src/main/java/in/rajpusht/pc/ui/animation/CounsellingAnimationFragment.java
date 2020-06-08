@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.animation;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -10,7 +11,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
 import android.widget.MediaController;
-import android.widget.VideoView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -30,6 +30,7 @@ import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
+import in.rajpusht.pc.utils.ui.CustomVideoView;
 
 
 public class CounsellingAnimationFragment extends Fragment {
@@ -101,8 +102,7 @@ public class CounsellingAnimationFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-
+        mediaPos = 0;
         vb.toolbarLy.toolbar.setTitle("PW Women Counselling");
         vb.nxtBtn.setVisibility(View.INVISIBLE);
         ViewTreeObserver vto = vb.imageview.getViewTreeObserver();
@@ -119,8 +119,8 @@ public class CounsellingAnimationFragment extends Fragment {
 
             vb.nxtBtn.setVisibility(View.GONE);
             //vb.toolbarLy.appBarLy.setVisibility(View.GONE);
-            VideoView videoView = vb.videoView;
-            videoView.setVisibility(View.VISIBLE);
+            CustomVideoView videoView = vb.videoView;
+            videoView.setVisibility(View.GONE);
             vb.imageview.setVisibility(View.GONE);
             //Creating MediaController
             MediaController mediaController = new MediaController(requireContext());
@@ -139,11 +139,38 @@ public class CounsellingAnimationFragment extends Fragment {
                 public void onCompletion(MediaPlayer mp) {
                     TransitionManager.beginDelayedTransition(vb.ll);
                     vb.nxtBtn.setVisibility(View.VISIBLE);
+                    vb.playBtn.setVisibility(View.VISIBLE);
+                }
+            });
+            vb.playBtn.setVisibility(View.INVISIBLE);
+            videoView.setPlayPauseListener(new CustomVideoView.PlayPauseListener() {
+                @Override
+                public void onPlay() {
+                    if (vb.playBtn.getVisibility() != View.INVISIBLE)
+                        vb.playBtn.setVisibility(View.INVISIBLE);
+                }
+
+                @Override
+                public void onPause() {
+                    if (vb.playBtn.getVisibility() != View.VISIBLE)
+                        vb.playBtn.setVisibility(View.VISIBLE);
+                }
+            });
+            vb.playBtn.setVisibility(View.VISIBLE);
+            vb.playBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    videoView.start();
+                    startActivity(new Intent(requireContext(), ActivityVideoPlay.class));
+                    TransitionManager.beginDelayedTransition(vb.ll);
+                    vb.nxtBtn.setVisibility(View.VISIBLE);
+
                 }
             });
 
 
         } else {
+            vb.playBtn.setVisibility(View.GONE);
             handler.postDelayed(runnable, 10);
         }
 
@@ -161,9 +188,9 @@ public class CounsellingAnimationFragment extends Fragment {
                     CounsellingMedia nextCounsellingMedia = CounsellingMedia.counsellingMediaData().get(nextCounPos);
 
                     if (nextCounsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA || nextCounsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
-                        FragmentUtils.replaceFragment(requireActivity(), CounsellingAnimationFragment.newInstance(nextCounPos), R.id.fragment_container, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
+                        FragmentUtils.replaceFragment(requireActivity(), CounsellingAnimationFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
                     } else {
-                        FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(), R.id.fragment_container, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
+                        FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
                     }
 
 
@@ -172,7 +199,7 @@ public class CounsellingAnimationFragment extends Fragment {
                     showAlertDialog("PW Women Counselling Completed !!!", new Runnable() {
                         @Override
                         public void run() {
-                            FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, FragmentUtils.TRANSITION_FADE_IN_OUT);
+                            FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
                         }
                     });
                 }
@@ -185,6 +212,7 @@ public class CounsellingAnimationFragment extends Fragment {
         super.onPause();
         if (counsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
             videoCurrentPos = vb.videoView.getCurrentPosition();
+
         }
     }
 
@@ -195,6 +223,7 @@ public class CounsellingAnimationFragment extends Fragment {
             if (videoCurrentPos > 0) {
                 vb.videoView.seekTo(videoCurrentPos);
             }
+            vb.playBtn.setVisibility(View.VISIBLE);
         }
     }
 

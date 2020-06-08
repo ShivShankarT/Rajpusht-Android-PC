@@ -7,12 +7,12 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -22,6 +22,7 @@ import javax.inject.Inject;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
+import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
@@ -87,7 +88,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         motherId = getArguments().getLong("motherId");
         subStage = getArguments().getString("subStage");
         lmFormId = (Long) getArguments().getSerializable("lmFormId");
-        Log.i("motherId", "newInstance: motherIddd"+motherId);
+        Log.i("motherId", "newInstance: motherIddd" + motherId);
     }
 
     @Override
@@ -109,7 +110,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             public void onClick(View v) {
                 FragmentUtils.replaceFragment(requireActivity(),
                         RegistrationFragment.newInstance(motherId), R.id.fragment_container,
-                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
             }
         });
         viewDataBinding.benfRegisteredProgramme.sethValueChangedListener(new HValueChangedListener<Set<Integer>>() {
@@ -177,6 +178,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                     if (throwable != null)
                         throwable.printStackTrace();
                     beneficiaryEntityPregnantEntityChildEntityTuple = tuple;
+                    if (beneficiaryEntityPregnantEntityChildEntityTuple != null)
+                        setBenfui();
                 });
 
         if (lmFormId != null)
@@ -194,16 +197,31 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             });
     }
 
+    private void setBenfui() {
+
+        ChildEntity childEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT3();
+        int days = HUtil.daysBetween(childEntity.getDob(), new Date());//106.458 ==3.5 month
+        getViewDataBinding().benfChildImmune.setEnableChild(days >= 106);
+
+        getViewDataBinding().benfChildLastRecMuac.setEnableChild(days >= 182);
+        getViewDataBinding().benfChildLastRecMuacDate.setEnableChild(days >= 182);
+        getViewDataBinding().benfChildCurrentMuac.setEnableChild(days >= 182);
+
+    }
+
     private void setFormUiData(LMMonitorEntity lmMonitorEntity) {
 
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         vb.benfChildImmune.setSectionByData(lmMonitorEntity.getIsFirstImmunizationComplete());
-        vb.benfChildLastRecMuac.setText(lmMonitorEntity.getLastMuac());
-        vb.benfChildLastRecMuacDate.setDate(lmMonitorEntity.getLastMuacCheckDate());
-        vb.benfChildCurrentMuac.setText(lmMonitorEntity.getCurrentMuac());
+        if (vb.benfChildLastRecMuac.isVisibleAndEnable())
+            vb.benfChildLastRecMuac.setText(lmMonitorEntity.getLastMuac());
+        if (vb.benfChildLastRecMuacDate.isVisibleAndEnable())
+            vb.benfChildLastRecMuacDate.setDate(lmMonitorEntity.getLastMuacCheckDate());
+        if (vb.benfChildCurrentMuac.isVisibleAndEnable())
+            vb.benfChildCurrentMuac.setText(lmMonitorEntity.getCurrentMuac());
         vb.benfBirthChildWeight.setText(lmMonitorEntity.getBirthWeight());
         vb.benfCurrentWeight.setText(lmMonitorEntity.getChildWeight());
-        vb.benfCurrentHeight.setText(lmMonitorEntity.getChildHeight());
+        vb.benfCurrentHeight.setText(String.valueOf(lmMonitorEntity.getChildHeight()));
 
         Set<Integer> regScheme = new HashSet<>();
 
@@ -235,10 +253,10 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         List<Pair<Boolean, View>> validateElement = new ArrayList<>();
 
-        validateElement.add(vb.benfChildImmune.validateWthView());
+        if (vb.benfChildImmune.isVisibleAndEnable())
+            validateElement.add(vb.benfChildImmune.validateWthView());
         validateElement.add(vb.benfChildLastRecMuac.validateWthView());
         validateElement.add(vb.benfChildLastRecMuacDate.validateWthView());
-        validateElement.add(vb.benfChildCurrentMuac.validateWthView());
         validateElement.add(vb.benfBirthChildWeight.validateWthView());
         validateElement.add(vb.benfChildCurrentMuac.validateWthView());
         validateElement.add(vb.benfCurrentWeight.validateWthView());
@@ -280,7 +298,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         lmMonitorEntity.setCurrentMuac(vb.benfChildCurrentMuac.getMeasValue());
         lmMonitorEntity.setBirthWeight(vb.benfBirthChildWeight.getMeasValue());
         lmMonitorEntity.setChildWeight(vb.benfCurrentWeight.getMeasValue());
-        lmMonitorEntity.setChildHeight(vb.benfCurrentHeight.getMeasValue());
+        lmMonitorEntity.setChildHeight(Double.valueOf(vb.benfCurrentHeight.getText()));
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
@@ -327,7 +345,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
                 FragmentUtils.replaceFragment(requireActivity(),
                         CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
 
             });
         });

@@ -149,4 +149,14 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
             hValueChangedListener.onValueChanged(mSelectedPos);
     }
 
-   }
+
+    public boolean isVisible() {
+        return getVisibility() == VISIBLE;
+    }
+
+
+    public boolean isVisibleAndEnable() {
+        return getVisibility() == VISIBLE && isEnabled();
+    }
+
+}

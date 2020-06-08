@@ -37,7 +37,8 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
     private HValueChangedListener<Date> hValueChangedListener;
     private boolean required;
     private Date mDate;
-
+    private long minDate;
+    private long maxDate;
 
     public FormDatePickerElement(Context context) {
         super(context);
@@ -157,7 +158,12 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         int month = mCurrentDate.get(Calendar.MONTH);
         int year = mCurrentDate.get(Calendar.YEAR);
         DatePickerDialog d = new DatePickerDialog(getContext(), dpd, year, month, day);
-        d.getDatePicker().setMaxDate(System.currentTimeMillis());
+        if (minDate != 0)
+            d.getDatePicker().setMinDate(minDate);
+        if (maxDate != 0)
+            d.getDatePicker().setMaxDate(maxDate);
+        else
+            d.getDatePicker().setMaxDate(System.currentTimeMillis());
         d.show();
     }
 
@@ -189,7 +195,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
 
 
     public void hideKeyboard() {
-        Activity activity= (Activity) getContext();
+        Activity activity = (Activity) getContext();
 
         View view = activity.getCurrentFocus();
         if (view != null) {
@@ -199,4 +205,21 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
             }
         }
     }
+
+    public long getMinDate() {
+        return minDate;
+    }
+
+    public void setMinDate(long minDate) {
+        this.minDate = minDate;
+    }
+
+    public long getMaxDate() {
+        return maxDate;
+    }
+
+    public void setMaxDate(long maxDate) {
+        this.maxDate = maxDate;
+    }
+
 }

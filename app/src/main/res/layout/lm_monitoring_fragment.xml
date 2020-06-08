@@ -97,11 +97,11 @@
                     app:ff_maxLength="5"
                     app:ff_required="true" />
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
                     android:id="@+id/benf_current_height"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_hint="Height"
+                    app:ff_hint="Height in inch"
                     app:ff_input_type="numberDecimal"
                     app:ff_label="7. Current Height of child "
                     app:ff_maxLength="5"

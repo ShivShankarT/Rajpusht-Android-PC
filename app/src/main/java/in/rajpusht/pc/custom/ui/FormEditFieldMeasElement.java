@@ -215,6 +215,9 @@ public class FormEditFieldMeasElement extends FrameLayout {
     public boolean isVisible() {
         return getVisibility() == VISIBLE;
     }
+    public boolean isVisibleAndEnable() {
+        return getVisibility() == VISIBLE && isEnabled();
+    }
 
 
 }

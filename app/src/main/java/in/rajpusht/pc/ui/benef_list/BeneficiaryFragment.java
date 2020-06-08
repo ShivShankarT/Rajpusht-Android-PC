@@ -95,7 +95,7 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
                             .subscribe(aBoolean -> {
                                 if (!aBoolean.isEmpty()) {//todo check
                                     showAlertDialog("Beneficiary Dummy Data  Added", () -> {
-                                        FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
+                                        FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, false, FragmentUtils.TRANSITION_NONE);
                                     });
                                 }
 
@@ -123,12 +123,12 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         getViewDataBinding().addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentUtils.replaceFragment(requireActivity(), new RegistrationFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+                FragmentUtils.replaceFragment(requireActivity(), new RegistrationFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
 
             }
         });
         if (TextUtils.isEmpty(dataRepository.getSelectedAwcCode())) {
-            FragmentUtils.replaceFragment(requireActivity(), new ProfileFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), new ProfileFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
 
         }
 
@@ -155,10 +155,10 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
     @Override
     public void onListFragmentInteraction(BefModel item) {
         if (item.getStage().equals("PW")) {
-            FragmentUtils.replaceFragment(requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage(), item.getPwFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage(), item.getPwFormId()), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
 
         } else {
-            FragmentUtils.replaceFragment(requireActivity(), LMMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getMotherId(), item.getCurrentSubStage(), item.getLmFormId()), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), LMMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getMotherId(), item.getCurrentSubStage(), item.getLmFormId()), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
 
         }
 

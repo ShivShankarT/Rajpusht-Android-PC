@@ -15,6 +15,7 @@ import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
@@ -118,8 +119,15 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
-        viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
-        viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
+        viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
+        viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
+        Calendar instance = Calendar.getInstance();
+        instance.add(Calendar.YEAR, -1);
+        viewDataBinding.benfChildDob.setMinDate(instance.getTime().getTime());
+
+        instance = Calendar.getInstance();
+        instance.add(Calendar.YEAR, -13);
+        viewDataBinding.benfAgeDob.setMaxDate(instance.getTime().getTime());
 
 
         viewDataBinding.benfRegStage.sethValueChangedListener(new HValueChangedListener<Integer>() {
@@ -270,6 +278,26 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         });
 
+        viewDataBinding.benfCousSms.sethValidatorListener(new HValidatorListener<Integer>() {
+            @Override
+            public ValidationStatus isValid(Integer data) {
+
+                double selectedPos = data;
+                String message = null;
+                if (selectedPos == 0 && viewDataBinding.benfSelfMobile.getText().isEmpty()) {
+                    message = "Please Add Self Mobile Number ";
+                } else if (selectedPos == 1 && viewDataBinding.benfHusMobile.getText().isEmpty()) {
+                    message = "Please Add Husband’s Mobile Number ";
+                } else if (selectedPos == 2 && (viewDataBinding.benfSelfMobile.getText().isEmpty() || viewDataBinding.benfHusMobile.getText().isEmpty())) {
+                    message = "Please Add Self and Husband’s Mobile Number ";
+                }
+                if (message != null)
+                    return new ValidationStatus(false, message);
+                else
+                    return new ValidationStatus(true);
+            }
+        });
+
         viewDataBinding.save.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,7 +305,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 validate();
             }
         });
-        Log.i("s", "onViewCreated: "+beneficiaryId);
+        Log.i("s", "onViewCreated: " + beneficiaryId);
         if (beneficiaryId != 0)
             dataRepository.getBeneficiaryData(beneficiaryId)
                     .subscribeOn(schedulerProvider.io())
@@ -502,6 +530,16 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 return;
             }
         }
+
+        /*if (vb.benfCousSms.getSelectedPos()==0 && vb.benfSelfMobile.getText().isEmpty()){
+            showMessage("Please Add Self Mobile Number ");
+        }
+        else if (vb.benfCousSms.getSelectedPos()==1 && vb.benfHusMobile.getText().isEmpty()){
+            showMessage("Please Add Husband’s Mobile Number ");
+        }
+        else if (vb.benfCousSms.getSelectedPos()==2 && (vb.benfSelfMobile.getText().isEmpty() || vb.benfHusMobile.getText().isEmpty()) ){
+            showMessage("Please Add Self and Husband’s Mobile Number ");
+        }*/
 
         save();
 

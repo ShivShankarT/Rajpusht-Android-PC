@@ -382,6 +382,7 @@ public class JsonParser {
         lmObject.addProperty("subStage", lmMonitorEntity.getSubStage());
         lmObject.addProperty("createdAt", lmMonitorEntity.getCreatedAt());
         lmObject.addProperty("updatedAt", lmMonitorEntity.getUpdatedAt());
+        lmObject.addProperty("dataStatus", lmMonitorEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
 
 
         return lmObject;
@@ -405,6 +406,7 @@ public class JsonParser {
         pwobject.addProperty("createdBy", pwMonitorEntity.getCreatedBy());
         pwobject.addProperty("createdAt", pwMonitorEntity.getCreatedAt());
         pwobject.addProperty("updatedAt", pwMonitorEntity.getUpdatedAt());
+        pwobject.addProperty("dataStatus", pwMonitorEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
 
         return pwobject;
     }

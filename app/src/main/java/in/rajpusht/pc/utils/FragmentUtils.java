@@ -1,10 +1,8 @@
 package in.rajpusht.pc.utils;
 
 
-
 import androidx.annotation.IdRes;
 import androidx.annotation.IntDef;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.fragment.app.FragmentManager;
@@ -25,7 +23,7 @@ public class FragmentUtils {
         // Private constructor to hide the implicit one
     }
 
-    public static void replaceFragment(FragmentActivity activity, Fragment fragment, @IdRes int id, boolean addToBackStack, @FragmentAnimation int animationType) {
+    public static void replaceFragment(FragmentActivity activity, Fragment fragment, @IdRes int id, boolean addToBackStack, boolean isReplace, @FragmentAnimation int animationType) {
 
         if (null == activity)
             return;
@@ -56,7 +54,11 @@ public class FragmentUtils {
         if (addToBackStack)
             transaction.addToBackStack(fragment.getClass().getCanonicalName());
 
-        transaction.replace(id, fragment, fragment.getClass().getCanonicalName());
+        if (isReplace)
+            transaction.replace(id, fragment, fragment.getClass().getCanonicalName());
+        else
+            transaction.add(id, fragment, fragment.getClass().getCanonicalName());
+
         transaction.commit();
     }
 

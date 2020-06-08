@@ -12,7 +12,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.lifecycle.ViewModelProviders;
 
-import com.github.mikephil.charting.charts.BarLineChartBase;
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
@@ -62,14 +61,9 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
         pregnancyGraphFragmentBinding.toolbarLy.toolbar.setTitle("PW Women Weight ");
         pregnancyGraphFragmentBinding.nxtBtn.setOnClickListener(v -> {
 
-            requireActivity().getSupportFragmentManager()
-                    .beginTransaction()
-                    .remove(PregnancyGraphFragment.this)
-                    .commit();
-
             FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
                     CounsellingAnimationFragment.newInstance(3), R.id.fragment_container,
-                    true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                    true, true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
         });
 
 

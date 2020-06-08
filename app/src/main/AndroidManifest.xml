@@ -31,6 +31,12 @@
             android:configChanges="keyboardHidden|orientation|screenSize"
             android:name=".ui.home.HomeActivity" />
 
+        <activity
+            android:screenOrientation="landscape"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:name=".ui.animation.ActivityVideoPlay" />
+
+
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />

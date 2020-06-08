@@ -12,7 +12,6 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.android.material.navigation.NavigationView;
@@ -30,7 +29,6 @@ import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
 import in.rajpusht.pc.ui.login.LoginActivity;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
-import in.rajpusht.pc.utils.Event;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.functions.Action;
@@ -72,12 +70,12 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         //fragment= PregnancyGraphFragment.newInstance();
         //fragment=new TestAnimationFragment();
         if (savedInstanceState == null)
-            FragmentUtils.replaceFragment(this, fragment, R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(this, fragment, R.id.fragment_container, false, false, FragmentUtils.TRANSITION_NONE);
 
         View.OnClickListener profileClick = new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FragmentUtils.replaceFragment(HomeActivity.this, new ProfileFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+                FragmentUtils.replaceFragment(HomeActivity.this, new ProfileFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
                 getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
             }
         };
@@ -100,9 +98,9 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             if (item.getItemId() == R.id.nav_select_awc) {
                 profileClick.onClick(null);
             } else if (item.getItemId() == R.id.nav_home) {
-                FragmentUtils.replaceFragment(this, new BeneficiaryFragment(), R.id.fragment_container, false, FragmentUtils.TRANSITION_NONE);
+                FragmentUtils.replaceFragment(this, new BeneficiaryFragment(), R.id.fragment_container, false, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_changePassword) {
-                FragmentUtils.replaceFragment(HomeActivity.this, new ChangePasswordFragment(), R.id.fragment_container, true, FragmentUtils.TRANSITION_NONE);
+                FragmentUtils.replaceFragment(HomeActivity.this, new ChangePasswordFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_sync) {
                 syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {

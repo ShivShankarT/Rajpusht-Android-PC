@@ -61,7 +61,7 @@ public class FormValidatorUtils {
         };
     }
 
-    public static HValidatorListener<String> textBwValidator(int min, int max, String message) {
+    public static HValidatorListener<String> textLengthBwValidator(int min, int max, String message) {
 
         return new HValidatorListener<String>() {
             @Override
@@ -71,6 +71,22 @@ public class FormValidatorUtils {
 
                     int length = value.length();
                     if (!(length >= min && length <= max))
+                        return new ValidationStatus(false, message);
+
+                    return new ValidationStatus(true, message);
+                }
+                return null;
+            }
+        };
+    }
+
+    public static HValidatorListener<Double> textLengthBwValidator(Double min, Double max, String message) {
+
+        return new HValidatorListener<Double>() {
+            @Override
+            public ValidationStatus isValid(Double value) {
+                if (value != null) {
+                    if (!(min >= min && max <= max))
                         return new ValidationStatus(false, message);
 
                     return new ValidationStatus(true, message);

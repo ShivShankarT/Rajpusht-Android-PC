@@ -6,13 +6,11 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -29,7 +27,6 @@ import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
-import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.functions.Consumer;
@@ -105,7 +102,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             public void onClick(View v) {
                 FragmentUtils.replaceFragment(requireActivity(),
                         RegistrationFragment.newInstance(beneficiaryId), R.id.fragment_container,
-                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
             }
         });
 
@@ -114,7 +111,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             public void onClick(View v) {
                 FragmentUtils.replaceFragment(requireActivity(),
                         CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                        true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
             }
         });
 
@@ -320,7 +317,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                     showAlertDialog("Beneficiary Report Saved Successfully", () -> {
                         FragmentUtils.replaceFragment(requireActivity(),
                                 CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                                true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                                true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
 
                         requireActivity().getSupportFragmentManager()
                                 .beginTransaction()
