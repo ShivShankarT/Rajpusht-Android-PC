@@ -165,6 +165,7 @@
                     app:ff_label="PMMVVY"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
+                    android:layout_marginLeft="7dp"
                     app:ff_selections="@array/count_0_3"
                     app:ff_show_divider="false" />
 
@@ -176,6 +177,7 @@
                     app:ff_label="IGMPY"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
+                    android:layout_marginLeft="7dp"
                     app:ff_selections="@array/count_0_4"
                     app:ff_show_divider="false" />
 
@@ -186,6 +188,7 @@
                     app:ff_label="JSY"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
+                    android:layout_marginLeft="7dp"
                     app:ff_selections="@array/count_0_1"
                     app:ff_show_divider="false" />
 
@@ -196,6 +199,7 @@
                     app:ff_label="RAJSHRI"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
+                    android:layout_marginLeft="7dp"
                     app:ff_selections="@array/count_0_2_more" />
 
                 <Button

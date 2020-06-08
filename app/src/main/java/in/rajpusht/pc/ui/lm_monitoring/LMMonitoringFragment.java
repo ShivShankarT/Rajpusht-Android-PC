@@ -23,6 +23,7 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.custom.utils.HUtil;
+import in.rajpusht.pc.custom.validator.FormValidatorUtils;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
@@ -105,6 +106,20 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 requireActivity().onBackPressed();
             }
         });
+
+        //FormValidator
+        viewDataBinding.benfChildCurrentMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0 , 18.00 ,
+                "Muac should be from 5 cm to 18cm"));
+        viewDataBinding.benfChildLastRecMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0 , 18.00 ,
+                "Muac should be from 5 cm to 18cm"));
+
+        viewDataBinding.benfCurrentHeight.sethValidatorListener(FormValidatorUtils.valueBwValidatorForStringNumber(10.0 , 30.00 ,
+                "Child height should be from 10 inch to 30 inch"));
+
+        viewDataBinding.benfBirthChildWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(.5 , 10.0 ,
+                "Child weight should be from 500 gm to 10 kg"));
+
+
         viewDataBinding.editBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

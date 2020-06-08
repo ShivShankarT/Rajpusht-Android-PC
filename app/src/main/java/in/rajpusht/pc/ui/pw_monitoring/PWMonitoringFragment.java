@@ -11,6 +11,7 @@ import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -19,11 +20,18 @@ import javax.inject.Inject;
 
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
+import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
+import in.rajpusht.pc.custom.utils.HUtil;
+import in.rajpusht.pc.custom.validator.FormValidatorUtils;
+import in.rajpusht.pc.custom.validator.ValidationStatus;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
+import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
+import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
+import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
@@ -39,13 +47,13 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     DataRepository dataRepository;
     @Inject
     SchedulerProvider schedulerProvider;
-    BeneficiaryEntity beneficiaryEntity;
     private PWMonitoringViewModel mViewModel;
     private long pregnancyId;
     private String subStage;
     private long beneficiaryId;
     private Long pwFormId;
     private PWMonitorEntity mPwMonitorEntity;
+    private Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> beneficiaryEntityPregnantEntityChildEntityTuple;
 
     public static PWMonitoringFragment newInstance(long beneficiaryId, long pregnancyId, String subStage, Long pwFormId) {
         PWMonitoringFragment pwMonitoringFragment = new PWMonitoringFragment();
@@ -166,40 +174,75 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             }
         });
 
-        dataRepository.getBeneficiary(beneficiaryId)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui()).subscribe((d) -> {
-            beneficiaryEntity = d;
-            setupUiData();
-        });
-        if (pwFormId != null)
-            fetchFormUiData();
+
+        fetchFormUiData();
     }
 
     private void setupUiData() {
+        BeneficiaryEntity beneficiaryEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT1();
+        PregnantEntity pregnantEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT2();
         getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
         getViewDataBinding().benfHusName.setText("w/o:" + beneficiaryEntity.getHusbandName());
         getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
         getViewDataBinding().pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
+        getViewDataBinding().benfLastcheckupdate.setMinDate(pregnantEntity.getLmpDate().getTime());
+
+        getViewDataBinding().benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0 ,99.0,
+                "Weight should be from 30 Kg to 99 Kg"));
+
+       /* a. 1st visit: Within 12 weeks—preferably as soon as pregnancy is suspected—for registration of pregnancy and first ANC
+        b. 2nd visit: Between 14 and 26 weeks
+        c. 3rd visit: Between 28 and 34 weeks
+        d. 4th visit: Between 36 weeks and term*/
+
+        int days = HUtil.daysBetween(pregnantEntity.getLmpDate(), new Date());//106.458 ==3.5 month
+        //FormValidator
+        getViewDataBinding().benfAncDate.sethValidatorListener(new HValidatorListener<Date>() {
+            @Override
+            public ValidationStatus isValid(Date data) {
+                int lmpWek = HUtil.daysBetween(pregnantEntity.getLmpDate(), data);
+                int ancCont = getViewDataBinding().benfAncCount.getSelectedPos();
+
+                if (ancCont==0){
+
+                }else if (ancCont==1 ){
+
+                }
+                return new ValidationStatus(true);
+            }
+        });
+
     }
 
     private void fetchFormUiData() {
 
-        dataRepository.pwMonitorByID(pwFormId)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui()).subscribe(new Consumer<PWMonitorEntity>() {
-            @Override
-            public void accept(PWMonitorEntity pwMonitorEntity) throws Exception {
 
-                if (pwMonitorEntity != null) {
-                    PWMonitoringFragment.this.mPwMonitorEntity = pwMonitorEntity;
-                    setFormUiData(pwMonitorEntity);
+        dataRepository.getBeneficiaryData(beneficiaryId)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe((tuple, throwable) -> {
+                    if (throwable != null)
+                        throwable.printStackTrace();
+                    beneficiaryEntityPregnantEntityChildEntityTuple = tuple;
+                    if (beneficiaryEntityPregnantEntityChildEntityTuple != null)
+                        setupUiData();
+                });
+        if (pwFormId != null)
+            dataRepository.pwMonitorByID(pwFormId)
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui()).subscribe(new Consumer<PWMonitorEntity>() {
+                @Override
+                public void accept(PWMonitorEntity pwMonitorEntity) throws Exception {
+
+                    if (pwMonitorEntity != null) {
+                        PWMonitoringFragment.this.mPwMonitorEntity = pwMonitorEntity;
+                        setFormUiData(pwMonitorEntity);
+                    }
                 }
-            }
-        });
+            });
     }
 
-    private  void setFormUiData(PWMonitorEntity pwMonitorEntity) {
+    private void setFormUiData(PWMonitorEntity pwMonitorEntity) {
         PwMonitoringFragmentBinding vb = getViewDataBinding();
         vb.benfAncCount.setSection(pwMonitorEntity.getAncCount());
         vb.benfAncDate.setDate(pwMonitorEntity.getLastAnc());
@@ -266,11 +309,11 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             }
         }
 
-        PWMonitorEntity pwMonitorEntity ;
-        if (mPwMonitorEntity==null)
-            pwMonitorEntity=new PWMonitorEntity();
+        PWMonitorEntity pwMonitorEntity;
+        if (mPwMonitorEntity == null)
+            pwMonitorEntity = new PWMonitorEntity();
         else
-            pwMonitorEntity=mPwMonitorEntity;
+            pwMonitorEntity = mPwMonitorEntity;
 
         pwMonitorEntity.setStage("PW");
         pwMonitorEntity.setSubStage(subStage);
@@ -302,7 +345,9 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         }
 
 
-
+        BeneficiaryEntity beneficiaryEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT1();
+        beneficiaryEntity.setSubStage(pwMonitorEntity.getStage());
+        beneficiaryEntity.setSubStage(pwMonitorEntity.getStage());
         dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())

@@ -84,6 +84,7 @@
                     app:ff_label="@string/pmmvvy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
+                    android:layout_marginLeft="7dp"
                     app:ff_selections="@array/count_0_3"
                     app:ff_show_divider="false" />
 
@@ -95,6 +96,7 @@
                     app:ff_label="@string/igmpy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
+                    android:layout_marginLeft="7dp"
                     app:ff_selections="@array/count_0_4"
                     app:ff_show_divider="false" />
 
@@ -103,6 +105,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_label="JSY"
+                    android:layout_marginLeft="7dp"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_1"
@@ -113,6 +116,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_label="@string/rajshri"
+                    android:layout_marginLeft="7dp"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_2_more" />
@@ -215,7 +219,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="PCTS ID"
                     app:ff_label="@string/benef_pcts_id"
-                    app:ff_input_type="phone_no"
+                    app:ff_input_type="number"
                     app:ff_maxLength="15"
                     app:ff_required="true" />
 
@@ -225,7 +229,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Bahamashah ID/ACK"
                     app:ff_label="@string/bahamashah_id"
-                    app:ff_input_type="phone_no"
+                    app:ff_input_type="number"
                     app:ff_maxLength="15"
                     app:ff_required="true" />
 

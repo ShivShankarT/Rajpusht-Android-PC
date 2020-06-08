@@ -1,5 +1,7 @@
 package in.rajpusht.pc.custom.validator;
 
+import android.text.TextUtils;
+
 import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.utils.HUtil;
 
@@ -70,26 +72,45 @@ public class FormValidatorUtils {
                     value = value.trim();
 
                     int length = value.length();
-                    if (!(length >= min && length <= max))
-                        return new ValidationStatus(false, message);
+                    if (length >= min && length <= max) {
+                        return new ValidationStatus(true, message);
+                    }
+                    return new ValidationStatus(false, message);
 
-                    return new ValidationStatus(true, message);
                 }
                 return null;
             }
         };
     }
 
-    public static HValidatorListener<Double> textLengthBwValidator(Double min, Double max, String message) {
+    public static HValidatorListener<Double> valueBwValidator(Double min, Double max, String message) {
 
         return new HValidatorListener<Double>() {
             @Override
             public ValidationStatus isValid(Double value) {
                 if (value != null) {
-                    if (!(min >= min && max <= max))
-                        return new ValidationStatus(false, message);
+                    if ((min >= value && value <= max))
+                        return new ValidationStatus(true, message);
 
-                    return new ValidationStatus(true, message);
+                    return new ValidationStatus(false, message);
+                }
+                return null;
+            }
+        };
+    }
+
+
+    public static HValidatorListener<String> valueBwValidatorForStringNumber(Double min, Double max, String message) {
+
+        return new HValidatorListener<String>() {
+            @Override
+            public ValidationStatus isValid(String value) {
+                if (value != null&& TextUtils.isDigitsOnly(value)) {
+                    Double aDouble = new Double(value);
+                    if ((min >= aDouble && aDouble <= max))
+                        return new ValidationStatus(true, message);
+
+                    return new ValidationStatus(false, message);
                 }
                 return null;
             }
