@@ -1,12 +1,11 @@
 package in.rajpusht.pc.data;
 
 import androidx.annotation.Nullable;
+import androidx.lifecycle.LiveData;
 
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-
-import org.json.JSONObject;
 
 import java.util.List;
 
@@ -32,8 +31,6 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
-import okhttp3.ResponseBody;
-import retrofit2.HttpException;
 
 public class DataRepository {
 
@@ -107,7 +104,7 @@ public class DataRepository {
         return appDbHelper.insertOrUpdateLmMonitor(lmMonitorEntity);
     }
 
-    public List<BefModel> getBefModels() {
+    public LiveData<List<BefModel>> getBefModels() {
 
         return appDbHelper.getBefModels();
     }
@@ -122,25 +119,7 @@ public class DataRepository {
 
 
     public Single<ApiResponse<JsonObject>> login(String email, String password) {
-        return appApiHelper.login(email, password).onErrorReturn(new Function<Throwable, ApiResponse<JsonObject>>() {
-            @Override
-            public ApiResponse<JsonObject> apply(Throwable throwable) throws Exception {
-
-                if (throwable instanceof HttpException) {
-                    HttpException httpException = (HttpException) throwable;
-                    ResponseBody json = httpException.response().errorBody();
-                    JSONObject jsonObject = new JSONObject(json.string());
-                    boolean status = jsonObject.optBoolean("status", false);
-                    String message = jsonObject.optString("message", null);
-                    ApiResponse<JsonObject> jsonObjectApiResponse = new ApiResponse<>();
-                    jsonObjectApiResponse.setStatus(status);
-                    jsonObjectApiResponse.setMessage(message);
-                    return jsonObjectApiResponse;
-                }
-                throwable.printStackTrace();
-                return new ApiResponse<>();
-            }
-        }).doOnSuccess(jsonObjectApiResponse -> {
+        return appApiHelper.login(email, password).doOnSuccess(jsonObjectApiResponse -> {
             if (jsonObjectApiResponse != null && jsonObjectApiResponse.isStatus()) {
                 JsonObject data = jsonObjectApiResponse.getData();
                 String token = data.get("token").getAsString();
@@ -176,7 +155,7 @@ public class DataRepository {
                 .profileDetail()
                 .flatMapCompletable(profileDetailApiResponse -> {
 
-                    if (profileDetailApiResponse == null)
+                    if (profileDetailApiResponse == null || !profileDetailApiResponse.isStatus())
                         return Completable.error(new Exception("no data"));
                     ProfileDetail data = profileDetailApiResponse.getData();
                     appPreferencesHelper.setCurrentUserId(Long.valueOf(data.getPcId()));

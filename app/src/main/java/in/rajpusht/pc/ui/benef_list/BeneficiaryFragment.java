@@ -9,9 +9,12 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.lifecycle.LiveData;
+import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.util.Collections;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -81,25 +84,13 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
             }
         });
         toolbar.getMenu().add(1, 1, 1, "info").setIcon(R.drawable.ic_info_outline).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
-        toolbar.getMenu().add(1, 2, 2, "Insert Dummy").setIcon(R.drawable.ic_info_outline).setShowAsAction(MenuItem.SHOW_AS_ACTION_NEVER);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
                 if (item.getItemId() == 1)
                     showColorInfo();
                 else if (item.getItemId() == 2) {
-                    Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> tuple = HUtil.staticData();
-                    dataRepository.insertOrUpdateBeneficiaryData(tuple.getT1(), tuple.getT3(), tuple.getT2())
-                            .subscribeOn(schedulerProvider.io())
-                            .observeOn(schedulerProvider.ui())
-                            .subscribe(aBoolean -> {
-                                if (!aBoolean.isEmpty()) {//todo check
-                                    showAlertDialog("Beneficiary Dummy Data  Added", () -> {
-                                        FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, false, FragmentUtils.TRANSITION_NONE);
-                                    });
-                                }
 
-                            });
                 }
                 return true;
             }
@@ -113,13 +104,22 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
         recyclerView.setLayoutManager(new LinearLayoutManager(context));
 
 
-        List<BefModel> list = dataRepository.getBefModels();
-        if (list.isEmpty())
-            getViewDataBinding().noData.setVisibility(View.VISIBLE);
-        else
-            getViewDataBinding().noData.setVisibility(View.GONE);
+        LiveData<List<BefModel>> list = dataRepository.getBefModels();
+        BeneficiaryAdapter adapter = new BeneficiaryAdapter(Collections.emptyList(), this);
+        list.observe(getViewLifecycleOwner(), befModels -> {
+            if (befModels.isEmpty()) {
+                getViewDataBinding().noData.setVisibility(View.VISIBLE);
+                adapter.setValues(befModels);
+            }
+            else {
+                adapter.setValues(befModels);
+                getViewDataBinding().noData.setVisibility(View.GONE);
+            }
+        });
 
-        recyclerView.setAdapter(new BeneficiaryAdapter(list, this));
+
+
+        recyclerView.setAdapter(adapter);
         getViewDataBinding().addFab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -128,7 +128,7 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
             }
         });
         if (TextUtils.isEmpty(dataRepository.getSelectedAwcCode())) {
-            FragmentUtils.replaceFragment(requireActivity(), new ProfileFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
+            FragmentUtils.replaceFragment(requireActivity(), new ProfileFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_NONE);
 
         }
 

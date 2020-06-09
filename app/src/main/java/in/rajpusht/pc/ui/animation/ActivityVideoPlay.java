@@ -13,6 +13,7 @@ import android.widget.VideoView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.transition.TransitionManager;
 
 import in.rajpusht.pc.R;
 
@@ -70,6 +71,12 @@ public class ActivityVideoPlay extends AppCompatActivity {
         video_views.setMediaController(mc);
         video_views.setVideoURI(uri);
         video_views.start();
+        video_views.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(MediaPlayer mp) {
+                finish();
+            }
+        });
         progressBar.setVisibility(View.VISIBLE);
         video_views.setVisibility(View.VISIBLE);
     }

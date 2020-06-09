@@ -39,6 +39,7 @@ import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
 import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.Disposable;
 
@@ -345,8 +346,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setChildCount(vb.benfChildCount.getSelectedPos());
         beneficiaryEntity.setMobileNo(vb.benfSelfMobile.getText());
         beneficiaryEntity.setHusbandMobNo(vb.benfHusMobile.getText());
-        beneficiaryEntity.setCaste(vb.benfCaste.getSelectedData());
-        beneficiaryEntity.setEconomic(vb.benfEcon.getSelectedData());
+        beneficiaryEntity.setCaste(FormDataConstant.caste.get(vb.benfCaste.getSelectedPos()));
+        beneficiaryEntity.setEconomic(FormDataConstant.economic.get(vb.benfEcon.getSelectedPos()));
         beneficiaryEntity.setPctsId(vb.benfPctsid.getText());
         beneficiaryEntity.setBahamashahId(vb.benfBahamashaId.getText());
         beneficiaryEntity.setCounselingProv(vb.benfCounseling.getSelectedData());
@@ -387,10 +388,11 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
 
         if (isPregnant) {
-            if (pregnantEntity == null)
+            if (pregnantEntity == null) {
                 pregnantEntity = new PregnantEntity();
-            pregnantEntity.setBeneficiaryId(beneficiaryId);
-            pregnantEntity.setPregnancyId(beneficiaryId);
+                pregnantEntity.setBeneficiaryId(beneficiaryId);
+                pregnantEntity.setPregnancyId(beneficiaryId);
+            }
             Date lmpdate = vb.benfLmp.getDate();
             pregnantEntity.setLmpDate(lmpdate);
 
@@ -403,9 +405,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (hasChild) {
 
             Date date = vb.benfChildDob.getDate();
-            if (childEntity == null)
+            if (childEntity == null) {
                 childEntity = new ChildEntity();
-            childEntity.setChildId(Long.parseLong(beneficiaryId + "1"));
+                childEntity.setChildId(Long.parseLong(beneficiaryId + "1"));
+            }
             childEntity.setStage("PW");
             int days = HUtil.daysBetween(date, new Date());
             String lmmySubStage = HUtil.getLMMYSubStage(days);
@@ -629,8 +632,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             vh.benfMobileSelector.setSelectedIds(new HashSet<>(Collections.singletonList(1)));
         }
 
-        vh.benfCaste.setSectionByData(beneficiaryEntity.getCaste());
-        vh.benfEcon.setSectionByData(beneficiaryEntity.getEconomic());
+        vh.benfCaste.setSection(FormDataConstant.caste.indexOf(beneficiaryEntity.getCaste()));
+        vh.benfEcon.setSection(FormDataConstant.economic.indexOf(beneficiaryEntity.getEconomic()));
         vh.benfBahamashaId.setText(beneficiaryEntity.getBahamashahId());
         vh.benfPctsid.setText(beneficiaryEntity.getPctsId());
         vh.benfCounseling.setSectionByData(beneficiaryEntity.getCounselingProv());

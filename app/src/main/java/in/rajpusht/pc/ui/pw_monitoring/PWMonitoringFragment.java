@@ -1,11 +1,13 @@
 package in.rajpusht.pc.ui.pw_monitoring;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.lifecycle.ViewModelProvider;
@@ -187,7 +189,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         getViewDataBinding().pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
         getViewDataBinding().benfLastcheckupdate.setMinDate(pregnantEntity.getLmpDate().getTime());
 
-        getViewDataBinding().benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0 ,99.0,
+        getViewDataBinding().benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
                 "Weight should be from 30 Kg to 99 Kg"));
 
        /* a. 1st visit: Within 12 weeks—preferably as soon as pregnancy is suspected—for registration of pregnancy and first ANC
@@ -200,15 +202,15 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         getViewDataBinding().benfAncDate.sethValidatorListener(new HValidatorListener<Date>() {
             @Override
             public ValidationStatus isValid(Date data) {
-                int lmpWek = HUtil.daysBetween(pregnantEntity.getLmpDate(), data);
-                int ancCont = getViewDataBinding().benfAncCount.getSelectedPos();
+                boolean isValid = true;
+                int lmpWek = HUtil.daysBetween(pregnantEntity.getLmpDate(), data) / 7;
+                if ("PW1".equalsIgnoreCase(subStage) && lmpWek <= 12 ||
+                        "PW2".equalsIgnoreCase(subStage) && lmpWek >= 14 && lmpWek <= 26 ||
+                        "PW3".equalsIgnoreCase(subStage) && lmpWek >= 28 && lmpWek <= 34 ||
+                        "PW4".equalsIgnoreCase(subStage) && lmpWek >= 36 && lmpWek <= 40) {
 
-                if (ancCont==0){
-
-                }else if (ancCont==1 ){
-
-                }
-                return new ValidationStatus(true);
+                } else isValid = false;
+                return new ValidationStatus(isValid, "Invalid Anc Date");
             }
         });
 
@@ -227,7 +229,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                     if (beneficiaryEntityPregnantEntityChildEntityTuple != null)
                         setupUiData();
                 });
-        if (pwFormId != null)
+        if (pwFormId != null) {
             dataRepository.pwMonitorByID(pwFormId)
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui()).subscribe(new Consumer<PWMonitorEntity>() {
@@ -236,10 +238,17 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
                     if (pwMonitorEntity != null) {
                         PWMonitoringFragment.this.mPwMonitorEntity = pwMonitorEntity;
-                        setFormUiData(pwMonitorEntity);
+                        if (mPwMonitorEntity.getAvailable())
+                            setFormUiData(pwMonitorEntity);
+                        else {
+                            checkBenfAvailable();
+                        }
                     }
                 }
             });
+        } else {
+            checkBenfAvailable();
+        }
     }
 
     private void setFormUiData(PWMonitorEntity pwMonitorEntity) {
@@ -324,7 +333,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         pwMonitorEntity.setLastWeightInMamta(vb.benfMamtaCdWeight.getMeasValue());
         pwMonitorEntity.setLastWeightCheckDate(vb.benfLastcheckupdate.getDate());
         pwMonitorEntity.setCurrentWeight(vb.benfCurrentWeight.getMeasValue());
-
+        pwMonitorEntity.setAvailable(true);
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
@@ -370,6 +379,61 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                                 .commit();
                     });
                 });
+
+    }
+
+
+    private void saveNotAvi() {
+
+
+        PWMonitorEntity pwMonitorEntity;
+        if (mPwMonitorEntity == null)
+            pwMonitorEntity = new PWMonitorEntity();
+        else
+            pwMonitorEntity = mPwMonitorEntity;
+
+        pwMonitorEntity.setStage("PW");
+        pwMonitorEntity.setSubStage(subStage);
+        pwMonitorEntity.setPregnancyId(pregnancyId);
+        pwMonitorEntity.setBeneficiaryId(beneficiaryId);
+        pwMonitorEntity.setAvailable(false);
+
+        BeneficiaryEntity beneficiaryEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT1();
+        beneficiaryEntity.setSubStage(pwMonitorEntity.getStage());
+        beneficiaryEntity.setSubStage(pwMonitorEntity.getStage());
+        dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe((d) -> {
+
+                });
+
+        dataRepository.insertOrUpdatePwMonitor(pwMonitorEntity)
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(() -> {
+                    showAlertDialog("Beneficiary Report Saved Successfully", () -> {
+
+                        requireActivity().getSupportFragmentManager()
+                                .beginTransaction()
+                                .remove(PWMonitoringFragment.this)
+                                .commit();
+                    });
+                });
+
+    }
+
+    private void checkBenfAvailable() {
+        new AlertDialog.Builder(requireContext()).setTitle("Alert")
+                .setMessage("Is beneficiary available ?")
+                .setCancelable(false)
+                .setPositiveButton("Yes", null)
+                .setNegativeButton("No", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                saveNotAvi();
+            }
+        }).show();
 
     }
 

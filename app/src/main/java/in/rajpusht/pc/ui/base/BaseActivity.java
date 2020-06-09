@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import androidx.annotation.LayoutRes;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 
@@ -20,6 +21,7 @@ import com.google.android.material.snackbar.Snackbar;
 
 import dagger.android.AndroidInjection;
 import dagger.android.support.DaggerAppCompatActivity;
+import in.rajpusht.pc.utils.ContextWrapper;
 import in.rajpusht.pc.utils.MyProgressDialogFragment;
 import in.rajpusht.pc.utils.NetworkUtils;
 
@@ -53,6 +55,10 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
      */
     public abstract V getViewModel();
 
+    @Override
+    protected void attachBaseContext(Context newBase) {
+        super.attachBaseContext(ContextWrapper.wrap(newBase));
+    }
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -106,22 +112,23 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         mViewDataBinding.executePendingBindings();
     }
 
-    public void showDialog() {
-        dismissDialog();
+    public void showProgressDialog() {
+        dismissProgressDialog();
         myDialogFragment = new MyProgressDialogFragment(this);
         myDialogFragment.show();
         myDialogFragment.setCancelable(false);
 
     }
 
-    public void dismissDialog() {
+    public void dismissProgressDialog() {
 
         if (myDialogFragment != null) {
             myDialogFragment.dismiss();
             myDialogFragment = null;
         }
     }
-    public void showMessage( View view,String message) {
+
+    public void showMessage(View view, String message) {
         if (isFinishing())
             return;
         Snackbar snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
@@ -131,9 +138,23 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         snack.show();
     }
 
+    public void showMessage(String message) {
+        if (isFinishing())
+            return;
+        showMessage(findViewById(android.R.id.content), message);
+    }
+
+    public void showAlertDialog(String message) {
+        new AlertDialog.Builder(this)
+                .setTitle("Alert!")
+                .setMessage(message)
+                .setPositiveButton("OK", null)
+                .show();
+    }
+
     @Override
     protected void onDestroy() {
-        dismissDialog();
+        dismissProgressDialog();
         super.onDestroy();
     }
 }

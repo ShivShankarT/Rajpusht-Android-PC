@@ -59,6 +59,10 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         pregnancyGraphFragmentBinding.toolbarLy.toolbar.setTitle("PW Women Weight ");
+        pregnancyGraphFragmentBinding.toolbarLy.toolbar.setNavigationOnClickListener((v)->{
+            requireActivity().onBackPressed();
+        });
+
         pregnancyGraphFragmentBinding.nxtBtn.setOnClickListener(v -> {
 
             FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),

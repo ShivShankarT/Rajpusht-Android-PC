@@ -102,8 +102,8 @@ public class FormEditFieldMeasElement extends FrameLayout {
         edf_txt_inp_ly = view.findViewById(R.id.edf_txt_inp_ly);
 
 
-        edf_text.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
-        edf_text2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        edf_text.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        edf_text2.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_SIGNED);
 
         if (maxLength != -1) {
             edf_text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});

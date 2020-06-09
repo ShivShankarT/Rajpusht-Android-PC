@@ -158,7 +158,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         int month = mCurrentDate.get(Calendar.MONTH);
         int year = mCurrentDate.get(Calendar.YEAR);
         DatePickerDialog d = new DatePickerDialog(getContext(), dpd, year, month, day);
-        if (minDate != 0)
+        if (minDate != 0&&(maxDate!=0&&minDate<maxDate))
             d.getDatePicker().setMinDate(minDate);
         if (maxDate != 0)
             d.getDatePicker().setMaxDate(maxDate);

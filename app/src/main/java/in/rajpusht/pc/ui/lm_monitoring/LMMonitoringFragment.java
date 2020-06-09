@@ -108,15 +108,15 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         });
 
         //FormValidator
-        viewDataBinding.benfChildCurrentMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0 , 18.00 ,
+        viewDataBinding.benfChildCurrentMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0, 18.00,
                 "Muac should be from 5 cm to 18cm"));
-        viewDataBinding.benfChildLastRecMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0 , 18.00 ,
+        viewDataBinding.benfChildLastRecMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0, 18.00,
                 "Muac should be from 5 cm to 18cm"));
 
-        viewDataBinding.benfCurrentHeight.sethValidatorListener(FormValidatorUtils.valueBwValidatorForStringNumber(10.0 , 30.00 ,
+        viewDataBinding.benfCurrentHeight.sethValidatorListener(FormValidatorUtils.valueBwValidatorForStringNumber(10.0, 30.00,
                 "Child height should be from 10 inch to 30 inch"));
 
-        viewDataBinding.benfBirthChildWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(.5 , 10.0 ,
+        viewDataBinding.benfBirthChildWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(.5, 10.0,
                 "Child weight should be from 500 gm to 10 kg"));
 
 
@@ -228,12 +228,9 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         vb.benfChildImmune.setSectionByData(lmMonitorEntity.getIsFirstImmunizationComplete());
-        if (vb.benfChildLastRecMuac.isVisibleAndEnable())
-            vb.benfChildLastRecMuac.setText(lmMonitorEntity.getLastMuac());
-        if (vb.benfChildLastRecMuacDate.isVisibleAndEnable())
-            vb.benfChildLastRecMuacDate.setDate(lmMonitorEntity.getLastMuacCheckDate());
-        if (vb.benfChildCurrentMuac.isVisibleAndEnable())
-            vb.benfChildCurrentMuac.setText(lmMonitorEntity.getCurrentMuac());
+        vb.benfChildLastRecMuac.setText(lmMonitorEntity.getLastMuac());
+        vb.benfChildLastRecMuacDate.setDate(lmMonitorEntity.getLastMuacCheckDate());
+        vb.benfChildCurrentMuac.setText(lmMonitorEntity.getCurrentMuac());
         vb.benfBirthChildWeight.setText(lmMonitorEntity.getBirthWeight());
         vb.benfCurrentWeight.setText(lmMonitorEntity.getChildWeight());
         vb.benfCurrentHeight.setText(String.valueOf(lmMonitorEntity.getChildHeight()));
@@ -270,10 +267,13 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         if (vb.benfChildImmune.isVisibleAndEnable())
             validateElement.add(vb.benfChildImmune.validateWthView());
-        validateElement.add(vb.benfChildLastRecMuac.validateWthView());
-        validateElement.add(vb.benfChildLastRecMuacDate.validateWthView());
+        if (vb.benfChildLastRecMuac.isVisibleAndEnable())
+            validateElement.add(vb.benfChildLastRecMuac.validateWthView());
+        if (vb.benfChildLastRecMuacDate.isVisibleAndEnable())
+            validateElement.add(vb.benfChildLastRecMuacDate.validateWthView());
         validateElement.add(vb.benfBirthChildWeight.validateWthView());
-        validateElement.add(vb.benfChildCurrentMuac.validateWthView());
+        if (vb.benfChildCurrentMuac.isVisibleAndEnable())
+            validateElement.add(vb.benfChildCurrentMuac.validateWthView());
         validateElement.add(vb.benfCurrentWeight.validateWthView());
         validateElement.add(vb.benfCurrentHeight.validateWthView());
 
@@ -307,13 +307,15 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         lmMonitorEntity.setChildId(childId);
         lmMonitorEntity.setStage("LM");
         lmMonitorEntity.setSubStage(subStage);
-        lmMonitorEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
+        if (vb.benfChildImmune.isVisibleAndEnable())
+            lmMonitorEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
         lmMonitorEntity.setLastMuac(vb.benfChildLastRecMuac.getMeasValue());
         lmMonitorEntity.setLastMuacCheckDate(vb.benfChildLastRecMuacDate.getDate());
         lmMonitorEntity.setCurrentMuac(vb.benfChildCurrentMuac.getMeasValue());
         lmMonitorEntity.setBirthWeight(vb.benfBirthChildWeight.getMeasValue());
         lmMonitorEntity.setChildWeight(vb.benfCurrentWeight.getMeasValue());
         lmMonitorEntity.setChildHeight(Double.valueOf(vb.benfCurrentHeight.getText()));
+        lmMonitorEntity.setAvailable(true);
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
@@ -341,7 +343,6 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         if (pregnantEntity == null) {
             beneficiaryEntity.setStage(lmMonitorEntity.getStage());
             beneficiaryEntity.setSubStage(lmMonitorEntity.getSubStage());
-            dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity);
         }
 
         childEntity.setStage(lmMonitorEntity.getStage());

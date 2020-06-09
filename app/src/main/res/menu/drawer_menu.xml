@@ -20,9 +20,10 @@
             android:title="@string/sync" />
 
         <item
+            android:visible="false"
             android:id="@+id/nav_download"
             android:icon="@drawable/ic_account"
-            android:title="Download(tesing)" />
+            android:title="Download(testing)" />
 
         <item
             android:id="@+id/nav_changePassword"

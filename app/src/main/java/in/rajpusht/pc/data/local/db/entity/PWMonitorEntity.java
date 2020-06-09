@@ -27,9 +27,11 @@ public class PWMonitorEntity {
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
     private DataStatus dataStatus;
+    private Boolean available;
     private long createdBy;
     private String createdAt;
     private String updatedAt;
+
 
 
     public int getId() {
@@ -175,5 +177,13 @@ public class PWMonitorEntity {
 
     public void setBeneficiaryId(long beneficiaryId) {
         this.beneficiaryId = beneficiaryId;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }

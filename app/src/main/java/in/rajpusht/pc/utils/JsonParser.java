@@ -124,6 +124,7 @@ public class JsonParser {
                     JsonObject object = (JsonObject) pw_monitorlist.get(i);
 
                     PWMonitorEntity pwmodel = new PWMonitorEntity();
+                    int id = getInt(object, "id");
                     int pregnancy_id = getInt(object, "pregnancy_id");
                     String stage = getString(object, "stage");
                     String sub_stage = getString(object, "sub_stage");
@@ -137,7 +138,10 @@ public class JsonParser {
                     Integer jsy_installment = getInt(object, "jsy_installment");
                     Integer rajshri_installment = getInt(object, "rajshri_installment");
                     Integer created_by = getInt(object, "created_by");
+                    String is_available = getString(object, "is_available");
 
+
+                    pwmodel.setId(id);
                     pwmodel.setPregnancyId(pregnancy_id);
                     pwmodel.setStage(stage);
                     pwmodel.setSubStage(sub_stage);
@@ -152,6 +156,7 @@ public class JsonParser {
                     pwmodel.setRajshriInstallment(rajshri_installment);
                     pwmodel.setCreatedBy(created_by);
                     pwmodel.setDataStatus(DataStatus.OLD);
+                    pwmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
                     pwMonitorModels.add(pwmodel);
 
 
@@ -169,6 +174,8 @@ public class JsonParser {
                     Integer delivery_home = getInt(object, "delivery_place_type");
                     String delivery_place = getString(object, "delivery_place");
                     Integer child_order = getInt(object, "child_order");
+
+
                     cmodel.setChildId(child_id);
                     cmodel.setDob(AppDateTimeUtils.convertDateFromServer(dob));
                     cmodel.setAge(age);
@@ -179,6 +186,7 @@ public class JsonParser {
                     cmodel.setDeliveryPlace(delivery_place);
                     cmodel.setChildOrder(child_order);
                     cmodel.setDataStatus(DataStatus.OLD);
+
                     childModel.add(cmodel);
 
 
@@ -187,6 +195,7 @@ public class JsonParser {
                 for (int i = 0; i < lm_monitorlist.size(); i++) {
                     JsonObject object = (JsonObject) lm_monitorlist.get(i);
 
+                    int id = getInt(object, "id");
                     int child_id = getInt(object, "child_id");
                     String is_first_immunization_complete = getString(object, "is_first_immunization_complete");
                     Double last_muac = getDouble(object, "last_muac");
@@ -202,8 +211,11 @@ public class JsonParser {
                     int created_by = getInt(object, "created_by");
                     String stage = getString(object, "stage");
                     String sub_stage = getString(object, "sub_stage");
+                    String is_available = getString(object, "is_available");
+
 
                     LMMonitorEntity lmmodel = new LMMonitorEntity();
+                    lmmodel.setId(id);
                     lmmodel.setChildId(child_id);
                     lmmodel.setIsFirstImmunizationComplete(HUtil.convYtoYes(is_first_immunization_complete));
                     lmmodel.setLastMuac(last_muac);
@@ -220,6 +232,7 @@ public class JsonParser {
                     lmmodel.setStage(stage);
                     lmmodel.setSubStage(sub_stage);
                     lmmodel.setDataStatus(DataStatus.OLD);
+                    lmmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
                     lmMonitorModel.add(lmmodel);
 
 
@@ -366,6 +379,8 @@ public class JsonParser {
         if (!isNew) {
             lmObject.addProperty("childId", lmMonitorEntity.getChildId());
         }
+        if (lmMonitorEntity.getDataStatus() != DataStatus.NEW)
+            lmObject.addProperty("lmId", lmMonitorEntity.getId());
         lmObject.addProperty("isFirstImmunizationComplete", HUtil.convYestoY(lmMonitorEntity.getIsFirstImmunizationComplete()));
         lmObject.addProperty("lastMuac", lmMonitorEntity.getLastMuac());
         lmObject.addProperty("lastMuacCheckDate", AppDateTimeUtils.convertServerDate(lmMonitorEntity.getLastMuacCheckDate()));
@@ -380,6 +395,7 @@ public class JsonParser {
         lmObject.addProperty("createdBy", lmMonitorEntity.getCreatedBy());
         lmObject.addProperty("stage", lmMonitorEntity.getStage());
         lmObject.addProperty("subStage", lmMonitorEntity.getSubStage());
+        lmObject.addProperty("isAvailable", lmMonitorEntity.getAvailable() != null && lmMonitorEntity.getAvailable() ? "Y" : "N");
         lmObject.addProperty("createdAt", lmMonitorEntity.getCreatedAt());
         lmObject.addProperty("updatedAt", lmMonitorEntity.getUpdatedAt());
         lmObject.addProperty("dataStatus", lmMonitorEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
@@ -392,6 +408,9 @@ public class JsonParser {
         JsonObject pwobject = new JsonObject();
         if (!isNew)
             pwobject.addProperty("pregnancyId", pwMonitorEntity.getPregnancyId());
+        if (pwMonitorEntity.getDataStatus() != DataStatus.NEW)
+            pwobject.addProperty("pwId", pwMonitorEntity.getId());
+
         pwobject.addProperty("stage", pwMonitorEntity.getStage());
         pwobject.addProperty("subStage", pwMonitorEntity.getSubStage());
         pwobject.addProperty("ancCount", pwMonitorEntity.getAncCount());
@@ -403,6 +422,7 @@ public class JsonParser {
         pwobject.addProperty("igmpyInstallment", pwMonitorEntity.getIgmpyInstallment());
         pwobject.addProperty("jsyInstallment", pwMonitorEntity.getJsyInstallment());
         pwobject.addProperty("rajshriInstallment", pwMonitorEntity.getRajshriInstallment());
+        pwobject.addProperty("isAvailable", pwMonitorEntity.getAvailable() != null && pwMonitorEntity.getAvailable() ? "Y" : "N");
         pwobject.addProperty("createdBy", pwMonitorEntity.getCreatedBy());
         pwobject.addProperty("createdAt", pwMonitorEntity.getCreatedAt());
         pwobject.addProperty("updatedAt", pwMonitorEntity.getUpdatedAt());

@@ -106,7 +106,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Last ANC Date"
-                    app:ff_label="2. Enter Last ANC Date"
+                    app:ff_label="@string/last_anc_date"
                     app:ff_required="true" />
 
 
@@ -116,7 +116,7 @@
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
                     app:ff_measurement_type="weight"
-                    app:ff_label="3. Last recorded pregnancy weight (As in Mamta Card)"
+                    app:ff_label="@string/last_pregnancy_weight"
                     app:ff_maxLength="3"
                     app:ff_required="true" />
 
@@ -126,7 +126,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Date"
-                    app:ff_label="4. Date of last recorded pregnancy weight (As in Mamta Card)"
+                    app:ff_label="@string/date_recorded_pregnancy_weight"
                     app:ff_required="true" />
 
 
@@ -137,7 +137,7 @@
                     app:ff_hint="Weight"
                     app:ff_measurement_type="weight"
                     app:ff_input_type="numberDecimal"
-                    app:ff_label="5. Current pregnancy weight "
+                    app:ff_label="@string/current_preg_weight"
                     app:ff_maxLength="3"
                     app:ff_required="true" />
 
@@ -146,7 +146,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_chbox_none_pos="4"
-                    app:ff_label="4. Are you registered in"
+                    app:ff_label="@string/you_register_in"
                     app:ff_required="true"
                     app:ff_selections="@array/benf_registered_in" />
 
@@ -156,13 +156,13 @@
                     style="@style/FormTextMini"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="5. How many installments have you received?" />
+                    android:text="@string/installment_received_till" />
 
                 <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
                     android:id="@+id/benf_pmmvvy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="PMMVVY"
+                    app:ff_label="@string/pmmvvy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     android:layout_marginLeft="7dp"
@@ -174,7 +174,7 @@
                     android:id="@+id/benf_igmpy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="IGMPY"
+                    app:ff_label="@string/igmpy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     android:layout_marginLeft="7dp"
@@ -185,7 +185,7 @@
                     android:id="@+id/benf_jsy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="JSY"
+                    app:ff_label="@string/jsy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     android:layout_marginLeft="7dp"
@@ -196,7 +196,7 @@
                     android:id="@+id/benf_rajshri_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="RAJSHRI"
+                    app:ff_label="@string/rajshri"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     android:layout_marginLeft="7dp"
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="save" />
+                    android:text="@string/save" />
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

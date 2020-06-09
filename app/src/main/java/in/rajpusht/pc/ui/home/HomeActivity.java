@@ -45,6 +45,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     @Inject
     SchedulerProvider schedulerProvider;
     private HomeViewModel mViewModel;
+    private TextView awcName;
 
     @Override
     public int getBindingVariable() {
@@ -84,15 +85,14 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         View navigationView = navigationView1.getHeaderView(0);
         navigationView.findViewById(R.id.profile_iv).setOnClickListener(profileClick);
         TextView name = navigationView.findViewById(R.id.pc_name_tv);
-        TextView awcName = navigationView.findViewById(R.id.pc_sele_awc);
+        awcName = navigationView.findViewById(R.id.pc_sele_awc);
         TextView email = navigationView.findViewById(R.id.pc_email_tv);
         name.setOnClickListener(profileClick);
         email.setOnClickListener(profileClick);
         awcName.setOnClickListener(profileClick);
-
         name.setText(appPreferencesHelper.getCurrentUserName());
         email.setText(appPreferencesHelper.getCurrentUserEmail());
-        awcName.setText(appPreferencesHelper.getString("awc_name"));
+        setNavUiData();
 
         navigationView1.setNavigationItemSelectedListener(item -> {
             if (item.getItemId() == R.id.nav_select_awc) {
@@ -105,7 +105,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {
                 syncData();
-                startActivity(new Intent(HomeActivity.this, LoginActivity.class));
             } else if (item.getItemId() == R.id.nav_download) {
                 dataRepository.profileAndBulkDownload().subscribeOn(schedulerProvider.io()).subscribe(new Action() {
                     @Override
@@ -127,9 +126,9 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             Pair<Boolean, String> progWithdata = pairEvent.getContentIfNotHandled();
             if (progWithdata != null) {
                 if (progWithdata.first)
-                    showDialog();
+                    showProgressDialog();
                 else
-                    dismissDialog();
+                    dismissProgressDialog();
                 if (!TextUtils.isEmpty(progWithdata.second)) {
                     showMessage(getViewDataBinding().fragmentContainer, progWithdata.second);
                 }
@@ -139,7 +138,11 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
 
     }
 
-    private void syncData() {
+    public void setNavUiData() {
+        awcName.setText(appPreferencesHelper.getString("awc_name"));
+    }
+
+    public void syncData() {
         mViewModel.syncData();
     }
 

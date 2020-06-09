@@ -1,6 +1,7 @@
 package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
+import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
@@ -48,6 +49,13 @@ public class AssignedLocationEntity {
     @SerializedName("sectorHindiName")
     @Expose
     private String sectorHindiName;
+
+    @Ignore
+    private Integer pwCount;
+    @Ignore
+    private Integer lmCount;
+    @Ignore
+    private Integer myCount;
 
     public Integer getId() {
         return id;
@@ -151,5 +159,29 @@ public class AssignedLocationEntity {
 
     public void setSectorHindiName(String sectorHindiName) {
         this.sectorHindiName = sectorHindiName;
+    }
+
+    public Integer getPwCount() {
+        return pwCount;
+    }
+
+    public void setPwCount(Integer pwCount) {
+        this.pwCount = pwCount;
+    }
+
+    public Integer getLmCount() {
+        return lmCount;
+    }
+
+    public void setLmCount(Integer lmCount) {
+        this.lmCount = lmCount;
+    }
+
+    public Integer getMyCount() {
+        return myCount;
+    }
+
+    public void setMyCount(Integer myCount) {
+        this.myCount = myCount;
     }
 }

@@ -30,26 +30,27 @@ import in.rajpusht.pc.ui.login.LoginActivity;
  */
 
 public class AppPreferencesHelper {
+    public static final String PREF_NAME = "app-ref.db";
+
     public static final long NULL_INDEX = -1L;
-
     private static final String PREF_LOGIN = "login";
-
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
-
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
-
     private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
-
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
-
-
+    private static AppPreferencesHelper appPreferencesHelper;
     private final SharedPreferences mPrefs;
     private final Context context;
 
     @Inject
     public AppPreferencesHelper(Context context, @PreferenceInfo String prefFileName) {
-        this.context=context.getApplicationContext();
-        mPrefs = context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
+        this.context = context;
+        mPrefs = this.context.getSharedPreferences(prefFileName, Context.MODE_PRIVATE);
+        appPreferencesHelper = this;
+    }
+
+    public static AppPreferencesHelper getAppPreferencesHelper() {
+        return appPreferencesHelper;
     }
 
     public boolean getLogin() {
@@ -64,43 +65,35 @@ public class AppPreferencesHelper {
         return mPrefs.getString(PREF_KEY_ACCESS_TOKEN, null);
     }
 
-
     public void setAccessToken(String accessToken) {
         mPrefs.edit().putString(PREF_KEY_ACCESS_TOKEN, accessToken).apply();
     }
-
 
     public String getCurrentUserEmail() {
         return mPrefs.getString(PREF_KEY_CURRENT_USER_EMAIL, null);
     }
 
-
     public void setCurrentUserEmail(String email) {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_EMAIL, email).apply();
     }
-
 
     public Long getCurrentUserId() {
         long userId = mPrefs.getLong(PREF_KEY_CURRENT_USER_ID, NULL_INDEX);
         return userId == NULL_INDEX ? null : userId;
     }
 
-
     public void setCurrentUserId(Long userId) {
         long id = userId == null ? NULL_INDEX : userId;
         mPrefs.edit().putLong(PREF_KEY_CURRENT_USER_ID, id).apply();
     }
 
-
     public String getCurrentUserName() {
         return mPrefs.getString(PREF_KEY_CURRENT_USER_NAME, null);
     }
 
-
     public void setCurrentUserName(String userName) {
         mPrefs.edit().putString(PREF_KEY_CURRENT_USER_NAME, userName).apply();
     }
-
 
     public String getCurrentUserMob() {
         return mPrefs.getString("mob", null);
@@ -118,7 +111,6 @@ public class AppPreferencesHelper {
         mPrefs.edit().putString("awc_code", userName).apply();
     }
 
-
     public boolean isEnglish() {
         return mPrefs.getBoolean("is_eng_language", true);
     }
@@ -127,7 +119,6 @@ public class AppPreferencesHelper {
         mPrefs.edit().putBoolean("is_eng_language", isEng).apply();
     }
 
-
     public void putString(String key, String value) {
         mPrefs.edit().putString(key, value).apply();
     }
@@ -135,7 +126,6 @@ public class AppPreferencesHelper {
     public String getString(String key) {
         return mPrefs.getString(key, null);
     }
-
 
     public void logout() {
         mPrefs.edit().clear().apply();

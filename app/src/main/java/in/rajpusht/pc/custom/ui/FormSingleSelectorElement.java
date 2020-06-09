@@ -15,6 +15,9 @@ import androidx.annotation.Nullable;
 
 import com.google.android.material.textfield.TextInputLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
@@ -23,12 +26,13 @@ import in.rajpusht.pc.custom.validator.ValidationStatus;
 
 public class FormSingleSelectorElement extends FrameLayout implements RadioGroup.OnCheckedChangeListener {
 
+    RadioGroup edf_ch_gp;
     private int mSelectedPos = -1;
     private TextInputLayout edf_txt_inp_ly;
     private HValidatorListener<Integer> hValidatorListener;
     private HValueChangedListener<Integer> hValueChangedListener;
     private boolean required;
-    RadioGroup edf_ch_gp;
+    private List<String> sectionData = new ArrayList<>();
 
     public FormSingleSelectorElement(Context context) {
         super(context);
@@ -64,13 +68,16 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
         TextView labelTv = view.findViewById(R.id.edf_lab);
         edf_txt_inp_ly = view.findViewById(R.id.edf_txt_inp_ly);
         labelTv.setText(label);
-        CharSequence[] s = a.getTextArray(R.styleable.FormField_ff_selections);
-         edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
+        CharSequence[] array = a.getTextArray(R.styleable.FormField_ff_selections);
+        for (int i = 0; i < array.length; i++) {
+            sectionData.add(String.valueOf(array[i]));
+        }
+        edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
         edf_ch_gp.removeAllViews();
         edf_ch_gp.setOnCheckedChangeListener(this);
-        for (int i = 0; i < s.length; i++) {
+        for (int i = 0; i < array.length; i++) {
             RadioButton child = new RadioButton(getContext());
-            child.setText(s[i]);
+            child.setText(array[i]);
             child.setId(i);
             edf_ch_gp.addView(child);
         }
@@ -132,7 +139,7 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
 
 
     public void setSection(Integer pos) {
-        if (pos == null)
+        if (pos == null || pos < 0)
             return;
         edf_ch_gp.setOnCheckedChangeListener(null);
         if (pos < edf_ch_gp.getChildCount()) {
@@ -144,8 +151,8 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
 
     }
 
-    public  void sendChangedListenerValue(){
-        if (hValueChangedListener!=null&&mSelectedPos!=-1)
+    public void sendChangedListenerValue() {
+        if (hValueChangedListener != null && mSelectedPos != -1)
             hValueChangedListener.onValueChanged(mSelectedPos);
     }
 
@@ -157,6 +164,20 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
 
     public boolean isVisibleAndEnable() {
         return getVisibility() == VISIBLE && isEnabled();
+    }
+
+
+    public void setSectionByData(String data) {
+        int pos = sectionData.indexOf(data);
+        if (pos != -1) {
+            setSection(pos);
+        }
+
+    }
+
+
+    public String getSelectedData() {
+        return sectionData.get(mSelectedPos);
     }
 
 }

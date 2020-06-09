@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.otp;
 
 import android.util.Pair;
 
+import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
 
 import in.rajpusht.pc.data.DataRepository;
@@ -13,6 +14,7 @@ import io.reactivex.functions.Consumer;
 
 public class OtpViewModel extends BaseViewModel {
     public MutableLiveData<Event<Pair<Boolean, String>>> _navigateToHome = new MutableLiveData<>();
+    public MutableLiveData<Event<Boolean>> progressDialog = new MutableLiveData<>();
 
     public OtpViewModel(DataRepository dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -33,6 +35,7 @@ public class OtpViewModel extends BaseViewModel {
     }
 
     public void download() {
+        progressDialog.setValue(Event.data(true));
         getCompositeDisposable().add(getDataManager().profileAndBulkDownload()
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui()).subscribe(new Action() {
@@ -40,12 +43,14 @@ public class OtpViewModel extends BaseViewModel {
                     public void run() throws Exception {
                         getDataManager().setLogin(true);
                         _navigateToHome.setValue(new Event<>(new Pair<>(true, "")));
+                        progressDialog.setValue(Event.data(false));
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
                         _navigateToHome.setValue(new Event<>(new Pair<>(false, "sync failed")));
+                        progressDialog.setValue(Event.data(false));
                     }
                 }));
 

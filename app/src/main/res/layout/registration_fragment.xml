@@ -197,7 +197,7 @@
                     app:ff_required="true" />
 
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_caste"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -205,7 +205,7 @@
                     app:ff_required="true"
                     app:ff_selections="@array/caste" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_econ"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"

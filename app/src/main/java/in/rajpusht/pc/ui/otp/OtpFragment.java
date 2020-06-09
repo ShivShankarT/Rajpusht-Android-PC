@@ -58,7 +58,17 @@ public class OtpFragment extends BaseFragment<OtpFragmentBinding, OtpViewModel> 
                     requireActivity().finish();
                     startActivity(new Intent(requireContext(), HomeActivity.class));
                 }
+                showMessage(contentIfNotHandled.second);
 
+            }
+        });
+
+        getViewModel().progressDialog.observe(getViewLifecycleOwner(),d->{
+            Boolean progress = d.getContentIfNotHandled();
+            if (progress!=null&&progress){
+                showProgressDialog();
+            }else {
+                dismissProgressDialog();
             }
         });
 

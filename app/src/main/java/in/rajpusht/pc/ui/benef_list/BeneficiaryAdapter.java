@@ -17,11 +17,12 @@ import java.util.List;
 
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.model.BefModel;
+import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 
 public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.ViewHolder> {
 
-    private final List<BefModel> mValues;
+    private  List<BefModel> mValues;
     private final OnListFragmentInteractionListener mListener;
 
     public BeneficiaryAdapter(List<BefModel> items, OnListFragmentInteractionListener listener) {
@@ -45,32 +46,36 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
 
         if (befModel.getStage().equals("PW")) {
             holder.benf_name.setText(befModel.getName());
-            holder.benf_hus_name.setText("w/o:" + befModel.getHusbandName());
             holder.date.setText("LMP Date :" + AppDateTimeUtils.convertLocalDate(befModel.getLmpDate()));
         } else {
             holder.benf_name.setText(befModel.getMotherName());
-            holder.benf_hus_name.setText("w/o:" + befModel.getHusbandName());
             holder.date.setText("DOB :"+ AppDateTimeUtils.convertLocalDate(befModel.getDob()));
         }
-
+        holder.benf_hus_name.setText("w/o:" +(TextUtils.isEmpty(befModel.getHusbandName())?"-":befModel.getHusbandName()));
         holder.buttonststus.setText(befModel.getCurrentSubStage());
 
         if (!TextUtils.isEmpty(befModel.getPctsId())) {
             holder.pctsId.setVisibility(View.VISIBLE);
             holder.pctsId.setText("PCTS ID :"+ befModel.getPctsId());
         } else {
-            holder.pctsId.setVisibility(View.GONE);
+            holder.pctsId.setText("PCTS ID :-");
+
         }
 
         Context context = holder.itemView.getContext();
         if (befModel.getPwFormId() != null || befModel.getLmFormId() != null) {
-            if (position == 3)
-                holder.img_synced.setImageResource(R.drawable.ic_done_all);
             holder.buttonststus.setBackgroundColor(ContextCompat.getColor(context, R.color.dark_green));
             holder.img_delete.setVisibility(View.GONE);
         } else {
             holder.img_delete.setVisibility(View.GONE);//todo
             holder.buttonststus.setBackgroundColor(ContextCompat.getColor(context, R.color.colorAccent));
+        }
+
+        if (befModel.getDataStatus()!=null&&befModel.getDataStatus()== DataStatus.OLD){
+            holder.img_synced.setImageResource(R.drawable.ic_done_all);
+        }
+        else {
+            holder.img_synced.setImageResource(R.drawable.ic_done);
         }
 
         holder.item_holder.setOnClickListener(new View.OnClickListener() {
@@ -114,5 +119,10 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
         }
 
 
+    }
+
+    public void setValues(List<BefModel> mValues) {
+        this.mValues = mValues;
+        notifyDataSetChanged();
     }
 }

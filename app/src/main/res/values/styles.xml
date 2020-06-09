@@ -40,7 +40,7 @@
         <item name="android:paddingRight">5dp</item>
         <item name="android:gravity">center_vertical</item>
         <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/black</item>
+        <item name="android:textColor">@color/h_label_tc</item>
         <item name="android:padding">5dp</item>
         <item name="android:fontFamily">@font/roboto_medium</item>
     </style>

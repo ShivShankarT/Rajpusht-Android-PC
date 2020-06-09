@@ -28,6 +28,7 @@ public class LMMonitorEntity {
     private Integer igmpyInstallment;
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
+    private Boolean available;
     private DataStatus dataStatus;
     private String createdAt;
     private String updatedAt;
@@ -192,5 +193,13 @@ public class LMMonitorEntity {
 
     public void setChildHeight(Double childHeight) {
         this.childHeight = childHeight;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }

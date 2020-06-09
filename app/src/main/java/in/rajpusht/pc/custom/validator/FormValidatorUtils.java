@@ -1,6 +1,6 @@
 package in.rajpusht.pc.custom.validator;
 
-import android.text.TextUtils;
+import android.util.Log;
 
 import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.utils.HUtil;
@@ -19,7 +19,7 @@ public class FormValidatorUtils {
                     return new ValidationStatus(isEmail, "Please enter a valid email");
 
                 }
-                return null;
+                return new ValidationStatus(false);
             }
         };
     }
@@ -39,7 +39,7 @@ public class FormValidatorUtils {
                     // check for number
                     return new ValidationStatus(HUtil.isNumeric(value), msg);
                 }
-                return null;
+                return new ValidationStatus(false, msg);
             }
         };
     }
@@ -58,7 +58,7 @@ public class FormValidatorUtils {
                     }
                     return new ValidationStatus(true, message);
                 }
-                return null;
+                return new ValidationStatus(false, message);
             }
         };
     }
@@ -78,7 +78,7 @@ public class FormValidatorUtils {
                     return new ValidationStatus(false, message);
 
                 }
-                return null;
+                return new ValidationStatus(false, message);
             }
         };
     }
@@ -89,12 +89,12 @@ public class FormValidatorUtils {
             @Override
             public ValidationStatus isValid(Double value) {
                 if (value != null) {
-                    if ((min >= value && value <= max))
+                    if (min <= value && value <= max)
                         return new ValidationStatus(true, message);
 
                     return new ValidationStatus(false, message);
                 }
-                return null;
+                return new ValidationStatus(false, message);
             }
         };
     }
@@ -105,16 +105,25 @@ public class FormValidatorUtils {
         return new HValidatorListener<String>() {
             @Override
             public ValidationStatus isValid(String value) {
-                if (value != null&& TextUtils.isDigitsOnly(value)) {
-                    Double aDouble = new Double(value);
-                    if ((min >= aDouble && aDouble <= max))
-                        return new ValidationStatus(true, message);
+                if (value != null) {
+                    Double aDouble = null;
+                    try {
+                        aDouble = Double.valueOf(value);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                    if (aDouble != null) {
+                        if (min <= aDouble && aDouble <= max)
+                            return new ValidationStatus(true, message);
 
-                    return new ValidationStatus(false, message);
+                        return new ValidationStatus(false, message);
+                    }
                 }
-                return null;
+                return new ValidationStatus(false, message);
             }
-        };
+        }
+
+                ;
     }
 
 }

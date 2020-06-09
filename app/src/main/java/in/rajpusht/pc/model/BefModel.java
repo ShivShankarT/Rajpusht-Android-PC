@@ -17,6 +17,7 @@ public class BefModel {
     private String currentSubStage;
     private Long lmFormId;
     private Long pwFormId;
+    private  DataStatus dataStatus;//mother
 
     public Long getBeneficiaryId() {
         return beneficiaryId;
@@ -130,5 +131,13 @@ public class BefModel {
 
     public void setPwFormId(Long pwFormId) {
         this.pwFormId = pwFormId;
+    }
+
+    public DataStatus getDataStatus() {
+        return dataStatus;
+    }
+
+    public void setDataStatus(DataStatus dataStatus) {
+        this.dataStatus = dataStatus;
     }
 }

@@ -55,8 +55,27 @@ public class LoginFragment extends BaseFragment<LoginFragmentBinding, LoginViewM
             if (login != null)
                 if (login.first)
                     FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new OtpFragment(), R.id.container, true, false, FragmentUtils.TRANSITION_NONE);
-                else
+                else {
+                    showMessage(login.second);
                     getViewDataBinding().passwordLayout.setError(login.second);
+                }
+        });
+
+        mLoginViewModel.errorEmail.observe(getViewLifecycleOwner(), s -> {
+            getViewDataBinding().usernameType.setError(s);
+        });
+        mLoginViewModel.errorPassword.observe(getViewLifecycleOwner(), s -> {
+            getViewDataBinding().passwordLayout.setError(s);
+        });
+
+        mLoginViewModel.progressDialog.observe(getViewLifecycleOwner(),d->{
+            Boolean progress = d.getContentIfNotHandled();
+            if (progress!=null&&progress){
+                showProgressDialog();
+            }else {
+                dismissProgressDialog();
+            }
         });
     }
+
 }

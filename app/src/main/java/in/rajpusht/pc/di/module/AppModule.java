@@ -42,14 +42,14 @@ public class AppModule {
     @Provides
     @DatabaseInfo
     String dbName() {
-        return "pc-test1.db";
+        return "pc-test1.1.0.db";
     }
 
 
     @Provides
     @PreferenceInfo
     String prefName() {
-        return "app-ref.db";
+        return AppPreferencesHelper.PREF_NAME;
     }
 
     @Provides

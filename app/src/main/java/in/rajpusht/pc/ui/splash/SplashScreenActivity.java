@@ -1,8 +1,10 @@
 package in.rajpusht.pc.ui.splash;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.provider.Settings;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
@@ -46,6 +48,11 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
 
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        if (!isTimeAutomatic()){
+            showAlertDialog("SET SYSTEM TIME  AUTOMATE FORMAT");
+            return;
+        }
         new Handler().postDelayed(() -> {
             finish();
             Intent intent;
@@ -55,6 +62,14 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
                 intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
             startActivity(intent);
         }, 100);
+    }
+
+    public boolean isTimeAutomatic() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
+            return Settings.Global.getInt(getContentResolver(), Settings.Global.AUTO_TIME, 0) == 1;
+        } else {
+            return android.provider.Settings.System.getInt(getContentResolver(), android.provider.Settings.System.AUTO_TIME, 0) == 1;
+        }
     }
 
 }

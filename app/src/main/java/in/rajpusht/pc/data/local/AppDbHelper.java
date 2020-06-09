@@ -1,5 +1,7 @@
 package in.rajpusht.pc.data.local;
 
+import androidx.lifecycle.LiveData;
+
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
+import in.rajpusht.pc.model.AwcStageCount;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.BefRel;
 import in.rajpusht.pc.model.DataStatus;
@@ -24,6 +27,7 @@ import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Action;
+import io.reactivex.functions.BiFunction;
 
 public class AppDbHelper {
     private AppDatabase mAppDatabase;
@@ -65,7 +69,29 @@ public class AppDbHelper {
     }
 
     public Maybe<List<AssignedLocationEntity>> getAllAssignedLocation() {
-        return mAppDatabase.assignedLocationDao().getAllAssignedLocation();
+        return mAppDatabase.assignedLocationDao().getAllAssignedLocation().zipWith(mAppDatabase.assignedLocationDao().awcStageCount(), new BiFunction<List<AssignedLocationEntity>, List<AwcStageCount>, List<AssignedLocationEntity>>() {
+            @Override
+            public List<AssignedLocationEntity> apply(List<AssignedLocationEntity> assignedLocationEntities, List<AwcStageCount> awcStageCounts) throws Exception {
+                //todo break
+                for (AssignedLocationEntity assignedLocationEntity : assignedLocationEntities) {
+                    for (AwcStageCount awcStageCount : awcStageCounts) {
+                        if (assignedLocationEntity.getAwcCode().equals(awcStageCount.getAwcCode())) {
+                            if ("PW".equals(awcStageCount.getStage())) {
+                                assignedLocationEntity.setPwCount(awcStageCount.getCount());
+                            } else if ("LM".equals(awcStageCount.getStage())) {
+                                assignedLocationEntity.setLmCount(awcStageCount.getCount());
+                            } else if ("MY".equals(awcStageCount.getStage())) {
+                                assignedLocationEntity.setMyCount(awcStageCount.getCount());
+                            }
+                        }
+                    }
+
+                }
+
+
+                return assignedLocationEntities;
+            }
+        });
     }
 
     public Observable<Boolean> insertOrUpdateBeneficiary(final BeneficiaryEntity beneficiaryEntity) {
@@ -181,8 +207,8 @@ public class AppDbHelper {
     }
 
 
-    public List<BefModel> getBefModels() {
-        return mAppDatabase.AppDao().befModels();
+    public LiveData<List<BefModel>> getBefModels() {
+        return mAppDatabase.AppDao().befModels(appPreferencesHelper.getSelectedAwcCode());
     }
 
     private Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> getBeneficiaryDatah(long beneficiaryId) {
@@ -204,7 +230,6 @@ public class AppDbHelper {
 
         return Single.fromCallable(() -> mAppDatabase.beneficiaryDao().getBeneficiariesById(beneficiaryId));
     }
-
 
 
     // upload data sync

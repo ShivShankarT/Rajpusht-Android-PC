@@ -43,6 +43,7 @@ public class CounsellingAnimationFragment extends Fragment {
     private int mediaPos = 0;
     private int pos = 0;
     private FragmentTestAnimationBinding vb;
+   private static final int delayMillis = 2000;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -61,7 +62,8 @@ public class CounsellingAnimationFragment extends Fragment {
                             }
                         });
                 mediaPos++;
-                handler.postDelayed(runnable, 2000);
+
+                handler.postDelayed(runnable, delayMillis);
             } else {
                 TransitionManager.beginDelayedTransition(vb.ll);
                 vb.nxtBtn.setVisibility(View.VISIBLE);
@@ -103,7 +105,14 @@ public class CounsellingAnimationFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mediaPos = 0;
+
+       // vb.toolbarLy.toolbar.setTitle(counsellingMedia.getId()+"-"+ counsellingMedia.getMediaImage().get(0).substring("file:///android_asset/counseling".length()));
         vb.toolbarLy.toolbar.setTitle("PW Women Counselling");
+
+        vb.toolbarLy.toolbar.setNavigationOnClickListener((v)->{
+            requireActivity().onBackPressed();
+        });
+
         vb.nxtBtn.setVisibility(View.INVISIBLE);
         ViewTreeObserver vto = vb.imageview.getViewTreeObserver();
         vto.addOnPreDrawListener(new ViewTreeObserver.OnPreDrawListener() {
@@ -121,7 +130,9 @@ public class CounsellingAnimationFragment extends Fragment {
             //vb.toolbarLy.appBarLy.setVisibility(View.GONE);
             CustomVideoView videoView = vb.videoView;
             videoView.setVisibility(View.GONE);
-            vb.imageview.setVisibility(View.GONE);
+            vb.imageview.setVisibility(View.VISIBLE);
+            Glide.with(requireContext())
+                    .load(Uri.parse("file:///android_asset/counseling/video_thumb.webp" )).into(vb.imageview);
             //Creating MediaController
             MediaController mediaController = new MediaController(requireContext());
             mediaController.setAnchorView(videoView);
@@ -157,17 +168,15 @@ public class CounsellingAnimationFragment extends Fragment {
                 }
             });
             vb.playBtn.setVisibility(View.VISIBLE);
-            vb.playBtn.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    videoView.start();
-                    startActivity(new Intent(requireContext(), ActivityVideoPlay.class));
-                    TransitionManager.beginDelayedTransition(vb.ll);
-                    vb.nxtBtn.setVisibility(View.VISIBLE);
+            View.OnClickListener onClickListener = v -> {
+                videoView.start();
+                startActivity(new Intent(requireContext(), ActivityVideoPlay.class));
+                TransitionManager.beginDelayedTransition(vb.ll);
+                vb.nxtBtn.setVisibility(View.VISIBLE);
 
-                }
-            });
-
+            };
+            vb.playBtn.setOnClickListener(onClickListener);
+            vb.imageview.setOnClickListener(onClickListener);
 
         } else {
             vb.playBtn.setVisibility(View.GONE);

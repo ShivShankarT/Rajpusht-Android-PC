@@ -26,7 +26,10 @@ import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.databinding.FragmentProfileBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
+import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.profile_edit.ProfileEditFragment;
+import in.rajpusht.pc.utils.ContextWrapper;
 import in.rajpusht.pc.utils.ExpandableRecyclerAdapter;
 import in.rajpusht.pc.utils.FragmentUtils;
 
@@ -97,17 +100,11 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         getViewDataBinding().profileName.setText(appPreferencesHelper.getCurrentUserName());
         getViewDataBinding().profileEmail.setText(appPreferencesHelper.getCurrentUserEmail());
 
-        getViewDataBinding().saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
 
         if (appPreferencesHelper.isEnglish()) {
             getViewDataBinding().english.setChecked(true);
         } else {
-            getViewDataBinding().english.setChecked(true);
+            getViewDataBinding().hindi.setChecked(true);
         }
 
         getViewDataBinding().languageRadiogroup.setOnCheckedChangeListener((group, checkedId) -> {
@@ -116,6 +113,17 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             } else if (checkedId == R.id.hindi) {
                 appPreferencesHelper.setLanguage(false);
             }
+
+            ContextWrapper.setLocale(requireActivity());
+        });
+
+        getViewDataBinding().saveBtn.setOnClickListener(v -> {
+            FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(),
+                    R.id.fragment_container, false, true, FragmentUtils.TRANSITION_NONE);
+
+        });
+        getViewDataBinding().logout.setOnClickListener(v -> {
+            ((HomeActivity)requireActivity()).syncData();
         });
 
     }
@@ -150,6 +158,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onAwcChange(String awcCode, String awcName) {
         appPreferencesHelper.setAwcCode(awcCode);
         appPreferencesHelper.putString("awc_name", awcName);
+        ((HomeActivity)requireActivity()).setNavUiData();
 
     }
 

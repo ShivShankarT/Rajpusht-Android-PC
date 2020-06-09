@@ -1,5 +1,6 @@
 package in.rajpusht.pc.data.local.db.dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
 
@@ -27,7 +28,7 @@ public abstract class AppDao {
             "                         when julianday('now') - julianday(p.lmpDate) <=252 then 'PW3'                                                            \n" +
             "                         when julianday('now') - julianday(p.lmpDate) <=280 then 'PW4'                                                            \n" +
             "        END                                                                                                                                       \n" +
-            "       END AS currentSubStage, p.lmpDate,lm.id as lmFormId,pw.id as pwFormId                                                                  \n" +
+            "       END AS currentSubStage, p.lmpDate,lm.id as lmFormId,pw.id as pwFormId,b.dataStatus                                                                  \n" +
             "                                                                                                                                                  \n" +
             "                                                                                                                                                  \n" +
             " from                                                                                                                                             \n" +
@@ -37,8 +38,9 @@ public abstract class AppDao {
             "Left Join pregnant p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                                                                   \n" +
             "inner join  beneficiary b on (u.motherId is NULL  and b.beneficiaryId=u.beneficiaryId ) OR((u.motherId is NOT NULL  and b.beneficiaryId=u.motherId ))                                                                                                                                   \n" +
             "left join pw_monitor pw on pw.pregnancyId=p.pregnancyId and currentSubStage=pw.substage\n" +
-            "left join lm_monitor lm on lm.childId=u.beneficiaryId and u.motherId is NOT NULL and currentSubStage=lm.substage")
-    public abstract List<BefModel> befModels();
+            "left join lm_monitor lm on lm.childId=u.beneficiaryId and u.motherId is NOT NULL and currentSubStage=lm.substage\n" +
+            "where b.awcCode=:awcCode and currentSubStage <> ''")
+    public abstract LiveData<List<BefModel>> befModels(String awcCode);
 
     @Query("select * from beneficiary")
     public  abstract Maybe<List<BefRel>> befRels();

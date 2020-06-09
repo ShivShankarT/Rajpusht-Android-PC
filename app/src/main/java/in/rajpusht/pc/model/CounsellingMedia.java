@@ -90,15 +90,16 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(17, Collections.singletonList("file:///android_asset/counseling/ifa/5.webp")));
         counsellingMedia.add(new CounsellingMedia(18, Collections.singletonList("file:///android_asset/counseling/ifa/3.webp")));
         counsellingMedia.add(new CounsellingMedia(19, Collections.singletonList("file:///android_asset/counseling/ifa/4.webp")));
-        counsellingMedia.add(new CounsellingMedia(20, Collections.singletonList("file:///android_asset/counseling/ifa/15.webp")));
-        counsellingMedia.add(new CounsellingMedia(21, Collections.singletonList("file:///android_asset/counseling/wg/16.webp")));//todo check
+        counsellingMedia.add(new CounsellingMedia(20, Collections.singletonList("file:///android_asset/counseling/ifa/16.webp")));
+        counsellingMedia.add(new CounsellingMedia(21, Collections.singletonList("file:///android_asset/counseling/ifa/12.webp")));//1
         counsellingMedia.add(new CounsellingMedia(22, Collections.singletonList("file:///android_asset/counseling/ifa/14.webp")));
         counsellingMedia.add(new CounsellingMedia(23, Collections.singletonList("file:///android_asset/counseling/ifa/13.webp")));
         counsellingMedia.add(new CounsellingMedia(24, Collections.singletonList("file:///android_asset/counseling/ifa/8.webp")));
         counsellingMedia.add(new CounsellingMedia(25, Collections.singletonList("file:///android_asset/counseling/ifa/11.webp")));
-        counsellingMedia.add(new CounsellingMedia(26, Collections.singletonList("file:///android_asset/counseling/ifa/14.webp")));
+        counsellingMedia.add(new CounsellingMedia(18, Collections.singletonList("file:///android_asset/counseling/ifa/3.webp")));
         counsellingMedia.add(new CounsellingMedia(27, Collections.singletonList("file:///android_asset/counseling/ifa/10.webp")));
-        counsellingMedia.add(new CounsellingMedia(28, Collections.singletonList("file:///android_asset/counseling/ifa/12.webp")));
+        counsellingMedia.add(new CounsellingMedia(28, Collections.singletonList("file:///android_asset/counseling/ifa/15.webp")));//
+
 
 
 
@@ -182,6 +183,12 @@ public class CounsellingMedia implements Parcelable {
         this.type = type;
     }
 
+    public int getId() {
+        return id;
+    }
 
+    public void setId(int id) {
+        this.id = id;
+    }
 }
 

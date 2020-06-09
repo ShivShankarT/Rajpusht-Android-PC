@@ -23,6 +23,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import dagger.android.support.AndroidSupportInjection;
+import in.rajpusht.pc.utils.MyProgressDialogFragment;
 
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
@@ -31,6 +32,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     private View mRootView;
     private T mViewDataBinding;
     private V mViewModel;
+    private MyProgressDialogFragment myDialogFragment;
 
     /**
      * Override for set binding variable
@@ -108,6 +110,22 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
     public boolean isNetworkConnected() {
         return mActivity != null && mActivity.isNetworkConnected();
+    }
+
+    public void showProgressDialog() {
+        dismissProgressDialog();
+        myDialogFragment = new MyProgressDialogFragment(requireContext());
+        myDialogFragment.show();
+        myDialogFragment.setCancelable(false);
+
+    }
+
+    public void dismissProgressDialog() {
+
+        if (myDialogFragment != null) {
+            myDialogFragment.dismiss();
+            myDialogFragment = null;
+        }
     }
 
 

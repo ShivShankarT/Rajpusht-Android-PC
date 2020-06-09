@@ -13,7 +13,7 @@
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:id="@+id/category_layout"
-        android:background="#D3D3D3">
+        android:background="#F6F6F6">
 
         <View
             android:layout_width="match_parent"

@@ -57,11 +57,33 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
             holder1.textviewLocation.setText(locationEntity.getAwcEnglishName());
             holder1.textviewSector.setText(locationEntity.getSectorName());
 
+            if (locationEntity.getPwCount()!=null){
+                holder1.pw_count.setText(String.valueOf(locationEntity.getPwCount()));
+            }else {
+                holder1.pw_count.setText("0");
+
+            }
+
+            if (locationEntity.getLmCount()!=null){
+                holder1.lm_count.setText(String.valueOf(locationEntity.getLmCount()));
+            }else {
+                holder1.lm_count.setText("0");
+
+            }
+
+            if (locationEntity.getMyCount()!=null){
+                holder1.my_count.setText(String.valueOf(locationEntity.getMyCount()));
+            }else {
+                holder1.my_count.setText("0");
+
+            }
+            holder1.radiobutton.setOnClickListener(null);
             if (locationEntity.getAwcCode().equals(selectedAWC)) {
                 holder1.radiobutton.setChecked(true);
             } else {
                 holder1.radiobutton.setChecked(false);
             }
+            holder1.radiobutton.setOnClickListener(holder1);
         }
 
     }
@@ -74,18 +96,18 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
         private final TextView textviewLocation;
         private final TextView textviewSector;
         private final RadioButton radiobutton;
-        private final TextView txt_lm_count;
-        private final TextView txt_my_count;
-        private final TextView txt_pw_count;
+        private final TextView lm_count;
+        private final TextView my_count;
+        private final TextView pw_count;
 
         public AwcViewHolder(View view) {
             super(view);
             textviewLocation = view.findViewById(R.id.textviewLocation);
             textviewSector = view.findViewById(R.id.textviewSector);
             radiobutton = view.findViewById(R.id.radiobutton);
-            txt_pw_count = view.findViewById(R.id.txt_pw_count);
-            txt_lm_count = view.findViewById(R.id.txt_lm_count);
-            txt_my_count = view.findViewById(R.id.txt_my_count);
+            pw_count = view.findViewById(R.id.pw_count);
+            lm_count = view.findViewById(R.id.lm_count);
+            my_count = view.findViewById(R.id.my_count);
             radiobutton.setOnCheckedChangeListener(this);
             this.itemView.setOnClickListener(this);
 
@@ -94,13 +116,14 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
 
         @Override
         public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            onClick(null);//todo check
+            if (isChecked)
+                onClick(null);//todo check
 
         }
 
         @Override
         public void onClick(View v) {
-                AssignedLocationEntity locationEntity = visibleItems.get(getLayoutPosition()).assignedLocationEntity;
+                AssignedLocationEntity locationEntity = visibleItems.get(getAdapterPosition()).assignedLocationEntity;
                 selectedAWC = locationEntity.getAwcCode();
                 awcChangeLister.onAwcChange(locationEntity.getAwcCode(), locationEntity.getAwcEnglishName());
                 new Handler().postDelayed(AwcLocationAdapter.this::notifyDataSetChanged, 500);

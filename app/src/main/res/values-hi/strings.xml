@@ -1,0 +1,110 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="menu_home">घर</string>
+    <string name="save">सहेजें</string>
+
+
+    <string name="no_of_children">1. आपके जीवित बच्चे कितने हैं ?</string>
+    <string name="are_you">2. क्या आप </string>
+    <string name="child_age">3. आपके बच्चे की आयु क्या है ?</string>
+    <string name="register_in">4. क्या आप इनमें से किसी स्कीम में पंजीकृत हैं?</string>
+    <string name="number_installment_received">5. आपको स्कीम की कितनी किश्तें मिली हैं ? </string>
+    <string name="pmmvvy">पीएमएमवीवाई</string>
+    <string name="igmpy">आईजीएमपीवाई</string>
+    <string name="rajshri">राजश्री</string>
+    <string name="jsy">जेएसवाई</string>
+    <string name="none">कोई भी नहीं</string>
+    <string name="benef_husband_name">7. लाभार्थी के पति  का नाम </string>
+    <string name="benef_age">8. लाभार्थी की आयु</string>
+    <string name="benef_dob">जन्म की तिथि</string>
+    <string name="benef_age_enter">आयु भरिए (e.g 25)</string>
+    <string name="mobile_number">9. लाभार्थी का मोबाइल नंबर</string>
+    <string name="self_mobile">स्वयं का मोबाइल नंबर</string>
+    <string name="husband_mobile">लाभार्थी के पति का मोबाइल नंबर</string>
+    <string name="caste">10. जाति</string>
+    <string name="economic_status">11. आर्थिक स्थिति (राशन कार्ड )</string>
+    <string name="benef_pcts_id">12.पीसीटीएस आईडी</string>
+    <string name="bahamashah_id">13. भामाशाह आईडी</string>
+    <string name="counselling">14.Counseling Provided by ASHA/ANM/AWW</string>
+    <string name="benef_lmp_date">15. एलएमपी तिथि </string>
+    <string name="delivery">16. संस्थागत प्रसव या घर पर प्रसव </string>
+    <string name="institutional_delivery">17. प्रसूति गृह का नाम</string>
+    <string name="receive_counselling">18. क्या आप मोबाइल पर परामर्श संदेश प्राप्त करने के इच्छुक हैं?</string>
+
+
+    <string name="first_cycle_immunization">1. टीकाकरण का पहला चक्र पूर्ण हुआ (ममता कार्ड में देखें )</string>
+    <string name="last_record_muac_child">2. शिशु का अंतिम दर्ज़ MUAC </string>
+    <string name="date_muac_child">3. अंतिम दर्ज़ MUAC की तिथि </string>
+    <string name="current_muac_child">4. शिशु का वर्तमान में MUAC (MUAC टेप से नापें) </string>
+    <string name="birth_weight_child">5. जन्म के समय शिशु का वज़न (ममता कार्ड में देखें ) </string>
+    <string name="current_weight_child">6. शिशु का वर्तमान में वज़न (मशीन से देखें)  </string>
+    <string name="are_you_register_in">7. क्या आप इनमें से किसी स्कीम में पंजीकृत हैं ? </string>
+    <string name="child_current_height">8. बच्चे की वर्तमान ऊंचाई</string>
+    <string name="installment_received">9.  आपको स्कीम की कितनी किश्तें मिली हैं? </string>
+
+    <string name="number_anc_completed">1. कितनी प्रसव पूर्व जाँचें हुई हैं   </string>
+    <string name="last_anc_date">2. पिछली प्रसव पूर्व जांच की तिथि </string>
+    <string name="last_pregnancy_weight">3. ममता कार्ड में अंतिम बार लिखित वज़न  </string>
+    <string name="date_recorded_pregnancy_weight">4. ममता कार्ड में अंतिम बार लिखित वज़न की तिथि </string>
+    <string name="current_preg_weight">5. गर्भवती महिला का वर्तमान में वज़न (मशीन से देखें )  </string>
+    <string name="you_register_in">6. क्या आप इनमें से किसी स्कीम में पंजीकृत हैं ? </string>
+    <string name="installment_received_till">7. आपको स्कीम की कितनी किश्तें मिली हैं? </string>
+
+    <string-array name="benf_currently">
+        <item>गर्भवती</item>
+        <item>धात्री</item>
+        <item>गर्भवती और धात्री</item>
+    </string-array>
+
+    <string-array name="benf_registered_in">
+        <item>@string/pmmvvy</item>
+        <item>@string/igmpy</item>
+        <item>@string/jsy</item>
+        <item>@string/rajshri</item>
+        <item>@string/none</item>
+    </string-array>
+
+
+    <string-array name="benf_age">
+        <item>शिशु के जन्म की तिथि</item>
+        <item>शिशु की आयु</item>
+    </string-array>
+
+
+    <string-array name="caste">
+        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+    </string-array>
+
+
+    <string-array name="benf_econ">
+        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+    </string-array>
+
+
+    <string-array name="benf_delivery_place">
+        <item>संस्थागत प्रसव</item>
+        <item>घर पर प्रसव</item>
+    </string-array>
+
+
+    <string-array name="benf_sele_mobile">
+        <item>सेल्फ </item>
+        <item>पति</item>
+    </string-array>
+
+    <string-array name="benf_mobile_both">
+        <item>सेल्फ </item>
+        <item>पति </item>
+        <item>सभी</item>
+    </string-array>
+
+
+    <string name="set_location">आंगनवाड़ी चुनियें</string>
+    <string name="set_language">आंगनवाड़ी चुनियें</string>
+
+</resources>
