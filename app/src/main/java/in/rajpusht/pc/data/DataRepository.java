@@ -161,7 +161,7 @@ public class DataRepository {
                     appPreferencesHelper.setCurrentUserId(Long.valueOf(data.getPcId()));
                     appPreferencesHelper.setCurrentUserEmail(data.getEmail());
                     appPreferencesHelper.setCurrentUserMob(String.valueOf(data.getMobile()));
-                    appPreferencesHelper.setCurrentUserName(data.getFirstName() + data.getLastName());
+                    appPreferencesHelper.setCurrentUserName(data.getFirstName() +" "+ data.getLastName());
                     return appDbHelper.deleteAndInsertAssignedLocation(data.getAssignedLocations());
                 });
     }

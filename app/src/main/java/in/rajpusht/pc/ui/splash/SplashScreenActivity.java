@@ -45,7 +45,6 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     }
 
     @Override
-
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

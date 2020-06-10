@@ -71,6 +71,7 @@
 
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/benf_instal_ly"
                     style="@style/FormTextMini"
                     android:layout_width="match_parent"
