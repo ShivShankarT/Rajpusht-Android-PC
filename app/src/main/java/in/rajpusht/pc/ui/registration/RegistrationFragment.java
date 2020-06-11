@@ -37,11 +37,14 @@ import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
+import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.Disposable;
+
+import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
 
 public class RegistrationFragment extends BaseFragment<RegistrationFragmentBinding, RegistrationViewModel> {
 
@@ -118,6 +121,29 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         });
 
+        viewDataBinding.benfChildCount.sethValidatorListener(FormValidatorUtils.valueBwValidator(0, 2, "NOT ELIGIBLE"));
+        viewDataBinding.benfChildCount.sethValueChangedListener(new HValueChangedListener<Integer>() {
+            @Override
+            public void onValueChanged(Integer data) {
+                if (data == 2) {
+                    viewDataBinding.benfRegStage.setEnableChild(false);
+                    viewDataBinding.benfRegStage.setSection(1);
+                    viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
+                }else if (data == 3) {
+                    showAlertDialog("Beneficiary not eligible to registration", new Runnable() {
+                        @Override
+                        public void run() {
+                            requireActivity().onBackPressed();
+                        }
+                    });
+                }else {
+                    viewDataBinding.benfRegStage.setEnableChild(true);
+                }
+
+            }
+        });
+
+
         viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
@@ -155,19 +181,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             }
         });
-        viewDataBinding.benfChildCount.sethValueChangedListener(new HValueChangedListener<Integer>() {
-            @Override
-            public void onValueChanged(Integer data) {
 
-                if (data == 0) {
-                    viewDataBinding.benfIgmpyCount.setVisibility(View.GONE);
-                    //values viewDataBinding.benfPmmvvyCount update count
-                } else {
-                    viewDataBinding.benfIgmpyCount.setVisibility(View.VISIBLE);
-                }
-
-            }
-        });
         viewDataBinding.benfChildDob.sethValidatorListener(new HValidatorListener<Date>() {
             @Override
             public ValidationStatus isValid(Date data) {
@@ -286,11 +300,15 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 double selectedPos = data;
                 String message = null;
                 if (selectedPos == 0 && viewDataBinding.benfSelfMobile.getText().isEmpty()) {
-                    message = "Please Add Self Mobile Number ";
+                    message = getString(R.string.add_self_mobile_val_mes);
                 } else if (selectedPos == 1 && viewDataBinding.benfHusMobile.getText().isEmpty()) {
-                    message = "Please Add Husband’s Mobile Number ";
-                } else if (selectedPos == 2 && (viewDataBinding.benfSelfMobile.getText().isEmpty() || viewDataBinding.benfHusMobile.getText().isEmpty())) {
-                    message = "Please Add Self and Husband’s Mobile Number ";
+                    message = getString(R.string.add_husb_mobile_val_mes);
+                } else if (selectedPos == 2 && (viewDataBinding.benfSelfMobile.getText().isEmpty() && viewDataBinding.benfHusMobile.getText().isEmpty())) {
+                    message = getString(R.string.add_self_husb_mobile_val_mes);
+                } else if (selectedPos == 2 && viewDataBinding.benfSelfMobile.getText().isEmpty()) {
+                    message = getString(R.string.add_self_mobile_val_mes);
+                } else if (selectedPos == 2 && viewDataBinding.benfHusMobile.getText().isEmpty()) {
+                    message = getString(R.string.add_husb_mobile_val_mes);
                 }
                 if (message != null)
                     return new ValidationStatus(false, message);
@@ -306,7 +324,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 validate();
             }
         });
-        Log.i("s", "onViewCreated: " + beneficiaryId);
+
+
         if (beneficiaryId != 0)
             dataRepository.getBeneficiaryData(beneficiaryId)
                     .subscribeOn(schedulerProvider.io())
@@ -358,19 +377,19 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
         if (data.contains(0)) {
-            beneficiaryEntity.setPmmvyInstallment(vb.benfPmmvvyCount.getSelectedPos());
+            beneficiaryEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
         }
 
         if (data.contains(1)) {
-            beneficiaryEntity.setIgmpyInstallment(vb.benfIgmpyCount.getSelectedPos());
+            beneficiaryEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
         }
 
         if (data.contains(2)) {
-            beneficiaryEntity.setJsyInstallment(vb.benfJsyCount.getSelectedPos());
+            beneficiaryEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
         }
 
         if (data.contains(3)) {
-            beneficiaryEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
+            beneficiaryEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
         }
 
 
@@ -559,8 +578,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         PregnantEntity pregnantEntity = tuple.getT2();
 
         RegistrationFragmentBinding vh = getViewDataBinding();
-
-//        vh.save.setEnabled(false);//todo
+        if (beneficiaryEntity.getDataStatus() != DataStatus.NEW) {
+            vh.save.setEnabled(false);
+            HUtil.recursiveSetEnabled(vh.formContainer,false);
+        }
         vh.benfChildCount.setSection(beneficiaryEntity.getChildCount());
         if (pregnantEntity != null && childEntity != null)
             vh.benfRegStage.setSection(2);
@@ -585,19 +606,19 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         Set<Integer> regScheme = new HashSet<>();
 
         if (beneficiaryEntity.getPmmvyInstallment() != null) {
-            vh.benfPmmvvyCount.setSection(beneficiaryEntity.getPmmvyInstallment());
+            vh.benfPmmvvyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getPmmvyInstallment()));
             regScheme.add(0);
         }
         if (beneficiaryEntity.getIgmpyInstallment() != null) {
-            vh.benfIgmpyCount.setSection(beneficiaryEntity.getIgmpyInstallment());
+            vh.benfIgmpyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getIgmpyInstallment()));
             regScheme.add(1);
         }
         if (beneficiaryEntity.getJsyInstallment() != null) {
-            vh.benfJsyCount.setSection(beneficiaryEntity.getJsyInstallment());
+            vh.benfJsyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getJsyInstallment()));
             regScheme.add(2);
         }
         if (beneficiaryEntity.getRajshriInstallment() != null) {
-            vh.benfRajshriCount.setSection(beneficiaryEntity.getRajshriInstallment());
+            vh.benfRajshriCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getRajshriInstallment()));
             regScheme.add(3);
         }
 

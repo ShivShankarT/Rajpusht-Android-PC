@@ -85,22 +85,10 @@
         <item>3 OR More</item>
     </string-array>
 
-    <string-array name="count_0_1" translatable="false">
+    <string-array name="count_0" translatable="false">
         <item>0</item>
-        <item>1</item>
-    </string-array>
-    <string-array name="count_0_2_more" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2 OR More</item>
     </string-array>
 
-    <string-array name="count_0_3" translatable="false">
-        <item>0</item>
-        <item>1</item>
-        <item>2</item>
-        <item>3</item>
-    </string-array>
     <string-array name="count_0_4" translatable="false">
         <item>0</item>
         <item>1</item>
@@ -109,11 +97,52 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="count_0_1_dot" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>Don\'t Know</item>
+
+    </string-array>
+
+    <string-array name="count_0_2_dot" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>Don\'t Know</item>
+
+    </string-array>
+
+    <string-array name="count_0_2_more_dot" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2 OR More</item>
+        <item>Don\'t Know</item>
+    </string-array>
+
+    <string-array name="count_0_3_dot" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>Don\'t Know</item>
+    </string-array>
+
+
+    <string-array name="count_0_4_dot" translatable="false">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>Don\'t Know</item>
+    </string-array>
+
     <string-array name="benf_currently">
         <item>Pregnant</item>
         <item>Lactating</item>
         <item>Both</item>
     </string-array>
+
 
     <string-array name="benf_registered_in">
         <item>PMMVY</item>
@@ -177,7 +206,9 @@
     <string name="change_password">Change Password</string>
     <string name="how_many_anc_comp">1. How Many ANCs Completed</string>
     <string name="save">save</string>
-
+    <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
+    <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
+    <string name="add_self_husb_mobile_val_mes">Please Add Self and Husband’s Mobile Number</string>
 
 
 </resources>

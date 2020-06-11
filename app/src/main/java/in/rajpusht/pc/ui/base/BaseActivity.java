@@ -16,11 +16,13 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
+import androidx.fragment.app.Fragment;
 
 import com.google.android.material.snackbar.Snackbar;
 
 import dagger.android.AndroidInjection;
 import dagger.android.support.DaggerAppCompatActivity;
+import in.rajpusht.pc.R;
 import in.rajpusht.pc.utils.ContextWrapper;
 import in.rajpusht.pc.utils.MyProgressDialogFragment;
 import in.rajpusht.pc.utils.NetworkUtils;
@@ -156,6 +158,20 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
     protected void onDestroy() {
         dismissProgressDialog();
         super.onDestroy();
+    }
+
+
+    @Override
+    public void onBackPressed() {
+        Fragment fragment = getSupportFragmentManager().findFragmentById(R.id.fragment_container);
+        if (fragment instanceof BaseFragment) {
+            BaseFragment base = (BaseFragment) fragment;
+            if (base.onBackPressed())
+                super.onBackPressed();
+        } else
+            super.onBackPressed();
+
+
     }
 }
 

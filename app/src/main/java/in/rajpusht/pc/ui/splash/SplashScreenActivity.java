@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider;
 import javax.inject.Inject;
 
 import in.rajpusht.pc.BR;
+import in.rajpusht.pc.BuildConfig;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.data.DataRepository;
@@ -48,7 +49,7 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!isTimeAutomatic()){
+        if (!isTimeAutomatic()&&!BuildConfig.DEBUG){
             showAlertDialog("SET SYSTEM TIME  AUTOMATE FORMAT");
             return;
         }

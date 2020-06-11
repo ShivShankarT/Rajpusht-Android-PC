@@ -107,4 +107,8 @@
     <string name="set_location">आंगनवाड़ी चुनियें</string>
     <string name="set_language">आंगनवाड़ी चुनियें</string>
 
+    <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
+    <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
+    <string name="add_self_husb_mobile_val_mes">Please Add Self and Husband’s Mobile Number</string>
+
 </resources>

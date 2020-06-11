@@ -60,15 +60,30 @@ public class CounsellingMedia implements Parcelable {
 
         List<CounsellingMedia> counsellingMedia = new ArrayList<>();
 
-        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/0.1.webp")));
-        counsellingMedia.add(new CounsellingMedia(2, Collections.singletonList("file:///android_asset/counseling/wg/5.webp")));
+        counsellingMedia.add(new CounsellingMedia(1, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/4.webp",
+                "file:///android_asset/counseling/wg/0.1.webp")));
+        counsellingMedia.add(new CounsellingMedia(2, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/4.webp",
+                "file:///android_asset/counseling/wg/5.webp")));
+
         counsellingMedia.add(new CounsellingMedia(3, CounsellingMedia.GRAPH_MEDIA));
-        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/2.webp")));
-        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/1.webp")));
-        counsellingMedia.add(new CounsellingMedia(1, Collections.singletonList("file:///android_asset/counseling/wg/3.webp")));
-        counsellingMedia.add(new CounsellingMedia(13, Collections.singletonList(R.raw.film + ""), VIDEO_MEDIA));
-        counsellingMedia.add(new CounsellingMedia(6, Collections.singletonList("file:///android_asset/counseling/wg/6.webp")));
-        counsellingMedia.add(new CounsellingMedia(7, Collections.singletonList("file:///android_asset/counseling/wg/7.webp")));
+        counsellingMedia.add(new CounsellingMedia(1, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/1.webp",
+                "file:///android_asset/counseling/wg/2.webp")));
+        counsellingMedia.add(new CounsellingMedia(1, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/1.webp",
+                "file:///android_asset/counseling/wg/1.webp")));
+        counsellingMedia.add(new CounsellingMedia(1, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/2.webp",
+                "file:///android_asset/counseling/wg/3.webp")));
+        counsellingMedia.add(new CounsellingMedia(13, Arrays.asList(R.raw.film + ""), VIDEO_MEDIA));
+        counsellingMedia.add(new CounsellingMedia(6, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/5.webp",
+                "file:///android_asset/counseling/wg/6.webp")));
+        counsellingMedia.add(new CounsellingMedia(7, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/5.webp",
+                "file:///android_asset/counseling/wg/7.webp")));
         counsellingMedia.add(new CounsellingMedia(8,
                 Arrays.asList(
                         "file:///android_asset/counseling/an/1.webp",
@@ -79,26 +94,68 @@ public class CounsellingMedia implements Parcelable {
                         "file:///android_asset/counseling/an/6.webp"
                 )));
 
-        counsellingMedia.add(new CounsellingMedia(9, Collections.singletonList("file:///android_asset/counseling/wg/8.webp")));
-        counsellingMedia.add(new CounsellingMedia(10, Collections.singletonList("file:///android_asset/counseling/wg/9.webp")));
-        counsellingMedia.add(new CounsellingMedia(11, Collections.singletonList("file:///android_asset/counseling/wg/10.webp")));
-        counsellingMedia.add(new CounsellingMedia(12, Collections.singletonList("file:///android_asset/counseling/wg/4.webp")));
-        counsellingMedia.add(new CounsellingMedia(13, Collections.singletonList("file:///android_asset/counseling/ifa/1.webp")));
-        counsellingMedia.add(new CounsellingMedia(14, Collections.singletonList("file:///android_asset/counseling/ifa/6.webp")));
-        counsellingMedia.add(new CounsellingMedia(15, Collections.singletonList("file:///android_asset/counseling/ifa/7.webp")));
-        counsellingMedia.add(new CounsellingMedia(16, Collections.singletonList("file:///android_asset/counseling/ifa/2.webp")));
-        counsellingMedia.add(new CounsellingMedia(17, Collections.singletonList("file:///android_asset/counseling/ifa/5.webp")));
-        counsellingMedia.add(new CounsellingMedia(18, Collections.singletonList("file:///android_asset/counseling/ifa/3.webp")));
-        counsellingMedia.add(new CounsellingMedia(19, Collections.singletonList("file:///android_asset/counseling/ifa/4.webp")));
-        counsellingMedia.add(new CounsellingMedia(20, Collections.singletonList("file:///android_asset/counseling/ifa/16.webp")));
-        counsellingMedia.add(new CounsellingMedia(21, Collections.singletonList("file:///android_asset/counseling/ifa/12.webp")));//1
-        counsellingMedia.add(new CounsellingMedia(22, Collections.singletonList("file:///android_asset/counseling/ifa/14.webp")));
-        counsellingMedia.add(new CounsellingMedia(23, Collections.singletonList("file:///android_asset/counseling/ifa/13.webp")));
-        counsellingMedia.add(new CounsellingMedia(24, Collections.singletonList("file:///android_asset/counseling/ifa/8.webp")));
-        counsellingMedia.add(new CounsellingMedia(25, Collections.singletonList("file:///android_asset/counseling/ifa/11.webp")));
-        counsellingMedia.add(new CounsellingMedia(18, Collections.singletonList("file:///android_asset/counseling/ifa/3.webp")));
-        counsellingMedia.add(new CounsellingMedia(27, Collections.singletonList("file:///android_asset/counseling/ifa/10.webp")));
-        counsellingMedia.add(new CounsellingMedia(28, Collections.singletonList("file:///android_asset/counseling/ifa/15.webp")));//
+        counsellingMedia.add(new CounsellingMedia(9, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/5.webp",
+                "file:///android_asset/counseling/wg/8.webp")));
+        counsellingMedia.add(new CounsellingMedia(10, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/5.webp",
+                "file:///android_asset/counseling/wg/9.webp")));
+        counsellingMedia.add(new CounsellingMedia(11, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/5.webp",
+                "file:///android_asset/counseling/wg/10.webp")));
+        counsellingMedia.add(new CounsellingMedia(12, Arrays.asList(
+                "file:///android_asset/counseling/wg/t/3.webp",
+                "file:///android_asset/counseling/wg/4.webp")));
+        //IFA
+
+        counsellingMedia.add(new CounsellingMedia(13, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/6.webp",
+                "file:///android_asset/counseling/ifa/1.webp")));
+        counsellingMedia.add(new CounsellingMedia(14, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/7.webp",
+                "file:///android_asset/counseling/ifa/6.webp")));
+        counsellingMedia.add(new CounsellingMedia(15, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/7.webp",
+                "file:///android_asset/counseling/ifa/7.webp")));
+        counsellingMedia.add(new CounsellingMedia(16, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/7.webp",
+                "file:///android_asset/counseling/ifa/2.webp")));
+        counsellingMedia.add(new CounsellingMedia(17, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/7.webp",
+                "file:///android_asset/counseling/ifa/5.webp")));
+        counsellingMedia.add(new CounsellingMedia(18, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/7.webp",
+                "file:///android_asset/counseling/ifa/3.webp")));
+        counsellingMedia.add(new CounsellingMedia(19, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/7.webp",
+                "file:///android_asset/counseling/ifa/4.webp")));
+        counsellingMedia.add(new CounsellingMedia(20, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/12.webp",
+                "file:///android_asset/counseling/ifa/16.webp")));
+        counsellingMedia.add(new CounsellingMedia(21, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/9.webp",
+                "file:///android_asset/counseling/ifa/12.webp")));//1
+        counsellingMedia.add(new CounsellingMedia(22, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/9.webp",
+                "file:///android_asset/counseling/ifa/14.webp")));
+        counsellingMedia.add(new CounsellingMedia(23, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/9.webp",
+                "file:///android_asset/counseling/ifa/13.webp")));
+        counsellingMedia.add(new CounsellingMedia(24, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/9.webp",
+                "file:///android_asset/counseling/ifa/8.webp")));
+        counsellingMedia.add(new CounsellingMedia(25, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/9.webp",
+                "file:///android_asset/counseling/ifa/11.webp")));
+        counsellingMedia.add(new CounsellingMedia(18, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/7.webp",
+                "file:///android_asset/counseling/ifa/3.webp")));
+        counsellingMedia.add(new CounsellingMedia(27, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/9.webp",
+                "file:///android_asset/counseling/ifa/10.webp")));
+        counsellingMedia.add(new CounsellingMedia(28, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/11.webp",
+                "file:///android_asset/counseling/ifa/15.webp")));//
 
 
 

@@ -1,6 +1,5 @@
 package in.rajpusht.pc.ui.home;
 
-import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -27,7 +26,6 @@ import in.rajpusht.pc.databinding.ActivityHomeBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
-import in.rajpusht.pc.ui.login.LoginActivity;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
@@ -46,6 +44,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     SchedulerProvider schedulerProvider;
     private HomeViewModel mViewModel;
     private TextView awcName;
+    private TextView name;
 
     @Override
     public int getBindingVariable() {
@@ -84,7 +83,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         NavigationView navigationView1 = getViewDataBinding().navigationView;
         View navigationView = navigationView1.getHeaderView(0);
         navigationView.findViewById(R.id.profile_iv).setOnClickListener(profileClick);
-        TextView name = navigationView.findViewById(R.id.pc_name_tv);
+        name = navigationView.findViewById(R.id.pc_name_tv);
         awcName = navigationView.findViewById(R.id.pc_sele_awc);
         TextView email = navigationView.findViewById(R.id.pc_email_tv);
         name.setOnClickListener(profileClick);
@@ -139,6 +138,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     }
 
     public void setNavUiData() {
+        name.setText(appPreferencesHelper.getCurrentUserName());
         awcName.setText(appPreferencesHelper.getString("awc_name"));
     }
 

@@ -5,8 +5,6 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
-import org.json.JSONArray;
-
 import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.ProfileDetail;
 import io.reactivex.Single;
@@ -14,6 +12,7 @@ import retrofit2.http.Body;
 import retrofit2.http.Field;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
+import retrofit2.http.PATCH;
 import retrofit2.http.POST;
 
 public interface ApiService {
@@ -30,18 +29,18 @@ public interface ApiService {
 
     @POST("changePassword")
     @FormUrlEncoded
-    Single<ApiResponse<JsonObject>> changePassword(@Field("oldPassword") String oldPassword,
+    Single<ApiResponse<JsonElement>> changePassword(@Field("oldPassword") String oldPassword,
                                                    @Field("newPassword") String newPassword);
 
 
     @POST("forgotPassword")
     @FormUrlEncoded
-    Single<ApiResponse<JsonObject>> forgotPassword(@Field("email") String oldPassword);
+    Single<ApiResponse<JsonObject>> forgotPassword(@Field("email") String email);
 
 
     @POST("setPassword")
     @FormUrlEncoded
-    Single<ApiResponse<JsonObject>> setPassword(@Field("resetOtp") String resetOtp,
+    Single<ApiResponse<JsonElement>> setPassword(@Field("resetOtp") String resetOtp,
                                                 @Field("newPassword") String newPassword);
 
 
@@ -52,6 +51,11 @@ public interface ApiService {
 
     @GET("profileDetail")
     Single<ApiResponse<ProfileDetail>> profileDetail();
+   
+
+    @PATCH("profileUpdate")
+    @FormUrlEncoded
+    Single<ApiResponse<JsonElement>> profileUpdate(@Field("firstName") String fName, @Field("lastName") String LName, @Field("mobileNumber") String mob);
 
 
     @POST("logout")

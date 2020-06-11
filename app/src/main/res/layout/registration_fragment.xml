@@ -18,6 +18,7 @@
             tools:viewBindingIgnore="true" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/form_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:background="@color/white"
@@ -78,19 +79,19 @@
                     android:layout_height="wrap_content"
                     android:text="@string/number_installment_received" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_pmmvvy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_label="@string/pmmvvy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    android:layout_marginLeft="7dp"
-                    app:ff_selections="@array/count_0_3"
+                    android:layout_marginStart="7dp"
+                    app:ff_selections="@array/count_0_3_dot"
                     app:ff_show_divider="false" />
 
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_igmpy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -98,10 +99,10 @@
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     android:layout_marginLeft="7dp"
-                    app:ff_selections="@array/count_0_4"
+                    app:ff_selections="@array/count_0_4_dot"
                     app:ff_show_divider="false" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_jsy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,10 +110,10 @@
                     android:layout_marginLeft="7dp"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    app:ff_selections="@array/count_0_1"
+                    app:ff_selections="@array/count_0_1_dot"
                     app:ff_show_divider="false" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_rajshri_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -120,7 +121,7 @@
                     android:layout_marginLeft="7dp"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    app:ff_selections="@array/count_0_2_more" />
+                    app:ff_selections="@array/count_0_2_more_dot" />
 
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement

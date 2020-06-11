@@ -1,137 +1,68 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/white"
-    android:clickable="true"
-    android:focusable="true"
-    android:orientation="vertical"
-    tools:context=".ui.profile_edit.ProfileEditFragment">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
 
-    <include
-        tools:viewBindingIgnore="true"
-        android:id="@+id/toolbar_ly"
-        layout="@layout/toolbar_ly" />
+        <variable
+            name="viewModel"
+            type="in.rajpusht.pc.ui.profile_edit.ProfileEditViewModel" />
+    </data>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp"
-        android:orientation="vertical">
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:clickable="true"
+        android:focusable="true"
+        android:orientation="vertical"
+        tools:context=".ui.profile_edit.ProfileEditFragment">
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/first_name_tly"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <include
+            android:id="@+id/toolbar_ly"
+            layout="@layout/toolbar_ly"
+            tools:viewBindingIgnore="true" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="50dp">
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:orientation="vertical">
 
-            <EditText
-                android:id="@+id/first_name_et"
-                android:layout_width="match_parent"
+            <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                android:id="@+id/first_name_ly"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:ems="10"
-                android:hint="First Name"
-                android:inputType="textPersonName" />
+                android:layout_marginTop="28dp"
+                app:ff_hint="First Name" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/last_name_tly"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp">
-
-            <EditText
-                android:id="@+id/last_name_et"
-                android:layout_width="match_parent"
+            <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                android:id="@+id/last_name_ly"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Last Name"
-                android:inputType="textPersonName" />
+                app:ff_hint="Last Name" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/username_tly"
-            android:enabled="false"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp">
-
-            <EditText
-                android:id="@+id/user_name_et"
-                android:layout_width="match_parent"
+            <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                android:id="@+id/mobile_ly"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="User Name"
-                android:inputType="textPersonName" />
+                android:enabled="false"
+                app:ff_hint="Mobile Number" />
 
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/email_tly"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:enabled="false">
-
-            <EditText
-                android:id="@+id/email_et"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/submit_btn"
+                style="@style/Widget.MaterialComponents.Button"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:ems="10"
-                android:hint="Email"
-                android:inputType="textEmailAddress" />
-
-        </com.google.android.material.textfield.TextInputLayout>
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:onClick="@{(v)->viewModel.updateProfile(firstNameLy.getText(),lastNameLy.getText(),mobileLy.getText())}"
+                android:text="save" />
 
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/phone_tly"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp">
-
-            <EditText
-                android:id="@+id/phone_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:hint="Phone Number"
-                android:inputType="phone"
-                android:maxLength="10" />
-
-        </com.google.android.material.textfield.TextInputLayout>
-
-
-        <Button
-            android:id="@+id/submit_btn"
-            style="@style/Widget.MaterialComponents.Button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="save" />
-
+        </LinearLayout>
 
     </LinearLayout>
-
-</LinearLayout>
+</layout>

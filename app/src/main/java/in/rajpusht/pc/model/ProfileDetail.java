@@ -23,7 +23,7 @@ public class ProfileDetail {
     private String lastName;
     @SerializedName("mobile")
     @Expose
-    private Integer mobile;
+    private String mobile;
     @SerializedName("email")
     @Expose
     private String email;
@@ -66,11 +66,11 @@ public class ProfileDetail {
         this.lastName = lastName;
     }
 
-    public Integer getMobile() {
+    public String getMobile() {
         return mobile;
     }
 
-    public void setMobile(Integer mobile) {
+    public void setMobile(String mobile) {
         this.mobile = mobile;
     }
 

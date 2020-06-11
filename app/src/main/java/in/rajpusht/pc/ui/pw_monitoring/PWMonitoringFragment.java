@@ -33,6 +33,7 @@ import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
+import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
@@ -40,6 +41,8 @@ import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.functions.Consumer;
+
+import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
 
 public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBinding, PWMonitoringViewModel> {
 
@@ -177,6 +180,42 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         });
 
 
+        if (subStage.contains("PW")) {
+            viewDataBinding.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0));
+            viewDataBinding.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0));
+        }
+
+        if (subStage.contains("LM")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_4_dot));
+            viewDataBinding.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            viewDataBinding.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+        }
+
+        if (subStage.contains("MY")) {
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_4_dot));
+            viewDataBinding.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            viewDataBinding.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+        }
+
+
+        if (subStage.equalsIgnoreCase("PW1")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+
+        } else if (subStage.equalsIgnoreCase("PW2")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+
+        } else if (subStage.equalsIgnoreCase("PW3")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+        } else if (subStage.equalsIgnoreCase("PW4")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+        }
+
+
         fetchFormUiData();
     }
 
@@ -241,13 +280,13 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                         if (mPwMonitorEntity.getAvailable())
                             setFormUiData(pwMonitorEntity);
                         else {
-                            checkBenfAvailable();
+                            checkBenfAvailable(mPwMonitorEntity.getDataStatus() == DataStatus.NEW);
                         }
                     }
                 }
             });
         } else {
-            checkBenfAvailable();
+            checkBenfAvailable(true);
         }
     }
 
@@ -259,22 +298,26 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         vb.benfLastcheckupdate.setDate(pwMonitorEntity.getLastWeightCheckDate());
         vb.benfCurrentWeight.setText(pwMonitorEntity.getCurrentWeight());
 
+        if (pwMonitorEntity.getDataStatus() != DataStatus.NEW) {
+            vb.saveBtn.setEnabled(false);
+            HUtil.recursiveSetEnabled(vb.formContainer, false, vb.benfDtLy.getId(), R.id.benf_dt_ly, R.id.weight_iv);
+        }
         Set<Integer> regScheme = new HashSet<>();
 
         if (pwMonitorEntity.getPmmvyInstallment() != null) {
-            vb.benfPmmvvyCount.setSection(pwMonitorEntity.getPmmvyInstallment());
+            vb.benfPmmvvyCount.setSectionByData(instalmentValConvt(pwMonitorEntity.getPmmvyInstallment()));
             regScheme.add(0);
         }
         if (pwMonitorEntity.getIgmpyInstallment() != null) {
-            vb.benfIgmpyCount.setSection(pwMonitorEntity.getIgmpyInstallment());
+            vb.benfIgmpyCount.setSectionByData(instalmentValConvt(pwMonitorEntity.getIgmpyInstallment()));
             regScheme.add(1);
         }
         if (pwMonitorEntity.getJsyInstallment() != null) {
-            vb.benfJsyCount.setSection(pwMonitorEntity.getJsyInstallment());
+            vb.benfJsyCount.setSectionByData(instalmentValConvt(pwMonitorEntity.getJsyInstallment()));
             regScheme.add(2);
         }
         if (pwMonitorEntity.getRajshriInstallment() != null) {
-            vb.benfRajshriCount.setSection(pwMonitorEntity.getRajshriInstallment());
+            vb.benfRajshriCount.setSectionByData(instalmentValConvt(pwMonitorEntity.getRajshriInstallment()));
             regScheme.add(3);
         }
 
@@ -338,19 +381,19 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
         if (data.contains(0)) {
-            pwMonitorEntity.setPmmvyInstallment(vb.benfPmmvvyCount.getSelectedPos());
+            pwMonitorEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
         }
 
         if (data.contains(1)) {
-            pwMonitorEntity.setIgmpyInstallment(vb.benfIgmpyCount.getSelectedPos());
+            pwMonitorEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
         }
 
         if (data.contains(2)) {
-            pwMonitorEntity.setJsyInstallment(vb.benfJsyCount.getSelectedPos());
+            pwMonitorEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
         }
 
         if (data.contains(3)) {
-            pwMonitorEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
+            pwMonitorEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
         }
 
 
@@ -423,17 +466,28 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
     }
 
-    private void checkBenfAvailable() {
-        new AlertDialog.Builder(requireContext()).setTitle("Alert")
-                .setMessage("Is beneficiary available ?")
-                .setCancelable(false)
-                .setPositiveButton("Yes", null)
-                .setNegativeButton("No", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                saveNotAvi();
-            }
-        }).show();
+    private void checkBenfAvailable(boolean isNew) {
+        if (isNew) {
+
+            new AlertDialog.Builder(requireContext()).setTitle("Alert")
+                    .setMessage("Is beneficiary available ?")
+                    .setCancelable(false)
+                    .setPositiveButton("Yes", null)
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            saveNotAvi();
+                        }
+                    }).show();
+
+        } else {
+            showAlertDialog("Beneficiary not available", new Runnable() {
+                @Override
+                public void run() {
+                    requireActivity().onBackPressed();
+                }
+            });
+        }
 
     }
 

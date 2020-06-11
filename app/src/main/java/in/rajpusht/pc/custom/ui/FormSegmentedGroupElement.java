@@ -179,6 +179,15 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
         return getVisibility() == VISIBLE;
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        if (enabled)
+            edf_ch_gp.setTintColor(getResources().getColor(R.color.colorAccent));
+        else
+            edf_ch_gp.setTintColor(getResources().getColor(R.color.grey_07));
+    }
+
     public void setEnableChild(boolean enable) {
         HUtil.recursiveSetEnabled(this, enable);
         if (enable)

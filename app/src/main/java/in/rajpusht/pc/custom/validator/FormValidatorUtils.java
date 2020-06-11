@@ -83,6 +83,22 @@ public class FormValidatorUtils {
         };
     }
 
+    public static HValidatorListener<Integer> valueBwValidator(Integer min, Integer max, String message) {
+
+        return new HValidatorListener<Integer>() {
+            @Override
+            public ValidationStatus isValid(Integer value) {
+                if (value != null) {
+                    if (min <= value && value <= max)
+                        return new ValidationStatus(true, message);
+
+                    return new ValidationStatus(false, message);
+                }
+                return new ValidationStatus(false, message);
+            }
+        };
+    }
+
     public static HValidatorListener<Double> valueBwValidator(Double min, Double max, String message) {
 
         return new HValidatorListener<Double>() {

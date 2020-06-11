@@ -8,6 +8,7 @@ import android.text.InputType;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -27,7 +28,7 @@ import in.rajpusht.pc.custom.validator.ValidationStatus;
 
 public class FormEditFieldElement extends FrameLayout {
 
-    HValidatorListener<String>  hValidatorListener;
+    HValidatorListener<String> hValidatorListener;
     private EditText edf_text;
     private TextInputLayout edf_txt_inp_ly;
     private HValueChangedListener<String> hValueChangedListener;
@@ -71,11 +72,13 @@ public class FormEditFieldElement extends FrameLayout {
         }
         a.recycle();
         TextView labelTv = view.findViewById(R.id.edf_lab);
+        edf_txt_inp_ly = view.findViewById(R.id.edf_txt_inp_ly);
         edf_text = view.findViewById(R.id.edf_text);
         if (maxLength != -1) {
             edf_text.setFilters(new InputFilter[]{new InputFilter.LengthFilter(maxLength)});
 
         }
+
 
         if (inputType == 0) {
             edf_text.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
@@ -86,6 +89,9 @@ public class FormEditFieldElement extends FrameLayout {
             edf_text.setInputType(InputType.TYPE_CLASS_NUMBER);
         } else if (inputType == 3) {
             edf_text.setInputType(InputType.TYPE_CLASS_NUMBER | InputType.TYPE_NUMBER_FLAG_DECIMAL | InputType.TYPE_NUMBER_FLAG_SIGNED);
+        } else if (inputType == 4) {
+            edf_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD);
+            edf_txt_inp_ly.setEndIconMode(TextInputLayout.END_ICON_PASSWORD_TOGGLE);
         }
 
 
@@ -107,7 +113,7 @@ public class FormEditFieldElement extends FrameLayout {
                 edf_txt_inp_ly.setError(null);
             }
         });
-        edf_txt_inp_ly = view.findViewById(R.id.edf_txt_inp_ly);
+
         labelTv.setText(label);
         if (TextUtils.isEmpty(label)) {
             labelTv.setVisibility(GONE);
@@ -142,7 +148,7 @@ public class FormEditFieldElement extends FrameLayout {
         return new Pair<>(validate(), this);
     }
 
-    public void sethValidatorListener(HValidatorListener<String>  hValidatorListener) {
+    public void sethValidatorListener(HValidatorListener<String> hValidatorListener) {
         this.hValidatorListener = hValidatorListener;
     }
 
@@ -161,6 +167,12 @@ public class FormEditFieldElement extends FrameLayout {
         targetView.getParent().requestChildFocus(targetView, targetView);
     }
 
+    @Override
+    public void setEnabled(boolean enabled) {
+        super.setEnabled(enabled);
+        setEnableChild(enabled);
+    }
+
     public void setEnableChild(boolean enable) {
         HUtil.recursiveSetEnabled(this, enable);
     }
@@ -171,8 +183,11 @@ public class FormEditFieldElement extends FrameLayout {
     }
 
 
-
     public boolean isVisibleAndEnable() {
         return getVisibility() == VISIBLE && isEnabled();
+    }
+
+    public void setError(String error) {
+        edf_txt_inp_ly.setError(error);
     }
 }

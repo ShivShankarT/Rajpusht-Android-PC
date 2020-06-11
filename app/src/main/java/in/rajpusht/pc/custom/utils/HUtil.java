@@ -15,8 +15,11 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
@@ -66,12 +69,31 @@ public class HUtil {
     }
 
     public static void recursiveSetEnabled(@NonNull final ViewGroup vg, final boolean enabled) {
-        vg.setEnabled(enabled);
+        boolean old = vg.isEnabled();
+        if (old && !enabled || !old && enabled)
+            vg.setEnabled(enabled);
+
+
         for (int i = 0, count = vg.getChildCount(); i < count; i++) {
             final View child = vg.getChildAt(i);
             child.setEnabled(enabled);
             if (child instanceof ViewGroup) {
                 recursiveSetEnabled((ViewGroup) child, enabled);
+            }
+        }
+    }
+
+
+    public static void recursiveSetEnabled(@NonNull final ViewGroup vg, final boolean enabled, Integer... exceptIds) {
+        Set<Integer> integers = new HashSet<Integer>(Arrays.asList(exceptIds));
+        vg.setEnabled(enabled);
+        for (int i = 0, count = vg.getChildCount(); i < count; i++) {
+            final View child = vg.getChildAt(i);
+            if (!integers.contains(child.getId())) {
+                child.setEnabled(enabled);
+                if (child instanceof ViewGroup) {
+                    recursiveSetEnabled((ViewGroup) child, enabled, exceptIds);
+                }
             }
         }
     }

@@ -1,14 +1,12 @@
 package in.rajpusht.pc.ui.base;
 
 
-import android.app.Activity;
 import android.content.Context;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.CallSuper;
@@ -142,7 +140,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     public void showMessage(String message) {
-        if (isDetached() || getContext() == null ||getView() == null)
+        if (isDetached() || getContext() == null || getView() == null)
             return;
         View view = getView();
         Snackbar snack = Snackbar.make(view, message, Snackbar.LENGTH_LONG);
@@ -152,4 +150,9 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         snack.show();
     }
 
+    public boolean onBackPressed() {
+        return true;
+    }
+
+    ;
 }

@@ -1,6 +1,7 @@
 package in.rajpusht.pc.ui.profile;
 
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -123,7 +124,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
 
         });
         getViewDataBinding().logout.setOnClickListener(v -> {
-            ((HomeActivity)requireActivity()).syncData();
+            ((HomeActivity) requireActivity()).syncData();
         });
 
     }
@@ -158,8 +159,17 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     public void onAwcChange(String awcCode, String awcName) {
         appPreferencesHelper.setAwcCode(awcCode);
         appPreferencesHelper.putString("awc_name", awcName);
-        ((HomeActivity)requireActivity()).setNavUiData();
+        ((HomeActivity) requireActivity()).setNavUiData();
 
+    }
+
+    @Override
+    public boolean onBackPressed() {
+        if (TextUtils.isEmpty(appPreferencesHelper.getSelectedAwcCode())) {
+            showAlertDialog("Please Select Awc", null);
+            return false;
+        } else
+            return super.onBackPressed();
     }
 
     public static class AssignedLocationListItem extends ExpandableRecyclerAdapter.ListItem {
@@ -178,6 +188,4 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         }
 
     }
-
-
 }

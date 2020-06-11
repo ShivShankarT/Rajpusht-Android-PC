@@ -1,6 +1,7 @@
 package in.rajpusht.pc.data;
 
 import androidx.annotation.Nullable;
+import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
 
 import com.google.gson.JsonArray;
@@ -30,6 +31,7 @@ import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
 public class DataRepository {
@@ -135,6 +137,28 @@ public class DataRepository {
         return appApiHelper.verifyOtp(otp);
     }
 
+    public Single<ApiResponse<JsonElement>> changePassword(String oldPassword,
+                                                          String newPassword) {
+        return appApiHelper.changePassword(oldPassword, newPassword);
+    }
+
+    public Single<ApiResponse<JsonObject>> forgotPassword(String email) {
+        return appApiHelper.forgotPassword(email).doOnSuccess(jsonObjectApiResponse -> {
+            if (jsonObjectApiResponse != null && jsonObjectApiResponse.isStatus()) {
+                JsonObject data = jsonObjectApiResponse.getData();
+                String token = data.get("token").getAsString();
+                JsonElement otpjsonElement = data.get("reset_otp");
+                String otp = otpjsonElement != null && !otpjsonElement.isJsonNull() ? otpjsonElement.getAsString() : null;
+                appPreferencesHelper.setAccessToken(token);
+                appPreferencesHelper.putString("otp", otp);
+            }
+        });
+    }
+
+    public Single<ApiResponse<JsonElement>> setPassword(String resetOtp, String newPassword) {
+        return appApiHelper.setPassword(resetOtp, newPassword);
+    }
+
     public Single<ApiResponse<JsonObject>> bulkUpload(JsonArray jsonArray) {
         return appApiHelper.bulkUpload(jsonArray);
     }
@@ -149,6 +173,20 @@ public class DataRepository {
         return appApiHelper.profileDetail();
     }
 
+    public Single<ApiResponse<JsonElement>> profileUpdate(String fName, String lName, String mob) {
+
+        return appApiHelper.profileUpdate(fName, lName, mob).doOnSuccess(new Consumer<ApiResponse<JsonElement>>() {
+            @Override
+            public void accept(ApiResponse<JsonElement> jsonElementApiResponse) throws Exception {
+                if (jsonElementApiResponse.isStatus()) {
+                    appPreferencesHelper.putString(AppPreferencesHelper.PREF_FIRST_NAME, fName);
+                    appPreferencesHelper.putString(AppPreferencesHelper.PREF_LAST_NAME, lName);
+                    appPreferencesHelper.setCurrentUserName(fName + " " + lName);
+                }
+            }
+        });
+    }
+
     public Completable profileAssignedLocation() {
 
         return appApiHelper
@@ -161,7 +199,9 @@ public class DataRepository {
                     appPreferencesHelper.setCurrentUserId(Long.valueOf(data.getPcId()));
                     appPreferencesHelper.setCurrentUserEmail(data.getEmail());
                     appPreferencesHelper.setCurrentUserMob(String.valueOf(data.getMobile()));
-                    appPreferencesHelper.setCurrentUserName(data.getFirstName() +" "+ data.getLastName());
+                    appPreferencesHelper.setCurrentUserName(data.getFirstName() + " " + data.getLastName());
+                    appPreferencesHelper.putString(AppPreferencesHelper.PREF_FIRST_NAME, data.getFirstName());
+                    appPreferencesHelper.putString(AppPreferencesHelper.PREF_LAST_NAME, data.getLastName());
                     return appDbHelper.deleteAndInsertAssignedLocation(data.getAssignedLocations());
                 });
     }
@@ -183,6 +223,9 @@ public class DataRepository {
         return Completable.concatArray(profileAssignedLocation(), bulkdownloadandInsert());
     }
 
+    public String getString(@StringRes int stringId) {
+        return appPreferencesHelper.getStringRes(stringId);
+    }
 
     public void logout() {
         appPreferencesHelper.logout();

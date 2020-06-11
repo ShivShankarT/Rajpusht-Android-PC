@@ -16,6 +16,7 @@
 
 package in.rajpusht.pc.data.local.pref;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -38,6 +39,9 @@ public class AppPreferencesHelper {
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
     private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
+    public static final String PREF_FIRST_NAME = "first_name";
+    public static final String PREF_LAST_NAME = "last_name";
+    @SuppressLint("StaticFieldLeak")//application context
     private static AppPreferencesHelper appPreferencesHelper;
     private final SharedPreferences mPrefs;
     private final Context context;
@@ -135,5 +139,9 @@ public class AppPreferencesHelper {
                 Intent.FLAG_ACTIVITY_NEW_TASK);
         context.startActivity(intent);
 
+    }
+
+    public String getStringRes(int stringId) {
+        return context.getString(stringId);
     }
 }

@@ -1,138 +1,108 @@
 package in.rajpusht.pc.ui.profile_edit;
 
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.util.Patterns;
-import android.view.LayoutInflater;
+import android.util.Pair;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.EditText;
-import androidx.appcompat.widget.Toolbar;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 
-import com.google.android.material.textfield.TextInputLayout;
+import javax.inject.Inject;
 
-import java.util.HashMap;
-
+import in.rajpusht.pc.BR;
 import in.rajpusht.pc.R;
+import in.rajpusht.pc.ViewModelProviderFactory;
+import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
+import in.rajpusht.pc.databinding.FragmentProfileEditBinding;
+import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.home.HomeActivity;
+import in.rajpusht.pc.utils.Event;
 
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ProfileEditFragment extends Fragment {
+public class ProfileEditFragment extends BaseFragment<FragmentProfileEditBinding, ProfileEditViewModel> {
 
-    private TextInputLayout first_name_tly;
-    private TextInputLayout last_name_tly;
-    private TextInputLayout username_tly;
-    private TextInputLayout email_tly;
-    private TextInputLayout phone_tly;
+
+    @Inject
+    ViewModelProviderFactory factory;
+    @Inject
+    AppPreferencesHelper appPreferencesHelper;
 
     public ProfileEditFragment() {
         // Required empty public constructor
     }
 
     @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+    public int getBindingVariable() {
+        return BR.viewModel;
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_profile_edit, container, false);
+    public int getLayoutId() {
+        return R.layout.fragment_profile_edit;
+    }
+
+
+    @Override
+    public ProfileEditViewModel getViewModel() {
+        return new ViewModelProvider(this, factory).get(ProfileEditViewModel.class);
     }
 
     @Override
-    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+    public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        Toolbar toolbar=view.findViewById(R.id.toolbar);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+        getViewModel().progressDialog.observe(getViewLifecycleOwner(), new Observer<Event<Boolean>>() {
             @Override
-            public void onClick(View v) {
-                requireActivity().onBackPressed();
+            public void onChanged(Event<Boolean> booleanEvent) {
+                Boolean contentIfNotHandled = booleanEvent.getContentIfNotHandled();
+                if (booleanEvent.hasBeenHandled() && contentIfNotHandled != null && contentIfNotHandled) {
+                    showProgressDialog();
+                } else {
+                    dismissProgressDialog();
+                }
             }
         });
-        EditText first_name_et = view.findViewById(R.id.first_name_et);
-        EditText last_name_et = view.findViewById(R.id.last_name_et);
-        EditText email_et = view.findViewById(R.id.email_et);
-        EditText user_name_et = view.findViewById(R.id.user_name_et);
-        EditText phone_et = view.findViewById(R.id.phone_et);
-        Button submit_btn = view.findViewById(R.id.submit_btn);
 
-        first_name_tly = view.findViewById(R.id.first_name_tly);
-        last_name_tly = view.findViewById(R.id.last_name_tly);
-        username_tly = view.findViewById(R.id.username_tly);
-        email_tly = view.findViewById(R.id.email_tly);
-        phone_tly = view.findViewById(R.id.phone_tly);
+        getViewDataBinding().firstNameLy.setText(appPreferencesHelper.getString(AppPreferencesHelper.PREF_FIRST_NAME));
+        getViewDataBinding().lastNameLy.setText(appPreferencesHelper.getString(AppPreferencesHelper.PREF_LAST_NAME));
+        getViewDataBinding().mobileLy.setText(appPreferencesHelper.getCurrentUserMob());
+        getViewDataBinding().mobileLy.setEnableChild(false);
 
+        getViewModel().statusLiveData.observe(getViewLifecycleOwner(), pairEvent -> {
+            Pair<Integer, String> data = pairEvent.getContentIfNotHandled();
 
-        submit_btn.setOnClickListener(v -> {
-
-            check(first_name_et.getText().toString(),
-                    last_name_et.getText().toString(),
-                    email_et.getText().toString(),
-                    user_name_et.getText().toString(),
-                    phone_et.getText().toString()
-            );
+            if (data != null) {
+                getViewDataBinding().firstNameLy.setError(null);
+                getViewDataBinding().lastNameLy.setError(null);
+                getViewDataBinding().mobileLy.setError(null);
+                switch (data.first) {
+                    case ProfileEditViewModel.FNAME_ERROR:
+                        getViewDataBinding().firstNameLy.setError(data.second);
+                        break;
+                    case ProfileEditViewModel.LNAME_ERROR:
+                        getViewDataBinding().lastNameLy.setError(data.second);
+                        break;
+                    case ProfileEditViewModel.MOBILE_ERROR:
+                        getViewDataBinding().mobileLy.setEnableChild(true);
+                        getViewDataBinding().mobileLy.setError(data.second);
+                        break;
+                    case ProfileEditViewModel.SUCCESS:
+                        showAlertDialog(data.second, () -> {
+                            HomeActivity homeActivity= (HomeActivity) requireActivity();
+                            homeActivity.setNavUiData();
+                            requireActivity().onBackPressed();
+                        });
+                        break;
+                    case ProfileEditViewModel.ERROR:
+                        showAlertDialog(data.second, null);
+                        break;
+                }
+            }
         });
 
-
     }
-
-
-    private void check(String firstName, String lastName, String email, String userName, String phone) {
-        boolean isInvalid = false;
-
-        if (firstName.length() < 5) {
-            isInvalid = true;
-            first_name_tly.setError(getResources().getString(R.string.error_firstname));
-        } else
-            first_name_tly.setError(null);
-
-        if (lastName.length() < 1) {
-            isInvalid = true;
-            last_name_tly.setError(getResources().getString(R.string.error_lastname));
-
-        } else
-            last_name_tly.setError(null);
-
-        if (TextUtils.isEmpty(email) || !Patterns.EMAIL_ADDRESS.matcher(email).matches()) {
-            isInvalid = true;
-            email_tly.setError(getResources().getString(R.string.error_email));
-        } else
-            email_tly.setError(null);
-
-        if (userName.length() < 5) {
-            isInvalid = true;
-            username_tly.setError(getResources().getString(R.string.error_username));
-        } else
-            username_tly.setError(null);
-
-        if (phone.length() < 10) {
-            isInvalid = true;
-            phone_tly.setError(getResources().getString(R.string.error_phoneno));
-        } else
-            phone_tly.setError(null);
-
-        if (isInvalid) {
-            return;
-        }
-
-        HashMap<String, String> params = new HashMap<>();
-        params.put("firstName", firstName);
-        params.put("lastName", lastName);
-        params.put("username", userName);
-        params.put("email", email);
-        params.put("mobile", phone);
-
-
-    }
-
-
 }

@@ -18,6 +18,7 @@
             tools:viewBindingIgnore="true" />
 
         <androidx.core.widget.NestedScrollView
+            android:id="@+id/form_container"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
@@ -39,7 +40,6 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:background="?android:attr/selectableItemBackground"
-                        android:clickable="true"
                         android:gravity="center_vertical"
                         android:paddingTop="5dp"
                         android:paddingBottom="8dp">
@@ -64,8 +64,6 @@
                             android:layout_alignStart="@+id/benf_name"
                             android:text="(w/o) Mr. XYZ"
                             android:textSize="12dp" />
-
-
 
 
                         <ImageView
@@ -115,9 +113,9 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
-                    app:ff_measurement_type="weight"
                     app:ff_label="@string/last_pregnancy_weight"
                     app:ff_maxLength="3"
+                    app:ff_measurement_type="weight"
                     app:ff_required="true" />
 
 
@@ -135,10 +133,10 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Weight"
-                    app:ff_measurement_type="weight"
                     app:ff_input_type="numberDecimal"
                     app:ff_label="@string/current_preg_weight"
                     app:ff_maxLength="3"
+                    app:ff_measurement_type="weight"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
@@ -152,55 +150,56 @@
 
 
                 <TextView
+                    android:layout_marginLeft="10dp"
                     android:id="@+id/benfInstalLy"
                     style="@style/FormTextMini"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:text="@string/installment_received_till" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_pmmvvy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
                     app:ff_label="@string/pmmvvy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    android:layout_marginLeft="7dp"
-                    app:ff_selections="@array/count_0_3"
+                    app:ff_selections="@array/count_0_3_dot"
                     app:ff_show_divider="false" />
 
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_igmpy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
                     app:ff_label="@string/igmpy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    android:layout_marginLeft="7dp"
-                    app:ff_selections="@array/count_0_4"
+                    app:ff_selections="@array/count_0_4_dot"
                     app:ff_show_divider="false" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_jsy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
                     app:ff_label="@string/jsy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    android:layout_marginLeft="7dp"
-                    app:ff_selections="@array/count_0_1"
+                    app:ff_selections="@array/count_0_1_dot"
                     app:ff_show_divider="false" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_rajshri_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
                     app:ff_label="@string/rajshri"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    android:layout_marginLeft="7dp"
-                    app:ff_selections="@array/count_0_2_more" />
+                    app:ff_selections="@array/count_0_2_more_dot" />
 
                 <Button
                     android:id="@+id/save_btn"

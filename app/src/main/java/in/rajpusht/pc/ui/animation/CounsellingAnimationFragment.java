@@ -36,6 +36,7 @@ import in.rajpusht.pc.utils.ui.CustomVideoView;
 public class CounsellingAnimationFragment extends Fragment {
 
 
+    private static final int delayMillis = 2000;
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
     private Handler handler = new Handler();
@@ -43,13 +44,12 @@ public class CounsellingAnimationFragment extends Fragment {
     private int mediaPos = 0;
     private int pos = 0;
     private FragmentTestAnimationBinding vb;
-   private static final int delayMillis = 2000;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
             if (mediaPos < counsellingMedia.getMediaImage().size()) {
                 // Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
-                Glide.with(getContext()).asBitmap()
+                Glide.with(requireContext()).asBitmap()
                         .load(counsellingMedia.getMediaImage().get(mediaPos))
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)
@@ -106,10 +106,11 @@ public class CounsellingAnimationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mediaPos = 0;
 
-       // vb.toolbarLy.toolbar.setTitle(counsellingMedia.getId()+"-"+ counsellingMedia.getMediaImage().get(0).substring("file:///android_asset/counseling".length()));
         vb.toolbarLy.toolbar.setTitle("PW Women Counselling");
-
-        vb.toolbarLy.toolbar.setNavigationOnClickListener((v)->{
+       /* if (counsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA)
+            vb.toolbarLy.toolbar.setTitle(counsellingMedia.getId() + "-" + counsellingMedia.getMediaImage().get(0).substring("file:///android_asset/counseling".length()));
+*/
+        vb.toolbarLy.toolbar.setNavigationOnClickListener((v) -> {
             requireActivity().onBackPressed();
         });
 
@@ -132,7 +133,7 @@ public class CounsellingAnimationFragment extends Fragment {
             videoView.setVisibility(View.GONE);
             vb.imageview.setVisibility(View.VISIBLE);
             Glide.with(requireContext())
-                    .load(Uri.parse("file:///android_asset/counseling/video_thumb.webp" )).into(vb.imageview);
+                    .load(Uri.parse("file:///android_asset/counseling/video_thumb.webp")).into(vb.imageview);
             //Creating MediaController
             MediaController mediaController = new MediaController(requireContext());
             mediaController.setAnchorView(videoView);
@@ -243,5 +244,10 @@ public class CounsellingAnimationFragment extends Fragment {
         }).show();
     }
 
+    @Override
+    public void onDestroy() {
+        handler.removeCallbacks(runnable);
+        super.onDestroy();
+    }
 }
 

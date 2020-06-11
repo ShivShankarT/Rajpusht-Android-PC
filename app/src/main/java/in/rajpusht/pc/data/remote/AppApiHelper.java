@@ -34,7 +34,7 @@ public class AppApiHelper {
                     HttpException httpException = (HttpException) throwable;
                     ResponseBody json = httpException.response().errorBody();
                     boolean status = false;
-                    String message = httpException.code() +" "+ httpException.message();
+                    String message = httpException.code() + " " + httpException.message();
                     if (httpException.code() == 422) {
                         JSONObject jsonObject = new JSONObject(json.string());
                         status = jsonObject.optBoolean("status", false);
@@ -50,6 +50,7 @@ public class AppApiHelper {
                     throwable.printStackTrace();
                 ApiResponse apiResponse = new ApiResponse();
                 apiResponse.setStatus(false);
+                apiResponse.setInternalError(true);
                 apiResponse.setMessage("Check your internet");
                 return apiResponse;
             }
@@ -66,23 +67,23 @@ public class AppApiHelper {
     }
 
 
-    Single<ApiResponse<JsonObject>> changePassword(String oldPassword,
-                                                   String newPassword) {
+    public Single<ApiResponse<JsonElement>> changePassword(String oldPassword,
+                                                          String newPassword) {
         return networkErrorWrapper(apiService.changePassword(oldPassword, newPassword));
     }
 
 
-    Single<ApiResponse<JsonObject>> forgotPassword(String oldPassword) {
-        return networkErrorWrapper(apiService.forgotPassword(oldPassword));
+    public Single<ApiResponse<JsonObject>> forgotPassword(String email) {
+        return networkErrorWrapper(apiService.forgotPassword(email));
     }
 
 
-    Single<ApiResponse<JsonObject>> setPassword(String resetOtp, String newPassword) {
+    public Single<ApiResponse<JsonElement>> setPassword(String resetOtp, String newPassword) {
         return networkErrorWrapper(apiService.setPassword(resetOtp, newPassword));
     }
 
 
-    Single<ApiResponse<JsonObject>> resendOtp() {
+    public Single<ApiResponse<JsonObject>> resendOtp() {
         return networkErrorWrapper(apiService.resendOtp());
     }
 
@@ -91,8 +92,14 @@ public class AppApiHelper {
         return networkErrorWrapper(apiService.profileDetail());
     }
 
+    public Single<ApiResponse<JsonElement>> profileUpdate(String fName, String lname, String mob) {
 
-    Single<ApiResponse<JsonObject>> logout() {
+        return networkErrorWrapper(apiService.profileUpdate(fName, lname, mob));
+    }
+
+
+
+    public Single<ApiResponse<JsonObject>> logout() {
         return networkErrorWrapper(apiService.logout());
     }
 

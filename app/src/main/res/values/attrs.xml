@@ -15,6 +15,7 @@
             <enum name="phone_no" value="1" />
             <enum name="number" value="2" />
             <enum name="numberDecimal" value="3" />
+            <enum name="password" value="4" />
         </attr>
 
         <attr name="ff_measurement_type" format="enum">

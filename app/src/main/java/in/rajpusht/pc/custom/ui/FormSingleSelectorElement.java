@@ -16,6 +16,7 @@ import androidx.annotation.Nullable;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import in.rajpusht.pc.R;
@@ -73,15 +74,31 @@ public class FormSingleSelectorElement extends FrameLayout implements RadioGroup
             sectionData.add(String.valueOf(array[i]));
         }
         edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
+
+        setUiData();
+        a.recycle();
+    }
+
+    public void setSectionList(String[] data) {
+        List<String> data1 = Arrays.asList(data);
+        setSectionList(data1);
+    }
+
+    public void setSectionList(List<String> data) {
+        sectionData.clear();
+        sectionData.addAll(data);
+        setUiData();
+    }
+
+    private void setUiData() {
         edf_ch_gp.removeAllViews();
         edf_ch_gp.setOnCheckedChangeListener(this);
-        for (int i = 0; i < array.length; i++) {
+        for (int i = 0; i < sectionData.size(); i++) {
             RadioButton child = new RadioButton(getContext());
-            child.setText(array[i]);
+            child.setText(sectionData.get(i));
             child.setId(i);
             edf_ch_gp.addView(child);
         }
-        a.recycle();
     }
 
     public boolean validate() {

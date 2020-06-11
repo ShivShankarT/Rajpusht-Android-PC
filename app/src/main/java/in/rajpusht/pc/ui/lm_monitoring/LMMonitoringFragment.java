@@ -30,6 +30,7 @@ import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
+import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
@@ -37,7 +38,10 @@ import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.Completable;
-import io.reactivex.functions.Consumer;
+import io.reactivex.Single;
+import io.reactivex.disposables.Disposable;
+
+import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
 
 public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBinding, LMMonitoringViewModel> {
 
@@ -171,45 +175,63 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             }
         });
 
-        viewDataBinding.saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        viewDataBinding.saveBtn.setOnClickListener(v -> save());
 
 
-                save();
+        if (subStage.contains("PW")) {
+            viewDataBinding.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0));
+            viewDataBinding.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0));
+        }
+        if (subStage.contains("LM")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_4_dot));
+            viewDataBinding.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            viewDataBinding.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+        }
+        if (subStage.contains("MY")) {
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_4_dot));
+            viewDataBinding.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            viewDataBinding.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+        }
 
-            }
-        });
+        if (subStage.equalsIgnoreCase("PW1")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+        } else if (subStage.equalsIgnoreCase("PW2")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+        } else if (subStage.equalsIgnoreCase("PW3")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+        } else if (subStage.equalsIgnoreCase("PW4")) {
+            viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+        }
+
+
         fetchFormUiData();
 
 
     }
 
     private void fetchFormUiData() {
-        dataRepository.getBeneficiaryData(motherId)
+        Single<LMMonitorEntity> other = Single.just(new LMMonitorEntity());
+        if (lmFormId != null)
+            other = dataRepository.lmMonitorById(lmFormId).toSingle();
+        Disposable disposable = dataRepository.getBeneficiaryData(motherId).zipWith(other, Pair::new)
                 .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe((tuple, throwable) -> {
-                    if (throwable != null)
-                        throwable.printStackTrace();
-                    beneficiaryEntityPregnantEntityChildEntityTuple = tuple;
+                .observeOn(schedulerProvider.ui()).subscribe((tupleLMMonitorEntityPair, throwable) -> {
+                    beneficiaryEntityPregnantEntityChildEntityTuple = tupleLMMonitorEntityPair.first;
+                    LMMonitorEntity lmMonitorEntity = tupleLMMonitorEntityPair.second;
                     if (beneficiaryEntityPregnantEntityChildEntityTuple != null)
                         setBenfui();
-                });
-
-        if (lmFormId != null)
-            dataRepository.lmMonitorById(lmFormId)
-                    .subscribeOn(schedulerProvider.io())
-                    .observeOn(schedulerProvider.ui()).subscribe(new Consumer<LMMonitorEntity>() {
-                @Override
-                public void accept(LMMonitorEntity lmMonitorEntity) throws Exception {
-
-                    if (lmMonitorEntity != null) {
+                    if (lmMonitorEntity != null && lmMonitorEntity.getId() != 0) {
                         LMMonitoringFragment.this.mLmMonitorEntity = lmMonitorEntity;
                         setFormUiData(lmMonitorEntity);
                     }
-                }
-            });
+                });
+
+
     }
 
     private void setBenfui() {
@@ -224,6 +246,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
     }
 
+
     private void setFormUiData(LMMonitorEntity lmMonitorEntity) {
 
         LmMonitoringFragmentBinding vb = getViewDataBinding();
@@ -235,22 +258,23 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         vb.benfCurrentWeight.setText(lmMonitorEntity.getChildWeight());
         vb.benfCurrentHeight.setText(String.valueOf(lmMonitorEntity.getChildHeight()));
 
+
         Set<Integer> regScheme = new HashSet<>();
 
         if (lmMonitorEntity.getPmmvyInstallment() != null) {
-            vb.benfPmmvvyCount.setSection(lmMonitorEntity.getPmmvyInstallment());
+            vb.benfPmmvvyCount.setSectionByData(instalmentValConvt(lmMonitorEntity.getPmmvyInstallment()));
             regScheme.add(0);
         }
         if (lmMonitorEntity.getIgmpyInstallment() != null) {
-            vb.benfIgmpyCount.setSection(lmMonitorEntity.getIgmpyInstallment());
+            vb.benfIgmpyCount.setSectionByData(instalmentValConvt(lmMonitorEntity.getIgmpyInstallment()));
             regScheme.add(1);
         }
         if (lmMonitorEntity.getJsyInstallment() != null) {
-            vb.benfJsyCount.setSection(lmMonitorEntity.getJsyInstallment());
+            vb.benfJsyCount.setSectionByData(instalmentValConvt(lmMonitorEntity.getJsyInstallment()));
             regScheme.add(2);
         }
         if (lmMonitorEntity.getRajshriInstallment() != null) {
-            vb.benfRajshriCount.setSection(lmMonitorEntity.getRajshriInstallment());
+            vb.benfRajshriCount.setSectionByData(instalmentValConvt(lmMonitorEntity.getRajshriInstallment()));
             regScheme.add(3);
         }
 
@@ -259,6 +283,11 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         }
 
         vb.benfRegisteredProgramme.setSelectedIds(regScheme);
+
+        if (lmMonitorEntity.getDataStatus() != DataStatus.NEW) {
+            vb.saveBtn.setEnabled(false);
+            HUtil.recursiveSetEnabled(vb.formContainer, false, R.id.edit_btn);
+        }
     }
 
     private void save() {
@@ -320,19 +349,19 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
         if (data.contains(0)) {
-            lmMonitorEntity.setPmmvyInstallment(vb.benfPmmvvyCount.getSelectedPos());
+            lmMonitorEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
         }
 
         if (data.contains(1)) {
-            lmMonitorEntity.setIgmpyInstallment(vb.benfIgmpyCount.getSelectedPos());
+            lmMonitorEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
         }
 
         if (data.contains(2)) {
-            lmMonitorEntity.setJsyInstallment(vb.benfJsyCount.getSelectedPos());
+            lmMonitorEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
         }
 
         if (data.contains(3)) {
-            lmMonitorEntity.setRajshriInstallment(vb.benfRajshriCount.getSelectedPos());
+            lmMonitorEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
         }
         lmMonitorEntity.setMotherId(motherId);
 

@@ -16,6 +16,7 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.databinding.LoginFragmentBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.forgot_password.ForgotPasswordFragment;
 import in.rajpusht.pc.ui.otp.OtpFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 
@@ -68,12 +69,18 @@ public class LoginFragment extends BaseFragment<LoginFragmentBinding, LoginViewM
             getViewDataBinding().passwordLayout.setError(s);
         });
 
-        mLoginViewModel.progressDialog.observe(getViewLifecycleOwner(),d->{
+        mLoginViewModel.progressDialog.observe(getViewLifecycleOwner(), d -> {
             Boolean progress = d.getContentIfNotHandled();
-            if (progress!=null&&progress){
+            if (progress != null && progress) {
                 showProgressDialog();
-            }else {
+            } else {
                 dismissProgressDialog();
+            }
+        });
+        getViewDataBinding().forgotPassBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(), new ForgotPasswordFragment(), R.id.container, true, false, FragmentUtils.TRANSITION_NONE);
             }
         });
     }

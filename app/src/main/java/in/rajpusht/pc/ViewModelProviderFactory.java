@@ -8,11 +8,14 @@ import javax.inject.Inject;
 import javax.inject.Singleton;
 
 import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.ui.change_password.ChangePasswordViewModel;
+import in.rajpusht.pc.ui.forgot_password.ForgotPasswordViewModel;
 import in.rajpusht.pc.ui.home.HomeViewModel;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringViewModel;
 import in.rajpusht.pc.ui.login.LoginViewModel;
 import in.rajpusht.pc.ui.otp.OtpViewModel;
 import in.rajpusht.pc.ui.profile.ProfileViewModel;
+import in.rajpusht.pc.ui.profile_edit.ProfileEditViewModel;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringViewModel;
 import in.rajpusht.pc.ui.registration.RegistrationViewModel;
 import in.rajpusht.pc.ui.splash.SplashScreenViewModel;
@@ -58,10 +61,18 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(LMMonitoringViewModel.class)) {
             //noinspection unchecked
             return (T) new LMMonitoringViewModel(dataManager, schedulerProvider);
-        }
-        else if (modelClass.isAssignableFrom(ProfileViewModel.class)) {
+        } else if (modelClass.isAssignableFrom(ProfileViewModel.class)) {
             //noinspection unchecked
             return (T) new ProfileViewModel(dataManager, schedulerProvider);
+        } else if (modelClass.isAssignableFrom(ChangePasswordViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ChangePasswordViewModel(dataManager, schedulerProvider);
+        } else if (modelClass.isAssignableFrom(ForgotPasswordViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ForgotPasswordViewModel(dataManager, schedulerProvider);
+        } else if (modelClass.isAssignableFrom(ProfileEditViewModel.class)) {
+            //noinspection unchecked
+            return (T) new ProfileEditViewModel(dataManager, schedulerProvider);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

@@ -30,6 +30,7 @@
             tools:listitem="@layout/fragment_beneficiart_list_item" />
 
         <TextView
+            android:visibility="gone"
             style="@style/FormTextMiniBlack"
             android:id="@+id/no_data"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"

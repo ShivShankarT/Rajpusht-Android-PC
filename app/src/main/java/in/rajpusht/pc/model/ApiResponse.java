@@ -18,6 +18,8 @@ public class ApiResponse<T> {
     @Expose
     private boolean status;
 
+    private boolean internalError = false;
+
     public T getData() {
         return data;
     }
@@ -43,12 +45,21 @@ public class ApiResponse<T> {
         this.status = status;
     }
 
+    public boolean isInternalError() {
+        return internalError;
+    }
+
+    public void setInternalError(boolean internalError) {
+        this.internalError = internalError;
+    }
+
     @Override
     public String toString() {
         return "ApiResponse{" +
                 "data=" + data +
                 ", message='" + message + '\'' +
                 ", status=" + status +
+                ", internalError=" + internalError +
                 '}';
     }
 }
