@@ -19,6 +19,7 @@ import in.rajpusht.pc.ui.profile_edit.ProfileEditViewModel;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringViewModel;
 import in.rajpusht.pc.ui.registration.RegistrationViewModel;
 import in.rajpusht.pc.ui.splash.SplashScreenViewModel;
+import in.rajpusht.pc.ui.sync.SyncViewModel;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 
@@ -73,6 +74,9 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(ProfileEditViewModel.class)) {
             //noinspection unchecked
             return (T) new ProfileEditViewModel(dataManager, schedulerProvider);
+        } else if (modelClass.isAssignableFrom(SyncViewModel.class)) {
+            //noinspection unchecked
+            return (T) new SyncViewModel(dataManager, schedulerProvider);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

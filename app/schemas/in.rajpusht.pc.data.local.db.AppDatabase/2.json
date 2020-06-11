@@ -1,0 +1,692 @@
+{
+  "formatVersion": 1,
+  "database": {
+    "version": 2,
+    "identityHash": "bcfffaa1b9bf5e8c7c6622168f202b4c",
+    "entities": [
+      {
+        "tableName": "assigned_location",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT, `projectCode` TEXT, `projectEnglishName` TEXT, `projectHindiName` TEXT, `districtCode` TEXT, `districtEnglishName` TEXT, `districtHindiName` TEXT, `awcCode` TEXT, `awcEnglishName` TEXT, `awcHindiName` TEXT, `sectorCode` TEXT, `sectorName` TEXT, `sectorHindiName` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "projectCode",
+            "columnName": "projectCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "projectEnglishName",
+            "columnName": "projectEnglishName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "projectHindiName",
+            "columnName": "projectHindiName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "districtCode",
+            "columnName": "districtCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "districtEnglishName",
+            "columnName": "districtEnglishName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "districtHindiName",
+            "columnName": "districtHindiName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "awcCode",
+            "columnName": "awcCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "awcEnglishName",
+            "columnName": "awcEnglishName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "awcHindiName",
+            "columnName": "awcHindiName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sectorCode",
+            "columnName": "sectorCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sectorName",
+            "columnName": "sectorName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "sectorHindiName",
+            "columnName": "sectorHindiName",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "beneficiary",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `name` TEXT, `husbandName` TEXT, `mobileNo` TEXT, `husbandMobNo` TEXT, `stage` TEXT, `subStage` TEXT, `dob` TEXT, `childCount` INTEGER, `age` INTEGER, `caste` TEXT, `economic` TEXT, `pctsId` TEXT, `bahamashahId` TEXT, `counselingProv` TEXT, `counselingSms` INTEGER, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `awcCode` TEXT, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "beneficiaryId",
+            "columnName": "beneficiaryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "name",
+            "columnName": "name",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "husbandName",
+            "columnName": "husbandName",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "mobileNo",
+            "columnName": "mobileNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "husbandMobNo",
+            "columnName": "husbandMobNo",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "stage",
+            "columnName": "stage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subStage",
+            "columnName": "subStage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dob",
+            "columnName": "dob",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "childCount",
+            "columnName": "childCount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "age",
+            "columnName": "age",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "caste",
+            "columnName": "caste",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "economic",
+            "columnName": "economic",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pctsId",
+            "columnName": "pctsId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "bahamashahId",
+            "columnName": "bahamashahId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "counselingProv",
+            "columnName": "counselingProv",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "counselingSms",
+            "columnName": "counselingSms",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pmmvyInstallment",
+            "columnName": "pmmvyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "igmpyInstallment",
+            "columnName": "igmpyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "jsyInstallment",
+            "columnName": "jsyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rajshriInstallment",
+            "columnName": "rajshriInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataStatus",
+            "columnName": "dataStatus",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "awcCode",
+            "columnName": "awcCode",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdBy",
+            "columnName": "createdBy",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "pregnant",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `pregnancyId` INTEGER NOT NULL, `lmpDate` TEXT, `dataStatus` INTEGER, `createdAt` TEXT, `updatedAt` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "beneficiaryId",
+            "columnName": "beneficiaryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pregnancyId",
+            "columnName": "pregnancyId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "lmpDate",
+            "columnName": "lmpDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataStatus",
+            "columnName": "dataStatus",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "child",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "childId",
+            "columnName": "childId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stage",
+            "columnName": "stage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subStage",
+            "columnName": "subStage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "childOrder",
+            "columnName": "childOrder",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dob",
+            "columnName": "dob",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "motherId",
+            "columnName": "motherId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "deliveryPlace",
+            "columnName": "deliveryPlace",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "deliveryHome",
+            "columnName": "deliveryHome",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataStatus",
+            "columnName": "dataStatus",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "age",
+            "columnName": "age",
+            "affinity": "INTEGER",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "pw_monitor",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pregnancyId` INTEGER NOT NULL, `beneficiaryId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `ancCount` INTEGER, `lastAnc` TEXT, `lastWeightInMamta` REAL, `lastWeightCheckDate` TEXT, `currentWeight` REAL, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `available` INTEGER, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "pregnancyId",
+            "columnName": "pregnancyId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "beneficiaryId",
+            "columnName": "beneficiaryId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stage",
+            "columnName": "stage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subStage",
+            "columnName": "subStage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "ancCount",
+            "columnName": "ancCount",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastAnc",
+            "columnName": "lastAnc",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastWeightInMamta",
+            "columnName": "lastWeightInMamta",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastWeightCheckDate",
+            "columnName": "lastWeightCheckDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currentWeight",
+            "columnName": "currentWeight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pmmvyInstallment",
+            "columnName": "pmmvyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "igmpyInstallment",
+            "columnName": "igmpyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "jsyInstallment",
+            "columnName": "jsyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rajshriInstallment",
+            "columnName": "rajshriInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataStatus",
+            "columnName": "dataStatus",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "available",
+            "columnName": "available",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdBy",
+            "columnName": "createdBy",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      },
+      {
+        "tableName": "lm_monitor",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`createdBy` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `motherId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `isFirstImmunizationComplete` TEXT, `lastMuac` REAL, `lastMuacCheckDate` TEXT, `currentMuac` REAL, `birthWeight` REAL, `childWeight` REAL, `childHeight` REAL, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `available` INTEGER, `dataStatus` INTEGER, `createdAt` TEXT, `updatedAt` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "createdBy",
+            "columnName": "createdBy",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "childId",
+            "columnName": "childId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "motherId",
+            "columnName": "motherId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "stage",
+            "columnName": "stage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "subStage",
+            "columnName": "subStage",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isFirstImmunizationComplete",
+            "columnName": "isFirstImmunizationComplete",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastMuac",
+            "columnName": "lastMuac",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastMuacCheckDate",
+            "columnName": "lastMuacCheckDate",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "currentMuac",
+            "columnName": "currentMuac",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "birthWeight",
+            "columnName": "birthWeight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "childWeight",
+            "columnName": "childWeight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "childHeight",
+            "columnName": "childHeight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pmmvyInstallment",
+            "columnName": "pmmvyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "igmpyInstallment",
+            "columnName": "igmpyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "jsyInstallment",
+            "columnName": "jsyInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "rajshriInstallment",
+            "columnName": "rajshriInstallment",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "available",
+            "columnName": "available",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "dataStatus",
+            "columnName": "dataStatus",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "createdAt",
+            "columnName": "createdAt",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "updatedAt",
+            "columnName": "updatedAt",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
+      }
+    ],
+    "views": [],
+    "setupQueries": [
+      "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bcfffaa1b9bf5e8c7c6622168f202b4c')"
+    ]
+  }
+}

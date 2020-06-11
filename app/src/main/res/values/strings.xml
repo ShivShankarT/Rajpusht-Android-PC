@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Rajpusht PC</string>
 
@@ -26,53 +27,53 @@
     <string name="radioselecteng">English</string>
     <string name="radioselecthin">Hindi</string>
 
-    <string name="no_of_children">1. How many living children Do you having ?</string>
-    <string name="are_you">2. Are you</string>
-    <string name="child_age">3. Age of Child</string>
-    <string name="register_in">4. Are you registered in</string>
-    <string name="number_installment_received">5. How many installments have you received?</string>
+    <string name="no_of_children">How many living children Do you having ?</string>
+    <string name="are_you">Are you</string>
+    <string name="child_age">Age of Child</string>
+    <string name="register_in">Are you registered in</string>
+    <string name="number_installment_received">How many installments have you received?</string>
     <string name="pmmvvy">PMMVVY</string>
     <string name="igmpy">IGMPY</string>
     <string name="rajshri">RAJSHRI</string>
     <string name="jsy">JSY</string>
     <string name="none">None</string>
 
-    <string name="benef_husband_name">7. Beneficiary Husband/Father\'s Name</string>
-    <string name="benef_age">8. Age Of beneficiary"</string>
+    <string name="benef_husband_name">Beneficiary Husband/Father\'s Name</string>
+    <string name="benef_age">Age Of beneficiary"</string>
     <string name="benef_dob">Enter DOB</string>
     <string name="benef_age_enter">Enter Age (e.g 25)</string>
-    <string name="mobile_number">9. Beneficiary Mobile Number</string>
+    <string name="mobile_number">Beneficiary Mobile Number</string>
     <string name="self_mobile">Self Mobile</string>
     <string name="husband_mobile">Husband/Father\'s Mobile Number</string>
-    <string name="caste">10. CASTE</string>
-    <string name="economic_status">11. Economic Status</string>
-    <string name="benef_pcts_id">12. Enter the PCTS ID</string>
-    <string name="bahamashah_id">13. Enter the Bahamashah ID/ACK NO</string>
-    <string name="counselling">14.Counseling Provided by ASHA/ANM/AWW</string>
-    <string name="benef_lmp_date">15. First Day of the Last Menstrual Period - DATE(LMP)</string>
-    <string name="delivery">16. Institutional Delivery or Home Delivery</string>
-    <string name="institutional_delivery">17. Place of Institutional Delivery</string>
-    <string name="receive_counselling">18. Are you willing to receive counselling messages on mobile</string>
+    <string name="caste">CASTE</string>
+    <string name="economic_status">Economic Status</string>
+    <string name="benef_pcts_id">Enter the PCTS ID</string>
+    <string name="bahamashah_id">Enter the Bahamashah ID/ACK NO</string>
+    <string name="counselling">Counseling Provided by ASHA/ANM/AWW</string>
+    <string name="benef_lmp_date">First Day of the Last Menstrual Period - DATE(LMP)</string>
+    <string name="delivery">Institutional Delivery or Home Delivery</string>
+    <string name="institutional_delivery">Place of Institutional Delivery</string>
+    <string name="receive_counselling">Are you willing to receive counselling messages on mobile</string>
 
 
-    <string name="first_cycle_immunization">1. First cycle of immunization of child completed (as in Manta Card)</string>
-    <string name="last_record_muac_child">2. Last recorded MUAC of child </string>
-    <string name="date_muac_child">3. Date of Last recorded MUAC of child </string>
-    <string name="current_muac_child">4. Current MUAC of child </string>
-    <string name="birth_weight_child">5. Birth Weight of Child (As in Manta Card) </string>
-    <string name="current_weight_child">6. Current Weight of child  </string>
-    <string name="are_you_register_in">7. Are you registered in </string>
-    <string name="child_current_height">8. Current Height of child</string>
-    <string name="installment_received">9. How many installments have you received? </string>
+    <string name="first_cycle_immunization">First cycle of immunization of child completed (as in Manta Card)</string>
+    <string name="last_record_muac_child">Last recorded MUAC of child </string>
+    <string name="date_muac_child">Date of Last recorded MUAC of child </string>
+    <string name="current_muac_child">Current MUAC of child </string>
+    <string name="birth_weight_child">Birth Weight of Child (As in Manta Card) </string>
+    <string name="current_weight_child">Current Weight of child  </string>
+    <string name="are_you_register_in">Are you registered in </string>
+    <string name="child_current_height">Current Height of child</string>
+    <string name="installment_received">How many installments have you received? </string>
 
 
-    <string name="number_anc_completed">1. How Many ANCs Completed  </string>
-    <string name="last_anc_date">2. Enter Last ANC Date </string>
-    <string name="last_pregnancy_weight">3. Last recorded pregnancy weight (As in Mamta Card) </string>
-    <string name="date_recorded_pregnancy_weight">4. Date of last recorded pregnancy weight (As in Mamta Card) </string>
-    <string name="current_preg_weight">5. Current pregnancy weight  </string>
-    <string name="you_register_in">6. Are you registered in </string>
-    <string name="installment_received_till">7. How many installments have you received? </string>
+    <string name="number_anc_completed">How Many ANCs Completed  </string>
+    <string name="last_anc_date">Enter Last ANC Date </string>
+    <string name="last_pregnancy_weight">Last recorded pregnancy weight (As in Mamta Card) </string>
+    <string name="date_recorded_pregnancy_weight">Date of last recorded pregnancy weight (As in Mamta Card) </string>
+    <string name="current_preg_weight">Current pregnancy weight  </string>
+    <string name="you_register_in">Are you registered in </string>
+    <string name="installment_received_till">How many installments have you received? </string>
 
 
     <string name="set_location">Select AWC </string>
@@ -204,7 +205,7 @@
     <string name="change_awc">Change AWC</string>
     <string name="sync">Sync</string>
     <string name="change_password">Change Password</string>
-    <string name="how_many_anc_comp">1. How Many ANCs Completed</string>
+    <string name="how_many_anc_comp">How Many ANCs Completed</string>
     <string name="save">save</string>
     <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
     <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>

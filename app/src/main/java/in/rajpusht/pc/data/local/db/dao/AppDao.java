@@ -6,6 +6,7 @@ import androidx.room.Query;
 
 import java.util.List;
 
+import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.BefRel;
 import io.reactivex.Maybe;
@@ -44,6 +45,15 @@ public abstract class AppDao {
 
     @Query("select * from beneficiary")
     public  abstract Maybe<List<BefRel>> befRels();
+
+    @Query("select al.awcCode, al.awcEnglishName, u.dataStatus,ismother as isMother,  case when  ismother is not null then  count(*) else 0 end as count from assigned_location al\n" +
+            "left join  (select beneficiaryId ,'Y' as ismother,  NULL AS motherId, awcCode,dataStatus from beneficiary                                                              \n" +
+            "UNION                                                                                                                                             \n" +
+            "select childId, 'N' as ismother, motherId AS motherId,awcCode,c.dataStatus from child\n" +
+            " c inner join beneficiary m on m.beneficiaryId=c.motherId) u on  al.awcCode=u.awcCode\n" +
+            " where dataStatus!=0\n" +
+            "  group by  al.awcCode, ismother,u.dataStatus\n")
+    public  abstract Maybe<List<AwcSyncCount>> awcViceSyncData();
 
 }
 

@@ -27,6 +27,7 @@ import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
+import in.rajpusht.pc.ui.sync.SyncFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.functions.Action;
@@ -94,6 +95,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         setNavUiData();
 
         navigationView1.setNavigationItemSelectedListener(item -> {
+            getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
             if (item.getItemId() == R.id.nav_select_awc) {
                 profileClick.onClick(null);
             } else if (item.getItemId() == R.id.nav_home) {
@@ -101,9 +103,10 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             } else if (item.getItemId() == R.id.nav_changePassword) {
                 FragmentUtils.replaceFragment(HomeActivity.this, new ChangePasswordFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_sync) {
-                syncData();
+                FragmentUtils.replaceFragment(this, new SyncFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
+                //syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {
-                syncData();
+                // syncData();
             } else if (item.getItemId() == R.id.nav_download) {
                 dataRepository.profileAndBulkDownload().subscribeOn(schedulerProvider.io()).subscribe(new Action() {
                     @Override
@@ -117,7 +120,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                     }
                 });
             }
-            getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
+
             return false;
         });
 

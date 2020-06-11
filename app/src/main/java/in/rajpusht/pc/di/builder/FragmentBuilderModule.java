@@ -12,6 +12,7 @@ import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.ui.profile_edit.ProfileEditFragment;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
+import in.rajpusht.pc.ui.sync.SyncFragment;
 
 @Module
 public abstract class FragmentBuilderModule {
@@ -56,6 +57,10 @@ public abstract class FragmentBuilderModule {
     @SuppressWarnings("unused")
     @ContributesAndroidInjector()
     abstract ProfileEditFragment profileEditFragment();
+
+    @SuppressWarnings("unused")
+    @ContributesAndroidInjector()
+    abstract SyncFragment syncFragment();
 
 
 }

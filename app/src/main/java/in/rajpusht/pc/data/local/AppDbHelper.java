@@ -16,6 +16,7 @@ import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.model.AwcStageCount;
+import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.BefRel;
 import in.rajpusht.pc.model.DataStatus;
@@ -237,6 +238,12 @@ public class AppDbHelper {
     public Maybe<List<BefRel>> getNotSyncBenfData() {
         return mAppDatabase.AppDao().befRels();
     }
+
+    public Maybe<List<AwcSyncCount>> awcViceSyncData() {
+        return mAppDatabase.AppDao().awcViceSyncData();
+    }
+
+    ;
 
 
 }

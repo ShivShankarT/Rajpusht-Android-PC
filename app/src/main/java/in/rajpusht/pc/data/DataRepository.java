@@ -22,6 +22,7 @@ import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.data.remote.AppApiHelper;
 import in.rajpusht.pc.model.ApiResponse;
+import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.ProfileDetail;
 import in.rajpusht.pc.model.Tuple;
@@ -138,7 +139,7 @@ public class DataRepository {
     }
 
     public Single<ApiResponse<JsonElement>> changePassword(String oldPassword,
-                                                          String newPassword) {
+                                                           String newPassword) {
         return appApiHelper.changePassword(oldPassword, newPassword);
     }
 
@@ -166,6 +167,10 @@ public class DataRepository {
     public Single<ApiResponse<JsonObject>> uploadDataToServer() {
         return appDbHelper.getNotSyncBenfData()
                 .map(JsonParser::convertBenfUploadJson).flatMapSingle(jsonElements -> appApiHelper.bulkUpload(jsonElements));
+    }
+
+    public Maybe<List<AwcSyncCount>> awcViceSyncData() {
+        return appDbHelper.awcViceSyncData();
     }
 
 

@@ -238,11 +238,11 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         ChildEntity childEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT3();
         int days = HUtil.daysBetween(childEntity.getDob(), new Date());//106.458 ==3.5 month
-        getViewDataBinding().benfChildImmune.setEnableChild(days >= 106);
-
-        getViewDataBinding().benfChildLastRecMuac.setEnableChild(days >= 182);
-        getViewDataBinding().benfChildLastRecMuacDate.setEnableChild(days >= 182);
-        getViewDataBinding().benfChildCurrentMuac.setEnableChild(days >= 182);
+        getViewDataBinding().benfChildImmune.setVisibility(days >= 106 ? View.VISIBLE : View.GONE);
+        boolean is182Day = days >= 182;
+        getViewDataBinding().benfChildLastRecMuac.setVisibility(is182Day ? View.VISIBLE : View.GONE);
+        getViewDataBinding().benfChildLastRecMuacDate.setVisibility(is182Day ? View.VISIBLE : View.GONE);
+        getViewDataBinding().benfChildCurrentMuac.setVisibility(is182Day ? View.VISIBLE : View.GONE);
 
     }
 
