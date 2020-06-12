@@ -1,10 +1,7 @@
 package in.rajpusht.pc.data.local.db.entity;
 
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.PrimaryKey;
-
-import com.google.gson.JsonElement;
 
 import java.util.Date;
 
@@ -39,6 +36,7 @@ public class BeneficiaryEntity {
     private Integer rajshriInstallment;
     private DataStatus dataStatus;
     private String awcCode;
+    private String isActive;
     private long createdBy;
     private String createdAt;
     private String updatedAt;
@@ -253,4 +251,11 @@ public class BeneficiaryEntity {
         this.createdBy = createdBy;
     }
 
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
 }

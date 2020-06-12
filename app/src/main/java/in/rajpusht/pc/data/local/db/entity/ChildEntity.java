@@ -24,6 +24,7 @@ public class ChildEntity {
     private long motherId;
     private String deliveryPlace;
     private Integer deliveryHome;
+    private String isActive;
     private String createdAt;
     private String updatedAt;
     private DataStatus dataStatus;
@@ -144,5 +145,13 @@ public class ChildEntity {
 
     public void setAge(Integer age) {
         this.age = age;
+    }
+
+    public String getIsActive() {
+        return isActive;
+    }
+
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
     }
 }

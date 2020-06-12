@@ -72,6 +72,7 @@
 
 
                 <TextView
+                    android:visibility="gone"
                     android:layout_marginLeft="10dp"
                     android:id="@+id/benf_instal_ly"
                     style="@style/FormTextMini"
@@ -129,7 +130,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="Beneficiary Name"
-                    app:ff_label="6. Name of Beneficiary"
+                    app:ff_label="Name of Beneficiary"
                     app:ff_maxLength="30"
                     app:ff_required="true" />
 

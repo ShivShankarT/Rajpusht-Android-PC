@@ -37,8 +37,8 @@ import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
+import in.rajpusht.pc.model.BeneficiaryJoin;
 import in.rajpusht.pc.model.DataStatus;
-import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
@@ -56,7 +56,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     SchedulerProvider schedulerProvider;
     private RegistrationViewModel mViewModel;
     private long beneficiaryId;
-    private Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> beneficiaryEntityPregnantEntityChildEntityTuple;
+    private BeneficiaryJoin beneficiaryJoin;
 
 
     public static RegistrationFragment newInstance(long beneficiaryId) {
@@ -129,14 +129,14 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfRegStage.setEnableChild(false);
                     viewDataBinding.benfRegStage.setSection(1);
                     viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
-                }else if (data == 3) {
+                } else if (data == 3) {
                     showAlertDialog("Beneficiary not eligible to registration", new Runnable() {
                         @Override
                         public void run() {
                             requireActivity().onBackPressed();
                         }
                     });
-                }else {
+                } else {
                     viewDataBinding.benfRegStage.setEnableChild(true);
                 }
 
@@ -238,6 +238,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfInstalLy.setVisibility(View.VISIBLE);
 
                 }
+                if (data.isEmpty()) {
+                    viewDataBinding.benfInstalLy.setVisibility(View.GONE);
+                }
 
 
             }
@@ -332,7 +335,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     .observeOn(schedulerProvider.ui())
                     .subscribe(data -> {
                         if (data != null) {
-                            RegistrationFragment.this.beneficiaryEntityPregnantEntityChildEntityTuple = data;
+                            RegistrationFragment.this.beneficiaryJoin = data;
                             beneficiaryEntityUiUpdate(data);
                         }
                     });
@@ -346,16 +349,18 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         ChildEntity childEntity = null;
         PregnantEntity pregnantEntity = null;
         BeneficiaryEntity beneficiaryEntity = null;
-        if (beneficiaryEntityPregnantEntityChildEntityTuple != null) {
-            beneficiaryEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT1();
-            pregnantEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT2();
-            childEntity = beneficiaryEntityPregnantEntityChildEntityTuple.getT3();
+        if (beneficiaryJoin != null) {
+            beneficiaryEntity = beneficiaryJoin.getBeneficiaryEntity();
+            pregnantEntity = beneficiaryJoin.getPregnantEntity();
+            childEntity = beneficiaryJoin.getChildEntity();
             beneficiaryId = beneficiaryEntity.getBeneficiaryId();
         }
 
         RegistrationFragmentBinding vb = getViewDataBinding();
-        if (beneficiaryEntity == null)
+        if (beneficiaryEntity == null) {
             beneficiaryEntity = new BeneficiaryEntity();
+            beneficiaryEntity.setIsActive("Y");
+        }
         beneficiaryEntity.setBeneficiaryId(beneficiaryId);
         beneficiaryEntity.setName(vb.benfName.getText());
         beneficiaryEntity.setHusbandName(vb.benfHusName.getText());
@@ -409,6 +414,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (isPregnant) {
             if (pregnantEntity == null) {
                 pregnantEntity = new PregnantEntity();
+                pregnantEntity.setIsActive("Y");
                 pregnantEntity.setBeneficiaryId(beneficiaryId);
                 pregnantEntity.setPregnancyId(beneficiaryId);
             }
@@ -426,6 +432,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             Date date = vb.benfChildDob.getDate();
             if (childEntity == null) {
                 childEntity = new ChildEntity();
+                childEntity.setIsActive("Y");
                 childEntity.setChildId(Long.parseLong(beneficiaryId + "1"));
             }
             childEntity.setStage("PW");
@@ -569,18 +576,18 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     }
 
 
-    private void beneficiaryEntityUiUpdate(Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> tuple) {
+    private void beneficiaryEntityUiUpdate(BeneficiaryJoin tuple) {
 
         Log.i("ss", "beneficiaryEntityUiUpdate: " + new Gson().toJson(tuple));
 
-        BeneficiaryEntity beneficiaryEntity = tuple.getT1();
-        ChildEntity childEntity = tuple.getT3();
-        PregnantEntity pregnantEntity = tuple.getT2();
+        BeneficiaryEntity beneficiaryEntity = tuple.getBeneficiaryEntity();
+        ChildEntity childEntity = tuple.getChildEntity();
+        PregnantEntity pregnantEntity = tuple.getPregnantEntity();
 
         RegistrationFragmentBinding vh = getViewDataBinding();
         if (beneficiaryEntity.getDataStatus() != DataStatus.NEW) {
             vh.save.setEnabled(false);
-            HUtil.recursiveSetEnabled(vh.formContainer,false);
+            HUtil.recursiveSetEnabled(vh.formContainer, false);
         }
         vh.benfChildCount.setSection(beneficiaryEntity.getChildCount());
         if (pregnantEntity != null && childEntity != null)

@@ -72,6 +72,7 @@ public class JsonParser {
                     String pcts_id = getString(object, "pcts_id");
                     String bahamashah_id = getString(object, "bahamashah_or_ack_id");
                     String is_counseling_provided = getString(object, "is_counseling_prov");
+                    String is_active = getString(object, "is_active");
                     Integer counseling_sms = getInt(object, "counseling_sms");
 
 
@@ -98,6 +99,7 @@ public class JsonParser {
                     bmodel.setCounselingProv(HUtil.convYtoYes(is_counseling_provided));
                     bmodel.setCounselingSms(counseling_sms);
                     bmodel.setCreatedBy(created_by);
+                    bmodel.setIsActive(is_active);
                     bmodel.setDataStatus(DataStatus.OLD);
                     beneficiaryModels.add(bmodel);
 
@@ -112,9 +114,11 @@ public class JsonParser {
                     String lmp_date = getString(object, "lmp_date");
                     int beneficiary_id = getInt(object, "beneficiary_id");
                     long pregnancy_id = getLong(object, "id");
+                    String is_active = getString(object, "is_active");
                     pmodel.setPregnancyId(pregnancy_id);
                     pmodel.setLmpDate(AppDateTimeUtils.convertDateFromServer(lmp_date));
                     pmodel.setBeneficiaryId(beneficiary_id);
+                    pmodel.setIsActive(is_active);
                     pmodel.setDataStatus(DataStatus.OLD);
                     pregnantModels.add(pmodel);
 
@@ -139,6 +143,7 @@ public class JsonParser {
                     Integer rajshri_installment = getInt(object, "rajshri_installment");
                     Integer created_by = getInt(object, "created_by");
                     String is_available = getString(object, "is_available");
+                    String na_reason = getString(object, "na_reason");
 
 
                     pwmodel.setId(id);
@@ -154,6 +159,7 @@ public class JsonParser {
                     pwmodel.setIgmpyInstallment(igmpy_installment);
                     pwmodel.setJsyInstallment(jsy_installment);
                     pwmodel.setRajshriInstallment(rajshri_installment);
+                    pwmodel.setNaReason(na_reason);
                     pwmodel.setCreatedBy(created_by);
                     pwmodel.setDataStatus(DataStatus.OLD);
                     pwmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
@@ -174,6 +180,7 @@ public class JsonParser {
                     Integer delivery_home = getInt(object, "delivery_place_type");
                     String delivery_place = getString(object, "delivery_place");
                     Integer child_order = getInt(object, "child_order");
+                    String is_active = getString(object, "is_active");
 
 
                     cmodel.setChildId(child_id);
@@ -186,6 +193,7 @@ public class JsonParser {
                     cmodel.setDeliveryPlace(delivery_place);
                     cmodel.setChildOrder(child_order);
                     cmodel.setDataStatus(DataStatus.OLD);
+                    cmodel.setIsActive(is_active);
 
                     childModel.add(cmodel);
 
@@ -212,6 +220,7 @@ public class JsonParser {
                     String stage = getString(object, "stage");
                     String sub_stage = getString(object, "sub_stage");
                     String is_available = getString(object, "is_available");
+                    String na_reason = getString(object, "na_reason");
 
 
                     LMMonitorEntity lmmodel = new LMMonitorEntity();
@@ -232,6 +241,7 @@ public class JsonParser {
                     lmmodel.setStage(stage);
                     lmmodel.setSubStage(sub_stage);
                     lmmodel.setDataStatus(DataStatus.OLD);
+                    lmmodel.setNaReason(na_reason);
                     lmmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
                     lmMonitorModel.add(lmmodel);
 
@@ -333,6 +343,7 @@ public class JsonParser {
         beneficiaryobject.addProperty("bahamashahId", beneficiaryEntity.getBahamashahId());
         beneficiaryobject.addProperty("counselingProv", HUtil.convYestoY(beneficiaryEntity.getCounselingProv()));
         beneficiaryobject.addProperty("counselingSms", beneficiaryEntity.getCounselingSms());
+        beneficiaryobject.addProperty("isActive", beneficiaryEntity.getIsActive());
         beneficiaryobject.addProperty("createdBy", beneficiaryEntity.getCreatedBy());
         beneficiaryobject.addProperty("createdAt", beneficiaryEntity.getCreatedAt());
         beneficiaryobject.addProperty("updatedAt", beneficiaryEntity.getUpdatedAt());
@@ -349,6 +360,7 @@ public class JsonParser {
             pregnantobject.addProperty("pregnancyId", pregnantEntity.getPregnancyId());
         pregnantobject.addProperty("beneficiaryId", pregnantEntity.getBeneficiaryId());
         pregnantobject.addProperty("lmpDate", AppDateTimeUtils.convertServerDate(pregnantEntity.getLmpDate()));
+        pregnantobject.addProperty("isActive", pregnantEntity.getIsActive());
         pregnantobject.addProperty("createdAt", pregnantEntity.getCreatedAt());
         pregnantobject.addProperty("updatedAt", pregnantEntity.getUpdatedAt());
         pregnantobject.addProperty("dataStatus", pregnantEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
@@ -368,6 +380,7 @@ public class JsonParser {
         childobject.addProperty("deliveryPlaceType", childEntity.getDeliveryHome());
         childobject.addProperty("deliveryPlace", childEntity.getDeliveryPlace());
         childobject.addProperty("childOrder", childEntity.getChildOrder());
+        childobject.addProperty("isActive", childEntity.getIsActive());
         childobject.addProperty("createdAt", childEntity.getCreatedAt());
         childobject.addProperty("updatedAt", childEntity.getUpdatedAt());
         childobject.addProperty("dataStatus", childEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
@@ -396,6 +409,7 @@ public class JsonParser {
         lmObject.addProperty("stage", lmMonitorEntity.getStage());
         lmObject.addProperty("subStage", lmMonitorEntity.getSubStage());
         lmObject.addProperty("isAvailable", lmMonitorEntity.getAvailable() != null && lmMonitorEntity.getAvailable() ? "Y" : "N");
+        lmObject.addProperty("naReason", lmMonitorEntity.getNaReason());
         lmObject.addProperty("createdAt", lmMonitorEntity.getCreatedAt());
         lmObject.addProperty("updatedAt", lmMonitorEntity.getUpdatedAt());
         lmObject.addProperty("dataStatus", lmMonitorEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
@@ -423,6 +437,7 @@ public class JsonParser {
         pwobject.addProperty("jsyInstallment", pwMonitorEntity.getJsyInstallment());
         pwobject.addProperty("rajshriInstallment", pwMonitorEntity.getRajshriInstallment());
         pwobject.addProperty("isAvailable", pwMonitorEntity.getAvailable() != null && pwMonitorEntity.getAvailable() ? "Y" : "N");
+        pwobject.addProperty("naReason", pwMonitorEntity.getNaReason());
         pwobject.addProperty("createdBy", pwMonitorEntity.getCreatedBy());
         pwobject.addProperty("createdAt", pwMonitorEntity.getCreatedAt());
         pwobject.addProperty("updatedAt", pwMonitorEntity.getUpdatedAt());

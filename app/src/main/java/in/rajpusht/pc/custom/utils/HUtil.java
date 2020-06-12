@@ -86,14 +86,14 @@ public class HUtil {
 
     public static void recursiveSetEnabled(@NonNull final ViewGroup vg, final boolean enabled, Integer... exceptIds) {
         Set<Integer> integers = new HashSet<Integer>(Arrays.asList(exceptIds));
-        vg.setEnabled(enabled);
+        //vg.setEnabled(enabled);
         for (int i = 0, count = vg.getChildCount(); i < count; i++) {
             final View child = vg.getChildAt(i);
             if (!integers.contains(child.getId())) {
                 child.setEnabled(enabled);
-                if (child instanceof ViewGroup) {
-                    recursiveSetEnabled((ViewGroup) child, enabled, exceptIds);
-                }
+            }
+            if (child instanceof ViewGroup) {
+                recursiveSetEnabled((ViewGroup) child, enabled, exceptIds);
             }
         }
     }

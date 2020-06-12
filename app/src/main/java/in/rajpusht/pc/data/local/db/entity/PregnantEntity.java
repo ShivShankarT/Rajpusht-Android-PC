@@ -21,6 +21,7 @@ public class PregnantEntity {
     private long pregnancyId;
     private Date lmpDate;
     private DataStatus dataStatus;
+    private String isActive;
     private String createdAt;
     private String updatedAt;
 
@@ -89,5 +90,11 @@ public class PregnantEntity {
         this.updatedAt = updatedAt;
     }
 
+    public String getIsActive() {
+        return isActive;
+    }
 
+    public void setIsActive(String isActive) {
+        this.isActive = isActive;
+    }
 }

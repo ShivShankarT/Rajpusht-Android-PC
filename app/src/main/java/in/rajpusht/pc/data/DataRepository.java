@@ -24,8 +24,8 @@ import in.rajpusht.pc.data.remote.AppApiHelper;
 import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
+import in.rajpusht.pc.model.BeneficiaryJoin;
 import in.rajpusht.pc.model.ProfileDetail;
-import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.utils.JsonParser;
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
@@ -112,8 +112,8 @@ public class DataRepository {
         return appDbHelper.getBefModels();
     }
 
-    public Single<Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity>> getBeneficiaryData(long beneficiaryId) {
-        return appDbHelper.getBeneficiaryData(beneficiaryId);
+    public Single<BeneficiaryJoin> getBeneficiaryData(long beneficiaryId) {
+        return appDbHelper.getBeneficiaryJoinData(beneficiaryId);
     }
 
     public Single<BeneficiaryEntity> getBeneficiary(long beneficiaryId) {

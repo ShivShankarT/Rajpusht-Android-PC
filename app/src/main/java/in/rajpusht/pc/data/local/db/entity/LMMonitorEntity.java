@@ -28,6 +28,7 @@ public class LMMonitorEntity {
     private Integer igmpyInstallment;
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
+    private String naReason;
     private Boolean available;
     private DataStatus dataStatus;
     private String createdAt;
@@ -201,5 +202,13 @@ public class LMMonitorEntity {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public String getNaReason() {
+        return naReason;
+    }
+
+    public void setNaReason(String naReason) {
+        this.naReason = naReason;
     }
 }

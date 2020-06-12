@@ -28,6 +28,7 @@ public class PWMonitorEntity {
     private Integer rajshriInstallment;
     private DataStatus dataStatus;
     private Boolean available;
+    private String naReason;
     private long createdBy;
     private String createdAt;
     private String updatedAt;
@@ -185,5 +186,13 @@ public class PWMonitorEntity {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public String getNaReason() {
+        return naReason;
+    }
+
+    public void setNaReason(String naReason) {
+        this.naReason = naReason;
     }
 }

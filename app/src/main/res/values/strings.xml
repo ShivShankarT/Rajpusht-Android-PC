@@ -173,6 +173,10 @@
         <item>Yellow (Antodyaya/ Poorest</item>
     </string-array>
 
+    <string-array name="YES">
+        <item>YES</item>
+    </string-array>
+
     <string-array name="YES_NO">
         <item>YES</item>
         <item>NO</item>
@@ -201,6 +205,32 @@
         <item>Both</item>
     </string-array>
 
+    <string-array name="pw_na_reasons">
+
+        <item>The respondent/ pregnant woman not done antenatal checkup (ANC)</item>
+        <item>The respondent/ pregnant woman not available for interview</item>
+    </string-array>
+
+    <string-array name="pw_na_other_reason">
+        <item>Miscarriage/ abortion</item>
+        <item>Death</item>
+        <item>Migrated elsewhere</item>
+    </string-array>
+
+
+
+
+
+    <string-array name="lm_na_other_reason">
+        <item>@string/lm_na1</item>
+        <item>@string/lm_na2</item>
+        <item>@string/lm_na3</item>
+        <item>@string/lm_na4</item>
+        <item>@string/lm_na5</item>
+        <item>@string/lm_na6</item>
+    </string-array>
+
+
     <string name="nav_logout">Logout</string>
     <string name="change_awc">Change AWC</string>
     <string name="sync">Sync</string>
@@ -210,6 +240,18 @@
     <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
     <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
     <string name="add_self_husb_mobile_val_mes">Please Add Self and Husband’s Mobile Number</string>
+    <string name="Select">Select</string>
+    <string name="na_reason">N/A Reason</string>
+
+
+    <string name="lm_na1"> Mother died </string>
+    <string name="lm_na2">Mother migrated elsewhere</string>
+    <string name="lm_na3">Child died</string>
+    <string name="lm_na4">Child migrated elsewhere</string>
+    <string name="lm_na5">Both mother and infant died</string>
+    <string name="lm_na6">Both migrated elsewhere</string>
+
+
 
 
 </resources>

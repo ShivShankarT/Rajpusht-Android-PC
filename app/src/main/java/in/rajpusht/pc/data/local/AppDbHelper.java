@@ -19,6 +19,7 @@ import in.rajpusht.pc.model.AwcStageCount;
 import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.BefRel;
+import in.rajpusht.pc.model.BeneficiaryJoin;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Quintet;
 import in.rajpusht.pc.model.Tuple;
@@ -212,6 +213,7 @@ public class AppDbHelper {
         return mAppDatabase.AppDao().befModels(appPreferencesHelper.getSelectedAwcCode());
     }
 
+    @Deprecated
     private Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> getBeneficiaryDatah(long beneficiaryId) {
         BeneficiaryEntity q = mAppDatabase.beneficiaryDao().getBeneficiariesById(beneficiaryId);
         List<PregnantEntity> s = mAppDatabase.pregnantDao().getPregnantById(beneficiaryId);
@@ -222,6 +224,11 @@ public class AppDbHelper {
         return new Tuple<>(q, pregnantEntity, childEntity);
     }
 
+    public Single<BeneficiaryJoin> getBeneficiaryJoinData(long beneficiaryId) {
+        return mAppDatabase.beneficiaryDao().getBeneficiaryDataById(beneficiaryId);
+    }
+
+    @Deprecated
     public Single<Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity>> getBeneficiaryData(long beneficiaryId) {
 
         return Single.fromCallable(() -> getBeneficiaryDatah(beneficiaryId));

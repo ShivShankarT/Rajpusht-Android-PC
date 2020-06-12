@@ -17,6 +17,7 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.databinding.SyncFragmentBinding;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.home.HomeActivity;
 
 public class SyncFragment extends BaseFragment<SyncFragmentBinding, SyncViewModel> {
 
@@ -62,8 +63,25 @@ public class SyncFragment extends BaseFragment<SyncFragmentBinding, SyncViewMode
         list.setAdapter(awcSyncAdapter);
         getViewModel().getData();
         getViewModel().syncLiveData.observe(getViewLifecycleOwner(), awcSyncCounts -> {
+            if (awcSyncCounts.isEmpty()) {
+                list.setVisibility(View.GONE);
+                getViewDataBinding().noData.setVisibility(View.VISIBLE);
+                getViewDataBinding().uploadBtn.setVisibility(View.GONE);
+            } else {
+                list.setVisibility(View.VISIBLE);
+                getViewDataBinding().uploadBtn.setVisibility(View.VISIBLE);
+                getViewDataBinding().noData.setVisibility(View.GONE);
+
+            }
             awcSyncAdapter.setAwcSyncCounts(awcSyncCounts);
             awcSyncAdapter.notifyDataSetChanged();
+        });
+        getViewDataBinding().uploadBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                HomeActivity homeActivity = (HomeActivity) requireActivity();
+                homeActivity.syncData();
+            }
         });
     }
 }

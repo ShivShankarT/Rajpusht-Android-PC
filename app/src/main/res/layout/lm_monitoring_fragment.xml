@@ -30,154 +30,258 @@
                 android:orientation="vertical"
                 tools:context=".ui.lm_monitoring.LMMonitoringFragment">
 
-                <TextView
-                    android:id="@+id/edit_btn"
+
+                <androidx.cardview.widget.CardView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="right"
-                    android:padding="10dp"
-                    android:text="Edit" />
+                    app:cardElevation="5dp">
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
-                    android:id="@+id/benf_child_immune"
+                    <RelativeLayout
+                        android:id="@+id/benf_dt_ly"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="?android:attr/selectableItemBackground"
+                        android:gravity="center_vertical"
+                        android:paddingTop="5dp"
+                        android:paddingBottom="8dp">
+
+                        <TextView
+                            android:id="@+id/benf_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentStart="true"
+                            android:layout_alignParentTop="true"
+                            android:layout_marginStart="14dp"
+                            android:fontFamily="@font/roboto_medium"
+                            tools:text="Sulochana Devi"
+                            android:textColor="#555555"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/benf_hus_name"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/benf_name"
+                            android:layout_alignStart="@+id/benf_name"
+                            tools:text="(w/o) Mr. XYZ"
+                            android:textSize="12sp" />
+
+
+                        <TextView
+                            android:id="@+id/pctsId"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_below="@+id/benf_hus_name"
+                            android:layout_alignStart="@+id/benf_hus_name"
+                            tools:text="PCTS ID: 12345678"
+                            android:textSize="12sp" />
+
+
+                        <ImageView
+                            android:id="@+id/weight_iv"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_centerVertical="true"
+                            android:layout_marginEnd="13dp"
+                            android:layout_toLeftOf="@+id/na_btn"
+                            android:background="@color/white"
+                            android:src="@drawable/ic_weighing_machine"
+                            android:tint="@color/colorAccent" />
+
+                        <TextView
+                            android:id="@+id/na_btn"
+                            style="@style/FormTextMiniBlack"
+                            android:layout_width="40dp"
+                            android:layout_height="40dp"
+                            android:layout_alignParentRight="true"
+                            android:layout_centerVertical="true"
+                            android:layout_margin="3dp"
+                            android:background="@drawable/rounder_pink_grad"
+                            android:gravity="center"
+                            android:padding="5dp"
+                            android:text="N/A"
+                            android:textColor="@color/white"
+                            android:textSize="15sp" />
+
+                    </RelativeLayout>
+                </androidx.cardview.widget.CardView>
+
+                <LinearLayout
+                    android:id="@+id/na_ly"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="@string/first_cycle_immunization"
-                    app:ff_required="true"
-                    app:ff_selections="@array/YES_NO" />
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
-                    android:id="@+id/benf_child_last_rec_muac"
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_na_other_reason"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="@string/na_reason"
+                        app:ff_required="true"
+                        app:ff_selections="@array/lm_na_other_reason" />
+
+
+                    <Button
+                        android:id="@+id/save_na_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/save" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/form_ly"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_hint="Weight"
-                    app:ff_input_type="numberDecimal"
-                    app:ff_label="@string/last_record_muac_child"
-                    app:ff_maxLength="3"
-                    app:ff_measurement_type="length"
-                    app:ff_required="true" />
+                    android:layout_height="match_parent"
+                    android:animateLayoutChanges="true"
+                    android:orientation="vertical">
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:id="@+id/benf_child_immune"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="@string/first_cycle_immunization"
+                        app:ff_required="true"
+                        app:ff_selections="@array/YES_NO" />
 
 
-                <in.rajpusht.pc.custom.ui.FormDatePickerElement
-                    android:id="@+id/benf_child_last_rec_muac_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_hint="Date"
-                    app:ff_label="@string/date_muac_child"
-                    app:ff_required="true" />
+                    <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
+                        android:id="@+id/benf_child_last_rec_muac"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Weight"
+                        app:ff_input_type="numberDecimal"
+                        app:ff_label="@string/last_record_muac_child"
+                        app:ff_maxLength="3"
+                        app:ff_measurement_type="length"
+                        app:ff_required="true" />
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
-                    android:id="@+id/benf_child_current_muac"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_hint="MUAC"
-                    app:ff_input_type="numberDecimal"
-                    app:ff_label="@string/current_muac_child"
-                    app:ff_measurement_type="length"
-                    app:ff_required="true" />
-
-                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
-                    android:id="@+id/benf_birth_child_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_hint="Weight"
-                    app:ff_input_type="numberDecimal"
-                    app:ff_label="@string/birth_weight_child"
-                    app:ff_maxLength="5"
-                    app:ff_required="true" />
+                    <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                        android:id="@+id/benf_child_last_rec_muac_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Date"
+                        app:ff_label="@string/date_muac_child"
+                        app:ff_required="true" />
 
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
-                    android:id="@+id/benf_current_weight"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_hint="Weight"
-                    app:ff_input_type="numberDecimal"
-                    app:ff_label="@string/current_weight_child"
-                    app:ff_maxLength="5"
-                    app:ff_required="true" />
+                    <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
+                        android:id="@+id/benf_child_current_muac"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="MUAC"
+                        app:ff_input_type="numberDecimal"
+                        app:ff_label="@string/current_muac_child"
+                        app:ff_measurement_type="length"
+                        app:ff_required="true" />
 
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
-                    android:id="@+id/benf_current_height"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_hint="Height in inch"
-                    app:ff_input_type="numberDecimal"
-                    app:ff_label="@string/child_current_height"
-                    app:ff_maxLength="5"
-                    app:ff_measurement_type="length"
-                    app:ff_required="true" />
-
-                <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
-                    android:id="@+id/benf_registered_programme"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_chbox_none_pos="4"
-                    app:ff_label="@string/are_you_register_in"
-                    app:ff_required="true"
-                    app:ff_selections="@array/benf_registered_in" />
+                    <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
+                        android:id="@+id/benf_birth_child_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Weight"
+                        app:ff_input_type="numberDecimal"
+                        app:ff_label="@string/birth_weight_child"
+                        app:ff_maxLength="5"
+                        app:ff_required="true" />
 
 
-                <TextView
-                    android:layout_marginLeft="10dp"
-                    android:id="@+id/benfInstalLy"
-                    style="@style/FormTextMini"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="@string/installment_received" />
+                    <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
+                        android:id="@+id/benf_current_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Weight"
+                        app:ff_input_type="numberDecimal"
+                        app:ff_label="@string/current_weight_child"
+                        app:ff_maxLength="5"
+                        app:ff_required="true" />
 
-                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
-                    android:id="@+id/benf_pmmvvy_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    app:ff_label="@string/pmmvvy"
-                    app:ff_label_text_appearance="@style/FormTextSmall"
-                    app:ff_required="true"
-                    app:ff_selections="@array/count_0_3_dot"
-                    app:ff_show_divider="false" />
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:id="@+id/benf_current_height"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Height in inch"
+                        app:ff_input_type="numberDecimal"
+                        app:ff_label="@string/child_current_height"
+                        app:ff_maxLength="5"
+                        app:ff_measurement_type="length"
+                        app:ff_required="true" />
+
+                    <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
+                        android:id="@+id/benf_registered_programme"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_chbox_none_pos="4"
+                        app:ff_label="@string/are_you_register_in"
+                        app:ff_required="true"
+                        app:ff_selections="@array/benf_registered_in" />
 
 
-                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
-                    android:id="@+id/benf_igmpy_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    app:ff_label="@string/igmpy"
-                    app:ff_label_text_appearance="@style/FormTextSmall"
-                    app:ff_required="true"
-                    app:ff_selections="@array/count_0_4_dot"
-                    app:ff_show_divider="false" />
+                    <TextView
+                        android:id="@+id/benfInstalLy"
+                        style="@style/FormTextMini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="@string/installment_received" />
 
-                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
-                    android:id="@+id/benf_jsy_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    app:ff_label="@string/jsy"
-                    app:ff_label_text_appearance="@style/FormTextSmall"
-                    app:ff_required="true"
-                    app:ff_selections="@array/count_0_1_dot"
-                    app:ff_show_divider="false" />
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_pmmvvy_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        app:ff_label="@string/pmmvvy"
+                        app:ff_label_text_appearance="@style/FormTextSmall"
+                        app:ff_required="true"
+                        app:ff_selections="@array/count_0_3_dot"
+                        app:ff_show_divider="false" />
 
-                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
-                    android:id="@+id/benf_rajshri_count"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="7dp"
-                    app:ff_label="@string/rajshri"
-                    app:ff_label_text_appearance="@style/FormTextSmall"
-                    app:ff_required="true"
-                    app:ff_selections="@array/count_0_2_more_dot" />
 
-                <Button
-                    android:id="@+id/save_btn"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_horizontal"
-                    android:text="@string/save" />
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_igmpy_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        app:ff_label="@string/igmpy"
+                        app:ff_label_text_appearance="@style/FormTextSmall"
+                        app:ff_required="true"
+                        app:ff_selections="@array/count_0_4_dot"
+                        app:ff_show_divider="false" />
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_jsy_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        app:ff_label="@string/jsy"
+                        app:ff_label_text_appearance="@style/FormTextSmall"
+                        app:ff_required="true"
+                        app:ff_selections="@array/count_0_1_dot"
+                        app:ff_show_divider="false" />
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_rajshri_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="7dp"
+                        app:ff_label="@string/rajshri"
+                        app:ff_label_text_appearance="@style/FormTextSmall"
+                        app:ff_required="true"
+                        app:ff_selections="@array/count_0_2_more_dot" />
+
+                    <Button
+                        android:id="@+id/save_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/save" />
+                </LinearLayout>
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

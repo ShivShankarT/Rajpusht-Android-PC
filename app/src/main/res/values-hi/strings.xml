@@ -110,5 +110,6 @@
     <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
     <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
     <string name="add_self_husb_mobile_val_mes">Please Add Self and Husband’s Mobile Number</string>
+    <string name="Select">Select</string>
 
 </resources>

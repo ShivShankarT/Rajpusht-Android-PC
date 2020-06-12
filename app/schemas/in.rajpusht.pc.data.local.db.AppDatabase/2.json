@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "bcfffaa1b9bf5e8c7c6622168f202b4c",
+    "identityHash": "61bd8663bc177b049a9bded54d641a2f",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -98,7 +98,7 @@
       },
       {
         "tableName": "beneficiary",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `name` TEXT, `husbandName` TEXT, `mobileNo` TEXT, `husbandMobNo` TEXT, `stage` TEXT, `subStage` TEXT, `dob` TEXT, `childCount` INTEGER, `age` INTEGER, `caste` TEXT, `economic` TEXT, `pctsId` TEXT, `bahamashahId` TEXT, `counselingProv` TEXT, `counselingSms` INTEGER, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `awcCode` TEXT, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `name` TEXT, `husbandName` TEXT, `mobileNo` TEXT, `husbandMobNo` TEXT, `stage` TEXT, `subStage` TEXT, `dob` TEXT, `childCount` INTEGER, `age` INTEGER, `caste` TEXT, `economic` TEXT, `pctsId` TEXT, `bahamashahId` TEXT, `counselingProv` TEXT, `counselingSms` INTEGER, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `awcCode` TEXT, `isActive` TEXT, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -239,6 +239,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "isActive",
+            "columnName": "isActive",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "createdBy",
             "columnName": "createdBy",
             "affinity": "INTEGER",
@@ -268,7 +274,7 @@
       },
       {
         "tableName": "pregnant",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `pregnancyId` INTEGER NOT NULL, `lmpDate` TEXT, `dataStatus` INTEGER, `createdAt` TEXT, `updatedAt` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `pregnancyId` INTEGER NOT NULL, `lmpDate` TEXT, `dataStatus` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -301,6 +307,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "isActive",
+            "columnName": "isActive",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "createdAt",
             "columnName": "createdAt",
             "affinity": "TEXT",
@@ -324,7 +336,7 @@
       },
       {
         "tableName": "child",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -381,6 +393,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "isActive",
+            "columnName": "isActive",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "createdAt",
             "columnName": "createdAt",
             "affinity": "TEXT",
@@ -416,7 +434,7 @@
       },
       {
         "tableName": "pw_monitor",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pregnancyId` INTEGER NOT NULL, `beneficiaryId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `ancCount` INTEGER, `lastAnc` TEXT, `lastWeightInMamta` REAL, `lastWeightCheckDate` TEXT, `currentWeight` REAL, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `available` INTEGER, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `pregnancyId` INTEGER NOT NULL, `beneficiaryId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `ancCount` INTEGER, `lastAnc` TEXT, `lastWeightInMamta` REAL, `lastWeightCheckDate` TEXT, `currentWeight` REAL, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `available` INTEGER, `naReason` TEXT, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -515,6 +533,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "naReason",
+            "columnName": "naReason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "createdBy",
             "columnName": "createdBy",
             "affinity": "INTEGER",
@@ -544,7 +568,7 @@
       },
       {
         "tableName": "lm_monitor",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`createdBy` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `motherId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `isFirstImmunizationComplete` TEXT, `lastMuac` REAL, `lastMuacCheckDate` TEXT, `currentMuac` REAL, `birthWeight` REAL, `childWeight` REAL, `childHeight` REAL, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `available` INTEGER, `dataStatus` INTEGER, `createdAt` TEXT, `updatedAt` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`createdBy` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `motherId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `isFirstImmunizationComplete` TEXT, `lastMuac` REAL, `lastMuacCheckDate` TEXT, `currentMuac` REAL, `birthWeight` REAL, `childWeight` REAL, `childHeight` REAL, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `naReason` TEXT, `available` INTEGER, `dataStatus` INTEGER, `createdAt` TEXT, `updatedAt` TEXT)",
         "fields": [
           {
             "fieldPath": "createdBy",
@@ -649,6 +673,12 @@
             "notNull": false
           },
           {
+            "fieldPath": "naReason",
+            "columnName": "naReason",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
             "fieldPath": "available",
             "columnName": "available",
             "affinity": "INTEGER",
@@ -686,7 +716,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'bcfffaa1b9bf5e8c7c6622168f202b4c')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '61bd8663bc177b049a9bded54d641a2f')"
     ]
   }
 }

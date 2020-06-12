@@ -31,16 +31,16 @@ import in.rajpusht.pc.ui.login.LoginActivity;
  */
 
 public class AppPreferencesHelper {
-    public static final String PREF_NAME = "app-ref.db";
+    public static final String PREF_NAME = "app-pref";
 
     public static final long NULL_INDEX = -1L;
+    public static final String PREF_FIRST_NAME = "first_name";
+    public static final String PREF_LAST_NAME = "last_name";
     private static final String PREF_LOGIN = "login";
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
     private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
-    public static final String PREF_FIRST_NAME = "first_name";
-    public static final String PREF_LAST_NAME = "last_name";
     @SuppressLint("StaticFieldLeak")//application context
     private static AppPreferencesHelper appPreferencesHelper;
     private final SharedPreferences mPrefs;
