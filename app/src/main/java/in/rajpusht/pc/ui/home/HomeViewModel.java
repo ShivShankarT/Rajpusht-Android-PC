@@ -11,7 +11,9 @@ import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.ui.base.BaseViewModel;
 import in.rajpusht.pc.utils.Event;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
-import io.reactivex.functions.BiConsumer;
+import io.reactivex.Single;
+import io.reactivex.SingleSource;
+import io.reactivex.functions.Function;
 
 public class HomeViewModel extends BaseViewModel {
 
@@ -24,25 +26,26 @@ public class HomeViewModel extends BaseViewModel {
     public void syncData() {
         progressLive.postValue(Event.data(new Pair<>(true, "")));
         getCompositeDisposable().add(getDataManager().uploadDataToServer()
+                .flatMap((Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>) jsonObjectApiResponse -> {
+                    if (jsonObjectApiResponse.isStatus())
+                        return getDataManager().profileAndBulkDownload().toSingleDefault(new ApiResponse<>());
+                    else
+                        return Single.just(jsonObjectApiResponse);
+                })
                 .subscribeOn(getSchedulerProvider().io())
-                .observeOn(getSchedulerProvider().ui()).subscribe(new BiConsumer<ApiResponse<JsonObject>, Throwable>() {
-                    @Override
-                    public void accept(ApiResponse<JsonObject> jsonObjectApiResponse, Throwable throwable) throws Exception {
-                        if (throwable != null)
-                            throwable.printStackTrace();
-
-                        if (jsonObjectApiResponse != null) {
-                            if (jsonObjectApiResponse.isStatus()) {
-                                getDataManager().logout();
-                                progressLive.postValue(Event.data(new Pair<>(false, "")));
-                            } else {
-                                progressLive.postValue(Event.data(new Pair<>(false, jsonObjectApiResponse.getMessage())));
-                            }
-                        } else {
+                .observeOn(getSchedulerProvider().ui()).subscribe((jsonObjectApiResponse, throwable) -> {
+                    if (throwable != null)
+                        throwable.printStackTrace();
+                    if (jsonObjectApiResponse != null) {
+                        if (jsonObjectApiResponse.isStatus()) {
                             progressLive.postValue(Event.data(new Pair<>(false, "")));
+                        } else {
+                            progressLive.postValue(Event.data(new Pair<>(false, jsonObjectApiResponse.getMessage())));
                         }
-
+                    } else {
+                        progressLive.postValue(Event.data(new Pair<>(false, "")));
                     }
+
                 }));
     }
 

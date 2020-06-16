@@ -53,9 +53,9 @@
                             android:layout_alignParentTop="true"
                             android:layout_marginStart="14dp"
                             android:fontFamily="@font/roboto_medium"
-                            tools:text="Sulochana Devi"
                             android:textColor="#555555"
-                            android:textSize="14sp" />
+                            android:textSize="14sp"
+                            tools:text="Sulochana Devi" />
 
                         <TextView
                             android:id="@+id/benf_hus_name"
@@ -63,8 +63,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/benf_name"
                             android:layout_alignStart="@+id/benf_name"
-                            tools:text="(w/o) Mr. XYZ"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="(w/o) Mr. XYZ" />
 
 
                         <TextView
@@ -73,8 +73,8 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/benf_hus_name"
                             android:layout_alignStart="@+id/benf_hus_name"
-                            tools:text="PCTS ID: 12345678"
-                            android:textSize="12sp" />
+                            android:textSize="12sp"
+                            tools:text="PCTS ID: 12345678" />
 
 
                         <ImageView
@@ -126,6 +126,39 @@
 
                     <Button
                         android:id="@+id/save_na_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/save" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/add_pregnant_ly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Add Pregnancy" />
+
+                    <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                        android:id="@+id/benf_lmp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="LMP Date"
+                        app:ff_label="@string/benef_lmp_date"
+                        app:ff_required="true" />
+
+
+                    <Button
+                        android:id="@+id/save_prg_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"

@@ -3,6 +3,7 @@ package in.rajpusht.pc.ui.pw_monitoring;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Pair;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -28,6 +29,7 @@ import in.rajpusht.pc.custom.validator.FormValidatorUtils;
 import in.rajpusht.pc.custom.validator.ValidationStatus;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
+import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
@@ -39,6 +41,7 @@ import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 
@@ -104,6 +107,26 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         PwMonitoringFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
         toolbar.setTitle("PW Monitoring");
+
+        //todo only when ena
+        if (true || subStage.equalsIgnoreCase("PW3") || subStage.equalsIgnoreCase("PW4")) {
+            toolbar.getMenu().add(1, 1, 1, "add child").setIcon(R.drawable.ic_baby).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        }
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == 1) {
+                    if (!getViewDataBinding().addChildLy.isEnabled())
+                        HUtil.recursiveSetEnabled(getViewDataBinding().addChildLy, true);
+
+                    getViewDataBinding().addChildLy.setVisibility(View.VISIBLE);
+                    getViewDataBinding().naLy.setVisibility(View.GONE);
+                    getViewDataBinding().formLy.setVisibility(View.GONE);
+                }
+                return false;
+            }
+        });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -195,20 +218,9 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 }
             }
         });
-        viewDataBinding.saveNaBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save(true);
-            }
-        });
-
-        viewDataBinding.saveBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                save(false);
-
-            }
-        });
+        viewDataBinding.saveNaBtn.setOnClickListener(v -> save(true));
+        viewDataBinding.saveBtn.setOnClickListener(v -> save(false));
+        viewDataBinding.saveChildBtn.setOnClickListener(v -> addChild());
 
 
         if (subStage.contains("PW")) {
@@ -456,7 +468,18 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 int res = vb.benfNaOtherReason.getSelectedPos();
                 String naReason = FormDataConstant.pwNaReason.get(res);
                 pwMonitorEntity.setNaReason(naReason);
+
+                if (res == 0) {//MA
+                    pregnantEntity.setIsActive("N");//
+                } else if (res == 1) {//WD
+                    beneficiaryEntity.setIsActive("N");
+                    pregnantEntity.setIsActive("N");
+                } else if (res == 2) {//WM
+                    beneficiaryEntity.setIsActive("N");
+                }
+
             } else {
+                //AC
                 pwMonitorEntity.setNaReason(ANC_NOT_COMPLETED);
 
             }
@@ -466,40 +489,106 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             pwNaReason.add("WM");// women migrated
             pwNaReason.add("AC");//anc not completed*/
 
-            if (pos == 0) {//MA
-                pregnantEntity.setIsActive("N");
-            } else if (pos == 1) {
-                beneficiaryEntity.setIsActive("N");
-                pregnantEntity.setIsActive("N");
-            } else if (pos == 2) {
-                beneficiaryEntity.setIsActive("N");
-            }
 
         }
 
 
-        dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity)
-                .subscribeOn(schedulerProvider.io())
-                .observeOn(schedulerProvider.ui())
-                .subscribe((d) -> {
-
-                });
-
-        dataRepository.insertOrUpdatePwMonitor(pwMonitorEntity)
+        Disposable disposable = Completable.concatArray(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements(),
+                dataRepository.insertOrUpdatePregnant(pregnantEntity).ignoreElements(),
+                dataRepository.insertOrUpdatePwMonitor(pwMonitorEntity))
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
                     showAlertDialog("Beneficiary Report Saved Successfully", () -> {
-                        FragmentUtils.replaceFragment(requireActivity(),
-                                CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                                true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
 
-                        requireActivity().getSupportFragmentManager()
-                                .beginTransaction()
-                                .remove(PWMonitoringFragment.this)
-                                .commit();
+
+                        if (!isNa) {
+                            FragmentUtils.replaceFragment(requireActivity(),
+                                    CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                                    true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                            requireActivity().getSupportFragmentManager()
+                                    .beginTransaction()
+                                    .remove(PWMonitoringFragment.this)
+                                    .commit();
+                        } else {
+                            requireActivity().onBackPressed();
+                        }
                     });
                 });
+
+    }
+
+    private void addChild() {
+
+        BeneficiaryEntity beneficiaryEntity = beneficiaryJoin.getBeneficiaryEntity();
+        beneficiaryEntity.setSubStage("PW");
+        beneficiaryEntity.setSubStage(subStage);
+
+        PregnantEntity pregnantEntity = beneficiaryJoin.getPregnantEntity();
+
+        List<Pair<Boolean, View>> validateElement = new ArrayList<>();
+        PwMonitoringFragmentBinding vb = getViewDataBinding();
+        validateElement.add(vb.benfChildCount.validateWthView());
+        validateElement.add(vb.benfChildDob.validateWthView());
+        validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
+        validateElement.add(vb.benfChildDeliveryPlace.validateWthView());
+
+
+        for (Pair<Boolean, View> viewPair : validateElement) {
+
+            if (!viewPair.first) {
+                View targetView = viewPair.second;
+                targetView.getParent().requestChildFocus(targetView, targetView);
+                return;
+            }
+        }
+
+        List<Completable> completables = new ArrayList<>();
+
+        for (int i = 0; i <= vb.benfChildCount.getSelectedPos(); i++) {//0,1,2
+            ChildEntity childEntity = new ChildEntity();
+            int childOrder = i + 1;
+            childEntity.setChildOrder(childOrder);
+            childEntity.setIsActive("Y");
+            Date date = vb.benfChildDob.getDate();
+            childEntity.setChildId(Long.parseLong(System.currentTimeMillis() + "1" + childOrder));
+            int days = HUtil.daysBetween(date, new Date());
+            String lmmySubStage = HUtil.getLMMYSubStage(days);
+            //childEntity.setSubStage(lmmySubStage);//todo
+
+
+            if (lmmySubStage.contains("LM")) {
+                childEntity.setStage("LM");
+                childEntity.setSubStage("LM");
+            } else {
+                childEntity.setStage("MY");
+                childEntity.setSubStage("MY");
+            }
+
+            childEntity.setDob(date);
+            childEntity.setMotherId(beneficiaryId);
+            childEntity.setDeliveryHome(vb.benfChildDeliveryPlaceType.getSelectedPos());
+            childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getText());
+
+            beneficiaryEntity.setStage(childEntity.getStage());
+            beneficiaryEntity.setSubStage(childEntity.getStage());//todo
+
+            completables.add(dataRepository.insertOrUpdateChild(childEntity).ignoreElements());
+
+        }
+
+        pregnantEntity.setIsActive("N");
+        completables.add(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements());
+        completables.add(dataRepository.insertOrUpdatePregnant(pregnantEntity).ignoreElements());
+
+        Disposable disposable = Completable.concat(completables).subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(() -> {
+                    showAlertDialog("Beneficiary Child Registration Successfully", () -> {
+                        requireActivity().onBackPressed();
+                    });
+                });
+
 
     }
 

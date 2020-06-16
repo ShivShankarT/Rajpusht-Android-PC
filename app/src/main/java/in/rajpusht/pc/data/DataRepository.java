@@ -82,6 +82,9 @@ public class DataRepository {
     public Observable<Boolean> insertOrUpdateBeneficiary(final BeneficiaryEntity beneficiaryEntity) {
         return appDbHelper.insertOrUpdateBeneficiary(beneficiaryEntity);
     }
+    public Observable<Boolean> insertOrUpdatePregnant(PregnantEntity lmMonitorEntity) {
+        return appDbHelper.insertOrUpdatePregnant(lmMonitorEntity);
+    }
 
     public Observable<Boolean> insertOrUpdateChild(final ChildEntity childEntity) {
         return appDbHelper.insertOrUpdateChild(childEntity);
@@ -111,6 +114,10 @@ public class DataRepository {
 
         return appDbHelper.getBefModels();
     }
+    public LiveData<List<BefModel>> otherWomenBefModels() {
+
+        return appDbHelper.otherWomenBefModels();
+    }
 
     public Single<BeneficiaryJoin> getBeneficiaryData(long beneficiaryId) {
         return appDbHelper.getBeneficiaryJoinData(beneficiaryId);
@@ -118,6 +125,10 @@ public class DataRepository {
 
     public Single<BeneficiaryEntity> getBeneficiary(long beneficiaryId) {
         return appDbHelper.getBeneficiary(beneficiaryId);
+    }
+    public Maybe<ChildEntity> getChild(long childId) {
+
+        return  appDbHelper.getChild(childId);
     }
 
 
@@ -169,7 +180,7 @@ public class DataRepository {
                 .map(JsonParser::convertBenfUploadJson).flatMapSingle(jsonElements -> appApiHelper.bulkUpload(jsonElements));
     }
 
-    public Maybe<List<AwcSyncCount>> awcViceSyncData() {
+    public Observable<List<AwcSyncCount>> awcViceSyncData() {
         return appDbHelper.awcViceSyncData();
     }
 

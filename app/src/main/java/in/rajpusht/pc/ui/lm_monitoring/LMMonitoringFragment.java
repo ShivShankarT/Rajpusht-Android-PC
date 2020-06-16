@@ -4,6 +4,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
+import android.view.MenuItem;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -47,6 +48,7 @@ import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
 
 public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBinding, LMMonitoringViewModel> {
 
+    private static final int ADD_PREGNANCY_MENU = 12;
     @Inject
     ViewModelProviderFactory factory;
     @Inject
@@ -106,6 +108,20 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         LmMonitoringFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
         toolbar.setTitle("LM Monitoring");
+        toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == ADD_PREGNANCY_MENU) {
+                    if (!getViewDataBinding().addPregnantLy.isEnabled())
+                        HUtil.recursiveSetEnabled(getViewDataBinding().addPregnantLy, true);
+
+                    getViewDataBinding().addPregnantLy.setVisibility(View.VISIBLE);
+                    getViewDataBinding().naLy.setVisibility(View.GONE);
+                    getViewDataBinding().formLy.setVisibility(View.GONE);
+                }
+                return false;
+            }
+        });
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -190,8 +206,9 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         });
 
 
-        viewDataBinding.saveNaBtn.setOnClickListener(v -> save(false));
-        viewDataBinding.saveBtn.setOnClickListener(v -> save(true));
+        viewDataBinding.saveNaBtn.setOnClickListener(v -> save(true));
+        viewDataBinding.saveBtn.setOnClickListener(v -> save(false));
+        viewDataBinding.savePrgBtn.setOnClickListener(v -> addPregnancy());
 
 
         if (subStage.contains("PW")) {
@@ -266,9 +283,14 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
         getViewDataBinding().pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
 
+        //todo only when lm3
+        if ((beneficiaryJoin.getPregnantEntity()==null )||(beneficiaryJoin.getPregnantEntity() != null && !"Y".equalsIgnoreCase(beneficiaryJoin.getPregnantEntity().getIsActive()))) {
+            getViewDataBinding().toolbarLy.toolbar.getMenu().add(1, ADD_PREGNANCY_MENU, 1, "info").setIcon(R.drawable.ic_child_pregnant).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
+        }
+
 
     }
-
 
     private void setFormUiData(LMMonitorEntity lmMonitorEntity) {
 
@@ -327,7 +349,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         List<Pair<Boolean, View>> validateElement = new ArrayList<>();
 
-        if (isNa) {
+        if (!isNa) {
             if (vb.benfChildImmune.isVisibleAndEnable())
                 validateElement.add(vb.benfChildImmune.validateWthView());
             if (vb.benfChildLastRecMuac.isVisibleAndEnable())
@@ -384,7 +406,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         childEntity.setStage(lmMonitorEntity.getStage());
         childEntity.setSubStage(lmMonitorEntity.getSubStage());
 
-        if (isNa) {
+        if (!isNa) {
             if (vb.benfChildImmune.isVisibleAndEnable())
                 lmMonitorEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
             lmMonitorEntity.setLastMuac(vb.benfChildLastRecMuac.getMeasValue());
@@ -400,25 +422,22 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             String naReason = FormDataConstant.lmNaReason.get(res);
             lmMonitorEntity.setNaReason(naReason);
 
-            if (res == 0) {
+            if (res == 0) {//mother death
                 beneficiaryEntity.setIsActive("N");
                 childEntity.setIsActive("N");
-            } else if (res == 1) {
+            } else if (res == 1) {//mother migrated
                 beneficiaryEntity.setIsActive("N");
                 childEntity.setIsActive("N");
-            }
-            else if (res == 2) {
+            } else if (res == 2) {//child death
                 childEntity.setIsActive("N");
-            }
-            else if (res == 3) {
+            } else if (res == 3) {//child migrated
                 childEntity.setIsActive("N");
-            } else if (res == 4) {
+            } else if (res == 4) {//both death
                 beneficiaryEntity.setIsActive("N");
                 childEntity.setIsActive("N");
-            }
-            else if (res == 5) {
+            } else if (res == 5) {
                 beneficiaryEntity.setIsActive("N");
-                childEntity.setIsActive("N");
+                childEntity.setIsActive("N");//both migrated
             }
 
 /*            lmNaReason.add("MD");//mother death
@@ -457,18 +476,54 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
             showAlertDialog("Beneficiary Child Report Saved Successfully", () -> {
-                requireActivity().getSupportFragmentManager()
-                        .beginTransaction()
-                        .remove(LMMonitoringFragment.this)
-                        .commit();
-
-                FragmentUtils.replaceFragment(requireActivity(),
-                        CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                if (!isNa) {
+                    requireActivity().getSupportFragmentManager()
+                            .beginTransaction()
+                            .remove(LMMonitoringFragment.this)
+                            .commit();
+                    FragmentUtils.replaceFragment(requireActivity(),
+                            CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                            true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                } else {
+                    requireActivity().onBackPressed();
+                }
 
             });
         });
 
     }
+
+
+    private void addPregnancy() {
+
+        LmMonitoringFragmentBinding vb = getViewDataBinding();
+        if (!vb.benfLmp.validate()) {
+            return;
+        }
+        BeneficiaryEntity beneficiaryEntity = beneficiaryJoin.getBeneficiaryEntity();
+        PregnantEntity pregnantEntity = new PregnantEntity();
+        pregnantEntity.setIsActive("Y");
+        pregnantEntity.setBeneficiaryId(beneficiaryEntity.getBeneficiaryId());
+        pregnantEntity.setPregnancyId(System.currentTimeMillis());
+
+        Date lmpdate = vb.benfLmp.getDate();
+        pregnantEntity.setLmpDate(lmpdate);
+        beneficiaryEntity.setStage("PW");
+        beneficiaryEntity.setSubStage("PW");
+        beneficiaryEntity.setIsActive("Y");
+
+        Disposable disposable = Completable.concatArray(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements(),
+                dataRepository.insertOrUpdatePregnant(pregnantEntity).ignoreElements())
+                .subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.ui())
+                .subscribe(() -> {
+                    showAlertDialog("Beneficiary Pregnancy Registration Successfully", () -> {
+                        requireActivity().onBackPressed();
+                    });
+                });
+
+
+    }
+
 
 }

@@ -1,22 +1,8 @@
-package in.rajpusht.pc.data.local.db.dao;
+package in.rajpusht.pc.utils;
 
-import androidx.lifecycle.LiveData;
-import androidx.room.Dao;
-import androidx.room.Query;
+public class SqlQueryConstant {
 
-import java.util.List;
-
-import in.rajpusht.pc.model.AwcSyncCount;
-import in.rajpusht.pc.model.BefModel;
-import in.rajpusht.pc.model.BefRel;
-import in.rajpusht.pc.utils.SqlQueryConstant;
-import io.reactivex.Maybe;
-import io.reactivex.Observable;
-
-@Dao
-public abstract class AppDao {
-
-    @Query(value ="select u.beneficiaryId, u.name,u.dob,u.stage,u.subStage,u.motherId,b.husbandName, b.name as motherName,p.pregnancyId,b.pctsId, CASE WHEN u.motherId IS NOT NULL                                                                                                             \n" +
+    public static final String OTHER_WOMEN = "select u.beneficiaryId, u.name,u.dob,u.stage,u.subStage,u.motherId,b.husbandName, b.name as motherName,p.pregnancyId,b.pctsId, CASE WHEN u.motherId IS NOT NULL                                                                                                             \n" +
             "       THEN case when julianday('now') - julianday(u.dob) <=91 then 'LM1'                                                                         \n" +
             "                 when julianday('now') - julianday(u.dob) <=182 then 'LM2'                                                                        \n" +
             "                     when julianday('now') - julianday(u.dob) <=365 then 'LM3'                                                                    \n" +
@@ -38,33 +24,12 @@ public abstract class AppDao {
             "                                                                                                                                                  \n" +
             "                                                                                                                                                  \n" +
             " from                                                                                                                                             \n" +
-            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId from beneficiary where isActive='Y'                                           \n" +
+            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId from beneficiary where isActive='N'                                           \n" +
             "UNION                                                                                                                                             \n" +
-            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId from child where isActive='Y' ) u                                          \n" +
-            "Left Join (select * from  pregnant where isActive='Y') p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                               \n" +
+            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId from child where isActive='N' ) u                                          \n" +
+            "Left Join (select * from  pregnant) p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                               \n" +
             "inner join  beneficiary b on (u.motherId is NULL  and b.beneficiaryId=u.beneficiaryId ) OR((u.motherId is NOT NULL  and b.beneficiaryId=u.motherId ))                                                                                                                                   \n" +
             "left join pw_monitor pw on pw.pregnancyId=p.pregnancyId and currentSubStage=pw.substage\n" +
             "left join lm_monitor lm on lm.childId=u.beneficiaryId and u.motherId is NOT NULL and currentSubStage=lm.substage\n" +
-            "where b.awcCode=:awcCode  and currentSubStage <> '' and b.isActive='Y'")
-    public abstract LiveData<List<BefModel>> befModels(String awcCode);//b.awcCode=:awcCode
-
-
-    @Query(SqlQueryConstant.OTHER_WOMEN)
-    public abstract LiveData<List<BefModel>> otherWomenBefModels(String awcCode);//b.awcCode=:awcCode
-
-    @Query("select * from beneficiary")
-    public  abstract Maybe<List<BefRel>> befRels();
-
-    @Query("select al.awcCode, al.awcEnglishName, u.dataStatus,ismother as isMother,  case when  ismother is not null then  count(*) else 0 end as count from assigned_location al\n" +
-            "left join  (select beneficiaryId ,'Y' as ismother,  NULL AS motherId, awcCode,dataStatus from beneficiary                                                              \n" +
-            "UNION                                                                                                                                             \n" +
-            "select childId, 'N' as ismother, motherId AS motherId,awcCode,c.dataStatus from child\n" +
-            " c inner join beneficiary m on m.beneficiaryId=c.motherId) u on  al.awcCode=u.awcCode\n" +
-            " where dataStatus!=0\n" +
-            "  group by  al.awcCode, ismother,u.dataStatus\n")
-    public  abstract Observable<List<AwcSyncCount>> awcViceSyncData();
-
+            "where b.awcCode=:awcCode  and currentSubStage <> '' and b.isActive <>'Y'";
 }
-
-
-

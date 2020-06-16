@@ -26,6 +26,7 @@ import in.rajpusht.pc.databinding.ActivityHomeBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.change_password.ChangePasswordFragment;
+import in.rajpusht.pc.ui.other_women.OtherWomenFragment;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.ui.sync.SyncFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
@@ -100,6 +101,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 profileClick.onClick(null);
             } else if (item.getItemId() == R.id.nav_home) {
                 FragmentUtils.replaceFragment(this, new BeneficiaryFragment(), R.id.fragment_container, false, false, FragmentUtils.TRANSITION_NONE);
+            } else if (item.getItemId() == R.id.nav_other_women) {
+                FragmentUtils.replaceFragment(HomeActivity.this, new OtherWomenFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_changePassword) {
                 FragmentUtils.replaceFragment(HomeActivity.this, new ChangePasswordFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_sync) {

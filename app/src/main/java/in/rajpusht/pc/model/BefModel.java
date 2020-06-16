@@ -17,6 +17,8 @@ public class BefModel {
     private String currentSubStage;
     private Long lmFormId;
     private Long pwFormId;
+    private String naReason;
+    private Boolean available;
     private  DataStatus dataStatus;//mother
 
     public Long getBeneficiaryId() {
@@ -139,5 +141,21 @@ public class BefModel {
 
     public void setDataStatus(DataStatus dataStatus) {
         this.dataStatus = dataStatus;
+    }
+
+    public String getNaReason() {
+        return naReason;
+    }
+
+    public void setNaReason(String naReason) {
+        this.naReason = naReason;
+    }
+
+    public Boolean getAvailable() {
+        return available;
+    }
+
+    public void setAvailable(Boolean available) {
+        this.available = available;
     }
 }

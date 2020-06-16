@@ -35,17 +35,17 @@ public abstract class AssignedLocationDao extends BaseDao<AssignedLocationEntity
             "                         when julianday('now') - julianday(p.lmpDate) <=252 then 'PW3'                                                            \n" +
             "                         when julianday('now') - julianday(p.lmpDate) <=280 then 'PW4'                                                            \n" +
             "        END                                                                                                                                       \n" +
-            "       END AS currentSubStage ,count(*) as c                                                                                                         \n" +
-            "                                                                                                                                                                                                                                                                                                  \n" +
+            "       END AS currentSubStage ,count(*) as c                                                                                                      \n" +
+            "                                                                                                                                                  \n" +
             " from                                                                                                                                             \n" +
-            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId from beneficiary                                                              \n" +
+            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId from beneficiary  where isActive='Y'                                          \n" +
             "UNION                                                                                                                                             \n" +
-            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId from child  ) u                                                            \n" +
-            "Left Join pregnant p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                                                                   \n" +
-            "inner join  beneficiary b on (u.motherId is NULL  and b.beneficiaryId=u.beneficiaryId ) OR((u.motherId is NOT NULL  and b.beneficiaryId=u.motherId ))                                                                                                                                   \n" +
+            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId from child where isActive='Y' ) u                                          \n" +
+            "Left Join (select * from  pregnant where isActive='Y') p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                               \n" +
+            "inner join  beneficiary b on (u.motherId is NULL  and b.beneficiaryId=u.beneficiaryId ) OR((u.motherId is NOT NULL  and b.beneficiaryId=u.motherId ))       \n" +
             "left join pw_monitor pw on pw.pregnancyId=p.pregnancyId and currentSubStage=pw.substage\n" +
             "left join lm_monitor lm on lm.childId=u.beneficiaryId and u.motherId is NOT NULL and currentSubStage=lm.substage\n" +
-            "where currentSubStage <> '' and lm.id is  null and pw.id is  null\n" +
+            "where currentSubStage <> '' and lm.id is  null and pw.id is  null and b.isActive='Y' \n" +
             "group By b.awcCode,currentSubStage\n" +
             ") t\n" +
             "group By t.awcCode,stage")

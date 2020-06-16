@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginLeft="4dp"
@@ -74,6 +75,45 @@
             android:text="PCTS ID: 12345678"
             android:textSize="12dp" />
 
+        <LinearLayout
+            android:id="@+id/layout_na_reason"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pctsId"
+            android:background="@color/grey_07"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            android:gravity="right"
+            tools:visibility="visible">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="right"
+                android:paddingTop="2dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="2dp"
+                android:text="NA Reason : "
+                android:textColor="@color/colorPrevText"
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/txt_na_reason"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_medium"
+                android:gravity="right"
+                android:paddingTop="2dp"
+                android:paddingRight="16dp"
+                android:paddingBottom="2dp"
+                tools:text="Migrated"
+                android:textColor="@color/colorPrevText"
+                android:textSize="12sp" />
+
+
+        </LinearLayout>
+
 
         <RelativeLayout
             android:id="@+id/sync_layout"
@@ -96,6 +136,15 @@
 
         </RelativeLayout>
 
+        <ImageView
+            android:id="@+id/ic_flag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="5dp"
+            android:layout_toLeftOf="@+id/buttonststus"
+            android:src="@drawable/ic_flag" />
+
 
         <ImageView
             android:id="@+id/img_delete"
@@ -103,7 +152,7 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginRight="2dp"
-            android:layout_toLeftOf="@+id/buttonststus"
+            android:layout_toLeftOf="@+id/ic_flag"
             android:background="?selectableItemBackground"
             android:clickable="true"
             android:padding="10dp"

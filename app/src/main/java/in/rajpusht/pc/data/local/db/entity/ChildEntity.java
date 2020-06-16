@@ -31,6 +31,9 @@ public class ChildEntity {
     private Integer age;
 
 
+    public ChildEntity() {
+    }
+
     @Ignore
     private List<LMMonitorEntity> lmMonitorEntities;
 

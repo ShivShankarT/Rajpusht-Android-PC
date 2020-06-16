@@ -50,6 +50,9 @@
     <string name="you_register_in">क्या आप इनमें से किसी स्कीम में पंजीकृत हैं ? </string>
     <string name="installment_received_till">आपको स्कीम की कितनी किश्तें मिली हैं? </string>
 
+
+    <string name="nav_other_women_list"> माइग्रेट सूची </string>
+
     <string-array name="benf_currently">
         <item>गर्भवती</item>
         <item>धात्री</item>
@@ -104,6 +107,18 @@
     </string-array>
 
 
+    <string name="pw_na1">अकाल प्रसव / गर्भपात</string>
+    <string name="pw_na2">मौत</string>
+    <string name="pw_na3">कहीं और स्थानांतरित</string>
+
+    <string name="lm_na1"> माँ की मौत  हो गयीं </string>
+    <string name="lm_na2">माँ कहीं और चले गए</string>
+    <string name="lm_na3">बच्चे की मृत्यु हो गई</string>
+    <string name="lm_na4">नवजात  कहीं और चले गए</string>
+    <string name="lm_na5">दोनों मां और शिशु की मृत्यु हो गई</string>
+    <string name="lm_na6">दोनों कहीं और चले गए</string>
+
+
     <string name="set_location">आंगनवाड़ी चुनियें</string>
     <string name="set_language">आंगनवाड़ी चुनियें</string>
 
@@ -111,5 +126,11 @@
     <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
     <string name="add_self_husb_mobile_val_mes">Please Add Self and Husband’s Mobile Number</string>
     <string name="Select">Select</string>
+
+
+     
+    <string name="oops"> उफ़! </string>
+    <string name="no_internet_connection"> कोई इंटरनेट कनेक्शन नहीं! </string>
+    <string name="no_results_found"> ​​कोई परिणाम नहीं मिला! </string>
 
 </resources>

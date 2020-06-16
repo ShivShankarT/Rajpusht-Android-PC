@@ -7,7 +7,7 @@ import java.util.List;
 
 public class FormDataConstant {
 
-    public static final String ANC_NOT_COMPLETED = ("MA");// Miscarriage/ abortion
+    public static final String ANC_NOT_COMPLETED = ("AC");// Miscarriage/ abortion
     public static final List<String> economic = new ArrayList<>();
     public static List<String> caste = new ArrayList<>();
     public static List<String> pwNaReason = new ArrayList<>();

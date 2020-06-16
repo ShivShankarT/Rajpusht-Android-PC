@@ -98,6 +98,12 @@
         <item>4</item>
     </string-array>
 
+    <string-array name="child_1_3" translatable="false">
+        <item>Single</item>
+        <item>Twins</item>
+        <item>Triplets</item>
+    </string-array>
+
     <string-array name="count_0_1_dot" translatable="false">
         <item>0</item>
         <item>1</item>
@@ -211,14 +217,15 @@
         <item>The respondent/ pregnant woman not available for interview</item>
     </string-array>
 
+    <string name="pw_na1">Miscarriage/ abortion</string>
+    <string name="pw_na2">Death</string>
+    <string name="pw_na3">Migrated elsewhere</string>
+
     <string-array name="pw_na_other_reason">
-        <item>Miscarriage/ abortion</item>
-        <item>Death</item>
-        <item>Migrated elsewhere</item>
+        <item>@string/pw_na1</item>
+        <item>@string/pw_na2</item>
+        <item>@string/pw_na3</item>
     </string-array>
-
-
-
 
 
     <string-array name="lm_na_other_reason">
@@ -230,7 +237,7 @@
         <item>@string/lm_na6</item>
     </string-array>
 
-
+    <string name="nav_other_women_list">Migrated List</string>
     <string name="nav_logout">Logout</string>
     <string name="change_awc">Change AWC</string>
     <string name="sync">Sync</string>
@@ -251,7 +258,9 @@
     <string name="lm_na5">Both mother and infant died</string>
     <string name="lm_na6">Both migrated elsewhere</string>
 
-
+    <string name="oops">OOPS!</string>
+    <string name="no_internet_connection">No Internet Connection!</string>
+    <string name="no_results_found">No Results Found!</string>
 
 
 </resources>

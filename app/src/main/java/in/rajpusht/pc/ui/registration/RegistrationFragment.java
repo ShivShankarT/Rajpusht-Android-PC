@@ -125,7 +125,12 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.benfChildCount.sethValueChangedListener(new HValueChangedListener<Integer>() {
             @Override
             public void onValueChanged(Integer data) {
-                if (data == 2) {
+                if (data == 0) {
+                    viewDataBinding.benfRegStage.setEnableChild(false);
+                    viewDataBinding.benfRegStage.setSection(0);
+                    viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
+                }
+                else if (data == 2) {
                     viewDataBinding.benfRegStage.setEnableChild(false);
                     viewDataBinding.benfRegStage.setSection(1);
                     viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
@@ -342,7 +347,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
     }
 
-    void save() {
+   private void save() {
 
 
         long beneficiaryId = System.currentTimeMillis();
@@ -435,7 +440,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 childEntity.setIsActive("Y");
                 childEntity.setChildId(Long.parseLong(beneficiaryId + "1"));
             }
-            childEntity.setStage("PW");
+
             int days = HUtil.daysBetween(date, new Date());
             String lmmySubStage = HUtil.getLMMYSubStage(days);
             //childEntity.setSubStage(lmmySubStage);//todo
@@ -560,15 +565,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         }
 
-        /*if (vb.benfCousSms.getSelectedPos()==0 && vb.benfSelfMobile.getText().isEmpty()){
-            showMessage("Please Add Self Mobile Number ");
-        }
-        else if (vb.benfCousSms.getSelectedPos()==1 && vb.benfHusMobile.getText().isEmpty()){
-            showMessage("Please Add Husband’s Mobile Number ");
-        }
-        else if (vb.benfCousSms.getSelectedPos()==2 && (vb.benfSelfMobile.getText().isEmpty() || vb.benfHusMobile.getText().isEmpty()) ){
-            showMessage("Please Add Self and Husband’s Mobile Number ");
-        }*/
+
 
         save();
 

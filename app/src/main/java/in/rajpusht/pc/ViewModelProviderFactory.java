@@ -13,6 +13,8 @@ import in.rajpusht.pc.ui.forgot_password.ForgotPasswordViewModel;
 import in.rajpusht.pc.ui.home.HomeViewModel;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringViewModel;
 import in.rajpusht.pc.ui.login.LoginViewModel;
+import in.rajpusht.pc.ui.other_women.OtherWomenFragment;
+import in.rajpusht.pc.ui.other_women.OtherWomenViewModel;
 import in.rajpusht.pc.ui.otp.OtpViewModel;
 import in.rajpusht.pc.ui.profile.ProfileViewModel;
 import in.rajpusht.pc.ui.profile_edit.ProfileEditViewModel;
@@ -77,6 +79,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         } else if (modelClass.isAssignableFrom(SyncViewModel.class)) {
             //noinspection unchecked
             return (T) new SyncViewModel(dataManager, schedulerProvider);
+        }
+        else if (modelClass.isAssignableFrom(OtherWomenViewModel.class)) {
+            //noinspection unchecked
+            return (T) new OtherWomenViewModel(dataManager, schedulerProvider);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

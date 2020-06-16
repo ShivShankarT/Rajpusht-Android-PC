@@ -213,6 +213,10 @@ public class AppDbHelper {
         return mAppDatabase.AppDao().befModels(appPreferencesHelper.getSelectedAwcCode());
     }
 
+    public LiveData<List<BefModel>> otherWomenBefModels() {
+        return mAppDatabase.AppDao().otherWomenBefModels(appPreferencesHelper.getSelectedAwcCode());
+    }
+
     @Deprecated
     private Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> getBeneficiaryDatah(long beneficiaryId) {
         BeneficiaryEntity q = mAppDatabase.beneficiaryDao().getBeneficiariesById(beneficiaryId);
@@ -239,6 +243,12 @@ public class AppDbHelper {
         return Single.fromCallable(() -> mAppDatabase.beneficiaryDao().getBeneficiariesById(beneficiaryId));
     }
 
+    public Maybe<ChildEntity> getChild(long childId) {
+
+        return  mAppDatabase.childDao().childEntity(childId);
+    }
+
+
 
     // upload data sync
 
@@ -246,7 +256,7 @@ public class AppDbHelper {
         return mAppDatabase.AppDao().befRels();
     }
 
-    public Maybe<List<AwcSyncCount>> awcViceSyncData() {
+    public Observable<List<AwcSyncCount>> awcViceSyncData() {
         return mAppDatabase.AppDao().awcViceSyncData();
     }
 

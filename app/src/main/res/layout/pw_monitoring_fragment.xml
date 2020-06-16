@@ -24,9 +24,9 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <LinearLayout
-                android:animateLayoutChanges="true"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:animateLayoutChanges="true"
                 android:orientation="vertical">
 
 
@@ -52,30 +52,30 @@
                             android:layout_alignParentTop="true"
                             android:layout_marginStart="14dp"
                             android:fontFamily="@font/roboto_medium"
-                            tools:text="Sulochana Devi"
                             android:textColor="#555555"
-                            android:textSize="14dp" />
+                            android:textSize="14dp"
+                            tools:text="Sulochana Devi" />
 
                         <TextView
-                            android:textColor="@color/colorPrevText"
                             android:id="@+id/benf_hus_name"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/benf_name"
                             android:layout_alignStart="@+id/benf_name"
-                            tools:text="(w/o) Mr. XYZ"
-                            android:textSize="12dp" />
+                            android:textColor="@color/colorPrevText"
+                            android:textSize="12dp"
+                            tools:text="(w/o) Mr. XYZ" />
 
 
                         <TextView
-                            android:textColor="@color/colorPrevText"
                             android:id="@+id/pctsId"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/benf_hus_name"
                             android:layout_alignStart="@+id/benf_hus_name"
-                            tools:text="PCTS ID: 12345678"
-                            android:textSize="12dp" />
+                            android:textColor="@color/colorPrevText"
+                            android:textSize="12dp"
+                            tools:text="PCTS ID: 12345678" />
 
 
                         <ImageView
@@ -108,12 +108,12 @@
                 </androidx.cardview.widget.CardView>
 
                 <LinearLayout
-                    tools:visibility="visible"
-                    android:visibility="gone"
                     android:id="@+id/na_ly"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
 
 
                     <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
@@ -129,15 +129,76 @@
                         android:id="@+id/benf_na_other_reason"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:visibility="gone"
                         app:ff_label="@string/na_reason"
                         app:ff_required="true"
-                        android:visibility="gone"
-                        tools:visibility="visible"
-                        app:ff_selections="@array/pw_na_other_reason" />
+                        app:ff_selections="@array/pw_na_other_reason"
+                        tools:visibility="visible" />
 
 
                     <Button
                         android:id="@+id/save_na_btn"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="@string/save" />
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:id="@+id/add_child_ly"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone"
+                    tools:visibility="visible">
+
+                    <TextView
+                        style="@style/FormTextMini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Add Child" />
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:id="@+id/benf_child_count"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Child Birth"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_1_3" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                        android:id="@+id/benf_child_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="DOB"
+                        app:ff_input_type="number"
+                        app:ff_label="@string/child_age"
+                        app:ff_required="true" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_child_delivery_place_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="@string/delivery"
+                        app:ff_required="true"
+                        app:ff_selections="@array/benf_delivery_place" />
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:id="@+id/benf_child_delivery_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Place Name"
+                        app:ff_label="@string/institutional_delivery"
+                        app:ff_maxLength="130"
+                        app:ff_required="true" />
+
+                    <Button
+                        android:id="@+id/save_child_btn"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
