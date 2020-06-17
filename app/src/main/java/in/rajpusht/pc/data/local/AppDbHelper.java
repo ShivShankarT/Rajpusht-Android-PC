@@ -18,7 +18,7 @@ import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.model.AwcStageCount;
 import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
-import in.rajpusht.pc.model.BefRel;
+import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.BeneficiaryJoin;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Quintet;
@@ -252,8 +252,8 @@ public class AppDbHelper {
 
     // upload data sync
 
-    public Maybe<List<BefRel>> getNotSyncBenfData() {
-        return mAppDatabase.AppDao().befRels();
+    public Maybe<List<BeneficiaryWithRelation>> getNotSyncBenfData() {
+        return mAppDatabase.AppDao().getAllNotSyncBeneficiaryWithRelation();
     }
 
     public Observable<List<AwcSyncCount>> awcViceSyncData() {

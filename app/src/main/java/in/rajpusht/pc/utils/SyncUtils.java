@@ -16,7 +16,7 @@ import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.remote.AppApiHelper;
-import in.rajpusht.pc.model.BefRel;
+import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.DataStatus;
 
 public class SyncUtils {
@@ -61,16 +61,16 @@ public class SyncUtils {
     }
 
 
-    public JsonObject dataFor(BefRel befRel) {
+    public JsonObject dataFor(BeneficiaryWithRelation beneficiaryWithRelation) {
 
-        BeneficiaryEntity benfBeneficiaryEntity = befRel.beneficiaryEntity;
+        BeneficiaryEntity benfBeneficiaryEntity = beneficiaryWithRelation.beneficiaryEntity;
         JsonObject bjson = getBeneficiaryJson(benfBeneficiaryEntity);
         JsonArray pregJsonArray = new JsonArray();
         JsonArray childJsonArray = new JsonArray();
-        for (PregnantEntity pregnantEntity : befRel.pregnantEntities) {
+        for (PregnantEntity pregnantEntity : beneficiaryWithRelation.pregnantEntities) {
             JsonObject pregJson = getPregnantJson(pregnantEntity);
             JsonArray pwArray = new JsonArray();
-            for (PWMonitorEntity pwMonitorEntity : befRel.pwMonitorEntities) {
+            for (PWMonitorEntity pwMonitorEntity : beneficiaryWithRelation.pwMonitorEntities) {
                 if (pwMonitorEntity.getPregnancyId() == pregnantEntity.getPregnancyId()) {
                     pwArray.add(getPwJson(pwMonitorEntity));
                 }
@@ -81,10 +81,10 @@ public class SyncUtils {
         bjson.add("pregnant", pregJsonArray);
 
 
-        for (ChildEntity childEntity : befRel.childEntities) {
+        for (ChildEntity childEntity : beneficiaryWithRelation.childEntities) {
             JsonObject childJson = getChildJson(childEntity);
             JsonArray lmArray = new JsonArray();
-            for (LMMonitorEntity lmMonitorEntity : befRel.lmMonitorEntities) {
+            for (LMMonitorEntity lmMonitorEntity : beneficiaryWithRelation.lmMonitorEntities) {
                 if (lmMonitorEntity.getChildId() == childEntity.getChildId()) {
                     lmArray.add(getLmJson(lmMonitorEntity));
                 }

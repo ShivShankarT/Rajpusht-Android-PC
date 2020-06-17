@@ -107,7 +107,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         LmMonitoringFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
-        toolbar.setTitle("LM Monitoring");
+        toolbar.setTitle(R.string.LM_Monitoring);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -131,15 +131,15 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         //FormValidator
         viewDataBinding.benfChildCurrentMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0, 18.00,
-                "Muac should be from 5 cm to 18cm"));
+                getString(R.string.incorrct_Muac)));
         viewDataBinding.benfChildLastRecMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0, 18.00,
-                "Muac should be from 5 cm to 18cm"));
+                getString(R.string.incorrct_Muac)));
 
         viewDataBinding.benfCurrentHeight.sethValidatorListener(FormValidatorUtils.valueBwValidatorForStringNumber(10.0, 30.00,
-                "Child height should be from 10 inch to 30 inch"));
+                getString(R.string.incorrct_child_height)));
 
         viewDataBinding.benfBirthChildWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(.5, 10.0,
-                "Child weight should be from 500 gm to 10 kg"));
+                getString(R.string.incorrct_child_weight)));
 
 
         viewDataBinding.benfDtLy.setOnClickListener(new View.OnClickListener() {

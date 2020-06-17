@@ -3,12 +3,13 @@ package in.rajpusht.pc.data.local.db.dao;
 import androidx.lifecycle.LiveData;
 import androidx.room.Dao;
 import androidx.room.Query;
+import androidx.room.Transaction;
 
 import java.util.List;
 
 import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
-import in.rajpusht.pc.model.BefRel;
+import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.utils.SqlQueryConstant;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
@@ -52,8 +53,14 @@ public abstract class AppDao {
     @Query(SqlQueryConstant.OTHER_WOMEN)
     public abstract LiveData<List<BefModel>> otherWomenBefModels(String awcCode);//b.awcCode=:awcCode
 
-    @Query("select * from beneficiary")
-    public  abstract Maybe<List<BefRel>> befRels();
+    @Query("select * from beneficiary where beneficiaryId  in ( \n" +
+            "   select b.beneficiaryId from beneficiary b \n" +
+            "   left join pregnant p on p.beneficiaryId =b.beneficiaryId\n" +
+            "   left join child c on c.motherId =b.beneficiaryId\n" +
+            "   where b.dataStatus!=0 or c.dataStatus!=0 or p.dataStatus!=0 \n" +
+            "  )")
+    @Transaction
+    public  abstract Maybe<List<BeneficiaryWithRelation>> getAllNotSyncBeneficiaryWithRelation();
 
     @Query("select al.awcCode, al.awcEnglishName, u.dataStatus,ismother as isMother,  case when  ismother is not null then  count(*) else 0 end as count from assigned_location al\n" +
             "left join  (select beneficiaryId ,'Y' as ismother,  NULL AS motherId, awcCode,dataStatus from beneficiary                                                              \n" +

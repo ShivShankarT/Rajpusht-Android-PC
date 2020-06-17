@@ -135,7 +135,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfRegStage.setSection(1);
                     viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
                 } else if (data == 3) {
-                    showAlertDialog("Beneficiary not eligible to registration", new Runnable() {
+                    showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
                         @Override
                         public void run() {
                             requireActivity().onBackPressed();

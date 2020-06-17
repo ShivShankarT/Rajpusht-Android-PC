@@ -166,7 +166,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     @Override
     public boolean onBackPressed() {
         if (TextUtils.isEmpty(appPreferencesHelper.getSelectedAwcCode())) {
-            showAlertDialog("Please Select Awc", null);
+            showAlertDialog(getString(R.string.Please_Select_Awc), null);
             return false;
         } else
             return super.onBackPressed();

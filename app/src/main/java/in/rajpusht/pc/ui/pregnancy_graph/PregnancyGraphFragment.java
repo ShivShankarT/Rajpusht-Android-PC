@@ -58,7 +58,7 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pregnancyGraphFragmentBinding.toolbarLy.toolbar.setTitle("PW Women Weight ");
+        pregnancyGraphFragmentBinding.toolbarLy.toolbar.setTitle(R.string.PW_Women_Weight);
         pregnancyGraphFragmentBinding.toolbarLy.toolbar.setNavigationOnClickListener((v)->{
             requireActivity().onBackPressed();
         });
@@ -107,7 +107,7 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
         values1.add(new Entry(8, 2));
         values1.add(new Entry(9, 1.5f));
 
-        LineDataSet d1 = new LineDataSet(values1, "Ideal Weight Gain");
+        LineDataSet d1 = new LineDataSet(values1, getString(R.string.Ideal_Weight_Gain));
         d1.setLineWidth(2.5f);
         d1.setCircleRadius(4.5f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
@@ -116,7 +116,7 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
         ArrayList<Entry> values2 = new ArrayList<>();
         values2.add(new Entry(4, 1));
         values2.add(new Entry(5, 1));
-        LineDataSet d2 = new LineDataSet(values2, "Women Weight Gain");
+        LineDataSet d2 = new LineDataSet(values2, getString(R.string.Women_Weight_Gain));
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4.5f);
         d2.setHighLightColor(Color.rgb(244, 117, 117));

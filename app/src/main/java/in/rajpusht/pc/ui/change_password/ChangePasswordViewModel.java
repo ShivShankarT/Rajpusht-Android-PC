@@ -4,6 +4,7 @@ import android.util.Pair;
 
 import androidx.lifecycle.MutableLiveData;
 
+import in.rajpusht.pc.R;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.ui.base.BaseViewModel;
 import in.rajpusht.pc.utils.Event;
@@ -21,13 +22,13 @@ public class ChangePasswordViewModel extends BaseViewModel {
     public void changePassword(String oldPassword, String newPassword, String confirmPassword) {
 
         if (oldPassword.length() < 8) {
-            statusLiveData.setValue(Event.data(new Pair<>(1, "Invalid Password")));
+            statusLiveData.setValue(Event.data(new Pair<>(1, getDataManager().getString(R.string.Invalid_password))));
         } else if (newPassword.length() < 8) {
-            statusLiveData.setValue(Event.data(new Pair<>(2, "Invalid Password")));
+            statusLiveData.setValue(Event.data(new Pair<>(2,getDataManager().getString(R.string.Invalid_password))));
         } else if (confirmPassword.length() < 8) {
-            statusLiveData.setValue(Event.data(new Pair<>(3, "Invalid Password")));
+            statusLiveData.setValue(Event.data(new Pair<>(3,getDataManager().getString(R.string.Invalid_password))));
         } else if (!newPassword.equalsIgnoreCase(confirmPassword)) {
-            statusLiveData.setValue(Event.data(new Pair<>(3, "Confirm Password Incorrect")));
+            statusLiveData.setValue(Event.data(new Pair<>(3, getDataManager().getString(R.string.confirm_password_incorrect))));
         } else {
             progressDialog.setValue(Event.data(true));
             getCompositeDisposable().add(getDataManager().changePassword(oldPassword, newPassword)

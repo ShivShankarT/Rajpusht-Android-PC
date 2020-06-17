@@ -7,6 +7,7 @@ import androidx.lifecycle.MutableLiveData;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import in.rajpusht.pc.R;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.model.ApiResponse;
@@ -36,9 +37,9 @@ public class ForgotPasswordViewModel extends BaseViewModel {
     public void setOtp(String email) {
 
         if (email.isEmpty()) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_EMAIL, "Please enter your email")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_EMAIL, getDataManager().getString(R.string.enter_email))));
         } else if (!HUtil.isEmail(email)) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_EMAIL, "Invalid email")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_EMAIL, getDataManager().getString(R.string.error_email))));
         } else {
             progressDialog.setValue(Event.data(true));
             getCompositeDisposable().add(getDataManager().forgotPassword(email)
@@ -65,19 +66,19 @@ public class ForgotPasswordViewModel extends BaseViewModel {
     public void setPassword(String otp, String newPassword, String confirmPassword) {
 
         if (otp.isEmpty()) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_OTP, "Please enter OTP")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_OTP, getDataManager().getString(R.string.please_enter_OTP))));
         } else if (otp.length() < 4) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_OTP, "Invalid OTP")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_OTP, getDataManager().getString(R.string.InvalidOTP))));
         } else if (newPassword.isEmpty()) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_NEW_PASSWORD, "Please new password")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_NEW_PASSWORD, getDataManager().getString(R.string.please_new_password))));
         } else if (newPassword.length() < 8) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_NEW_PASSWORD, "Invalid new password")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_NEW_PASSWORD, getDataManager().getString(R.string.Invalid_new_password))));
         } else if (confirmPassword.isEmpty()) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_CONFIRM_PASSWORD, "Please new password")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_CONFIRM_PASSWORD, getDataManager().getString(R.string.please_new_password))));
         } else if (confirmPassword.length() < 8) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_CONFIRM_PASSWORD, "Invalid new password")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_CONFIRM_PASSWORD, getDataManager().getString(R.string.Invalid_new_password))));
         } else if (!confirmPassword.equals(newPassword)) {
-            statusLiveData.setValue(Event.data(new Pair<>(ERROR_CONFIRM_PASSWORD, "Confirm Password is not same")));
+            statusLiveData.setValue(Event.data(new Pair<>(ERROR_CONFIRM_PASSWORD, getDataManager().getString(R.string.confirm_password_not_same))));
         } else {
             progressDialog.setValue(Event.data(true));
             getCompositeDisposable().add(getDataManager().setPassword(otp, newPassword)

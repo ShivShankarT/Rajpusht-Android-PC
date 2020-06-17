@@ -49,7 +49,7 @@ public class SyncFragment extends BaseFragment<SyncFragmentBinding, SyncViewMode
 
         SyncFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
-        toolbar.setTitle("AWC Sync Details");
+        toolbar.setTitle(R.string.AWC_Sync_Details);
         toolbar.setNavigationOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

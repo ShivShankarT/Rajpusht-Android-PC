@@ -21,6 +21,7 @@ import androidx.fragment.app.Fragment;
 import com.google.android.material.snackbar.Snackbar;
 
 import dagger.android.support.AndroidSupportInjection;
+import in.rajpusht.pc.R;
 import in.rajpusht.pc.utils.MyProgressDialogFragment;
 
 
@@ -133,7 +134,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
 
 
     protected void showAlertDialog(String message, Runnable runnable) {
-        new AlertDialog.Builder(requireContext()).setTitle("Alert").setMessage(message).setCancelable(false).setPositiveButton("OK", (dialog, which) -> {
+        new AlertDialog.Builder(requireContext()).setTitle(R.string.alert).setMessage(message).setCancelable(false).setPositiveButton(R.string.ok, (dialog, which) -> {
             if (runnable != null)
                 runnable.run();
         }).show();

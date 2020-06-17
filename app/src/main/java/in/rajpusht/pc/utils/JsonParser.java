@@ -16,7 +16,7 @@ import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.model.ApiResponse;
-import in.rajpusht.pc.model.BefRel;
+import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Quintet;
 
@@ -260,11 +260,11 @@ public class JsonParser {
     }
 
 
-    public static JsonArray convertBenfUploadJson(List<BefRel> befRels) {
+    public static JsonArray convertBenfUploadJson(List<BeneficiaryWithRelation> beneficiaryWithRelations) {
 
         JsonArray jsonArray = new JsonArray();
-        for (BefRel befRel : befRels) {
-            JsonObject json = dataFor(befRel);
+        for (BeneficiaryWithRelation beneficiaryWithRelation : beneficiaryWithRelations) {
+            JsonObject json = dataFor(beneficiaryWithRelation);
             if (json != null)//if null no changes
                 jsonArray.add(json);
         }
@@ -272,17 +272,17 @@ public class JsonParser {
         return jsonArray;
     }
 
-    private static JsonObject dataFor(BefRel befRel) {
-        Log.i("ddd", "dataFor: " + new Gson().toJson(befRel));
-        BeneficiaryEntity benfBeneficiaryEntity = befRel.beneficiaryEntity;
+    private static JsonObject dataFor(BeneficiaryWithRelation beneficiaryWithRelation) {
+        Log.i("ddd", "dataFor: " + new Gson().toJson(beneficiaryWithRelation));
+        BeneficiaryEntity benfBeneficiaryEntity = beneficiaryWithRelation.beneficiaryEntity;
         JsonObject bjson = getBeneficiaryJson(benfBeneficiaryEntity);
         JsonArray pregJsonArray = new JsonArray();
         JsonArray childJsonArray = new JsonArray();
-        for (PregnantEntity pregnantEntity : befRel.pregnantEntities) {
+        for (PregnantEntity pregnantEntity : beneficiaryWithRelation.pregnantEntities) {
 
             JsonObject pregJson = getPregnantJson(pregnantEntity);
             JsonArray pwArray = new JsonArray();
-            for (PWMonitorEntity pwMonitorEntity : befRel.pwMonitorEntities) {
+            for (PWMonitorEntity pwMonitorEntity : beneficiaryWithRelation.pwMonitorEntities) {
                 if (pwMonitorEntity.getPregnancyId() == pregnantEntity.getPregnancyId()) {
                     if (pwMonitorEntity.getDataStatus() != DataStatus.OLD)
                         pwArray.add(getPwJson(pwMonitorEntity, pregnantEntity.getDataStatus() == DataStatus.NEW));
@@ -297,12 +297,12 @@ public class JsonParser {
         bjson.add("pregnant", pregJsonArray);
 
 
-        for (ChildEntity childEntity : befRel.childEntities) {
+        for (ChildEntity childEntity : beneficiaryWithRelation.childEntities) {
             if (childEntity.getDataStatus() == DataStatus.OLD)
                 continue;
             JsonObject childJson = getChildJson(childEntity);
             JsonArray lmArray = new JsonArray();
-            for (LMMonitorEntity lmMonitorEntity : befRel.lmMonitorEntities) {
+            for (LMMonitorEntity lmMonitorEntity : beneficiaryWithRelation.lmMonitorEntities) {
                 if (lmMonitorEntity.getChildId() == childEntity.getChildId()) {
                     if (lmMonitorEntity.getDataStatus() != DataStatus.OLD)
                         lmArray.add(getLmJson(lmMonitorEntity, childEntity.getDataStatus() == DataStatus.NEW));

@@ -272,7 +272,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         getViewDataBinding().benfLastcheckupdate.setMinDate(pregnantEntity.getLmpDate().getTime());
 
         getViewDataBinding().benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
-                "Weight should be from 30 Kg to 99 Kg"));
+                getString(R.string.incorrect_pw_weight)));
 
        /* a. 1st visit: Within 12 weeks—preferably as soon as pregnancy is suspected—for registration of pregnancy and first ANC
         b. 2nd visit: Between 14 and 26 weeks
@@ -292,7 +292,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                         "PW4".equalsIgnoreCase(subStage) && lmpWek >= 36 && lmpWek <= 40) {
 
                 } else isValid = false;
-                return new ValidationStatus(isValid, "Invalid Anc Date");
+                return new ValidationStatus(isValid, getString(R.string.Invalid_Anc_Date));
             }
         });
 
@@ -499,7 +499,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
-                    showAlertDialog("Beneficiary Report Saved Successfully", () -> {
+                    showAlertDialog(getString(R.string.beneficiary_report_save), () -> {
 
 
                         if (!isNa) {
@@ -584,7 +584,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         Disposable disposable = Completable.concat(completables).subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
-                    showAlertDialog("Beneficiary Child Registration Successfully", () -> {
+                    showAlertDialog(getString(R.string.beneficiary_child_reg_succ), () -> {
                         requireActivity().onBackPressed();
                     });
                 });

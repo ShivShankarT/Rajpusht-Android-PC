@@ -148,9 +148,9 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
 
     public void showAlertDialog(String message) {
         new AlertDialog.Builder(this)
-                .setTitle("Alert!")
+                .setTitle(R.string.alert)
                 .setMessage(message)
-                .setPositiveButton("OK", null)
+                .setPositiveButton(R.string.ok, null)
                 .show();
     }
 

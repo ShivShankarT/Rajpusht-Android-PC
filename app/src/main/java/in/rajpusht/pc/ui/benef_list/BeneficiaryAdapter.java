@@ -103,7 +103,7 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
                         holder.txt_na_reason.setText(R.string.pw_na3);
                         break;
                     case "AC":
-                        holder.txt_na_reason.setText("ANC not completed");
+                        holder.txt_na_reason.setText(R.string.ANC_not_compl);
                         break;
                     //child LM/MY
 

@@ -106,7 +106,7 @@ public class CounsellingAnimationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mediaPos = 0;
 
-        vb.toolbarLy.toolbar.setTitle("PW Women Counselling");
+        vb.toolbarLy.toolbar.setTitle(R.string.PW_Women_Counselling);
        /* if (counsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA)
             vb.toolbarLy.toolbar.setTitle(counsellingMedia.getId() + "-" + counsellingMedia.getMediaImage().get(0).substring("file:///android_asset/counseling".length()));
 */
@@ -186,7 +186,7 @@ public class CounsellingAnimationFragment extends Fragment {
 
         int nextCounPos = pos + 1;
         if (!(nextCounPos < CounsellingMedia.counsellingMediaData().size())) {
-            vb.nxtBtn.setText("Finish");
+            vb.nxtBtn.setText(R.string.finish);
         }
 
         vb.nxtBtn.setOnClickListener(new View.OnClickListener() {
@@ -206,7 +206,7 @@ public class CounsellingAnimationFragment extends Fragment {
 
                 } else {
 
-                    showAlertDialog("PW Women Counselling Completed !!!", new Runnable() {
+                    showAlertDialog(getString(R.string.pw_counselling_completed), new Runnable() {
                         @Override
                         public void run() {
                             FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
@@ -238,7 +238,7 @@ public class CounsellingAnimationFragment extends Fragment {
     }
 
     protected void showAlertDialog(String message, Runnable runnable) {//todo add basefragment impl
-        new AlertDialog.Builder(requireContext()).setTitle("Alert").setMessage(message).setCancelable(false).setPositiveButton("OK", (dialog, which) -> {
+        new AlertDialog.Builder(requireContext()).setTitle(R.string.alert).setMessage(message).setCancelable(false).setPositiveButton(R.string.ok, (dialog, which) -> {
             if (runnable != null)
                 runnable.run();
         }).show();

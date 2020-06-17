@@ -132,5 +132,35 @@
     <string name="oops"> उफ़! </string>
     <string name="no_internet_connection"> कोई इंटरनेट कनेक्शन नहीं! </string>
     <string name="no_results_found"> ​​कोई परिणाम नहीं मिला! </string>
+    <string name="alert">Alert!</string>
+    <string name="ok">OK</string>
+    <string name="ANC_not_compl">ANC not completed</string>
+    <string name="Invalid_password">Invalid Password</string>
+    <string name="confirm_password_incorrect">Confirm Password Incorrect</string>
+    <string name="PW_Women_Counselling">PW Women Counselling</string>
+    <string name="finish">Finish</string>
+    <string name="pw_counselling_completed">PW Women Counselling Completed !!!</string>
+    <string name="enter_email">Please enter your email</string>
+    <string name="please_enter_OTP">Please enter OTP</string>
+    <string name="InvalidOTP">Invalid OTP</string>
+    <string name="please_new_password">Please new password</string>
+    <string name="Invalid_new_password">Invalid new password</string>
+    <string name="confirm_password_not_same">Confirm Password is not same</string>
+    <string name="LM_Monitoring">LM Monitoring</string>
+    <string name="incorrct_Muac">Muac should be from 5 cm to 18cm</string>
+    <string name="incorrct_child_height">Child height should be from 10 inch to 30 inch</string>
+    <string name="incorrct_child_weight">Child weight should be from 500 gm to 10 kg</string>
+    <string name="PW_Women_Weight">PW Women Weight</string>
+    <string name="Ideal_Weight_Gain">Ideal Weight Gain</string>
+    <string name="Women_Weight_Gain">Women Weight Gain</string>
+    <string name="Please_Select_Awc">Please Select Awc</string>
+    <string name="incorrect_pw_weight">Weight should be from 30 Kg to 99 Kg</string>
+    <string name="Invalid_Anc_Date">Invalid Anc Date</string>
+    <string name="beneficiary_report_save">Beneficiary Report Saved Successfully</string>
+    <string name="beneficiary_child_reg_succ">Beneficiary Child Registration Successfully</string>
+    <string name="beneficiary_not_eligible">Beneficiary not eligible to registration</string>
+    <string name="AWC_Sync_Details">AWC Sync Details</string>
+    <string name="submit">Submit</string>
+    <string name="set_new_password">Set New Password</string>
 
 </resources>

@@ -11,7 +11,7 @@ import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 
-public class BefRel {
+public class BeneficiaryWithRelation {
 
     @Embedded
     public BeneficiaryEntity beneficiaryEntity;
