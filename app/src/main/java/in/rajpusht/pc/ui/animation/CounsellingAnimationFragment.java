@@ -25,7 +25,7 @@ import com.bumptech.glide.request.target.Target;
 import com.bumptech.glide.request.transition.Transition;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.databinding.FragmentTestAnimationBinding;
+import in.rajpusht.pc.databinding.FragmentCounsellingAnimationBinding;
 import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphFragment;
@@ -36,14 +36,14 @@ import in.rajpusht.pc.utils.ui.CustomVideoView;
 public class CounsellingAnimationFragment extends Fragment {
 
 
-    private static final int delayMillis = 2000;
+    private static final int delayMillis = 700;
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
     private Handler handler = new Handler();
     private CounsellingMedia counsellingMedia;
     private int mediaPos = 0;
     private int pos = 0;
-    private FragmentTestAnimationBinding vb;
+    private FragmentCounsellingAnimationBinding vb;
     private Runnable runnable = new Runnable() {
         @Override
         public void run() {
@@ -97,7 +97,7 @@ public class CounsellingAnimationFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        vb = FragmentTestAnimationBinding.inflate(inflater, container, false);
+        vb = FragmentCounsellingAnimationBinding.inflate(inflater, container, false);
         return vb.getRoot();
     }
 
@@ -106,7 +106,7 @@ public class CounsellingAnimationFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         mediaPos = 0;
 
-        vb.toolbarLy.toolbar.setTitle(R.string.PW_Women_Counselling);
+        vb.toolbarLy.toolbar.setTitle(R.string.Women_Counselling);
        /* if (counsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA)
             vb.toolbarLy.toolbar.setTitle(counsellingMedia.getId() + "-" + counsellingMedia.getMediaImage().get(0).substring("file:///android_asset/counseling".length()));
 */

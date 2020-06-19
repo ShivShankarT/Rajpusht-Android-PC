@@ -33,6 +33,7 @@ import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
 import in.rajpusht.pc.model.BeneficiaryJoin;
+import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
@@ -477,6 +478,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
             showAlertDialog("Beneficiary Child Report Saved Successfully", () -> {
                 if (!isNa) {
+                    CounsellingMedia.counsellingSubstage = subStage;
                     requireActivity().getSupportFragmentManager()
                             .beginTransaction()
                             .remove(LMMonitoringFragment.this)

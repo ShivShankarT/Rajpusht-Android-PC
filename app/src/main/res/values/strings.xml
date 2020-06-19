@@ -265,7 +265,7 @@
     <string name="ANC_not_compl">ANC not completed</string>
     <string name="Invalid_password">Invalid Password</string>
     <string name="confirm_password_incorrect">Confirm Password Incorrect</string>
-    <string name="PW_Women_Counselling">PW Women Counselling</string>
+    <string name="Women_Counselling">Women Counselling</string>
     <string name="finish">Finish</string>
     <string name="pw_counselling_completed">PW Women Counselling Completed !!!</string>
     <string name="enter_email">Please enter your email</string>
@@ -290,6 +290,9 @@
     <string name="AWC_Sync_Details">AWC Sync Details</string>
     <string name="submit">Submit</string>
     <string name="set_new_password">Set New Password</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

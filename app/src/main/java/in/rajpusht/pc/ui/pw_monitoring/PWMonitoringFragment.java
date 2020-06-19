@@ -34,6 +34,7 @@ import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
 import in.rajpusht.pc.model.BeneficiaryJoin;
+import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
@@ -503,6 +504,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
 
                         if (!isNa) {
+                            CounsellingMedia.counsellingSubstage = subStage;
                             FragmentUtils.replaceFragment(requireActivity(),
                                     CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
                                     true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
