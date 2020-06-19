@@ -31,7 +31,7 @@ import in.rajpusht.pc.ui.login.LoginActivity;
  */
 
 public class AppPreferencesHelper {
-    public static final String PREF_NAME = "app-pref";
+    public static final String PREF_NAME = "app-pref112";
 
     public static final long NULL_INDEX = -1L;
     public static final String PREF_FIRST_NAME = "first_name";

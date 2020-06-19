@@ -8,7 +8,7 @@ android {
         applicationId "in.rajpusht.pc"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 3
+        versionCode 4
         versionName "1.0.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
