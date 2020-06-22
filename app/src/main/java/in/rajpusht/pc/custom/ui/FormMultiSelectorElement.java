@@ -175,6 +175,21 @@ public class FormMultiSelectorElement extends FrameLayout implements CompoundBut
         edf_txt_inp_ly.setError(null);
     }
 
+    public void changeEleVisible(Pair<Integer, Boolean> posWith) {
+        for (int i = 0; i < edf_ch_gp.getChildCount() - 1; i++) {//skipping last
+            View view = edf_ch_gp.getChildAt(i);
+            if (posWith.first == i) {
+                if (posWith.second) {
+                    view.setVisibility(VISIBLE);
+                } else {
+                    view.setVisibility(GONE);
+                }
+
+            }
+        }
+
+    }
+
     public void requestFocusAndScroll() {
         View targetView = this;
         targetView.getParent().requestChildFocus(targetView, targetView);

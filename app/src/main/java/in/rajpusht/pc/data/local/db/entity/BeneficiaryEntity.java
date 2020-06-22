@@ -28,7 +28,6 @@ public class BeneficiaryEntity {
     private String economic;
     private String pctsId;
     private String bahamashahId;
-    private String counselingProv;
     private Integer counselingSms;
     private Integer pmmvyInstallment;
     private Integer igmpyInstallment;
@@ -146,13 +145,6 @@ public class BeneficiaryEntity {
         this.bahamashahId = bahamashahId;
     }
 
-    public String getCounselingProv() {
-        return counselingProv;
-    }
-
-    public void setCounselingProv(String counselingProv) {
-        this.counselingProv = counselingProv;
-    }
 
     public Integer getCounselingSms() {
         return counselingSms;

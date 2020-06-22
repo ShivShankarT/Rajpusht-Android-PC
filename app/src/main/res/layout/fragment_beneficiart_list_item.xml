@@ -75,15 +75,25 @@
             android:text="PCTS ID: 12345678"
             android:textSize="12dp" />
 
+
+        <TextView
+            android:id="@+id/childOrder"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/pctsId"
+            android:layout_alignStart="@+id/benf_hus_name"
+            android:text="child Order: 1"
+            android:textSize="12dp" />
+
         <LinearLayout
             android:id="@+id/layout_na_reason"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/pctsId"
+            android:layout_below="@+id/childOrder"
             android:background="@color/grey_07"
+            android:gravity="right"
             android:orientation="horizontal"
             android:visibility="gone"
-            android:gravity="right"
             tools:visibility="visible">
 
             <TextView
@@ -107,9 +117,9 @@
                 android:paddingTop="2dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="2dp"
-                tools:text="Migrated"
                 android:textColor="@color/colorPrevText"
-                android:textSize="12sp" />
+                android:textSize="12sp"
+                tools:text="Migrated" />
 
 
         </LinearLayout>

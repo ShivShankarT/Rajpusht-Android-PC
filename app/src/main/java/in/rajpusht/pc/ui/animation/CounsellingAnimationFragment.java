@@ -7,6 +7,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewTreeObserver;
@@ -15,16 +16,17 @@ import android.widget.MediaController;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.transition.TransitionManager;
 
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.load.engine.DiskCacheStrategy;
-import com.bumptech.glide.request.target.SimpleTarget;
+
 import com.bumptech.glide.request.target.Target;
-import com.bumptech.glide.request.transition.Transition;
+import com.squareup.picasso.Picasso;
 
 import in.rajpusht.pc.R;
+import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.databinding.FragmentCounsellingAnimationBinding;
 import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
@@ -36,7 +38,7 @@ import in.rajpusht.pc.utils.ui.CustomVideoView;
 public class CounsellingAnimationFragment extends Fragment {
 
 
-    private static final int delayMillis = 700;
+    private static final int delayMillis = 500;
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
     private Handler handler = new Handler();
@@ -48,8 +50,8 @@ public class CounsellingAnimationFragment extends Fragment {
         @Override
         public void run() {
             if (mediaPos < counsellingMedia.getMediaImage().size()) {
-                // Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
-                Glide.with(requireContext()).asBitmap()
+                 Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
+                /*Glide.with(requireContext()).asBitmap()
                         .load(counsellingMedia.getMediaImage().get(mediaPos))
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
                         .skipMemoryCache(true)
@@ -60,7 +62,7 @@ public class CounsellingAnimationFragment extends Fragment {
                             public void onResourceReady(@NonNull Bitmap resource, @Nullable Transition<? super Bitmap> transition) {
                                 vb.imageview.setImageBitmap(resource);
                             }
-                        });
+                        });*/
                 mediaPos++;
 
                 handler.postDelayed(runnable, delayMillis);
@@ -110,8 +112,23 @@ public class CounsellingAnimationFragment extends Fragment {
        /* if (counsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA)
             vb.toolbarLy.toolbar.setTitle(counsellingMedia.getId() + "-" + counsellingMedia.getMediaImage().get(0).substring("file:///android_asset/counseling".length()));
 */
+        vb.toolbarLy.toolbar.getMenu().add(1, 1, 1, "Exit").setIcon(R.drawable.ic_exit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+
         vb.toolbarLy.toolbar.setNavigationOnClickListener((v) -> {
             requireActivity().onBackPressed();
+        });
+
+        vb.toolbarLy.toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                if (item.getItemId() == 1) {
+                    requireActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+
+                    FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
+
+                }
+                return true;
+            }
         });
 
         vb.nxtBtn.setVisibility(View.INVISIBLE);
@@ -132,8 +149,7 @@ public class CounsellingAnimationFragment extends Fragment {
             CustomVideoView videoView = vb.videoView;
             videoView.setVisibility(View.GONE);
             vb.imageview.setVisibility(View.VISIBLE);
-            Glide.with(requireContext())
-                    .load(Uri.parse("file:///android_asset/counseling/video_thumb.webp")).into(vb.imageview);
+            Picasso.get().load("file:///android_asset/counseling/video_thumb.webp").noPlaceholder().into(vb.imageview);
             //Creating MediaController
             MediaController mediaController = new MediaController(requireContext());
             mediaController.setAnchorView(videoView);
@@ -198,17 +214,18 @@ public class CounsellingAnimationFragment extends Fragment {
                     CounsellingMedia nextCounsellingMedia = CounsellingMedia.counsellingMediaData().get(nextCounPos);
 
                     if (nextCounsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA || nextCounsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
-                        FragmentUtils.replaceFragment(requireActivity(), CounsellingAnimationFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
+                        FragmentUtils.replaceFragment(requireActivity(), CounsellingAnimationFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
                     } else {
-                        FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
+                        FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
                     }
 
 
                 } else {
 
-                    showAlertDialog(getString(R.string.pw_counselling_completed), new Runnable() {
+                    showAlertDialog(getString(R.string.counselling_completed), new Runnable() {
                         @Override
                         public void run() {
+                            requireActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
                             FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
                         }
                     });

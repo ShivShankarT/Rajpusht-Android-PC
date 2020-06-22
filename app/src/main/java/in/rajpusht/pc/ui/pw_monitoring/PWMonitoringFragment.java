@@ -153,6 +153,13 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             }
         });
 
+        viewDataBinding.benfChildCount.setEnableChild(false);//todo check
+        viewDataBinding.benfPmmvvyCount.setVisibility(View.GONE);
+        viewDataBinding.benfIgmpyCount.setVisibility(View.GONE);
+        viewDataBinding.benfJsyCount.setVisibility(View.GONE);
+        viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
+        viewDataBinding.benfInstalLy.setVisibility(View.GONE);
+        viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));//todo always IGMPY
         viewDataBinding.benfRegisteredProgramme.sethValueChangedListener(new HValueChangedListener<Set<Integer>>() {
             @Override
             public void onValueChanged(Set<Integer> data) {
@@ -306,7 +313,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         if (pwFormId != null)
             other = dataRepository.pwMonitorByID(pwFormId).toSingle();
 
-        Disposable disposable = dataRepository.getBeneficiaryData(beneficiaryId).zipWith(other, Pair::new)
+        Disposable disposable = dataRepository.getBeneficiaryJoinDataFromPregnancyId(pregnancyId).zipWith(other, Pair::new)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe((pair, throwable) -> {

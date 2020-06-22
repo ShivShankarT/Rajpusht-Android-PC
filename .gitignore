@@ -100,3 +100,4 @@ lint/tmp/
 /.idea/misc.xml
 /.idea/codeStyles/
 /.idea/.name
+/app/src/main/assets.zip

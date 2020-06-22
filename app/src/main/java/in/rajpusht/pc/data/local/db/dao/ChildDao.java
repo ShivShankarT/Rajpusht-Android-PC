@@ -15,6 +15,9 @@ public abstract class ChildDao extends BaseDao<ChildEntity> {
     public abstract List<ChildEntity> childEntities(long motherId);
 
     @Query("select * from child where childId=:childId")
+    public abstract ChildEntity childEntityId(long childId);
+
+    @Query("select * from child where childId=:childId")
     public abstract Maybe<ChildEntity> childEntity(long childId);
 
     @Query("Delete FROM child")

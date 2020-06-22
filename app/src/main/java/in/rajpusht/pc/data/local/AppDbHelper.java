@@ -18,8 +18,9 @@ import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.model.AwcStageCount;
 import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
-import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.BeneficiaryJoin;
+import in.rajpusht.pc.model.BeneficiaryWithChild;
+import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Quintet;
 import in.rajpusht.pc.model.Tuple;
@@ -217,25 +218,41 @@ public class AppDbHelper {
         return mAppDatabase.AppDao().otherWomenBefModels(appPreferencesHelper.getSelectedAwcCode());
     }
 
-    @Deprecated
-    private Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> getBeneficiaryDatah(long beneficiaryId) {
-        BeneficiaryEntity q = mAppDatabase.beneficiaryDao().getBeneficiariesById(beneficiaryId);
-        List<PregnantEntity> s = mAppDatabase.pregnantDao().getPregnantById(beneficiaryId);
-        List<ChildEntity> r = mAppDatabase.childDao().childEntities(beneficiaryId);
 
-        PregnantEntity pregnantEntity = s.isEmpty() ? null : s.get(0);
-        ChildEntity childEntity = r.isEmpty() ? null : r.get(0);
-        return new Tuple<>(q, pregnantEntity, childEntity);
+
+    public Single<BeneficiaryJoin> getBeneficiaryJoinDataFromPregnancyId(long pregnancyId) {
+        return Single.fromCallable(() -> {
+            PregnantEntity pregnantEntity = mAppDatabase.pregnantDao().getPregnantByPregnancyId(pregnancyId);
+            BeneficiaryEntity beneficiaryEntity=mAppDatabase.beneficiaryDao().getBeneficiariesById(pregnantEntity.getBeneficiaryId());
+            List<ChildEntity> childEntities = mAppDatabase.childDao().childEntities(beneficiaryEntity.getBeneficiaryId());
+            ChildEntity childEntity = childEntities.isEmpty() ? null : childEntities.get(0);
+            BeneficiaryJoin beneficiaryJoin=new BeneficiaryJoin();
+            beneficiaryJoin.setBeneficiaryEntity(beneficiaryEntity);
+            beneficiaryJoin.setChildEntity(childEntity);
+            beneficiaryJoin.setPregnantEntity(pregnantEntity);
+            return beneficiaryJoin;
+        });
+    }
+
+    public Single<BeneficiaryJoin> getBeneficiaryJoinDataFromChildId(long childID) {
+        return Single.fromCallable(() -> {
+            ChildEntity childEntity = mAppDatabase.childDao().childEntityId(childID);
+            BeneficiaryEntity beneficiaryEntity=mAppDatabase.beneficiaryDao().getBeneficiariesById(childEntity.getMotherId());
+            PregnantEntity pregnantEntity = mAppDatabase.pregnantDao().getPregnantByPregnancyId(childEntity.getMotherId());
+            BeneficiaryJoin beneficiaryJoin=new BeneficiaryJoin();
+            beneficiaryJoin.setBeneficiaryEntity(beneficiaryEntity);
+            beneficiaryJoin.setChildEntity(childEntity);
+            beneficiaryJoin.setPregnantEntity(pregnantEntity);
+            return beneficiaryJoin;
+        });
     }
 
     public Single<BeneficiaryJoin> getBeneficiaryJoinData(long beneficiaryId) {
         return mAppDatabase.beneficiaryDao().getBeneficiaryDataById(beneficiaryId);
     }
 
-    @Deprecated
-    public Single<Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity>> getBeneficiaryData(long beneficiaryId) {
-
-        return Single.fromCallable(() -> getBeneficiaryDatah(beneficiaryId));
+    public Single<BeneficiaryWithChild> getBeneficiaryChildDataById(long beneficiaryId) {
+        return mAppDatabase.beneficiaryDao().getBeneficiaryChildDataById(beneficiaryId);
     }
 
     public Single<BeneficiaryEntity> getBeneficiary(long beneficiaryId) {
@@ -245,9 +262,8 @@ public class AppDbHelper {
 
     public Maybe<ChildEntity> getChild(long childId) {
 
-        return  mAppDatabase.childDao().childEntity(childId);
+        return mAppDatabase.childDao().childEntity(childId);
     }
-
 
 
     // upload data sync

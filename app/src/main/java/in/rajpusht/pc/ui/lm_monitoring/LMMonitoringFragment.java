@@ -151,6 +151,13 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                         true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
             }
         });
+        viewDataBinding.benfPmmvvyCount.setVisibility(View.GONE);
+        viewDataBinding.benfIgmpyCount.setVisibility(View.GONE);
+        viewDataBinding.benfJsyCount.setVisibility(View.GONE);
+        viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
+        viewDataBinding.benfInstalLy.setVisibility(View.GONE);
+
+        viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));//todo always IGMPY
         viewDataBinding.benfRegisteredProgramme.sethValueChangedListener(new HValueChangedListener<Set<Integer>>() {
             @Override
             public void onValueChanged(Set<Integer> data) {
@@ -252,7 +259,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         Single<LMMonitorEntity> other = Single.just(new LMMonitorEntity());
         if (lmFormId != null)
             other = dataRepository.lmMonitorById(lmFormId).toSingle();
-        Disposable disposable = dataRepository.getBeneficiaryData(motherId).zipWith(other, Pair::new)
+        Disposable disposable = dataRepository.getBeneficiaryJoinDataFromChildId(childId).zipWith(other, Pair::new)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe((tupleLMMonitorEntityPair, throwable) -> {
                     beneficiaryJoin = tupleLMMonitorEntityPair.first;

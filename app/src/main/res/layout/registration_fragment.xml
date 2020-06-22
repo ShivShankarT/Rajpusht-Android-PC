@@ -51,14 +51,108 @@
                     app:ff_required="true"
                     app:ff_selections="@array/benf_currently" />
 
-                <in.rajpusht.pc.custom.ui.FormDatePickerElement
-                    android:id="@+id/benf_child_dob"
-                    android:layout_width="match_parent"
+                <LinearLayout
+                    android:id="@+id/first_child_ly"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    app:ff_hint="DOB"
-                    app:ff_input_type="number"
-                    app:ff_label="@string/child_age"
-                    app:ff_required="true" />
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:elevation="3dp"
+                    android:orientation="vertical"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        android:id="@+id/benf_child1_tv"
+                        style="@style/FormTextMini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="First Child"
+                        android:gravity="center"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="19sp" />
+
+                    <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                        android:id="@+id/benf_child_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="DOB"
+                        app:ff_input_type="number"
+                        app:ff_label="@string/child_age"
+                        app:ff_required="true" />
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_child_delivery_place_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="@string/delivery"
+                        app:ff_required="true"
+                        app:ff_selections="@array/benf_delivery_place" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:id="@+id/benf_child_delivery_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Place Name"
+                        app:ff_label="@string/institutional_delivery"
+                        app:ff_maxLength="130"
+                        app:ff_required="true" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/second_child_ly"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginRight="5dp"
+                    android:elevation="3dp"
+                    android:orientation="vertical"
+                    android:paddingTop="7dp"
+                    android:paddingBottom="7dp">
+
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/benf_child2_tv"
+                        style="@style/FormTextMini"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:text="Second Child"
+                        android:textColor="@color/colorAccent"
+                        android:textSize="19sp" />
+
+                    <in.rajpusht.pc.custom.ui.FormDatePickerElement
+                        android:id="@+id/benf_child2_dob"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="DOB"
+                        app:ff_input_type="number"
+                        app:ff_label="@string/child_age"
+                        app:ff_required="true" />
+
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_child2_delivery_place_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="@string/delivery"
+                        app:ff_required="true"
+                        app:ff_selections="@array/benf_delivery_place" />
+
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:id="@+id/benf_child2_delivery_place"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="Place Name"
+                        app:ff_label="@string/institutional_delivery"
+                        app:ff_maxLength="130"
+                        app:ff_required="true" />
+
+
+                </LinearLayout>
 
 
                 <in.rajpusht.pc.custom.ui.FormMultiSelectorElement
@@ -72,22 +166,22 @@
 
 
                 <TextView
-                    android:visibility="gone"
-                    android:layout_marginLeft="10dp"
                     android:id="@+id/benf_instal_ly"
                     style="@style/FormTextMini"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="@string/number_installment_received" />
+                    android:layout_marginLeft="10dp"
+                    android:text="@string/number_installment_received"
+                    android:visibility="gone" />
 
                 <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_pmmvvy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginStart="7dp"
                     app:ff_label="@string/pmmvvy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    android:layout_marginStart="7dp"
                     app:ff_selections="@array/count_0_3_dot"
                     app:ff_show_divider="false" />
 
@@ -96,10 +190,10 @@
                     android:id="@+id/benf_igmpy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:layout_marginLeft="7dp"
                     app:ff_label="@string/igmpy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
-                    android:layout_marginLeft="7dp"
                     app:ff_selections="@array/count_0_4_dot"
                     app:ff_show_divider="false" />
 
@@ -107,8 +201,8 @@
                     android:id="@+id/benf_jsy_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="JSY"
                     android:layout_marginLeft="7dp"
+                    app:ff_label="JSY"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_1_dot"
@@ -118,8 +212,8 @@
                     android:id="@+id/benf_rajshri_count"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_label="@string/rajshri"
                     android:layout_marginLeft="7dp"
+                    app:ff_label="@string/rajshri"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_2_more_dot" />
@@ -221,8 +315,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="PCTS ID"
-                    app:ff_label="@string/benef_pcts_id"
                     app:ff_input_type="number"
+                    app:ff_label="@string/benef_pcts_id"
                     app:ff_maxLength="15"
                     app:ff_required="true" />
 
@@ -230,19 +324,12 @@
                     android:id="@+id/benf_bahamasha_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_hint="Bahamashah ID/ACK"
+                    app:ff_hint="Bhamashah ID/ACK"
+                    app:ff_input_type="textPersonName"
                     app:ff_label="@string/bahamashah_id"
-                    app:ff_input_type="number"
                     app:ff_maxLength="15"
                     app:ff_required="true" />
 
-                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
-                    android:id="@+id/benf_counseling"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_label="@string/counselling"
-                    app:ff_required="true"
-                    app:ff_selections="@array/YES_NO" />
 
                 <in.rajpusht.pc.custom.ui.FormDatePickerElement
                     android:id="@+id/benf_lmp"
@@ -252,24 +339,6 @@
                     app:ff_label="@string/benef_lmp_date"
                     app:ff_required="true" />
 
-
-                <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
-                    android:id="@+id/benf_child_delivery_place_type"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_label="@string/delivery"
-                    app:ff_required="true"
-                    app:ff_selections="@array/benf_delivery_place" />
-
-
-                <in.rajpusht.pc.custom.ui.FormEditFieldElement
-                    android:id="@+id/benf_child_delivery_place"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    app:ff_hint="Place Name"
-                    app:ff_label="@string/institutional_delivery"
-                    app:ff_maxLength="130"
-                    app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_cous_sms"

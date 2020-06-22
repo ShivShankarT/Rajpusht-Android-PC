@@ -71,7 +71,6 @@ public class JsonParser {
                     String economic_status = getString(object, "economic_status");
                     String pcts_id = getString(object, "pcts_id");
                     String bahamashah_id = getString(object, "bahamashah_or_ack_id");
-                    String is_counseling_provided = getString(object, "is_counseling_prov");
                     String is_active = getString(object, "is_active");
                     Integer counseling_sms = getInt(object, "counseling_sms");
 
@@ -96,7 +95,6 @@ public class JsonParser {
                     bmodel.setEconomic(economic_status);
                     bmodel.setPctsId(pcts_id);
                     bmodel.setBahamashahId(bahamashah_id);
-                    bmodel.setCounselingProv(HUtil.convYtoYes(is_counseling_provided));
                     bmodel.setCounselingSms(counseling_sms);
                     bmodel.setCreatedBy(created_by);
                     bmodel.setIsActive(is_active);
@@ -341,7 +339,7 @@ public class JsonParser {
         beneficiaryobject.addProperty("economic", beneficiaryEntity.getEconomic());
         beneficiaryobject.addProperty("pctsId", beneficiaryEntity.getPctsId());
         beneficiaryobject.addProperty("bahamashahId", beneficiaryEntity.getBahamashahId());
-        beneficiaryobject.addProperty("counselingProv", HUtil.convYestoY(beneficiaryEntity.getCounselingProv()));
+        beneficiaryobject.addProperty("counselingProv", "N");//todo chek
         beneficiaryobject.addProperty("counselingSms", beneficiaryEntity.getCounselingSms());
         beneficiaryobject.addProperty("isActive", beneficiaryEntity.getIsActive());
         beneficiaryobject.addProperty("createdBy", beneficiaryEntity.getCreatedBy());

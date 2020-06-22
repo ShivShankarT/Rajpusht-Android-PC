@@ -67,6 +67,12 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
             holder.pctsId.setText("PCTS ID :-");
 
         }
+        if (befModel.getChildOrder() != null) {
+            holder.childOrder.setVisibility(View.VISIBLE);
+            holder.childOrder.setText("Child Order :" + befModel.getChildOrder());
+        } else {
+            holder.childOrder.setVisibility(View.GONE);
+        }
 
         Context context = holder.itemView.getContext();
         if (befModel.getPwFormId() != null || befModel.getLmFormId() != null) {
@@ -172,6 +178,7 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
         private final TextView benf_hus_name;
         private final TextView date;
         private final TextView pctsId;
+        private final TextView childOrder;
         private final ImageView img_synced;
         private final ImageView img_delete;
         private final ImageView ic_flag;
@@ -187,6 +194,7 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
             benf_hus_name = view.findViewById(R.id.benf_hus_name);
             date = view.findViewById(R.id.date);
             pctsId = view.findViewById(R.id.pctsId);
+            childOrder = view.findViewById(R.id.childOrder);
             img_synced = view.findViewById(R.id.img_synced);
             img_delete = view.findViewById(R.id.img_delete);
             ic_flag = view.findViewById(R.id.ic_flag);

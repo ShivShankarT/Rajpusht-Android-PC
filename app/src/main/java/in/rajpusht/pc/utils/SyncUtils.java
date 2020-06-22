@@ -19,6 +19,7 @@ import in.rajpusht.pc.data.remote.AppApiHelper;
 import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.DataStatus;
 
+@Deprecated
 public class SyncUtils {
     private AppApiHelper appApiHelper;
 
@@ -119,7 +120,6 @@ public class SyncUtils {
         beneficiaryobject.addProperty("economic_status", beneficiaryEntity.getEconomic());
         beneficiaryobject.addProperty("pcts_id", beneficiaryEntity.getPctsId());
         beneficiaryobject.addProperty("bahamashah_or_ack_id", beneficiaryEntity.getBahamashahId());
-        beneficiaryobject.addProperty("is_counseling_prov", HUtil.convYestoY(beneficiaryEntity.getCounselingProv()));
         beneficiaryobject.addProperty("counseling_sms", beneficiaryEntity.getCounselingSms());
         beneficiaryobject.addProperty("created_by", beneficiaryEntity.getCreatedBy());
         beneficiaryobject.addProperty("createdAt", beneficiaryEntity.getCreatedAt());

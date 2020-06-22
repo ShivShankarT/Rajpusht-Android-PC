@@ -139,7 +139,7 @@
     <string name="confirm_password_incorrect">Confirm Password Incorrect</string>
     <string name="Women_Counselling">Women Counselling</string>
     <string name="finish">Finish</string>
-    <string name="pw_counselling_completed">PW Women Counselling Completed !!!</string>
+    <string name="counselling_completed">Counselling Completed !!!</string>
     <string name="enter_email">Please enter your email</string>
     <string name="please_enter_OTP">Please enter OTP</string>
     <string name="InvalidOTP">Invalid OTP</string>

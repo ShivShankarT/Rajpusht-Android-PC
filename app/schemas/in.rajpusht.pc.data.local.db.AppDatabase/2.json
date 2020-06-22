@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "61bd8663bc177b049a9bded54d641a2f",
+    "identityHash": "01b2433d00cd844e4db5db028c121cb6",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -98,7 +98,7 @@
       },
       {
         "tableName": "beneficiary",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `name` TEXT, `husbandName` TEXT, `mobileNo` TEXT, `husbandMobNo` TEXT, `stage` TEXT, `subStage` TEXT, `dob` TEXT, `childCount` INTEGER, `age` INTEGER, `caste` TEXT, `economic` TEXT, `pctsId` TEXT, `bahamashahId` TEXT, `counselingProv` TEXT, `counselingSms` INTEGER, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `awcCode` TEXT, `isActive` TEXT, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `beneficiaryId` INTEGER NOT NULL, `name` TEXT, `husbandName` TEXT, `mobileNo` TEXT, `husbandMobNo` TEXT, `stage` TEXT, `subStage` TEXT, `dob` TEXT, `childCount` INTEGER, `age` INTEGER, `caste` TEXT, `economic` TEXT, `pctsId` TEXT, `bahamashahId` TEXT, `counselingSms` INTEGER, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `dataStatus` INTEGER, `awcCode` TEXT, `isActive` TEXT, `createdBy` INTEGER NOT NULL, `createdAt` TEXT, `updatedAt` TEXT)",
         "fields": [
           {
             "fieldPath": "id",
@@ -187,12 +187,6 @@
           {
             "fieldPath": "bahamashahId",
             "columnName": "bahamashahId",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "counselingProv",
-            "columnName": "counselingProv",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -716,7 +710,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '61bd8663bc177b049a9bded54d641a2f')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '01b2433d00cd844e4db5db028c121cb6')"
     ]
   }
 }

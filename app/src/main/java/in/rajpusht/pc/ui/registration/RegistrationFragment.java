@@ -37,11 +37,12 @@ import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
-import in.rajpusht.pc.model.BeneficiaryJoin;
+import in.rajpusht.pc.model.BeneficiaryWithChild;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
 
 import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
@@ -56,7 +57,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     SchedulerProvider schedulerProvider;
     private RegistrationViewModel mViewModel;
     private long beneficiaryId;
-    private BeneficiaryJoin beneficiaryJoin;
+    private BeneficiaryWithChild beneficiaryJoin;
 
 
     public static RegistrationFragment newInstance(long beneficiaryId) {
@@ -96,6 +97,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     @Override
     public void onViewCreated(@NonNull View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
         RegistrationFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
         toolbar.setTitle(getResources().getString(R.string.registration_title));
@@ -121,30 +123,62 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         });
 
+        viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));//todo always IGMPY
+
         viewDataBinding.benfChildCount.sethValidatorListener(FormValidatorUtils.valueBwValidator(0, 2, "NOT ELIGIBLE"));
         viewDataBinding.benfChildCount.sethValueChangedListener(new HValueChangedListener<Integer>() {
             @Override
             public void onValueChanged(Integer data) {
+
+                if (data == 0) {
+                    //viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));
+                    viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+                } else {
+                    //viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, true));
+                    viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+                }
+
+                if (data == 2) {//IGMPY
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(0, false));
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, true));//todo igmpy
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(2, false));
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
+                } else {
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(0, true));
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(2, true));
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, true));
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));//todo igmpy
+
+                }
+
+
                 if (data == 0) {
                     viewDataBinding.benfRegStage.setEnableChild(false);
                     viewDataBinding.benfRegStage.setSection(0);
                     viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
-                }
-                else if (data == 2) {
+                } else if (data == 2) {
                     viewDataBinding.benfRegStage.setEnableChild(false);
                     viewDataBinding.benfRegStage.setSection(1);
                     viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
-                } else if (data == 3) {
+                } else {
+                    viewDataBinding.benfRegStage.setEnableChild(true);
+                }
+
+            }
+        });
+
+        viewDataBinding.benfChildDob.sethValueChangedListener(new HValueChangedListener<Date>() {
+            @Override
+            public void onValueChanged(Date data) {
+
+                int age = HUtil.calcAge(data);
+                if (age >= 1)
                     showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
                         @Override
                         public void run() {
                             requireActivity().onBackPressed();
                         }
                     });
-                } else {
-                    viewDataBinding.benfRegStage.setEnableChild(true);
-                }
-
             }
         });
 
@@ -166,22 +200,25 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             @Override
             public void onValueChanged(Integer data) {
                 if (data == 0) {
-                    viewDataBinding.benfChildDob.setVisibility(View.GONE);
+
+                    viewDataBinding.firstChildLy.setVisibility(View.GONE);
+                    viewDataBinding.secondChildLy.setVisibility(View.GONE);
                     viewDataBinding.benfLmp.setVisibility(View.VISIBLE);
-                    viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.GONE);
-                    viewDataBinding.benfChildDeliveryPlace.setVisibility(View.GONE);
 
                 } else if (data == 1) {
-                    viewDataBinding.benfChildDob.setVisibility(View.VISIBLE);
+                    viewDataBinding.firstChildLy.setVisibility(View.VISIBLE);
                     viewDataBinding.benfLmp.setVisibility(View.GONE);
-                    viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.VISIBLE);
-                    viewDataBinding.benfChildDeliveryPlace.setVisibility(View.VISIBLE);
+                    if (viewDataBinding.benfChildCount.getSelectedPos() >= 2) {
+                        viewDataBinding.secondChildLy.setVisibility(View.VISIBLE);
+                    }
 
                 } else {
-                    viewDataBinding.benfChildDob.setVisibility(View.VISIBLE);
+
+                    viewDataBinding.firstChildLy.setVisibility(View.VISIBLE);
                     viewDataBinding.benfLmp.setVisibility(View.VISIBLE);
-                    viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.VISIBLE);
-                    viewDataBinding.benfChildDeliveryPlace.setVisibility(View.VISIBLE);
+                    if (viewDataBinding.benfChildCount.getSelectedPos() >= 2) {
+                        viewDataBinding.secondChildLy.setVisibility(View.VISIBLE);
+                    }
                 }
 
             }
@@ -204,6 +241,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.benfJsyCount.setVisibility(View.GONE);
         viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
         viewDataBinding.benfInstalLy.setVisibility(View.GONE);
+
+        viewDataBinding.firstChildLy.setVisibility(View.GONE);
+        viewDataBinding.secondChildLy.setVisibility(View.GONE);
 
         viewDataBinding.benfRegisteredProgramme.sethValueChangedListener(new HValueChangedListener<Set<Integer>>() {
             @Override
@@ -239,6 +279,13 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfJsyCount.setVisibility(View.GONE);
                     viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
                     viewDataBinding.benfInstalLy.setVisibility(View.GONE);
+                    showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
+                        @Override
+                        public void run() {
+                            requireActivity().onBackPressed();
+                        }
+                    });
+
                 } else {
                     viewDataBinding.benfInstalLy.setVisibility(View.VISIBLE);
 
@@ -335,7 +382,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
 
         if (beneficiaryId != 0)
-            dataRepository.getBeneficiaryData(beneficiaryId)
+            dataRepository.getBeneficiaryChildDataById(beneficiaryId)
                     .subscribeOn(schedulerProvider.io())
                     .observeOn(schedulerProvider.ui())
                     .subscribe(data -> {
@@ -347,17 +394,19 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
     }
 
-   private void save() {
+    private void save() {
 
 
         long beneficiaryId = System.currentTimeMillis();
         ChildEntity childEntity = null;
+        ChildEntity secondChildEntity = null;
         PregnantEntity pregnantEntity = null;
         BeneficiaryEntity beneficiaryEntity = null;
         if (beneficiaryJoin != null) {
             beneficiaryEntity = beneficiaryJoin.getBeneficiaryEntity();
             pregnantEntity = beneficiaryJoin.getPregnantEntity();
-            childEntity = beneficiaryJoin.getChildEntity();
+            childEntity = beneficiaryJoin.getChildEntities().size() > 0 ? beneficiaryJoin.getChildEntities().get(0) : null;
+            secondChildEntity = beneficiaryJoin.getChildEntities().size() > 1 ? beneficiaryJoin.getChildEntities().get(1) : null;
             beneficiaryId = beneficiaryEntity.getBeneficiaryId();
         }
 
@@ -379,7 +428,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setEconomic(FormDataConstant.economic.get(vb.benfEcon.getSelectedPos()));
         beneficiaryEntity.setPctsId(vb.benfPctsid.getText());
         beneficiaryEntity.setBahamashahId(vb.benfBahamashaId.getText());
-        beneficiaryEntity.setCounselingProv(vb.benfCounseling.getSelectedData());
         beneficiaryEntity.setCounselingSms(vb.benfCousSms.getSelectedPos());
         beneficiaryEntity.setAwcCode(dataRepository.getSelectedAwcCode());
 
@@ -405,6 +453,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         boolean isPregnant = false;
         boolean hasChild = false;
+        boolean hasSecondChild = false;
 
         if (vb.benfRegStage.getSelectedPos() == 0) {
             isPregnant = true;
@@ -413,6 +462,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         } else if (vb.benfRegStage.getSelectedPos() == 2) {
             hasChild = true;
             isPregnant = true;
+        }
+
+        if (vb.benfChildCount.getSelectedPos() >= 2) {
+            hasSecondChild = true;
         }
 
 
@@ -439,6 +492,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 childEntity = new ChildEntity();
                 childEntity.setIsActive("Y");
                 childEntity.setChildId(Long.parseLong(beneficiaryId + "1"));
+                childEntity.setChildOrder(1);
             }
 
             int days = HUtil.daysBetween(date, new Date());
@@ -459,7 +513,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 beneficiaryEntity.setStage(childEntity.getStage());
             }
 
-            childEntity.setChildOrder(1);
+
             childEntity.setDob(date);
             childEntity.setMotherId(beneficiaryId);
             childEntity.setDeliveryHome(vb.benfChildDeliveryPlaceType.getSelectedPos());
@@ -468,9 +522,54 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         }
 
-        Disposable sDisposable = dataRepository.insertOrUpdateBeneficiaryData(beneficiaryEntity, childEntity, pregnantEntity)
+        if (hasSecondChild) {
+
+            Date date = vb.benfChild2Dob.getDate();
+            if (secondChildEntity == null) {
+                secondChildEntity = new ChildEntity();
+                secondChildEntity.setIsActive("Y");
+                secondChildEntity.setChildId(Long.parseLong(beneficiaryId + "2"));
+                secondChildEntity.setChildOrder(2);
+            }
+
+            int days = HUtil.daysBetween(date, new Date());
+            String lmmySubStage = HUtil.getLMMYSubStage(days);
+            //childEntity.setSubStage(lmmySubStage);//todo
+
+
+            if (lmmySubStage.contains("LM")) {
+                secondChildEntity.setStage("LM");
+                secondChildEntity.setSubStage("LM");
+            } else {
+                secondChildEntity.setStage("MY");
+                secondChildEntity.setSubStage("MY");
+            }
+
+            if (!isPregnant) {
+                beneficiaryEntity.setSubStage(secondChildEntity.getStage());//todo
+                beneficiaryEntity.setStage(secondChildEntity.getStage());
+            }
+
+            secondChildEntity.setDob(date);
+            secondChildEntity.setMotherId(beneficiaryId);
+            secondChildEntity.setDeliveryHome(vb.benfChild2DeliveryPlaceType.getSelectedPos());
+            secondChildEntity.setDeliveryPlace(vb.benfChild2DeliveryPlace.getText());
+
+
+        }
+
+        List<Observable<Boolean>> insertOrUpdate = new ArrayList<>();
+        insertOrUpdate.add(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity));
+        if (pregnantEntity != null)
+            insertOrUpdate.add(dataRepository.insertOrUpdatePregnant(pregnantEntity));
+        if (childEntity != null)
+            insertOrUpdate.add(dataRepository.insertOrUpdateChild(childEntity));
+        if (secondChildEntity != null)
+            insertOrUpdate.add(dataRepository.insertOrUpdateChild(secondChildEntity));
+        Disposable sDisposable = Observable.merge(insertOrUpdate)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
+                .toList()
                 .subscribe(aBoolean -> {
                     if (!aBoolean.isEmpty()) {//todo check
                         showAlertDialog(getResources().getString(R.string.benf_success_reg), () -> {
@@ -490,6 +589,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         boolean isPregnant = false;
         boolean hasChild = false;
+        boolean hasSecondChild = false;
         if (vb.benfRegStage.getSelectedPos() == 0) {
             isPregnant = true;
         } else if (vb.benfRegStage.getSelectedPos() == 1) {
@@ -498,13 +598,25 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             hasChild = true;
             isPregnant = true;
         }
+        if (vb.benfChildCount.getSelectedPos() >= 2) {
+            hasSecondChild = true;
+        }
 
         validateElement.add(vb.benfChildCount.validateWthView());
         validateElement.add(vb.benfRegStage.validateWthView());
 
         if (hasChild) {
             validateElement.add(vb.benfChildDob.validateWthView());
+            validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
+            validateElement.add(vb.benfChildDeliveryPlace.validateWthView());
         }
+
+        if (hasSecondChild) {
+            validateElement.add(vb.benfChild2Dob.validateWthView());
+            validateElement.add(vb.benfChild2DeliveryPlaceType.validateWthView());
+            validateElement.add(vb.benfChild2DeliveryPlace.validateWthView());
+        }
+
 
         validateElement.add(vb.benfName.validateWthView());
         validateElement.add(vb.benfHusName.validateWthView());
@@ -543,7 +655,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         validateElement.add(vb.benfEcon.validateWthView());
         validateElement.add(vb.benfPctsid.validateWthView());
         validateElement.add(vb.benfBahamashaId.validateWthView());
-        validateElement.add(vb.benfCounseling.validateWthView());
 
 
         validateElement.add(vb.benfCousSms.validateWthView());
@@ -551,10 +662,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (isPregnant)
             validateElement.add(vb.benfLmp.validateWthView());
 
-        if (hasChild) {
-            validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
-            validateElement.add(vb.benfChildDeliveryPlace.validateWthView());
-        }
 
         for (Pair<Boolean, View> viewPair : validateElement) {
 
@@ -566,19 +673,18 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         }
 
 
-
         save();
 
 
     }
 
 
-    private void beneficiaryEntityUiUpdate(BeneficiaryJoin tuple) {
+    private void beneficiaryEntityUiUpdate(BeneficiaryWithChild tuple) {
 
         Log.i("ss", "beneficiaryEntityUiUpdate: " + new Gson().toJson(tuple));
 
         BeneficiaryEntity beneficiaryEntity = tuple.getBeneficiaryEntity();
-        ChildEntity childEntity = tuple.getChildEntity();
+        List<ChildEntity> childEntities = tuple.getChildEntities();
         PregnantEntity pregnantEntity = tuple.getPregnantEntity();
 
         RegistrationFragmentBinding vh = getViewDataBinding();
@@ -587,20 +693,32 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             HUtil.recursiveSetEnabled(vh.formContainer, false);
         }
         vh.benfChildCount.setSection(beneficiaryEntity.getChildCount());
-        if (pregnantEntity != null && childEntity != null)
+        if (pregnantEntity != null && !childEntities.isEmpty())
             vh.benfRegStage.setSection(2);
-        else if (childEntity != null)
+        else if (!childEntities.isEmpty())
             vh.benfRegStage.setSection(1);
         else if (pregnantEntity != null)
             vh.benfRegStage.setSection(0);
         vh.benfRegStage.sendChangedListenerValue();//ui hide
         vh.benfRegStage.setEnableChild(false);//will create conflict
+        vh.benfChildCount.sendChangedListenerValue();
+        vh.benfChildCount.setEnabled(false);
 
-        if (childEntity != null) {
+
+        if (!childEntities.isEmpty()) {
+            ChildEntity childEntity = childEntities.get(0);
             vh.benfChildDob.setDate(childEntity.getDob());
             vh.benfChildDeliveryPlace.setText(childEntity.getDeliveryPlace());
             if (childEntity.getDeliveryHome() != null)
                 vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
+
+            if (childEntities.size() >= 1) {
+                ChildEntity secondChild = childEntities.get(1);
+                vh.benfChild2Dob.setDate(secondChild.getDob());
+                vh.benfChild2DeliveryPlace.setText(secondChild.getDeliveryPlace());
+                if (secondChild.getDeliveryHome() != null)
+                    vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryHome());
+            }
         }
 
         if (pregnantEntity != null) {
@@ -661,7 +779,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         vh.benfEcon.setSection(FormDataConstant.economic.indexOf(beneficiaryEntity.getEconomic()));
         vh.benfBahamashaId.setText(beneficiaryEntity.getBahamashahId());
         vh.benfPctsid.setText(beneficiaryEntity.getPctsId());
-        vh.benfCounseling.setSectionByData(beneficiaryEntity.getCounselingProv());
         vh.benfCousSms.setSection(beneficiaryEntity.getCounselingSms());
 
 

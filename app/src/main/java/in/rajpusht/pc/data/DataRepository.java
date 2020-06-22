@@ -25,6 +25,7 @@ import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.AwcSyncCount;
 import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.BeneficiaryJoin;
+import in.rajpusht.pc.model.BeneficiaryWithChild;
 import in.rajpusht.pc.model.ProfileDetail;
 import in.rajpusht.pc.utils.JsonParser;
 import io.reactivex.Completable;
@@ -82,6 +83,7 @@ public class DataRepository {
     public Observable<Boolean> insertOrUpdateBeneficiary(final BeneficiaryEntity beneficiaryEntity) {
         return appDbHelper.insertOrUpdateBeneficiary(beneficiaryEntity);
     }
+
     public Observable<Boolean> insertOrUpdatePregnant(PregnantEntity lmMonitorEntity) {
         return appDbHelper.insertOrUpdatePregnant(lmMonitorEntity);
     }
@@ -114,6 +116,7 @@ public class DataRepository {
 
         return appDbHelper.getBefModels();
     }
+
     public LiveData<List<BefModel>> otherWomenBefModels() {
 
         return appDbHelper.otherWomenBefModels();
@@ -123,12 +126,27 @@ public class DataRepository {
         return appDbHelper.getBeneficiaryJoinData(beneficiaryId);
     }
 
+    public Single<BeneficiaryWithChild> getBeneficiaryChildDataById(long beneficiaryId) {
+        return appDbHelper.getBeneficiaryChildDataById(beneficiaryId);
+    }
+
+    public Single<BeneficiaryJoin> getBeneficiaryJoinDataFromPregnancyId(long pregnancyId) {
+
+        return appDbHelper.getBeneficiaryJoinDataFromPregnancyId(pregnancyId);
+    }
+
+    public Single<BeneficiaryJoin> getBeneficiaryJoinDataFromChildId(long childID) {
+
+        return appDbHelper.getBeneficiaryJoinDataFromChildId(childID);
+    }
+
     public Single<BeneficiaryEntity> getBeneficiary(long beneficiaryId) {
         return appDbHelper.getBeneficiary(beneficiaryId);
     }
+
     public Maybe<ChildEntity> getChild(long childId) {
 
-        return  appDbHelper.getChild(childId);
+        return appDbHelper.getChild(childId);
     }
 
 

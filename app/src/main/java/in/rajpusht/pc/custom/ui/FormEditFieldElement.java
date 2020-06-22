@@ -12,6 +12,7 @@ import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -119,6 +120,8 @@ public class FormEditFieldElement extends FrameLayout {
             labelTv.setVisibility(GONE);
         }
         edf_txt_inp_ly.setHint(hint);
+
+
     }
 
     public boolean validate() {

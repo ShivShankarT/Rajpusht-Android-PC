@@ -18,6 +18,7 @@ import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -205,14 +206,21 @@ public class HUtil {
         return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
 
-    public static int calcAge(Date date) {
-        Calendar calendar = Calendar.getInstance();
-        int nowYear = calendar.get(Calendar.YEAR);
-        calendar.setTime(date);
-        int age = nowYear - calendar.get(Calendar.YEAR);
+
+    public static int calcAge(Date birthday) {
+        GregorianCalendar today = new GregorianCalendar();
+        GregorianCalendar bday = new GregorianCalendar();
+        GregorianCalendar bdayThisYear = new GregorianCalendar();
+
+        bday.setTime(birthday);
+        bdayThisYear.setTime(birthday);
+        bdayThisYear.set(Calendar.YEAR, today.get(Calendar.YEAR));
+        int age = today.get(Calendar.YEAR) - bday.get(Calendar.YEAR);
+        if(today.getTimeInMillis() < bdayThisYear.getTimeInMillis())
+            age--;
+
         return age;
     }
-
     public static Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> staticData() {//todo rm
 
         String j = "{\"t1\":{\"dob\":\"Jun 30, 1984 12:00:00 AM\",\"age\":36,\"bahamashahId\":\"wr6688899\",\"beneficiaryId\":1590818137299,\"caste\":\"SC\",\"childCount\":2,\"collectedDataSubStage\":[],\"counselingProv\":\"YES\",\"counselingSms\":1,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"economic\":\"BPL\",\"husbandMobNo\":\"9736484543\",\"husbandName\":\"Ram Kumar\",\"id\":1,\"mobileNo\":\"9876543218\",\"name\":\"Shavani\",\"pctsId\":\"13466778\",\"pmmvyInstallment\":1,\"stage\":\"PW\",\"subStage\":\"PW\",\"updatedAt\":\"2020-05-30 11:25:37\"},\"t2\":{\"beneficiaryId\":1590818137299,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"id\":1,\"lmpDate\":\"Jun 4, 2020 12:00:00 AM\",\"pregnancyId\":1590818137299,\"updatedAt\":\"2020-05-30 11:25:37\"},\"t3\":{\"dob\":\"Oct 8, 2019 12:00:00 AM\",\"childId\":15908181372991,\"childOrder\":1,\"collectedDataSubStage\":[],\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"deliveryHome\":0,\"deliveryPlace\":\"Bhavu\",\"id\":1,\"motherId\":1590818137299,\"stage\":\"LM\",\"subStage\":\"LM\",\"updatedAt\":\"2020-05-30 11:25:37\"}}";

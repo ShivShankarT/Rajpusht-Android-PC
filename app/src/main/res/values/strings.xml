@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">Rajpusht PC</string>
+    <string name="app_name" translatable="false">Rajpusht PC</string>
 
     <string name="invalid_password">Password must be >5 characters</string>
     <string name="login_failed">"Login failed"</string>
@@ -37,17 +37,17 @@
     <string name="jsy">JSY</string>
     <string name="none">None</string>
 
-    <string name="benef_husband_name">Beneficiary Husband/Father\'s Name</string>
+    <string name="benef_husband_name">Beneficiary\'s Husband\'s Name</string>
     <string name="benef_age">Age Of beneficiary"</string>
     <string name="benef_dob">Enter DOB</string>
     <string name="benef_age_enter">Enter Age (e.g 25)</string>
     <string name="mobile_number">Beneficiary Mobile Number</string>
     <string name="self_mobile">Self Mobile</string>
-    <string name="husband_mobile">Husband/Father\'s Mobile Number</string>
+    <string name="husband_mobile">Husband\'s Mobile Number</string>
     <string name="caste">CASTE</string>
     <string name="economic_status">Economic Status</string>
     <string name="benef_pcts_id">Enter the PCTS ID</string>
-    <string name="bahamashah_id">Enter the Bahamashah ID/ACK NO</string>
+    <string name="bahamashah_id">Enter the Bhamashah ID/ACK NO</string>
     <string name="counselling">Counseling Provided by ASHA/ANM/AWW</string>
     <string name="benef_lmp_date">First Day of the Last Menstrual Period - DATE(LMP)</string>
     <string name="delivery">Institutional Delivery or Home Delivery</string>
@@ -55,20 +55,20 @@
     <string name="receive_counselling">Are you willing to receive counselling messages on mobile</string>
 
 
-    <string name="first_cycle_immunization">First cycle of immunization of child completed (as in Manta Card)</string>
+    <string name="first_cycle_immunization">First cycle of immunization of child completed (as in MAMTA Card)</string>
     <string name="last_record_muac_child">Last recorded MUAC of child </string>
-    <string name="date_muac_child">Date of Last recorded MUAC of child </string>
+    <string name="date_muac_child">Date of last recorded MUAC of child </string>
     <string name="current_muac_child">Current MUAC of child </string>
-    <string name="birth_weight_child">Birth Weight of Child (As in Manta Card) </string>
+    <string name="birth_weight_child">Birth Weight of Child (As in MAMTA Card ) </string>
     <string name="current_weight_child">Current Weight of child  </string>
     <string name="are_you_register_in">Are you registered in </string>
     <string name="child_current_height">Current Height of child</string>
     <string name="installment_received">How many installments have you received? </string>
 
 
-    <string name="number_anc_completed">How Many ANCs Completed  </string>
+    <string name="number_anc_completed">How Many ANCs Completed </string>
     <string name="last_anc_date">Enter Last ANC Date </string>
-    <string name="last_pregnancy_weight">Last recorded pregnancy weight (As in Mamta Card) </string>
+    <string name="last_pregnancy_weight">Last recorded pregnancy weight (As in MAMTA Card) </string>
     <string name="date_recorded_pregnancy_weight">Date of last recorded pregnancy weight (As in Mamta Card) </string>
     <string name="current_preg_weight">Current pregnancy weight  </string>
     <string name="you_register_in">Are you registered in </string>
@@ -82,7 +82,6 @@
         <item>0</item>
         <item>1</item>
         <item>2</item>
-        <item>3 OR More</item>
     </string-array>
 
     <string-array name="count_0" translatable="false">
@@ -173,7 +172,7 @@
 
 
     <string-array name="benf_econ">
-        <item>"Blue/ Green (APL)</item>
+        <item>Blue/ Green (APL)</item>
         <item>Dark Pink (BPL)</item>
         <item>Yellow (Antodyaya/ Poorest</item>
     </string-array>
@@ -241,7 +240,6 @@
     <string name="change_awc">Change AWC</string>
     <string name="sync">Sync</string>
     <string name="change_password">Change Password</string>
-    <string name="how_many_anc_comp">How Many ANCs Completed</string>
     <string name="save">save</string>
     <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
     <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
@@ -267,7 +265,7 @@
     <string name="confirm_password_incorrect">Confirm Password Incorrect</string>
     <string name="Women_Counselling">Women Counselling</string>
     <string name="finish">Finish</string>
-    <string name="pw_counselling_completed">PW Women Counselling Completed !!!</string>
+    <string name="counselling_completed">Counselling Completed !!!</string>
     <string name="enter_email">Please enter your email</string>
     <string name="please_enter_OTP">Please enter OTP</string>
     <string name="InvalidOTP">Invalid OTP</string>
@@ -290,9 +288,6 @@
     <string name="AWC_Sync_Details">AWC Sync Details</string>
     <string name="submit">Submit</string>
     <string name="set_new_password">Set New Password</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
 
 
 </resources>

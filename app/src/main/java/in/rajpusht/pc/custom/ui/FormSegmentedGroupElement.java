@@ -200,4 +200,10 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
         return getVisibility() == VISIBLE && isEnabled();
     }
 
+
+    public void sendChangedListenerValue() {
+        if (hValueChangedListener != null && mSelectedPos != -1)
+            hValueChangedListener.onValueChanged(mSelectedPos);
+    }
+
 }

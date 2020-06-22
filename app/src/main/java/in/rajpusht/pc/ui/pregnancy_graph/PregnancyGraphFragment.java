@@ -67,7 +67,7 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
 
             FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
                     CounsellingAnimationFragment.newInstance(3), R.id.fragment_container,
-                    true, true, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                    true, true, FragmentUtils.TRANSITION_POP);
         });
 
 

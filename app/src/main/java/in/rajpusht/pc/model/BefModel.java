@@ -19,7 +19,8 @@ public class BefModel {
     private Long pwFormId;
     private String naReason;
     private Boolean available;
-    private  DataStatus dataStatus;//mother
+    private Integer childOrder;
+    private DataStatus dataStatus;//mother
 
     public Long getBeneficiaryId() {
         return beneficiaryId;
@@ -157,5 +158,13 @@ public class BefModel {
 
     public void setAvailable(Boolean available) {
         this.available = available;
+    }
+
+    public Integer getChildOrder() {
+        return childOrder;
+    }
+
+    public void setChildOrder(Integer childOrder) {
+        this.childOrder = childOrder;
     }
 }
