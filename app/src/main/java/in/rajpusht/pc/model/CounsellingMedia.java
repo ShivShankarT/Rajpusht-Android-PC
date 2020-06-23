@@ -257,7 +257,7 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(43, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx01_t.webp", "file:///android_asset/img/preparing for birth/Gfx01.webp")));
         counsellingMedia.add(new CounsellingMedia(44, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx02_t.webp", "file:///android_asset/img/preparing for birth/Gfx02.webp")));
         counsellingMedia.add(new CounsellingMedia(46, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx04_t.webp", "file:///android_asset/img/preparing for birth/Gfx04.webp")));
-        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx03_t.webp", "file:///android_asset/img/preparing for birth/Gfx03.webp")));
+        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx03_t.webp", "file:///android_asset/img/preparing for birth/gfx03_low.webp")));
         counsellingMedia.add(new CounsellingMedia(26, Arrays.asList("file:///android_asset/img/exclusive breast feeding/Gfx05_t.webp", "file:///android_asset/img/exclusive breast feeding/Gfx05.webp")));
 
 
@@ -306,6 +306,15 @@ public class CounsellingMedia implements Parcelable {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    @Override
+    public String toString() {
+        return "CounsellingMedia{" +
+                "id=" + id +
+                ", mediaImage=" + mediaImage +
+                ", type=" + type +
+                '}';
     }
 }
 

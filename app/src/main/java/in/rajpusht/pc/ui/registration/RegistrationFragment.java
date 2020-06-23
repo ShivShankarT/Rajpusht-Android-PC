@@ -58,6 +58,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     private RegistrationViewModel mViewModel;
     private long beneficiaryId;
     private BeneficiaryWithChild beneficiaryJoin;
+    boolean firstChildinvalidDob=false;
 
 
     public static RegistrationFragment newInstance(long beneficiaryId) {
@@ -143,6 +144,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, true));//todo igmpy
                     viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(2, false));
                     viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
+                    viewDataBinding.benfChildDob.setMinDate(0);
                 } else {
                     viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(0, true));
                     viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(2, true));
@@ -172,6 +174,36 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             public void onValueChanged(Date data) {
 
                 int age = HUtil.calcAge(data);
+                firstChildinvalidDob=false;
+                if(viewDataBinding.benfChildCount.getSelectedPos()>=2 &&  age >= 1){
+                    firstChildinvalidDob=true;
+
+                    showAlertDialog("First child not eligible to registration", new Runnable() {
+                        @Override
+                        public void run() {
+                            viewDataBinding.benfChildDob.setError("First child not eligible to registration");
+
+                        }
+                    });
+                }
+                else{
+                    if (age >= 1) {
+                        showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
+                            @Override
+                            public void run() {
+                                requireActivity().onBackPressed();
+                            }
+                        });
+                    }
+                }
+            }
+        });
+
+        viewDataBinding.benfChild2Dob.sethValueChangedListener(new HValueChangedListener<Date>() {
+            @Override
+            public void onValueChanged(Date data) {
+
+                int age = HUtil.calcAge(data);
                 if (age >= 1)
                     showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
                         @Override
@@ -190,6 +222,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.YEAR, -1);
         viewDataBinding.benfChildDob.setMinDate(instance.getTime().getTime());
+        viewDataBinding.benfChild2Dob.setMinDate(instance.getTime().getTime());
 
         instance = Calendar.getInstance();
         instance.add(Calendar.YEAR, -13);
@@ -455,6 +488,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         boolean hasChild = false;
         boolean hasSecondChild = false;
 
+
         if (vb.benfRegStage.getSelectedPos() == 0) {
             isPregnant = true;
         } else if (vb.benfRegStage.getSelectedPos() == 1) {
@@ -467,6 +501,11 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (vb.benfChildCount.getSelectedPos() >= 2) {
             hasSecondChild = true;
         }
+
+        if(firstChildinvalidDob){
+            hasChild=false;
+        }
+
 
 
         if (isPregnant) {
@@ -590,6 +629,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         boolean isPregnant = false;
         boolean hasChild = false;
         boolean hasSecondChild = false;
+
         if (vb.benfRegStage.getSelectedPos() == 0) {
             isPregnant = true;
         } else if (vb.benfRegStage.getSelectedPos() == 1) {
@@ -600,6 +640,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         }
         if (vb.benfChildCount.getSelectedPos() >= 2) {
             hasSecondChild = true;
+        }
+
+        if(firstChildinvalidDob){
+            hasChild=false;
         }
 
         validateElement.add(vb.benfChildCount.validateWthView());

@@ -214,6 +214,15 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         });
 
 
+        viewDataBinding.weightIv.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                CounsellingMedia.counsellingSubstage = subStage;
+                FragmentUtils.replaceFragment(requireActivity(),
+                        CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+            }
+        });
         viewDataBinding.saveNaBtn.setOnClickListener(v -> save(true));
         viewDataBinding.saveBtn.setOnClickListener(v -> save(false));
         viewDataBinding.savePrgBtn.setOnClickListener(v -> addPregnancy());

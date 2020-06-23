@@ -97,8 +97,15 @@
                         app:ff_hint="Place Name"
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
+                        app:ff_show_divider="false"
                         app:ff_required="true" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/view2" />
 
                 </LinearLayout>
 
@@ -149,8 +156,15 @@
                         app:ff_hint="Place Name"
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
+                        app:ff_show_divider="false"
                         app:ff_required="true" />
 
+                    <View
+                        android:layout_width="match_parent"
+                        android:layout_height="1dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginBottom="5dp"
+                        android:background="@color/view2" />
 
                 </LinearLayout>
 

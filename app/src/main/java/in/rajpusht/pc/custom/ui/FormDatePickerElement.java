@@ -38,7 +38,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
     private boolean required;
     private Date mDate;
     private long minDate;
-    private long maxDate;
+    private long maxDate = System.currentTimeMillis();
 
     public FormDatePickerElement(Context context) {
         super(context);
@@ -111,6 +111,10 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         return true;
     }
 
+    public void setError(String error) {
+        edf_txt_inp_ly.setError(error);
+    }
+
     // return validate, view for requestFocusAndScroll
     public Pair<Boolean, View> validateWthView() {
         return new Pair<>(validate(), this);
@@ -158,7 +162,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         int month = mCurrentDate.get(Calendar.MONTH);
         int year = mCurrentDate.get(Calendar.YEAR);
         DatePickerDialog d = new DatePickerDialog(getContext(), dpd, year, month, day);
-        if (minDate != 0&&(maxDate!=0&&minDate<maxDate))
+        if (minDate != 0 && (maxDate != 0 && minDate < maxDate))
             d.getDatePicker().setMinDate(minDate);
         if (maxDate != 0)
             d.getDatePicker().setMaxDate(maxDate);

@@ -20,7 +20,7 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.transition.TransitionManager;
-
+import android.util.Log;
 
 import com.bumptech.glide.request.target.Target;
 import com.squareup.picasso.Picasso;
@@ -93,6 +93,7 @@ public class CounsellingAnimationFragment extends Fragment {
         if (getArguments() != null) {
             pos = getArguments().getInt("data");
             counsellingMedia = CounsellingMedia.counsellingMediaData().get(pos);
+            Log.i("imagedd",""+counsellingMedia.toString());
         }
     }
 
