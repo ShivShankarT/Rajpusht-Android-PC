@@ -220,6 +220,11 @@ public class JsonParser {
                     String is_available = getString(object, "is_available");
                     String na_reason = getString(object, "na_reason");
 
+                    String pcts_child_id = getString(object, "pcts_child_id");
+                    Integer birth_weight_source = getInt(object, "birth_weight_source");
+                    Long opd_ipd = getLong(object, "opd_ipd");
+
+
 
                     LMMonitorEntity lmmodel = new LMMonitorEntity();
                     lmmodel.setId(id);
@@ -238,6 +243,9 @@ public class JsonParser {
                     lmmodel.setCreatedBy(created_by);
                     lmmodel.setStage(stage);
                     lmmodel.setSubStage(sub_stage);
+                    lmmodel.setPctsChildId(pcts_child_id);
+                    lmmodel.setBirthWeightSource(birth_weight_source);
+                    lmmodel.setOpdipd(opd_ipd);
                     lmmodel.setDataStatus(DataStatus.OLD);
                     lmmodel.setNaReason(na_reason);
                     lmmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
@@ -406,6 +414,10 @@ public class JsonParser {
         lmObject.addProperty("createdBy", lmMonitorEntity.getCreatedBy());
         lmObject.addProperty("stage", lmMonitorEntity.getStage());
         lmObject.addProperty("subStage", lmMonitorEntity.getSubStage());
+        lmObject.addProperty("pctsChildId", lmMonitorEntity.getPctsChildId());
+        lmObject.addProperty("birthWeightSource", lmMonitorEntity.getBirthWeightSource());
+        lmObject.addProperty("opdIpd", lmMonitorEntity.getOpdipd());
+
         lmObject.addProperty("isAvailable", lmMonitorEntity.getAvailable() != null && lmMonitorEntity.getAvailable() ? "Y" : "N");
         lmObject.addProperty("naReason", lmMonitorEntity.getNaReason());
         lmObject.addProperty("createdAt", lmMonitorEntity.getCreatedAt());

@@ -345,7 +345,7 @@
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
-                    android:id="@+id/benf_bahamasha_id"
+                    android:id="@+id/benf_bhamasha_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="@string/bhamashah_ID_ACK"

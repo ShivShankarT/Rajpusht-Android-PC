@@ -1,7 +1,6 @@
 package in.rajpusht.pc.custom.ui;
 
 import android.app.Activity;
-import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.text.TextUtils;
@@ -10,17 +9,19 @@ import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
-import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.android.material.textfield.TextInputLayout;
+import com.wdullaer.materialdatetimepicker.date.DatePickerDialog;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
 
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.custom.callback.HValidatorListener;
@@ -141,10 +142,8 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
         hideKeyboard();
         DatePickerDialog.OnDateSetListener dpd = new DatePickerDialog.OnDateSetListener() {
             @Override
-            public void onDateSet(DatePicker view, int year, int monthOfYear,
-                                  int dayOfMonth) {
-
-                int month = monthOfYear + 1;
+            public void onDateSet(DatePickerDialog view, int year, int monthOfYear, int dayOfMonth) {
+                int month = monthOfYear;
                 Calendar calendar = Calendar.getInstance();
                 calendar.set(Calendar.DATE, dayOfMonth);
                 calendar.set(Calendar.MONTH, month);
@@ -156,19 +155,31 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
                 edf_txt_inp_ly.setError(null);
 
             }
+
         };
         Calendar mCurrentDate = Calendar.getInstance();
-        int day = mCurrentDate.get(Calendar.DAY_OF_MONTH);
-        int month = mCurrentDate.get(Calendar.MONTH);
-        int year = mCurrentDate.get(Calendar.YEAR);
-        DatePickerDialog d = new DatePickerDialog(getContext(), dpd, year, month, day);
-        if (minDate != 0 && (maxDate != 0 && minDate < maxDate))
-            d.getDatePicker().setMinDate(minDate);
-        if (maxDate != 0)
-            d.getDatePicker().setMaxDate(maxDate);
-        else
-            d.getDatePicker().setMaxDate(System.currentTimeMillis());
-        d.show();
+        if (mDate != null)
+            mCurrentDate.setTime(mDate);
+
+        DatePickerDialog d = DatePickerDialog.newInstance(dpd, mCurrentDate);
+        d.setLocale(Locale.ENGLISH);
+        if (minDate != 0 && (maxDate != 0 && minDate < maxDate)) {
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(new Date(minDate));
+            d.setMinDate(instance);
+        }
+
+        if (maxDate != 0) {
+            Calendar instance = Calendar.getInstance();
+            instance.setTime(new Date(maxDate));
+            d.setMaxDate(instance);
+        } else {
+            Calendar instance = Calendar.getInstance();
+            d.setMaxDate(instance);
+        }
+
+        AppCompatActivity appCompatActivity = (AppCompatActivity) getContext();
+        d.show(appCompatActivity.getSupportFragmentManager(), "DatePicker");
     }
 
     public void sethValidatorListener(HValidatorListener<Date> hValidatorListener) {

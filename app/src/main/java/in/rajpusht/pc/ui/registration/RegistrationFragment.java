@@ -214,6 +214,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
         viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
+        viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_pcts)));
+        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_bhamasha_id)));
+
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.YEAR, -1);
         viewDataBinding.benfChildDob.setMinDate(instance.getTime().getTime());
@@ -351,13 +354,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfJsyCount.setVisibility(View.GONE);
                     viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
                     viewDataBinding.benfInstalLy.setVisibility(View.GONE);
-                    showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
-                        @Override
-                        public void run() {
-                            requireActivity().onBackPressed();
-                        }
-                    });
-
                 } else {
                     viewDataBinding.benfInstalLy.setVisibility(View.VISIBLE);
 
@@ -499,7 +495,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         beneficiaryEntity.setCaste(FormDataConstant.caste.get(vb.benfCaste.getSelectedPos()));
         beneficiaryEntity.setEconomic(FormDataConstant.economic.get(vb.benfEcon.getSelectedPos()));
         beneficiaryEntity.setPctsId(vb.benfPctsid.getText());
-        beneficiaryEntity.setBahamashahId(vb.benfBahamashaId.getText());
+        beneficiaryEntity.setBahamashahId(vb.benfBhamashaId.getText());
         beneficiaryEntity.setCounselingSms(vb.benfCousSms.getSelectedPos());
         beneficiaryEntity.setAwcCode(dataRepository.getSelectedAwcCode());
 
@@ -738,7 +734,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         validateElement.add(vb.benfCaste.validateWthView());
         validateElement.add(vb.benfEcon.validateWthView());
         validateElement.add(vb.benfPctsid.validateWthView());
-        validateElement.add(vb.benfBahamashaId.validateWthView());
+        validateElement.add(vb.benfBhamashaId.validateWthView());
 
 
         validateElement.add(vb.benfCousSms.validateWthView());
@@ -869,7 +865,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         vh.benfCaste.setSection(FormDataConstant.caste.indexOf(beneficiaryEntity.getCaste()));
         vh.benfEcon.setSection(FormDataConstant.economic.indexOf(beneficiaryEntity.getEconomic()));
-        vh.benfBahamashaId.setText(beneficiaryEntity.getBahamashahId());
+        vh.benfBhamashaId.setText(beneficiaryEntity.getBahamashahId());
         vh.benfPctsid.setText(beneficiaryEntity.getPctsId());
         vh.benfCousSms.setSection(beneficiaryEntity.getCounselingSms());
 

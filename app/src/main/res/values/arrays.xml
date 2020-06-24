@@ -1,4 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+    <string-array name="birthWeightSource">
+        <item>@string/discharge_slip</item>
+        <item>@string/mamta_mcp_card</item>
+    </string-array>
+
+    <string-array name="pw_na_other_reason">
+        <item>@string/pw_na1</item>
+        <item>@string/pw_na2</item>
+        <item>@string/pw_na3</item>
+    </string-array>
+
+
+    <string-array name="lm_na_other_reason">
+        <item>@string/lm_na1</item>
+        <item>@string/lm_na2</item>
+        <item>@string/lm_na3</item>
+        <item>@string/lm_na4</item>
+        <item>@string/lm_na5</item>
+        <item>@string/lm_na6</item>
+    </string-array>
+
 </resources>

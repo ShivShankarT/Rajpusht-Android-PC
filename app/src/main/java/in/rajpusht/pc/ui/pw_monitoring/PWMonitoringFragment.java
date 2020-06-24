@@ -147,7 +147,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         viewDataBinding.weightIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (beneficiaryJoin!=null) {
+                if (beneficiaryJoin != null) {
                     PregnantEntity pregnantEntity = beneficiaryJoin.getPregnantEntity();
                     launchCounselling(pregnantEntity);
                 }
@@ -272,15 +272,16 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     }
 
     private void setupUiData() {
+        PwMonitoringFragmentBinding vb = getViewDataBinding();
         BeneficiaryEntity beneficiaryEntity = beneficiaryJoin.getBeneficiaryEntity();
         PregnantEntity pregnantEntity = beneficiaryJoin.getPregnantEntity();
-        getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
-        getViewDataBinding().benfHusName.setText("w/o:" + beneficiaryEntity.getHusbandName());
-        getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
-        getViewDataBinding().pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
-        getViewDataBinding().benfLastcheckupdate.setMinDate(pregnantEntity.getLmpDate().getTime());
+        vb.benfName.setText(beneficiaryEntity.getName());
+        vb.benfHusName.setText("w/o:" + beneficiaryEntity.getHusbandName());
+        vb.benfName.setText(beneficiaryEntity.getName());
+        vb.pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
+        vb.benfLastcheckupdate.setMinDate(pregnantEntity.getLmpDate().getTime());
 
-        getViewDataBinding().benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
+        vb.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
                 getString(R.string.incorrect_pw_weight)));
 
        /* a. 1st visit: Within 12 weeks—preferably as soon as pregnancy is suspected—for registration of pregnancy and first ANC
@@ -289,7 +290,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         d. 4th visit: Between 36 weeks and term*/
 
         //FormValidator
-        getViewDataBinding().benfAncDate.sethValidatorListener(new HValidatorListener<Date>() {
+        vb.benfAncDate.sethValidatorListener(new HValidatorListener<Date>() {
             @Override
             public ValidationStatus isValid(Date data) {
                 boolean isValid = true;
@@ -305,6 +306,29 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         });
 
 
+        if (mPwMonitorEntity == null) {
+            Set<Integer> regScheme = new HashSet<>();
+            if (beneficiaryEntity.getPmmvyInstallment() != null) {
+                regScheme.add(0);
+            }
+            if (beneficiaryEntity.getIgmpyInstallment() != null) {
+                regScheme.add(1);
+            }
+            if (beneficiaryEntity.getJsyInstallment() != null) {
+                regScheme.add(2);
+            }
+            if (beneficiaryEntity.getRajshriInstallment() != null) {
+                regScheme.add(3);
+            }
+            if (regScheme.isEmpty()) {
+                regScheme.add(4);
+            }
+            vb.benfRegisteredProgramme.setSelectedIds(regScheme);
+        }
+
+
+       /*
+        todo feature use
         if (beneficiaryEntity.getPmmvyInstallment() == null)
             getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(0, false));
         if (beneficiaryEntity.getIgmpyInstallment() == null)
@@ -312,7 +336,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         if (beneficiaryEntity.getJsyInstallment() == null)
             getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(2, false));
         if (beneficiaryEntity.getRajshriInstallment() == null)
-            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false)); */
 
     }
 
@@ -331,11 +355,14 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                         throwable.printStackTrace();
                     beneficiaryJoin = pair.first;
                     PWMonitorEntity pwMonitorEntity = pair.second;
-                    if (beneficiaryJoin != null)
-                        setupUiData();
                     if (pwMonitorEntity != null && pwMonitorEntity.getId() != 0) {
                         PWMonitoringFragment.this.mPwMonitorEntity = pwMonitorEntity;
-                        setFormUiData(pwMonitorEntity);
+                    }
+
+                    if (beneficiaryJoin != null)
+                        setupUiData();
+                    if (mPwMonitorEntity != null) {
+                        setFormUiData(mPwMonitorEntity);
 
                     }
                 });
@@ -532,9 +559,9 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
     private void launchCounselling(PregnantEntity pregnantEntity) {
         CounsellingMedia.counsellingSubstage = subStage;
-        CounsellingMedia.isTesting=false;
-        CounsellingMedia.counsellingPregId=pregnancyId;
-        CounsellingMedia.counsellingPregLmp=pregnantEntity.getLmpDate();
+        CounsellingMedia.isTesting = false;
+        CounsellingMedia.counsellingPregId = pregnancyId;
+        CounsellingMedia.counsellingPregLmp = pregnantEntity.getLmpDate();
         FragmentUtils.replaceFragment(requireActivity(),
                 CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
                 true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);

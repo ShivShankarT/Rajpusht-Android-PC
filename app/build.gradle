@@ -8,8 +8,8 @@ android {
         applicationId "in.rajpusht.pc"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 4
-        versionName "1.0.2"
+        versionCode 5
+        versionName "1.0.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         javaCompileOptions {
             annotationProcessorOptions {
@@ -44,6 +44,8 @@ dependencies {
     final ROOM_VERSION = '2.2.5'
     final rxjava2Version = '2.1.9'
     final rxandroidVersion = '2.0.2'
+    def work_version = "2.3.4"
+
 
     implementation fileTree(dir: 'libs', include: ['*.jar'])
 
@@ -117,6 +119,13 @@ dependencies {
     implementation 'com.github.piasy:GlideImageLoader:1.6.5'
 // progress pie indicator
     implementation 'com.github.piasy:ProgressPieIndicator:1.5.6'
+
+    implementation 'com.wdullaer:materialdatetimepicker:4.2.3'
+    // (Java only)
+    implementation "androidx.work:work-runtime:$work_version"
+    // optional - RxJava2 support
+    implementation "androidx.work:work-rxjava2:$work_version"
+
 
 
 }

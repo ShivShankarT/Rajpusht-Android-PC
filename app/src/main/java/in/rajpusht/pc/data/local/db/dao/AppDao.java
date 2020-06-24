@@ -20,12 +20,9 @@ public abstract class AppDao {
     @Query(value ="select u.beneficiaryId, u.name,u.dob,u.stage,u.subStage,u.motherId,b.husbandName, b.name as motherName,p.pregnancyId,b.pctsId, CASE WHEN u.motherId IS NOT NULL                                                                                                             \n" +
             "       THEN case when julianday('now') - julianday(u.dob) <=91 then 'LM1'                                                                         \n" +
             "                 when julianday('now') - julianday(u.dob) <=182 then 'LM2'                                                                        \n" +
-            "                     when julianday('now') - julianday(u.dob) <=365 then 'LM3'                                                                    \n" +
-            "                     when julianday('now') - julianday(u.dob) <=547 then 'MY1'                                                                    \n" +
-            "                         when julianday('now') - julianday(u.dob) <=730 then 'MY2'                                                                \n" +
-            "                         when julianday('now') - julianday(u.dob) <=912 then 'MY3'                                                                \n" +
-            "                         when julianday('now') - julianday(u.dob) <=1095 then 'MY4'                                                               \n" +
-            "             when julianday('now') - julianday(u.dob) <=1155 then 'MY5'                                                                           \n" +
+            "                     when julianday('now') - julianday(u.dob) <=365 then 'MY1'                                                                    \n" +
+            "                         when julianday('now') - julianday(u.dob) <=547 then 'MY2'                                                                \n" +
+            "                         when julianday('now') - julianday(u.dob) <=730 then 'MY3'                                                                \n" +
             "                        END                                                                                                                       \n" +
             "       ELSE case when julianday('now') - julianday(p.lmpDate) <=98 then 'PW1'                                                                     \n" +
             "                         when julianday('now') - julianday(p.lmpDate) <=196 then 'PW2'                                                            \n" +
@@ -39,9 +36,9 @@ public abstract class AppDao {
             "                                                                                                                                                  \n" +
             "                                                                                                                                                  \n" +
             " from                                                                                                                                             \n" +
-            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId,NULL as childOrder from beneficiary where isActive='Y'                                           \n" +
+            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId,NULL as childOrder from beneficiary where isActive='Y'                        \n" +
             "UNION                                                                                                                                             \n" +
-            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId, childOrder from child where isActive='Y' ) u                                          \n" +
+            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId, childOrder from child where isActive='Y' ) u                              \n" +
             "Left Join (select * from  pregnant where isActive='Y') p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                               \n" +
             "inner join  beneficiary b on (u.motherId is NULL  and b.beneficiaryId=u.beneficiaryId ) OR((u.motherId is NOT NULL  and b.beneficiaryId=u.motherId ))                                                                                                                                   \n" +
             "left join pw_monitor pw on pw.pregnancyId=p.pregnancyId and currentSubStage=pw.substage\n" +

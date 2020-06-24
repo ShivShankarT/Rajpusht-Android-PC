@@ -218,21 +218,6 @@
     <string name="pw_na2">Death</string>
     <string name="pw_na3">Migrated elsewhere</string>
 
-    <string-array name="pw_na_other_reason">
-        <item>@string/pw_na1</item>
-        <item>@string/pw_na2</item>
-        <item>@string/pw_na3</item>
-    </string-array>
-
-
-    <string-array name="lm_na_other_reason">
-        <item>@string/lm_na1</item>
-        <item>@string/lm_na2</item>
-        <item>@string/lm_na3</item>
-        <item>@string/lm_na4</item>
-        <item>@string/lm_na5</item>
-        <item>@string/lm_na6</item>
-    </string-array>
 
     <string name="nav_other_women_list">Migrated List</string>
     <string name="nav_logout">Logout</string>
@@ -349,6 +334,17 @@
     <string name="Child">Child</string>
     <string name="New">New</string>
     <string name="Edit">Edit</string>
+
+    <string name="discharge_slip">Discharge Slip</string>
+    <string name="mamta_mcp_card">Mamta/MCP Card</string>
+    <string name="invalid_pcts">Invalid PCTS</string>
+    <string name="invalid_bhamasha_id">Invalid Bhamasha Id/ACK</string>
+    <string name="invalid_OPD_IPD">Invalid OPD/IPD</string>
+    <string name="as_in_PCTS">As in PCTS</string>
+    <string name="enter_child_pctsid">Enter Child ID</string>
+    <string name="source_birthwt">Source of Birth Weight</string>
+    <string name="enter_OPD_IPD">Enter OPD/IPD</string>
+    <string name="as_in_discharge_slip">As in Discharge Slip</string>
 
 
 </resources>

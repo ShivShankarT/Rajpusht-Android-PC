@@ -58,13 +58,6 @@
         <item>गर्भवती और धात्री</item>
     </string-array>
 
-    <string-array name="benf_registered_in">
-        <item>@string/pmmvvy</item>
-        <item>@string/igmpy</item>
-        <item>@string/jsy</item>
-        <item>@string/rajshri</item>
-        <item>@string/none</item>
-    </string-array>
 
 
     <string-array name="benf_age">
@@ -247,5 +240,16 @@
     <string name="Child">Child</string>
     <string name="New">New</string>
     <string name="Edit">Edit</string>
+
+    <string name="discharge_slip">Discharge Slip</string>
+    <string name="mamta_mcp_card">Mamta/MCP Card</string>
+    <string name="invalid_pcts">Invalid PCTS</string>
+    <string name="invalid_bhamasha_id">Invalid Bhamasha Id/ACK</string>
+    <string name="invalid_OPD_IPD">Invalid OPD/IPD</string>
+    <string name="as_in_PCTS">As in PCTS</string>
+    <string name="enter_child_pctsid">Enter Child ID</string>
+    <string name="source_birthwt">Source of Birth Weight</string>
+    <string name="enter_OPD_IPD">Enter OPD/IPD</string>
+    <string name="as_in_discharge_slip">As in Discharge Slip</string>
 
 </resources>

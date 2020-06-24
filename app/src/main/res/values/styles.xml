@@ -67,5 +67,7 @@
         <item name="android:fontFamily">@font/noto_sans</item>
     </style>
 
+    <style name="mdtp_ActionButton.Text" parent="Widget.MaterialComponents.Button.TextButton.Dialog"/>
+
 
 </resources>
