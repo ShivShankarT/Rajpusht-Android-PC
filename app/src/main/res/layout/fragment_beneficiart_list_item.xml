@@ -27,7 +27,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginStart="14dp"
             android:fontFamily="@font/roboto_medium"
-            android:text="Sulochana Devi"
+            tools:text="Sulochana Devi"
             android:textColor="#555555"
             android:textSize="14dp" />
 
@@ -37,7 +37,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/date"
             android:layout_alignStart="@+id/date"
-            android:text="(w/o) Mr. XYZ"
+            tools:text="(w/o) Mr. XYZ"
             android:textSize="12dp" />
 
 
@@ -61,7 +61,7 @@
             android:clickable="false"
             android:elevation="5dp"
             android:minWidth="20dp"
-            android:text="PW 3"
+            tools:text="PW 3"
             android:textColor="@color/white"
             android:textSize="12dp" />
 
@@ -72,7 +72,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/benf_hus_name"
             android:layout_alignStart="@+id/benf_hus_name"
-            android:text="PCTS ID: 12345678"
+            tools:text="PCTS ID: 12345678"
             android:textSize="12dp" />
 
 
@@ -82,7 +82,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/pctsId"
             android:layout_alignStart="@+id/benf_hus_name"
-            android:text="child Order: 1"
+            tools:text="child Order: 1"
             android:textSize="12dp" />
 
         <LinearLayout
@@ -104,7 +104,7 @@
                 android:paddingTop="2dp"
                 android:paddingRight="16dp"
                 android:paddingBottom="2dp"
-                android:text="NA Reason : "
+                tools:text="NA Reason : "
                 android:textColor="@color/colorPrevText"
                 android:textSize="12sp" />
 

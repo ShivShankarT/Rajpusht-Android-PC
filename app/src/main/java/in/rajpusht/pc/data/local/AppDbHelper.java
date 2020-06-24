@@ -161,6 +161,10 @@ public class AppDbHelper {
         return mAppDatabase.pwMonitorDao().pwMonitorByID(id);
     }
 
+    public Single<List<PWMonitorEntity>> pwMonitorData(long pid) {
+        return mAppDatabase.pwMonitorDao().pwMonitor(pid);
+    }
+
 
     public Completable insertOrUpdatePwMonitor(PWMonitorEntity pwMonitorEntity) {
 

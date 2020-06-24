@@ -16,6 +16,7 @@ import in.rajpusht.pc.ui.login.LoginViewModel;
 import in.rajpusht.pc.ui.other_women.OtherWomenFragment;
 import in.rajpusht.pc.ui.other_women.OtherWomenViewModel;
 import in.rajpusht.pc.ui.otp.OtpViewModel;
+import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphViewModel;
 import in.rajpusht.pc.ui.profile.ProfileViewModel;
 import in.rajpusht.pc.ui.profile_edit.ProfileEditViewModel;
 import in.rajpusht.pc.ui.pw_monitoring.PWMonitoringViewModel;
@@ -83,6 +84,10 @@ public class ViewModelProviderFactory extends ViewModelProvider.NewInstanceFacto
         else if (modelClass.isAssignableFrom(OtherWomenViewModel.class)) {
             //noinspection unchecked
             return (T) new OtherWomenViewModel(dataManager, schedulerProvider);
+        }
+        else if (modelClass.isAssignableFrom(PregnancyGraphViewModel.class)) {
+            //noinspection unchecked
+            return (T) new PregnancyGraphViewModel(dataManager, schedulerProvider);
         }
 
         throw new IllegalArgumentException("Unknown ViewModel class: " + modelClass.getName());

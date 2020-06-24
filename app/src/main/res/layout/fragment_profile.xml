@@ -53,7 +53,7 @@
                             android:layout_marginTop="5dp"
                             android:minHeight="5dp"
                             android:padding="3dp"
-                            android:text="Edit"
+                            android:text="@string/edit"
                             android:textAllCaps="false"
                             android:textColor="@color/colorTextGray"
                             android:textSize="13sp" />

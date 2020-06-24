@@ -94,7 +94,7 @@ public class FormDatePickerElement extends FrameLayout implements View.OnClickLi
 
         if (required) {
             if (getDate() == null) {
-                edf_txt_inp_ly.setError("Please Enter *");
+                edf_txt_inp_ly.setError(getContext().getString(R.string.please_enter));
                 return false;
             }
         }

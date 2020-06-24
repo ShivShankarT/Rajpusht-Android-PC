@@ -6,6 +6,7 @@ import android.os.Parcelable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 import in.rajpusht.pc.R;
@@ -26,6 +27,9 @@ public class CounsellingMedia implements Parcelable {
     public static final int GRAPH_MEDIA = 2;
     public static final int VIDEO_MEDIA = 3;
     public static String counsellingSubstage = "PW1";
+    public static long counsellingPregId = 0;
+    public static Date counsellingPregLmp = null;
+    public static boolean isTesting = false;
     private int id;
     private List<String> mediaImage;
     private int type = IMAGE_MEDIA;//single , multiple, graph

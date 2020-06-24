@@ -76,7 +76,7 @@ public class ContextWrapper extends android.content.ContextWrapper {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        context.recreate();//todo
+      //  context.recreate();//todo
 //        this.setContentView(R.layout.activity_profile);
     }
 

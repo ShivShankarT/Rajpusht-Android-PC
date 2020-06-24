@@ -41,7 +41,7 @@
                     android:id="@+id/userNameFra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Email"
+                    android:hint="@string/email"
                     android:text="test@gmail.com"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -60,7 +60,7 @@
                     android:id="@+id/passwordFra"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:hint="Password"
+                    android:hint="@string/password"
                     android:text="admin123"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -75,7 +75,7 @@
                 android:layout_marginRight="10dp"
                 android:minHeight="0dp"
                 android:padding="0dp"
-                android:text="Forget Password"
+                android:text="@string/forget_password"
                 android:textAllCaps="false"
                 android:textSize="15dp" />
 
@@ -87,7 +87,7 @@
                 android:layout_gravity="center"
                 android:layout_margin="14dp"
                 android:onClick="@{() -> viewModel.login(userNameFra.getText().toString(),passwordFra.getText().toString())}"
-                android:text="Login"
+                android:text="@string/login"
                 android:textSize="14dp" />
 
 

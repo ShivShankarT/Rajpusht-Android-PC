@@ -110,7 +110,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         toolbar.setTitle("PW Monitoring");
 
         //todo only when ena
-        if (true || subStage.equalsIgnoreCase("PW3") || subStage.equalsIgnoreCase("PW4")) {
+        if (subStage.equalsIgnoreCase("PW3") || subStage.equalsIgnoreCase("PW4")) {
             toolbar.getMenu().add(1, 1, 1, "add child").setIcon(R.drawable.ic_baby).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         }
@@ -147,10 +147,10 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         viewDataBinding.weightIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CounsellingMedia.counsellingSubstage = subStage;
-                FragmentUtils.replaceFragment(requireActivity(),
-                        CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                if (beneficiaryJoin!=null) {
+                    PregnantEntity pregnantEntity = beneficiaryJoin.getPregnantEntity();
+                    launchCounselling(pregnantEntity);
+                }
             }
         });
 
@@ -288,7 +288,6 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         c. 3rd visit: Between 28 and 34 weeks
         d. 4th visit: Between 36 weeks and term*/
 
-        int days = HUtil.daysBetween(pregnantEntity.getLmpDate(), new Date());//106.458 ==3.5 month
         //FormValidator
         getViewDataBinding().benfAncDate.sethValidatorListener(new HValidatorListener<Date>() {
             @Override
@@ -304,6 +303,16 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 return new ValidationStatus(isValid, getString(R.string.Invalid_Anc_Date));
             }
         });
+
+
+        if (beneficiaryEntity.getPmmvyInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(0, false));
+        if (beneficiaryEntity.getIgmpyInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));
+        if (beneficiaryEntity.getJsyInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(2, false));
+        if (beneficiaryEntity.getRajshriInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
 
     }
 
@@ -512,20 +521,27 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
 
                         if (!isNa) {
-                            CounsellingMedia.counsellingSubstage = subStage;
-                            FragmentUtils.replaceFragment(requireActivity(),
-                                    CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                                    true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
-                            requireActivity().getSupportFragmentManager()
-                                    .beginTransaction()
-                                    .remove(PWMonitoringFragment.this)
-                                    .commit();
+                            launchCounselling(pregnantEntity);
                         } else {
                             requireActivity().onBackPressed();
                         }
                     });
                 });
 
+    }
+
+    private void launchCounselling(PregnantEntity pregnantEntity) {
+        CounsellingMedia.counsellingSubstage = subStage;
+        CounsellingMedia.isTesting=false;
+        CounsellingMedia.counsellingPregId=pregnancyId;
+        CounsellingMedia.counsellingPregLmp=pregnantEntity.getLmpDate();
+        FragmentUtils.replaceFragment(requireActivity(),
+                CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .remove(PWMonitoringFragment.this)
+                .commit();
     }
 
     private void addChild() {

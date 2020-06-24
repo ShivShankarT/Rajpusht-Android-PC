@@ -146,13 +146,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="Add Pregnancy" />
+                        android:text="@string/add_pregnancy" />
 
                     <in.rajpusht.pc.custom.ui.FormDatePickerElement
                         android:id="@+id/benf_lmp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="LMP Date"
+                        app:ff_hint="@string/LMP_date"
                         app:ff_label="@string/benef_lmp_date"
                         app:ff_required="true" />
 
@@ -187,7 +187,7 @@
                         android:id="@+id/benf_child_last_rec_muac"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Weight"
+                        app:ff_hint="@string/Weight"
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/last_record_muac_child"
                         app:ff_maxLength="3"
@@ -199,7 +199,7 @@
                         android:id="@+id/benf_child_last_rec_muac_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Date"
+                        app:ff_hint="@string/Date"
                         app:ff_label="@string/date_muac_child"
                         app:ff_required="true" />
 
@@ -208,7 +208,7 @@
                         android:id="@+id/benf_child_current_muac"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="MUAC"
+                        app:ff_hint="@string/MUAC"
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/current_muac_child"
                         app:ff_measurement_type="length"
@@ -218,7 +218,7 @@
                         android:id="@+id/benf_birth_child_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Weight"
+                        app:ff_hint="@string/Weight"
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/birth_weight_child"
                         app:ff_maxLength="5"
@@ -229,7 +229,7 @@
                         android:id="@+id/benf_current_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Weight"
+                        app:ff_hint="@string/Weight"
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/current_weight_child"
                         app:ff_maxLength="5"
@@ -239,7 +239,7 @@
                         android:id="@+id/benf_current_height"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Height in inch"
+                        app:ff_hint="@string/Height_in_inch"
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/child_current_height"
                         app:ff_maxLength="5"

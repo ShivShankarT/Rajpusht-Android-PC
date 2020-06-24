@@ -80,7 +80,7 @@ public class SyncFragment extends BaseFragment<SyncFragmentBinding, SyncViewMode
             @Override
             public void onClick(View v) {
                 HomeActivity homeActivity = (HomeActivity) requireActivity();
-                homeActivity.syncData();
+                homeActivity.syncData(false);
             }
         });
     }

@@ -159,13 +159,13 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="Add Child" />
+                        android:text="@string/add_child" />
 
                     <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
                         android:id="@+id/benf_child_count"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_label="Child Birth"
+                        app:ff_label="@string/child_birth"
                         app:ff_required="true"
                         app:ff_selections="@array/child_1_3" />
 
@@ -174,7 +174,7 @@
                         android:id="@+id/benf_child_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="DOB"
+                        app:ff_hint="@string/DOB"
                         app:ff_input_type="number"
                         app:ff_label="@string/child_age"
                         app:ff_required="true" />
@@ -192,7 +192,7 @@
                         android:id="@+id/benf_child_delivery_place"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Place Name"
+                        app:ff_hint="@string/place_name"
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
                         app:ff_required="true" />
@@ -227,7 +227,7 @@
                         android:id="@+id/benf_anc_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Last ANC Date"
+                        app:ff_hint="@string/Last_ANC_Date"
                         app:ff_label="@string/last_anc_date"
                         app:ff_required="true" />
 
@@ -236,7 +236,7 @@
                         android:id="@+id/benf_mamta_cd_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Weight"
+                        app:ff_hint="@string/Weight"
                         app:ff_label="@string/last_pregnancy_weight"
                         app:ff_maxLength="3"
                         app:ff_measurement_type="weight"
@@ -247,7 +247,7 @@
                         android:id="@+id/benf_lastcheckupdate"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Date"
+                        app:ff_hint="@string/Date"
                         app:ff_label="@string/date_recorded_pregnancy_weight"
                         app:ff_required="true" />
 
@@ -256,7 +256,7 @@
                         android:id="@+id/benf_current_weight"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Weight"
+                        app:ff_hint="@string/Weight"
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/current_preg_weight"
                         app:ff_maxLength="3"

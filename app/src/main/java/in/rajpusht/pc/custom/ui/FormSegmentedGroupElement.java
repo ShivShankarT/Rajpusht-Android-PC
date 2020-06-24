@@ -102,7 +102,7 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
     public boolean validate() {
         if (required) {
             if (mSelectedPos == -1) {
-                edf_txt_inp_ly.setError("Please Select");
+                edf_txt_inp_ly.setError(getContext().getString(R.string.Please_Select));
                 return false;
             }
         }

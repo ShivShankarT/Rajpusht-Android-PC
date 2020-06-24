@@ -37,7 +37,7 @@ public class SyncUtils {
 
 
             for (PregnantEntity pregnantEntity : pregnantEntities) {
-                List<PWMonitorEntity> pwMonitorEntities = appDatabase.pwMonitorDao().pwMonitor(pregnantEntity.getPregnancyId());
+                List<PWMonitorEntity> pwMonitorEntities = appDatabase.pwMonitorDao().pwMonitor_(pregnantEntity.getPregnancyId());
                 pregnantEntity.setPwMonitorEntities(pwMonitorEntities);
             }
 

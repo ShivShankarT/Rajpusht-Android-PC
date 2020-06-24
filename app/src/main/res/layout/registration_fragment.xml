@@ -42,6 +42,16 @@
                     app:ff_required="true"
                     app:ff_selections="@array/child_count" />
 
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/benf_child_twin"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:ff_label="@string/are_you_having_Twin"
+                    app:ff_required="true"
+                    tools:visibility="visible"
+                    android:visibility="gone"
+                    app:ff_selections="@array/YES_NO" />
+
 
                 <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
                     android:id="@+id/benf_reg_stage"
@@ -67,7 +77,7 @@
                         style="@style/FormTextMini"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="First Child"
+                        android:text="@string/first_child"
                         android:gravity="center"
                         android:textColor="@color/colorAccent"
                         android:textSize="19sp" />
@@ -76,7 +86,7 @@
                         android:id="@+id/benf_child_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="DOB"
+                        app:ff_hint="@string/DOB"
                         app:ff_input_type="number"
                         app:ff_label="@string/child_age"
                         app:ff_required="true" />
@@ -94,7 +104,7 @@
                         android:id="@+id/benf_child_delivery_place"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Place Name"
+                        app:ff_hint="@string/place_name"
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
                         app:ff_show_divider="false"
@@ -127,7 +137,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
-                        android:text="Second Child"
+                        android:text="@string/second_child"
                         android:textColor="@color/colorAccent"
                         android:textSize="19sp" />
 
@@ -135,7 +145,7 @@
                         android:id="@+id/benf_child2_dob"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="DOB"
+                        app:ff_hint="@string/DOB"
                         app:ff_input_type="number"
                         app:ff_label="@string/child_age"
                         app:ff_required="true" />
@@ -153,7 +163,7 @@
                         android:id="@+id/benf_child2_delivery_place"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="Place Name"
+                        app:ff_hint="@string/place_name"
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
                         app:ff_show_divider="false"
@@ -216,7 +226,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="7dp"
-                    app:ff_label="JSY"
+                    app:ff_label="@string/jsy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_1_dot"
@@ -237,8 +247,8 @@
                     android:id="@+id/benf_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_hint="Beneficiary Name"
-                    app:ff_label="Name of Beneficiary"
+                    app:ff_hint="@string/beneficiary_name"
+                    app:ff_label="@string/name_of_beneficiary"
                     app:ff_maxLength="30"
                     app:ff_required="true" />
 
@@ -246,7 +256,7 @@
                     android:id="@+id/benf_hus_name"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_hint="Name"
+                    app:ff_hint="@string/Name"
                     app:ff_label="@string/benef_husband_name"
                     app:ff_maxLength="30"
                     app:ff_required="true" />
@@ -328,7 +338,7 @@
                     android:id="@+id/benf_pctsid"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_hint="PCTS ID"
+                    app:ff_hint="@string/PCTS_ID"
                     app:ff_input_type="number"
                     app:ff_label="@string/benef_pcts_id"
                     app:ff_maxLength="15"
@@ -338,7 +348,7 @@
                     android:id="@+id/benf_bahamasha_id"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_hint="Bhamashah ID/ACK"
+                    app:ff_hint="@string/bhamashah_ID_ACK"
                     app:ff_input_type="textPersonName"
                     app:ff_label="@string/bahamashah_id"
                     app:ff_maxLength="15"
@@ -349,7 +359,7 @@
                     android:id="@+id/benf_lmp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:ff_hint="LMP Date"
+                    app:ff_hint="@string/LMP_date"
                     app:ff_label="@string/benef_lmp_date"
                     app:ff_required="true" />
 
@@ -367,7 +377,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="save" />
+                    android:text="@string/save" />
 
             </LinearLayout>
         </androidx.core.widget.NestedScrollView>

@@ -2,15 +2,14 @@ package in.rajpusht.pc.ui.pregnancy_graph;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.view.LayoutInflater;
+import android.util.Log;
 import android.view.View;
-import android.view.ViewGroup;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
-import androidx.lifecycle.ViewModelProviders;
+import androidx.databinding.library.baseAdapters.BR;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.components.XAxis;
@@ -25,41 +24,61 @@ import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import javax.inject.Inject;
 
 import in.rajpusht.pc.R;
+import in.rajpusht.pc.ViewModelProviderFactory;
+import in.rajpusht.pc.custom.utils.HUtil;
+import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.databinding.PregnancyGraphFragmentBinding;
+import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
+import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
-public class PregnancyGraphFragment extends Fragment implements OnChartValueSelectedListener {
+import static in.rajpusht.pc.model.CounsellingMedia.counsellingPregLmp;
 
-    private PregnancyGraphFragmentBinding pregnancyGraphFragmentBinding;
-    private PregnancyGraphViewModel mViewModel;
+public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentBinding, PregnancyGraphViewModel> implements OnChartValueSelectedListener {
+
+
+    @Inject
+    ViewModelProviderFactory factory;
+
+    @Inject
+    DataRepository dataRepository;
+    @Inject
+    SchedulerProvider schedulerProvider;
 
     public static PregnancyGraphFragment newInstance() {
         return new PregnancyGraphFragment();
     }
 
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container,
-                             @Nullable Bundle savedInstanceState) {
-        pregnancyGraphFragmentBinding = PregnancyGraphFragmentBinding.inflate(inflater, container, false);
-        //return inflater.inflate(R.layout.pregnancy_graph_fragment, container, false);
-        return pregnancyGraphFragmentBinding.getRoot();
+    public int getBindingVariable() {
+        return BR.viewModel;
     }
 
     @Override
-    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        mViewModel = ViewModelProviders.of(this).get(PregnancyGraphViewModel.class);
-        // TODO: Use the ViewModel
+    public int getLayoutId() {
+        return R.layout.pregnancy_graph_fragment;
+    }
+
+    @Override
+    public PregnancyGraphViewModel getViewModel() {
+        return new ViewModelProvider(this, factory).get(PregnancyGraphViewModel.class);
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        PregnancyGraphFragmentBinding pregnancyGraphFragmentBinding = getViewDataBinding();
         pregnancyGraphFragmentBinding.toolbarLy.toolbar.setTitle(R.string.PW_Women_Weight);
-        pregnancyGraphFragmentBinding.toolbarLy.toolbar.setNavigationOnClickListener((v)->{
+        pregnancyGraphFragmentBinding.toolbarLy.toolbar.setNavigationOnClickListener((v) -> {
             requireActivity().onBackPressed();
         });
 
@@ -75,11 +94,10 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
     }
 
     private void setWeightGainGraph() {
-        LineChart chart = pregnancyGraphFragmentBinding.chart1;
+        LineChart chart = getViewDataBinding().chart1;
         chart.setOnChartValueSelectedListener(this);
         chart.getDescription().setEnabled(false);
         chart.setDrawGridBackground(false);
-
 
 
         XAxis xAxis = chart.getXAxis();
@@ -114,8 +132,19 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
         d1.setDrawValues(false);
 
         ArrayList<Entry> values2 = new ArrayList<>();
-        values2.add(new Entry(4, 1));
-        values2.add(new Entry(5, 1));
+
+
+        if (CounsellingMedia.counsellingPregId != 0) {
+            List<PWMonitorEntity> listSingle = dataRepository.pwMonitorData(CounsellingMedia.counsellingPregId).blockingGet();
+            values2 = getPwWeightDiff(listSingle);
+            if (values2.isEmpty())
+                values2.add(new Entry(4, 0));
+        }
+        else {
+            values2.add(new Entry(4, 1));
+            values2.add(new Entry(5, 1));
+        }
+
         LineDataSet d2 = new LineDataSet(values2, getString(R.string.Women_Weight_Gain));
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4.5f);
@@ -136,7 +165,7 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
                 return String.valueOf((int) value);
             }
         });
-        xAxis.setLabelCount(values1.size(),true);
+        xAxis.setLabelCount(values1.size(), true);
         chart.invalidate();
         chart.animateXY(2000, 2000);
     }
@@ -144,6 +173,25 @@ public class PregnancyGraphFragment extends Fragment implements OnChartValueSele
     @Override
     public void onValueSelected(Entry e, Highlight h) {
 
+    }
+
+    private ArrayList<Entry> getPwWeightDiff(List<PWMonitorEntity> pwMonitorEntities) {
+        Date lmpda = counsellingPregLmp;
+        ArrayList<Entry> values2 = new ArrayList<>();
+        Double lastWeight = 0D;
+
+        for (PWMonitorEntity pwMonitorEntity : pwMonitorEntities) {
+            if (!pwMonitorEntity.getAvailable())
+                continue;
+            int lmpMonth = HUtil.daysBetween(lmpda, pwMonitorEntity.getLastWeightCheckDate()) / 30;
+            if (lastWeight != 0) {
+                double v = Math.abs(lastWeight - pwMonitorEntity.getLastWeightInMamta());
+                values2.add(new Entry(lmpMonth, (float) v));
+            }
+            lastWeight = pwMonitorEntity.getLastWeightInMamta();
+        }
+
+        return values2;
     }
 
     @Override

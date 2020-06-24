@@ -98,6 +98,11 @@ public class DataRepository {
         return appDbHelper.pwMonitorByID(id);
     }
 
+    public Single<List<PWMonitorEntity>> pwMonitorData(long pid) {
+        return appDbHelper.pwMonitorData(pid);
+    }
+
+
     public Completable insertOrUpdatePwMonitor(PWMonitorEntity pwMonitorEntity) {
 
         return appDbHelper.insertOrUpdatePwMonitor(pwMonitorEntity);

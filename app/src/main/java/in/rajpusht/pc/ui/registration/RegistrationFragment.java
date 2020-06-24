@@ -55,11 +55,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     DataRepository dataRepository;
     @Inject
     SchedulerProvider schedulerProvider;
+    boolean firstChildinvalidDob = false;
     private RegistrationViewModel mViewModel;
     private long beneficiaryId;
     private BeneficiaryWithChild beneficiaryJoin;
-    boolean firstChildinvalidDob=false;
-
 
     public static RegistrationFragment newInstance(long beneficiaryId) {
         RegistrationFragment registrationFragment = new RegistrationFragment();
@@ -131,40 +130,33 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             @Override
             public void onValueChanged(Integer data) {
 
-                if (data == 0) {
-                    //viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));
-                    viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
-                } else {
-                    //viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, true));
-                    viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
-                }
 
-                if (data == 2) {//IGMPY
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(0, false));
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, true));//todo igmpy
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(2, false));
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
-                    viewDataBinding.benfChildDob.setMinDate(0);
+                if (data == 2) {
+                    viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.GONE);
+                    viewDataBinding.benfChildDeliveryPlace.setVisibility(View.GONE);
+                    viewDataBinding.benfChildTwin.setVisibility(View.VISIBLE);
                 } else {
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(0, true));
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(2, true));
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, true));
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));//todo igmpy
-
+                    viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.VISIBLE);
+                    viewDataBinding.benfChildDeliveryPlace.setVisibility(View.VISIBLE);
+                    viewDataBinding.benfChildTwin.setVisibility(View.GONE);
                 }
 
 
                 if (data == 0) {
+
                     viewDataBinding.benfRegStage.setEnableChild(false);
                     viewDataBinding.benfRegStage.setSection(0);
-                    viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
                 } else if (data == 2) {
                     viewDataBinding.benfRegStage.setEnableChild(false);
                     viewDataBinding.benfRegStage.setSection(1);
-                    viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
                 } else {
                     viewDataBinding.benfRegStage.setEnableChild(true);
                 }
+
+                viewDataBinding.benfRegStage.sendChangedListenerValue();//ui hide
+                viewDataBinding.benfChildTwin.setSection(1);
+                viewDataBinding.benfChildTwin.sendChangedListenerValue();
+
 
             }
         });
@@ -174,19 +166,18 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             public void onValueChanged(Date data) {
 
                 int age = HUtil.calcAge(data);
-                firstChildinvalidDob=false;
-                if(viewDataBinding.benfChildCount.getSelectedPos()>=2 &&  age >= 1){
-                    firstChildinvalidDob=true;
+                firstChildinvalidDob = false;
+                if (viewDataBinding.benfChildCount.getSelectedPos() >= 2 && age >= 1) {
+                    firstChildinvalidDob = true;
 
-                    showAlertDialog("First child not eligible to registration", new Runnable() {
+                    showAlertDialog(getString(R.string.first_child_no_elig), new Runnable() {
                         @Override
                         public void run() {
-                            viewDataBinding.benfChildDob.setError("First child not eligible to registration");
+                            viewDataBinding.benfChildDob.setError(getString(R.string.first_child_no_elig));
 
                         }
                     });
-                }
-                else{
+                } else {
                     if (age >= 1) {
                         showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
                             @Override
@@ -211,6 +202,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                             requireActivity().onBackPressed();
                         }
                     });
+
+                if (viewDataBinding.benfChildTwin.getSelectedPos() == 0) {
+                    viewDataBinding.benfChildDob.setDate(data);
+                }
             }
         });
 
@@ -228,12 +223,16 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         instance.add(Calendar.YEAR, -13);
         viewDataBinding.benfAgeDob.setMaxDate(instance.getTime().getTime());
 
+        instance = Calendar.getInstance();
+        instance.add(Calendar.YEAR, -278);
+        viewDataBinding.benfLmp.setMinDate(instance.getTime().getTime());
+
+
 
         viewDataBinding.benfRegStage.sethValueChangedListener(new HValueChangedListener<Integer>() {
             @Override
             public void onValueChanged(Integer data) {
                 if (data == 0) {
-
                     viewDataBinding.firstChildLy.setVisibility(View.GONE);
                     viewDataBinding.secondChildLy.setVisibility(View.GONE);
                     viewDataBinding.benfLmp.setVisibility(View.VISIBLE);
@@ -243,10 +242,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfLmp.setVisibility(View.GONE);
                     if (viewDataBinding.benfChildCount.getSelectedPos() >= 2) {
                         viewDataBinding.secondChildLy.setVisibility(View.VISIBLE);
-                    }
+                    } else
+                        viewDataBinding.secondChildLy.setVisibility(View.GONE);
 
                 } else {
-
                     viewDataBinding.firstChildLy.setVisibility(View.VISIBLE);
                     viewDataBinding.benfLmp.setVisibility(View.VISIBLE);
                     if (viewDataBinding.benfChildCount.getSelectedPos() >= 2) {
@@ -254,6 +253,46 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     }
                 }
 
+
+                //Registration Form Validtions:
+                //0 Pregnant PMMVY(1,2), JSY, RAJSHRI
+                //1 pregnant PMMVY, JSY, RAJSHRI
+                //1  lactating PMMVY, JSY
+                //1 Both PMMVY, JSY, RAJSHRI
+                //2 Lactating PMMVY,JSY,Rajshri
+
+
+                int childCount = viewDataBinding.benfChildCount.getSelectedPos();
+
+                //setting
+                viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+                viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, true));
+
+                if (childCount == 0) {
+                    viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+                } else if (childCount == 1 && data == 0) {
+
+                } else if (childCount == 1 && data == 1) {
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
+                } else if (childCount == 1 && data == 2) {
+
+                } else if (childCount == 2) {
+
+                }
+
+
+            }
+        });
+        viewDataBinding.benfChildTwin.setSection(1);
+        viewDataBinding.benfChildTwin.sethValueChangedListener(new HValueChangedListener<Integer>() {
+            @Override
+            public void onValueChanged(Integer data) {
+
+                if (data == 0) {
+                    HUtil.recursiveSetEnabled(viewDataBinding.firstChildLy, false);
+                } else {
+                    HUtil.recursiveSetEnabled(viewDataBinding.firstChildLy, true);
+                }
             }
         });
 
@@ -502,10 +541,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             hasSecondChild = true;
         }
 
-        if(firstChildinvalidDob){
-            hasChild=false;
+        if (firstChildinvalidDob) {
+            hasChild = false;
         }
-
 
 
         if (isPregnant) {
@@ -642,8 +680,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             hasSecondChild = true;
         }
 
-        if(firstChildinvalidDob){
-            hasChild=false;
+        if (firstChildinvalidDob) {
+            hasChild = false;
         }
 
         validateElement.add(vb.benfChildCount.validateWthView());
@@ -651,8 +689,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         if (hasChild) {
             validateElement.add(vb.benfChildDob.validateWthView());
-            validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
-            validateElement.add(vb.benfChildDeliveryPlace.validateWthView());
+            if (vb.benfChildDeliveryPlaceType.isVisible())
+                validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
+            if (vb.benfChildDeliveryPlace.isVisible())
+                validateElement.add(vb.benfChildDeliveryPlace.validateWthView());
         }
 
         if (hasSecondChild) {
@@ -717,6 +757,17 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         }
 
 
+        if (vb.benfChildTwin.getSelectedPos() != 0 && !firstChildinvalidDob) {
+            if (vb.benfChildCount.getSelectedPos() == 2 && vb.benfChildDob.getDate().getTime() > vb.benfChild2Dob.getDate().getTime()) {
+                vb.benfChild2Dob.setError(getString(R.string.Second_child_age_less));
+                View targetView = vb.benfChild2Dob;
+                targetView.getParent().requestChildFocus(targetView, targetView);
+
+                return;
+            }
+        }
+
+
         save();
 
 
@@ -732,10 +783,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         PregnantEntity pregnantEntity = tuple.getPregnantEntity();
 
         RegistrationFragmentBinding vh = getViewDataBinding();
-        if (beneficiaryEntity.getDataStatus() != DataStatus.NEW) {
-            vh.save.setEnabled(false);
-            HUtil.recursiveSetEnabled(vh.formContainer, false);
-        }
+
         vh.benfChildCount.setSection(beneficiaryEntity.getChildCount());
         if (pregnantEntity != null && !childEntities.isEmpty())
             vh.benfRegStage.setSection(2);
@@ -747,7 +795,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         vh.benfRegStage.setEnableChild(false);//will create conflict
         vh.benfChildCount.sendChangedListenerValue();
         vh.benfChildCount.setEnabled(false);
-
+        vh.benfChildTwin.setEnabled(false);
 
         if (!childEntities.isEmpty()) {
             ChildEntity childEntity = childEntities.get(0);
@@ -756,7 +804,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             if (childEntity.getDeliveryHome() != null)
                 vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
 
-            if (childEntities.size() >= 1) {
+            if (childEntities.size() >= 2) {
                 ChildEntity secondChild = childEntities.get(1);
                 vh.benfChild2Dob.setDate(secondChild.getDob());
                 vh.benfChild2DeliveryPlace.setText(secondChild.getDeliveryPlace());
@@ -825,6 +873,11 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         vh.benfPctsid.setText(beneficiaryEntity.getPctsId());
         vh.benfCousSms.setSection(beneficiaryEntity.getCounselingSms());
 
+
+        if (beneficiaryEntity.getDataStatus() != DataStatus.NEW) {
+            vh.save.setEnabled(false);
+            HUtil.recursiveSetEnabled(vh.formContainer, false);
+        }
 
     }
 

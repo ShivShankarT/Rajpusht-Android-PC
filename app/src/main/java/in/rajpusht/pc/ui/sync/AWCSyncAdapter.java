@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.sync;
 
+import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -36,18 +37,19 @@ public class AWCSyncAdapter extends RecyclerView.Adapter<AWCSyncAdapter.ViewHold
 
         holder.awc_name.setText(awcSyncCount.getAwcEnglishName() + "\n" + awcSyncCount.getAwcCode());
 
+        Context context=holder.awc_name.getContext();
         String data = "";
         if ("Y".equals(awcSyncCount.getIsMother()))
-            data = "Women";
+            data = context.getString(R.string.Women);
         else if ("N".equals(awcSyncCount.getIsMother()))
-            data = "Child";
+            data = context.getString(R.string.Child);
 
         String staus = "-";
         if (awcSyncCount.getDataStatus() != null) {
             if (awcSyncCount.getDataStatus() == DataStatus.NEW) {
-                staus = "New";
+                staus = context.getString(R.string.New);
             } else if (awcSyncCount.getDataStatus() == DataStatus.EDIT) {
-                staus = "Edit";
+                staus = context.getString(R.string.Edit);
             } else if (awcSyncCount.getDataStatus() == DataStatus.OLD) {
                 staus = "NOC";
             }

@@ -48,11 +48,10 @@
     <string name="economic_status">Economic Status</string>
     <string name="benef_pcts_id">Enter the PCTS ID</string>
     <string name="bahamashah_id">Enter the Bhamashah ID/ACK NO</string>
-    <string name="counselling">Counseling Provided by ASHA/ANM/AWW</string>
     <string name="benef_lmp_date">First Day of the Last Menstrual Period - DATE(LMP)</string>
     <string name="delivery">Institutional Delivery or Home Delivery</string>
     <string name="institutional_delivery">Place of Institutional Delivery</string>
-    <string name="receive_counselling">Are you willing to receive counselling messages on mobile</string>
+    <string name="receive_counselling">Are you willing to receive counselling messages on mobile ?</string>
 
 
     <string name="first_cycle_immunization">First cycle of immunization of child completed (as in MAMTA Card)</string>
@@ -174,7 +173,7 @@
     <string-array name="benf_econ">
         <item>Blue/ Green (APL)</item>
         <item>Dark Pink (BPL)</item>
-        <item>Yellow (Antodyaya/ Poorest</item>
+        <item>Yellow (Antodyaya/ Poorest)</item>
     </string-array>
 
     <string-array name="YES">
@@ -288,6 +287,68 @@
     <string name="AWC_Sync_Details">AWC Sync Details</string>
     <string name="submit">Submit</string>
     <string name="set_new_password">Set New Password</string>
+    <string name="counselling">Counselling</string>
+    <string name="beneficiary_pregnancy_reg_succ">Beneficiary Pregnancy Registration Successfully</string>
+    <string name="beneficiary_child_report_saved">Beneficiary Child Report Saved Successfully</string>
+    <string name="first_child_no_elig">First child not eligible to registration</string>
+    <string name="Second_child_age_less">"Second child age should be less then first child "</string>
+    <string name="color_info">Color info</string>
+    <string name="not_filled">Not Filled</string>
+    <string name="filled">Filled</string>
+    <string name="delete_beneficiary_not_sync_server">Delete Beneficiary* ( Not Sync Server)</string>
+    <string name="saved_locally">Saved Locally</string>
+    <string name="synced_with_server">Synced With Server</string>
+    <string name="next">Next</string>
+    <string name="edit">Edit</string>
+    <string name="add_pregnancy">Add Pregnancy</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="login">Login</string>
+    <string name="enter_otp">Enter OTP</string>
+    <string name="submit_otp">Submit OTP</string>
+    <string name="wight_gain_graph">Wight Gain Graph:</string>
+    <string name="month">Month</string>
+    <string name="add_child">Add Child</string>
+    <string name="first_child">First Child</string>
+    <string name="second_child">Second Child</string>
+    <string name="awc_name">AWC NAME</string>
+    <string name="women_child">Women/Child</string>
+    <string name="count">Count</string>
+    <string name="no_data_to_be_synced">No Data to be Synced</string>
+    <string name="upload_all">UPLOAD ALL</string>
+    <string name="name_of_beneficiary">Name of Beneficiary</string>
+    <string name="are_you_having_Twin">Are you having Twin ?</string>
+    <string name="DOB">DOB</string>
+    <string name="place_name">Place Name</string>
+    <string name="beneficiary_name">Beneficiary Name</string>
+    <string name="Name">Name</string>
+    <string name="PCTS_ID">PCTS ID</string>
+    <string name="bhamashah_ID_ACK">Bhamashah ID/ACK</string>
+    <string name="LMP_date">LMP Date</string>
+    <string name="Date">Date</string>
+    <string name="Weight">Weight</string>
+    <string name="child_birth">Child Birth</string>
+    <string name="Last_ANC_Date">Last ANC Date</string>
+    <string name="Height_in_inch">Height in inch</string>
+    <string name="Old_Password">Old Password</string>
+    <string name="First_Name">First Name</string>
+    <string name="Last_Name">Last Name</string>
+    <string name="New_Password">New Password</string>
+    <string name="Confirm_New_Password">Confirm New Password</string>
+    <string name="Mobile_Number">Mobile Number</string>
+    <string name="OTP">OTP</string>
+    <string name="MUAC">MUAC</string>
+    <string name="KG">KG</string>
+    <string name="GM">GM</string>
+    <string name="CM">CM</string>
+    <string name="MM">MM</string>
+    <string name="please_enter">Please Enter *</string>
+    <string name="Please_Select">Please Select</string>
+    <string name="Women">Women</string>
+    <string name="Child">Child</string>
+    <string name="New">New</string>
+    <string name="Edit">Edit</string>
 
 
 </resources>

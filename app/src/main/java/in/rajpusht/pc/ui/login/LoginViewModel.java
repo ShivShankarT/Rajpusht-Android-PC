@@ -5,6 +5,7 @@ import android.util.Pair;
 
 import androidx.lifecycle.MutableLiveData;
 
+import in.rajpusht.pc.R;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.ui.base.BaseViewModel;
@@ -32,13 +33,13 @@ public class LoginViewModel extends BaseViewModel {
         errorEmail.setValue(null);
         errorPassword.setValue(null);
         if (email.isEmpty()) {
-            errorEmail.setValue("Please enter your email");
+            errorEmail.setValue(getDataManager().getString(R.string.enter_email));
         } else if (password.isEmpty()) {
-            errorPassword.setValue("Please enter your password");
+            errorPassword.setValue(getDataManager().getString(R.string.invalid_password));
         } else if (!HUtil.isEmail(email)) {
-            errorEmail.setValue("Invalid Email");
+            errorEmail.setValue(getDataManager().getString(R.string.error_email));
         } else if (password.length() < 8) {
-            errorPassword.setValue("Invalid Password");
+            errorEmail.setValue(getDataManager().getString(R.string.invalid_password));
         } else {
             progressDialog.setValue(Event.data(true));
             getCompositeDisposable().add(getDataManager().login(email, password)

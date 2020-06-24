@@ -32,7 +32,7 @@
                 style="@style/FormTextMiniBlack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Wight Gain Graph:" />
+                android:text="@string/wight_gain_graph" />
 
 
             <com.github.mikephil.charting.charts.LineChart
@@ -47,7 +47,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:layout_margin="3dp"
-                android:text="Month" />
+                android:text="@string/month" />
 
 
         </LinearLayout>
@@ -58,7 +58,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
-            android:text="Next" />
+            android:text="@string/next" />
 
     </LinearLayout>
 </layout>

@@ -36,20 +36,20 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="28dp"
-                app:ff_hint="First Name" />
+                app:ff_hint="@string/First_Name" />
 
             <in.rajpusht.pc.custom.ui.FormEditFieldElement
                 android:id="@+id/last_name_ly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                app:ff_hint="Last Name" />
+                app:ff_hint="@string/Last_Name" />
 
             <in.rajpusht.pc.custom.ui.FormEditFieldElement
                 android:id="@+id/mobile_ly"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:enabled="false"
-                app:ff_hint="Mobile Number" />
+                app:ff_hint="@string/Mobile_Number" />
 
             <Button
                 android:id="@+id/submit_btn"
@@ -59,7 +59,7 @@
                 android:layout_gravity="center"
                 android:layout_marginTop="10dp"
                 android:onClick="@{(v)->viewModel.updateProfile(firstNameLy.getText(),lastNameLy.getText(),mobileLy.getText())}"
-                android:text="save" />
+                android:text="@string/save" />
 
 
         </LinearLayout>

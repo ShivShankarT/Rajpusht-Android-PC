@@ -1,11 +1,11 @@
 package in.rajpusht.pc.ui.animation;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,13 +20,11 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.transition.TransitionManager;
-import android.util.Log;
 
 import com.bumptech.glide.request.target.Target;
 import com.squareup.picasso.Picasso;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.databinding.FragmentCounsellingAnimationBinding;
 import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
@@ -38,7 +36,7 @@ import in.rajpusht.pc.utils.ui.CustomVideoView;
 public class CounsellingAnimationFragment extends Fragment {
 
 
-    private static final int delayMillis = 500;
+    private  final int delayMillis = CounsellingMedia.isTesting ? 500 : 2000;
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
     private Handler handler = new Handler();
@@ -50,7 +48,7 @@ public class CounsellingAnimationFragment extends Fragment {
         @Override
         public void run() {
             if (mediaPos < counsellingMedia.getMediaImage().size()) {
-                 Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
+                Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
                 /*Glide.with(requireContext()).asBitmap()
                         .load(counsellingMedia.getMediaImage().get(mediaPos))
                         .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -93,7 +91,7 @@ public class CounsellingAnimationFragment extends Fragment {
         if (getArguments() != null) {
             pos = getArguments().getInt("data");
             counsellingMedia = CounsellingMedia.counsellingMediaData().get(pos);
-            Log.i("imagedd",""+counsellingMedia.toString());
+            Log.i("imagedd", "" + counsellingMedia.toString());
         }
     }
 
@@ -113,7 +111,8 @@ public class CounsellingAnimationFragment extends Fragment {
        /* if (counsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA)
             vb.toolbarLy.toolbar.setTitle(counsellingMedia.getId() + "-" + counsellingMedia.getMediaImage().get(0).substring("file:///android_asset/counseling".length()));
 */
-        vb.toolbarLy.toolbar.getMenu().add(1, 1, 1, "Exit").setIcon(R.drawable.ic_exit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
+        if (CounsellingMedia.isTesting)
+            vb.toolbarLy.toolbar.getMenu().add(1, 1, 1, "Exit").setIcon(R.drawable.ic_exit).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         vb.toolbarLy.toolbar.setNavigationOnClickListener((v) -> {
             requireActivity().onBackPressed();

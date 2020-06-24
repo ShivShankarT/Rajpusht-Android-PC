@@ -4,11 +4,9 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import in.rajpusht.pc.R;
@@ -43,7 +41,9 @@ public class CounsellingDemoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         View.OnClickListener onClickListener = v -> {
-
+            CounsellingMedia.isTesting = true;
+            CounsellingMedia.counsellingPregId = 0;
+            CounsellingMedia.counsellingPregLmp = null;
             if (v == vb.pw1Btn) {
                 CounsellingMedia.counsellingSubstage = "PW1";
             } else if (v == vb.pw2Btn) {
@@ -57,6 +57,7 @@ public class CounsellingDemoFragment extends Fragment {
             } else if (v == vb.myBtn) {
                 CounsellingMedia.counsellingSubstage = "MY";
             }
+
 
             FragmentUtils.replaceFragment(requireActivity(),
                     CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,

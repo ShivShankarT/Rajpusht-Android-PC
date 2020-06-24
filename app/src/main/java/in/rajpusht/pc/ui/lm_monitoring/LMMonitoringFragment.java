@@ -218,6 +218,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             @Override
             public void onClick(View v) {
                 CounsellingMedia.counsellingSubstage = subStage;
+                CounsellingMedia.isTesting = false;
                 FragmentUtils.replaceFragment(requireActivity(),
                         CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
                         true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
@@ -300,8 +301,19 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         getViewDataBinding().benfName.setText(beneficiaryEntity.getName());
         getViewDataBinding().pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
 
+
+        if (beneficiaryEntity.getPmmvyInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(0, false));
+        if (beneficiaryEntity.getIgmpyInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));
+        if (beneficiaryEntity.getJsyInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(2, false));
+        if (beneficiaryEntity.getRajshriInstallment() == null)
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
+
+
         //todo only when lm3
-        if ((beneficiaryJoin.getPregnantEntity()==null )||(beneficiaryJoin.getPregnantEntity() != null && !"Y".equalsIgnoreCase(beneficiaryJoin.getPregnantEntity().getIsActive()))) {
+        if ((beneficiaryJoin.getPregnantEntity() == null) || (!subStage.equals("LM1") && beneficiaryJoin.getPregnantEntity() != null && !"Y".equalsIgnoreCase(beneficiaryJoin.getPregnantEntity().getIsActive()))) {
             getViewDataBinding().toolbarLy.toolbar.getMenu().add(1, ADD_PREGNANCY_MENU, 1, "info").setIcon(R.drawable.ic_child_pregnant).setShowAsAction(MenuItem.SHOW_AS_ACTION_ALWAYS);
 
         }
@@ -492,8 +504,9 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 dataRepository.insertOrUpdateLmMonitor(lmMonitorEntity))
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
-            showAlertDialog("Beneficiary Child Report Saved Successfully", () -> {
+            showAlertDialog(getString(R.string.beneficiary_child_report_saved), () -> {
                 if (!isNa) {
+                    CounsellingMedia.isTesting = false;
                     CounsellingMedia.counsellingSubstage = subStage;
                     requireActivity().getSupportFragmentManager()
                             .beginTransaction()
@@ -535,7 +548,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
-                    showAlertDialog("Beneficiary Pregnancy Registration Successfully", () -> {
+                    showAlertDialog(getString(R.string.beneficiary_pregnancy_reg_succ), () -> {
                         requireActivity().onBackPressed();
                     });
                 });

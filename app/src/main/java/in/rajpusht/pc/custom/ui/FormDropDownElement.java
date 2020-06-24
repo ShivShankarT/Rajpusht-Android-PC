@@ -93,7 +93,7 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
     public boolean validate() {
         if (required) {
             if (mSelectedPos == -1) {
-                edf_txt_inp_ly.setError("Please Select");
+                edf_txt_inp_ly.setError(getContext().getString(R.string.Please_Select));
                 return false;
             }
         }

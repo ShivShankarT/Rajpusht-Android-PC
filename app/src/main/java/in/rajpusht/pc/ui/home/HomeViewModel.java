@@ -23,11 +23,11 @@ public class HomeViewModel extends BaseViewModel {
         super(dataManager, schedulerProvider);
     }
 
-    public void syncData() {
+    public void syncData(boolean isLogOut) {
         progressLive.postValue(Event.data(new Pair<>(true, "")));
         getCompositeDisposable().add(getDataManager().uploadDataToServer()
                 .flatMap((Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>) jsonObjectApiResponse -> {
-                    if (jsonObjectApiResponse.isStatus())
+                    if (jsonObjectApiResponse.isStatus()&&!isLogOut)
                         return getDataManager().profileAndBulkDownload().toSingleDefault(new ApiResponse<>());
                     else
                         return Single.just(jsonObjectApiResponse);
@@ -37,8 +37,10 @@ public class HomeViewModel extends BaseViewModel {
                     if (throwable != null)
                         throwable.printStackTrace();
                     if (jsonObjectApiResponse != null) {
+                        if(isLogOut)
+                            getDataManager().logout();
                         if (jsonObjectApiResponse.isStatus()) {
-                            progressLive.postValue(Event.data(new Pair<>(false, "")));
+                            progressLive.postValue(Event.data(new Pair<>(false, "Sync Successfully")));
                         } else {
                             progressLive.postValue(Event.data(new Pair<>(false, jsonObjectApiResponse.getMessage())));
                         }
@@ -49,5 +51,4 @@ public class HomeViewModel extends BaseViewModel {
                 }));
     }
 
-    ;
 }

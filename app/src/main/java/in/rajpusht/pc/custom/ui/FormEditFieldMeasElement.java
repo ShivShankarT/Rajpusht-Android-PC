@@ -118,11 +118,11 @@ public class FormEditFieldMeasElement extends FrameLayout {
         edf_txt_inp_ly.setHint(hint);
 
         if (measurement_type == 0) {
-            edf_sub1.setHint("KG");
-            edf_sub2.setHint("GM");
+            edf_sub1.setHint(getContext().getString(R.string.KG));
+            edf_sub2.setHint(getContext().getString(R.string.GM));
         } else {
-            edf_sub1.setHint("CM");
-            edf_sub2.setHint("MM");
+            edf_sub1.setHint(getContext().getString(R.string.CM));
+            edf_sub2.setHint(getContext().getString(R.string.MM));
         }
     }
 
@@ -132,7 +132,7 @@ public class FormEditFieldMeasElement extends FrameLayout {
         Double measValue = getMeasValue();
         if (required) {
             if (measValue == null || measValue == 0) {
-                edf_txt_inp_ly.setError("Please Enter *");
+                edf_txt_inp_ly.setError(getContext().getString(R.string.please_enter));
                 return false;
             }
         }

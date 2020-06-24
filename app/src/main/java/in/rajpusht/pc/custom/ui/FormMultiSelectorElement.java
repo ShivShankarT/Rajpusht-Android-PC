@@ -89,7 +89,7 @@ public class FormMultiSelectorElement extends FrameLayout implements CompoundBut
     public boolean validate() {
         if (required) {
             if (selectedId.isEmpty()) {
-                edf_txt_inp_ly.setError("Please Select");
+                edf_txt_inp_ly.setError(getContext().getString(R.string.Please_Select));
                 return false;
             }
         }

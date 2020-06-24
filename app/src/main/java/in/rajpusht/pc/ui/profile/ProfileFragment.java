@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.profile;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.View;
@@ -30,9 +31,11 @@ import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.profile_edit.ProfileEditFragment;
+import in.rajpusht.pc.ui.splash.SplashScreenActivity;
 import in.rajpusht.pc.utils.ContextWrapper;
 import in.rajpusht.pc.utils.ExpandableRecyclerAdapter;
 import in.rajpusht.pc.utils.FragmentUtils;
+
 
 
 /**
@@ -45,6 +48,7 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
     @Inject
     AppPreferencesHelper appPreferencesHelper;
     private ProfileViewModel profileViewModel;
+    private boolean isLangChange = false;
 
     public ProfileFragment() {
         // Required empty public constructor
@@ -114,21 +118,28 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
             } else if (checkedId == R.id.hindi) {
                 appPreferencesHelper.setLanguage(false);
             }
-
+            isLangChange = true;
             ContextWrapper.setLocale(requireActivity());
         });
 
         getViewDataBinding().saveBtn.setOnClickListener(v -> {
-            FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(),
-                    R.id.fragment_container, false, true, FragmentUtils.TRANSITION_NONE);
+
+            if (isLangChange) {
+                requireActivity().finish();
+                Intent intent = new Intent(requireActivity(), HomeActivity.class);
+                requireContext().startActivity(intent);
+
+            } else {
+                FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(),
+                        R.id.fragment_container, false, true, FragmentUtils.TRANSITION_NONE);
+            }
 
         });
         getViewDataBinding().logout.setOnClickListener(v -> {
-            ((HomeActivity) requireActivity()).syncData();
+            ((HomeActivity) requireActivity()).syncData(true);
         });
 
     }
-
 
     private List<AssignedLocationListItem> convert(List<AssignedLocationEntity> assignedLocationEntities) {
         HashMap<String, List<AssignedLocationEntity>> map = new HashMap<>();
@@ -168,24 +179,33 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         if (TextUtils.isEmpty(appPreferencesHelper.getSelectedAwcCode())) {
             showAlertDialog(getString(R.string.Please_Select_Awc), null);
             return false;
-        } else
+        } else {
+            if (isLangChange) {
+                requireActivity().finish();
+                Intent  intent = new Intent(requireContext(), HomeActivity.class);
+                requireContext().startActivity(intent);
+                return super.onBackPressed();
+            }
             return super.onBackPressed();
+        }
     }
 
-    public static class AssignedLocationListItem extends ExpandableRecyclerAdapter.ListItem {
-        AssignedLocationEntity assignedLocationEntity;
 
-        public AssignedLocationListItem(AssignedLocationEntity assignedLocationEntity) {
-            super(1211);
-            this.assignedLocationEntity = assignedLocationEntity;
+
+        static class AssignedLocationListItem extends ExpandableRecyclerAdapter.ListItem {
+            AssignedLocationEntity assignedLocationEntity;
+
+            public AssignedLocationListItem(AssignedLocationEntity assignedLocationEntity) {
+                super(1211);
+                this.assignedLocationEntity = assignedLocationEntity;
+
+            }
+
+            public AssignedLocationListItem(String name) {
+                super(ExpandableRecyclerAdapter.TYPE_HEADER);
+                super.title = name;
+
+            }
 
         }
-
-        public AssignedLocationListItem(String name) {
-            super(ExpandableRecyclerAdapter.TYPE_HEADER);
-            super.title = name;
-
-        }
-
     }
-}

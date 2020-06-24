@@ -113,7 +113,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 FragmentUtils.replaceFragment(this, new CounsellingDemoFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
                 //syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {
-                // syncData();
+                syncData(true);
             } else if (item.getItemId() == R.id.nav_download) {
                 dataRepository.profileAndBulkDownload().subscribeOn(schedulerProvider.io()).subscribe(new Action() {
                     @Override
@@ -152,8 +152,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         awcName.setText(appPreferencesHelper.getString("awc_name"));
     }
 
-    public void syncData() {
-        mViewModel.syncData();
+    public void syncData(boolean isLogOut) {
+        mViewModel.syncData(isLogOut);
     }
 
     public void openDrawer() {

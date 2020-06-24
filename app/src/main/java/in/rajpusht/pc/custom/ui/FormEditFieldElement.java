@@ -129,7 +129,7 @@ public class FormEditFieldElement extends FrameLayout {
 
         if (required) {
             if (TextUtils.isEmpty(getText())) {
-                edf_txt_inp_ly.setError("Please Enter *");
+                edf_txt_inp_ly.setError(getContext().getString(R.string.please_enter));
                 return false;
             }
         }

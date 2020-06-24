@@ -43,7 +43,7 @@
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="AWC NAME"
+                    android:text="@string/awc_name"
                     android:textStyle="bold"
                     android:textColor="@color/black" />
 
@@ -55,7 +55,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Women/Child"
+                    android:text="@string/women_child"
                     android:textColor="@color/black" />
 
 
@@ -67,7 +67,7 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:gravity="center"
-                    android:text="Count"
+                    android:text="@string/count"
                     android:textColor="@color/black" />
 
 
@@ -79,7 +79,7 @@
                 android:id="@+id/no_data"
                 android:gravity="center"
                 style="@style/FormTextMiniBlack"
-                android:text="No Data to be Synced"
+                android:text="@string/no_data_to_be_synced"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
 
@@ -104,7 +104,7 @@
             android:paddingTop="10dp"
             android:paddingRight="17dp"
             android:paddingBottom="10dp"
-            android:text="UPLOAD ALL"
+            android:text="@string/upload_all"
             android:textColor="@color/white"
             android:textStyle="bold" />
 
