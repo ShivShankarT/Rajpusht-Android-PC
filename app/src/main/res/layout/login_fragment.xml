@@ -42,7 +42,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/email"
-                    android:text="test@gmail.com"
+                    tools:text="test@gmail.com"
                     android:inputType="textEmailAddress" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -61,7 +61,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:hint="@string/password"
-                    android:text="admin123"
+                    tools:text="admin123"
                     android:inputType="textPassword" />
             </com.google.android.material.textfield.TextInputLayout>
 

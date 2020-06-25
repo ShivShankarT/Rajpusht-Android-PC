@@ -1,20 +1,43 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-    <string name="menu_home">घर</string>
-    <string name="save">सहेजें</string>
-
-
+<?xml version="1.0" encoding="UTF-8"?><!--
+ Loco xml export: Android string resources
+ Project: Rajpusht PC App
+ Release: Working copy
+ Locale: hi, Hindi
+ Exported by: Vinoth M
+ Exported at: Thu, 25 Jun 2020 17:46:39 +0530
+-->
+<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+    <string name="invalid_password">पासवर्ड छोटा है\u0020</string>
+    <string name="login_failed">लॉगिन असफल</string>
+    <string name="menu_home">होम</string>
+    <string name="registration_title">पंजीकरण</string>
+    <string name="beneficiary_age_limit">लाभार्थी की आयु 13 साल से अधिक होनी चाहिए</string>
+    <string name="error_invalid_mobile_no">मोबाइल नंबर गलत है</string>
+    <string name="error_invalid_name">नाम गलत है\u0020</string>
+    <string name="child_age_limit">शिशु की आयु 1 साल या उससे कम होनी चाहिए\u0020</string>
+    <string name="benf_success_reg">लाभार्थी का सफल पंजीकरण\u0020</string>
+    <string name="benf_success_update">लाभार्थी का सफल डाटा अपडेट\u0020</string>
+    <string name="change_pass">पासवर्ड बदलीये</string>
+    <string name="lmp_date">एल एम पी तिथि</string>
+    <string name="dob">जन्म की तिथि</string>
+    <string name="pcts_id">पी.सी.टी.एस आई.डी::</string>
+    <string name="error_firstname">नाम गलत है\u0020</string>
+    <string name="error_lastname">नाम गलत है\u0020</string>
+    <string name="error_email">ईमेल गलत है\u0020</string>
+    <string name="error_username">यूसर का नाम गलत है\u0020</string>
+    <string name="error_phoneno">फोन नंबर गलत है</string>
+    <string name="no_active_benef">लाभार्थी एक्टिव नहीं है</string>
     <string name="no_of_children">आपके जीवित बच्चे कितने हैं ?</string>
-    <string name="are_you">क्या आप </string>
+    <string name="are_you">क्या आप</string>
     <string name="child_age">आपके बच्चे की आयु क्या है ?</string>
     <string name="register_in">क्या आप इनमें से किसी स्कीम में पंजीकृत हैं?</string>
-    <string name="number_installment_received">आपको स्कीम की कितनी किश्तें मिली हैं ? </string>
+    <string name="number_installment_received">आपको स्कीम की कितनी किश्तें मिली हैं ?</string>
     <string name="pmmvvy">पीएमएमवीवाई</string>
     <string name="igmpy">आईजीएमपीवाई</string>
     <string name="rajshri">राजश्री</string>
     <string name="jsy">जेएसवाई</string>
     <string name="none">कोई भी नहीं</string>
-    <string name="benef_husband_name">लाभार्थी के पति  का नाम </string>
+    <string name="benef_husband_name">लाभार्थी के पति का नाम</string>
     <string name="benef_age">लाभार्थी की आयु</string>
     <string name="benef_dob">जन्म की तिथि</string>
     <string name="benef_age_enter">आयु भरिए (e.g 25)</string>
@@ -23,34 +46,161 @@
     <string name="husband_mobile">लाभार्थी के पति का मोबाइल नंबर</string>
     <string name="caste">जाति</string>
     <string name="economic_status">आर्थिक स्थिति (राशन कार्ड )</string>
-    <string name="benef_pcts_id">पीसीटीएस आईडी</string>
-    <string name="bahamashah_id">भामाशाह आईडी</string>
-    <string name="benef_lmp_date">एलएमपी तिथि </string>
-    <string name="delivery">संस्थागत प्रसव या घर पर प्रसव </string>
+    <string name="benef_pcts_id">पी.सी.टी.एस आई.डी</string>
+    <string name="bahamashah_id">भामाशाह आई.डी</string>
+    <string name="benef_lmp_date">एल.एम.पी तिथि</string>
+    <string name="delivery">संस्थागत प्रसव या घर पर प्रसव</string>
     <string name="institutional_delivery">प्रसूति गृह का नाम</string>
     <string name="receive_counselling">क्या आप मोबाइल पर परामर्श संदेश प्राप्त करने के इच्छुक हैं?</string>
-
-
     <string name="first_cycle_immunization">टीकाकरण का पहला चक्र पूर्ण हुआ (ममता कार्ड में देखें )</string>
-    <string name="last_record_muac_child">शिशु का अंतिम दर्ज़ MUAC </string>
-    <string name="date_muac_child">अंतिम दर्ज़ MUAC की तिथि </string>
-    <string name="current_muac_child">शिशु का वर्तमान में MUAC (MUAC टेप से नापें) </string>
-    <string name="birth_weight_child">जन्म के समय शिशु का वज़न (ममता कार्ड में देखें ) </string>
-    <string name="current_weight_child">शिशु का वर्तमान में वज़न (मशीन से देखें)  </string>
-    <string name="are_you_register_in">क्या आप इनमें से किसी स्कीम में पंजीकृत हैं ? </string>
+    <string name="last_record_muac_child">शिशु का अंतिम दर्ज़ MUAC</string>
+    <string name="date_muac_child">अंतिम दर्ज़ MUAC की तिथि</string>
+    <string name="current_muac_child">शिशु का वर्तमान में MUAC (MUAC टेप से नापें)</string>
+    <string name="birth_weight_child">जन्म के समय शिशु का वज़न (ममता कार्ड में देखें )</string>
+    <string name="current_weight_child">शिशु का वर्तमान में वज़न (मशीन से देखें)</string>
+    <string name="are_you_register_in">क्या आप इनमें से किसी स्कीम में पंजीकृत हैं ?</string>
     <string name="child_current_height">बच्चे की वर्तमान ऊंचाई</string>
-    <string name="installment_received">आपको स्कीम की कितनी किश्तें मिली हैं? </string>
+    <string name="installment_received">आपको स्कीम की कितनी किश्तें मिली हैं?</string>
+    <string name="number_anc_completed">कितनी प्रसव पूर्व जाँचें हुई हैं</string>
+    <string name="last_anc_date">पिछली प्रसव पूर्व जांच की तिथि</string>
+    <string name="last_pregnancy_weight">ममता कार्ड में अंतिम बार लिखित वज़न</string>
+    <string name="date_recorded_pregnancy_weight">ममता कार्ड में अंतिम बार लिखित वज़न की तिथि</string>
+    <string name="current_preg_weight">गर्भवती महिला का वर्तमान में वज़न (मशीन से देखें )</string>
+    <string name="you_register_in">क्या आप इनमें से किसी स्कीम में पंजीकृत हैं ?</string>
+    <string name="installment_received_till">आपको स्कीम की कितनी किश्तें मिली हैं?</string>
+    <string name="set_location">आंगनबाड़ी चुनिये</string>
+    <string name="set_language">भाषा चुनिये</string>
 
-    <string name="number_anc_completed">कितनी प्रसव पूर्व जाँचें हुई हैं   </string>
-    <string name="last_anc_date">पिछली प्रसव पूर्व जांच की तिथि </string>
-    <string name="last_pregnancy_weight">ममता कार्ड में अंतिम बार लिखित वज़न  </string>
-    <string name="date_recorded_pregnancy_weight">ममता कार्ड में अंतिम बार लिखित वज़न की तिथि </string>
-    <string name="current_preg_weight">गर्भवती महिला का वर्तमान में वज़न (मशीन से देखें )  </string>
-    <string name="you_register_in">क्या आप इनमें से किसी स्कीम में पंजीकृत हैं ? </string>
-    <string name="installment_received_till">आपको स्कीम की कितनी किश्तें मिली हैं? </string>
 
+    <string name="pw_na1">गर्भपात</string>
+    <string name="pw_na2">मृत्यु</string>
+    <string name="pw_na3">कहीं और स्थानांतरित</string>
+    <string name="nav_other_women_list">माइग्रेट सूची</string>
+    <string name="nav_logout">लॉग आउट</string>
+    <string name="change_awc">आंगनबाड़ी बदलीये</string>
+    <string name="sync">डाटा सिंक करें\u0020</string>
+    <string name="change_password">पासवर्ड बदलीये</string>
+    <string name="save">सहेजें</string>
+    <string name="add_self_mobile_val_mes">अपना मोबाइल नंबर दर्ज़ करें</string>
+    <string name="add_husb_mobile_val_mes">अपने पति का मोबाइल नंबर दर्ज़ करें</string>
+    <string name="add_self_husb_mobile_val_mes">आपका और आपके पति का मोबाइल नंबर दर्ज़ करें\u0020</string>
+    <string name="Select">चुनिये</string>
+    <string name="na_reason">N/A Reason</string>
+    <string name="lm_na1">लाभार्थी की मृत्यु हो गयी है</string>
+    <string name="lm_na2">माँ कहीं और चले गए</string>
+    <string name="lm_na3">बच्चे की मृत्यु हो गई</string>
+    <string name="lm_na4">नवजात कहीं और चले गए</string>
+    <string name="lm_na5">दोनों मां और शिशु की मृत्यु हो गई</string>
+    <string name="lm_na6">दोनों कहीं और चले गए</string>
+    <string name="oops">उफ़!</string>
+    <string name="no_internet_connection">कोई इंटरनेट कनेक्शन नहीं!</string>
+    <string name="no_results_found">​​कोई परिणाम नहीं मिला!</string>
+    <string name="alert">सावधान!</string>
+    <string name="ok">ओके</string>
+    <string name="ANC_not_compl">प्रसव पूर्व जांच नहीं हुई है</string>
+    <string name="Invalid_password">पासवर्ड गलत है</string>
+    <string name="confirm_password_incorrect">Confirm Password Incorrect</string>
+    <string name="Women_Counselling">Counselling</string>
+    <string name="finish">समाप्त</string>
+    <string name="counselling_completed">Counselling Completed !!!</string>
+    <string name="enter_email">ईमेल आई डी डालें\u0020</string>
+    <string name="please_enter_OTP">ओ टी पी डालें\u0020</string>
+    <string name="InvalidOTP">ओ टी पी गलत है\u0020</string>
+    <string name="please_new_password">नया पासवर्ड डालें</string>
+    <string name="Invalid_new_password">नया पासवर्ड गलत है\u0020</string>
+    <string name="confirm_password_not_same">नया पासवर्ड ओर कन्फ़र्म पासवर्ड अलग है\u0020</string>
+    <string name="LM_Monitoring">LM Monitoring</string>
+    <string name="incorrct_Muac">MUAC is wrong, please enter again</string>
+    <string name="incorrct_child_height">Child Height is wrong, please enter again</string>
+    <string name="incorrct_child_weight">Child Weight is wrong, please enter again</string>
+    <string name="PW_Women_Weight">महिला का वज़न</string>
+    <string name="Ideal_Weight_Gain">अपेक्षित वृद्धि</string>
+    <string name="Women_Weight_Gain">महिला के वज़न में वृद्धि\u0020</string>
+    <string name="Please_Select_Awc">आंगनबाड़ी चुनिये</string>
+    <string name="incorrect_pw_weight">Weight should be from 30 Kg to 99 Kg</string>
+    <string name="Invalid_Anc_Date">प्रसव पूर्व जांच की तिथि गलत है\u0020</string>
+    <string name="beneficiary_report_save">लाभार्थी की रिपोर्ट जमा हो गयी है</string>
+    <string name="beneficiary_child_reg_succ">शिशु का सफल पंजीकरण</string>
+    <string name="beneficiary_not_eligible">लाभार्थी एलीजीबल नहीं है\u0020</string>
+    <string name="AWC_Sync_Details">AWC Sync Details</string>
+    <string name="submit">जमा करें</string>
+    <string name="set_new_password">नया पासवर्ड सेट करें</string>
+    <string name="counselling">परामर्श</string>
+    <string name="beneficiary_pregnancy_reg_succ">लाभार्थी का सफल पंजीकरण</string>
+    <string name="beneficiary_child_report_saved">शिशु की रिपोर्ट सफलतापूर्वक जमा हो गयी है\u0020</string>
+    <string name="first_child_no_elig">पहला बच्चा पंजीकरण के लिए एलीजीबल नहीं है</string>
+    <string name="Second_child_age_less">दूसरे बच्चे की आयु दोबारा डालें</string>
+    <string name="color_info">Color info</string>
+    <string name="not_filled">Not Filled</string>
+    <string name="filled">Filled</string>
+    <string name="delete_beneficiary_not_sync_server">Delete Beneficiary* ( Not Sync Server)</string>
+    <string name="saved_locally">Saved Locally</string>
+    <string name="synced_with_server">सर्वर से सिंक हो गया है\u0020</string>
+    <string name="next">Next</string>
+    <string name="edit">एडिट करें</string>
+    <string name="add_pregnancy">Add Pregnancy</string>
+    <string name="email">ईमेल</string>
+    <string name="password">पासवर्ड</string>
+    <string name="forget_password">Forget Password</string>
+    <string name="login">लॉगिन</string>
+    <string name="enter_otp">ओ.टी.पी डालें\u0020</string>
+    <string name="submit_otp">ओ.टी.पी जमा करें\u0020</string>
+    <string name="wight_gain_graph">वज़न वृद्धि ग्राफ</string>
+    <string name="month">माह</string>
+    <string name="add_child">शिशु जोड़ें</string>
+    <string name="first_child">पहला बच्चा\u0020</string>
+    <string name="second_child">दूसरा बच्चा\u0020</string>
+    <string name="awc_name">आंगबाड़ी का नाम\u0020</string>
+    <string name="women_child">Women/Child</string>
+    <string name="count">Count</string>
+    <string name="no_data_to_be_synced">No Data to be Synced</string>
+    <string name="upload_all">अपलोड करें\u0020</string>
+    <string name="name_of_beneficiary">लाभार्थी का नाम</string>
+    <string name="are_you_having_Twin">क्या आपके जुड़वा बच्चे हैं ?</string>
+    <string name="DOB">जन्म की तिथि\u0020</string>
+    <string name="place_name">Place Name</string>
+    <string name="beneficiary_name">लाभार्थी का नाम</string>
+    <string name="Name">नाम</string>
+    <string name="PCTS_ID">पी.सी.टी.एस आई.डी</string>
+    <string name="bhamashah_ID_ACK">भामाशाह आई.डी</string>
+    <string name="LMP_date">एल.एम.पी की तिथि\u0020</string>
+    <string name="Date">Date</string>
+    <string name="Weight">वज़न</string>
+    <string name="child_birth">Child Birth</string>
+    <string name="Last_ANC_Date">प्रसव पूर्व जांच की तिथि (आखरी)</string>
+    <string name="Height_in_inch">लंबाई (इंच में )</string>
+    <string name="Old_Password">पुराना पासवर्ड</string>
+    <string name="First_Name">नाम</string>
+    <string name="Last_Name">सरनेम</string>
+    <string name="New_Password">नया पासवर्ड\u0020</string>
+    <string name="Confirm_New_Password">नया पासवर्ड कन्फ़र्म करें</string>
+    <string name="Mobile_Number">मोबाइल नंबर</string>
+    <string name="OTP">ओ टी पी</string>
+    <string name="MUAC">एम यू ए सी\u0020</string>
+    <string name="KG">किलो</string>
+    <string name="GM">ग्राम</string>
+    <string name="CM">सेंटिमीटर</string>
+    <string name="MM">मिलीमीटर</string>
+    <string name="please_enter">कृपया दर्ज़ करें</string>
+    <string name="Please_Select">कृपया चुने</string>
+    <string name="Women">महिला</string>
+    <string name="Child">शिशु</string>
+    <string name="New">नया</string>
+    <string name="Edit">एडिट करें</string>
+    <string name="discharge_slip">डिस्चार्ज स्लिप</string>
+    <string name="mamta_mcp_card">ममता कार्ड\u0020</string>
+    <string name="invalid_pcts">पी सी टी एस गलत है\u0020</string>
+    <string name="invalid_bhamasha_id">भामाशाह गलत है</string>
+    <string name="invalid_OPD_IPD">आउटडोर/ इंडोर क्रमांक गलत है\u0020</string>
+    <string name="as_in_PCTS">पी.सी.टी.एस में\u0020</string>
+    <string name="enter_child_pctsid">चाइल्ड आई डी दर्ज़ करें</string>
+    <string name="source_birthwt">जन्म के समय वज़न का सोर्स\u0020</string>
+    <string name="enter_OPD_IPD">आउटडोर/ इंडोर क्रमांक डालें</string>
+    <string name="as_in_discharge_slip">डिस्चार्ज स्लिप में\u0020</string>
 
-    <string name="nav_other_women_list"> माइग्रेट सूची </string>
+    <string name="child_sex">चाइल्ड सेक्स का चयन करें</string>
+    <string name="Child_Weight">बच्चे का वजन</string>
+    <string name="Child_Weight_Gain">बाल वजन</string>
 
     <string-array name="benf_currently">
         <item>गर्भवती</item>
@@ -59,27 +209,17 @@
     </string-array>
 
 
-
     <string-array name="benf_age">
         <item>शिशु के जन्म की तिथि</item>
-        <item>शिशु की आयु</item>
+        <item>आयु</item>
     </string-array>
 
 
-    <string-array name="caste">
-        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
-        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
-        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
-        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
+
+    <string-array name="pw_na_reasons">
+        <item>प्रसव पूर्व जांच नहीं हुई है\u0020</item>
+        <item>लाभार्थी इंटरव्यू के लिए उपस्थित नहीं है\u0020</item>
     </string-array>
-
-
-    <string-array name="benf_econ">
-        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
-        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
-        <item>राजपुष्ट एप्लिकेशन से लीजिये</item>
-    </string-array>
-
 
     <string-array name="benf_delivery_place">
         <item>संस्थागत प्रसव</item>
@@ -97,162 +237,5 @@
         <item>पति </item>
         <item>सभी</item>
     </string-array>
-
-
-    <string name="pw_na1">अकाल प्रसव / गर्भपात</string>
-    <string name="pw_na2">मौत</string>
-    <string name="pw_na3">कहीं और स्थानांतरित</string>
-
-    <string name="lm_na1"> माँ की मौत  हो गयीं </string>
-    <string name="lm_na2">माँ कहीं और चले गए</string>
-    <string name="lm_na3">बच्चे की मृत्यु हो गई</string>
-    <string name="lm_na4">नवजात  कहीं और चले गए</string>
-    <string name="lm_na5">दोनों मां और शिशु की मृत्यु हो गई</string>
-    <string name="lm_na6">दोनों कहीं और चले गए</string>
-
-
-    <string name="set_location">आंगनवाड़ी चुनियें</string>
-    <string name="set_language">आंगनवाड़ी चुनियें</string>
-
-    <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
-    <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
-    <string name="add_self_husb_mobile_val_mes">Please Add Self and Husband’s Mobile Number</string>
-    <string name="Select">Select</string>
-
-
-     
-    <string name="oops"> उफ़! </string>
-    <string name="no_internet_connection"> कोई इंटरनेट कनेक्शन नहीं! </string>
-    <string name="no_results_found"> ​​कोई परिणाम नहीं मिला! </string>
-    <string name="alert">Alert!</string>
-    <string name="ok">OK</string>
-    <string name="ANC_not_compl">ANC not completed</string>
-    <string name="Invalid_password">Invalid Password</string>
-    <string name="confirm_password_incorrect">Confirm Password Incorrect</string>
-    <string name="Women_Counselling">Women Counselling</string>
-    <string name="finish">Finish</string>
-    <string name="counselling_completed">Counselling Completed !!!</string>
-    <string name="enter_email">Please enter your email</string>
-    <string name="please_enter_OTP">Please enter OTP</string>
-    <string name="InvalidOTP">Invalid OTP</string>
-    <string name="please_new_password">Please new password</string>
-    <string name="Invalid_new_password">Invalid new password</string>
-    <string name="confirm_password_not_same">Confirm Password is not same</string>
-    <string name="LM_Monitoring">LM Monitoring</string>
-    <string name="incorrct_Muac">Muac should be from 5 cm to 18cm</string>
-    <string name="incorrct_child_height">Child height should be from 10 inch to 30 inch</string>
-    <string name="incorrct_child_weight">Child weight should be from 500 gm to 10 kg</string>
-    <string name="PW_Women_Weight">PW Women Weight</string>
-    <string name="Ideal_Weight_Gain">Ideal Weight Gain</string>
-    <string name="Women_Weight_Gain">Women Weight Gain</string>
-    <string name="Child_Weight">Child Weight</string>
-    <string name="Child_Weight_Gain">Child Weight Gain</string>
-    <string name="Please_Select_Awc">Please Select Awc</string>
-    <string name="incorrect_pw_weight">Weight should be from 30 Kg to 99 Kg</string>
-    <string name="Invalid_Anc_Date">Invalid Anc Date</string>
-    <string name="beneficiary_report_save">Beneficiary Report Saved Successfully</string>
-    <string name="beneficiary_child_reg_succ">Beneficiary Child Registration Successfully</string>
-    <string name="beneficiary_not_eligible">Beneficiary not eligible to registration</string>
-    <string name="AWC_Sync_Details">AWC Sync Details</string>
-    <string name="submit">Submit</string>
-    <string name="set_new_password">Set New Password</string>
-    <string name="counselling">Counselling</string>
-    <string name="beneficiary_pregnancy_reg_succ">Beneficiary Pregnancy Registration Successfully</string>
-    <string name="beneficiary_child_report_saved">Beneficiary Child Report Saved Successfully</string>
-    <string name="first_child_no_elig">First child not eligible to registration</string>
-    <string name="Second_child_age_less">"Second child age should be less then first child "</string>
-    <string name="invalid_password">Password must be >5 characters</string>
-    <string name="login_failed">Login failed</string>
-    <string name="beneficiary_age_limit">Beneficiary age should be greater then 13</string>
-    <string name="registration_title">Registration</string>
-    <string name="error_invalid_mobile_no">Invalid Mobile No</string>
-    <string name="error_invalid_name">Invalid Name</string>
-    <string name="child_age_limit">Child age should be less then 1 year</string>
-    <string name="benf_success_reg">Beneficiary Registration Successfully</string>
-    <string name="benf_success_update">Beneficiary Data Updated Successfully</string>
-    <string name="change_pass">Change Password</string>
-    <string name="lmp_date">LMP Date :</string>
-    <string name="dob">DOB :</string>
-    <string name="pcts_id">PCTS ID :</string>
-    <string name="error_firstname">Invalid First Name</string>
-    <string name="error_lastname">Invalid First Name</string>
-    <string name="error_email">Invalid Email</string>
-    <string name="error_username">Invalid UserName</string>
-    <string name="error_phoneno">Invalid Phone Number</string>
-    <string name="no_active_benef">No Active Beneficiary</string>
-    <string name="nav_logout">Logout</string>
-    <string name="change_awc">Change AWC</string>
-    <string name="sync">Sync</string>
-    <string name="change_password">Change Password</string>
-    <string name="na_reason">N/A Reason</string>
-    <string name="color_info">Color info</string>
-    <string name="not_filled">Not Filled</string>
-    <string name="filled">Filled</string>
-    <string name="delete_beneficiary_not_sync_server">Delete Beneficiary* ( Not Sync Server)</string>
-    <string name="saved_locally">Saved Locally</string>
-    <string name="synced_with_server">Synced With Server</string>
-    <string name="next">Next</string>
-    <string name="edit">Edit</string>
-    <string name="add_pregnancy">Add Pregnancy</string>
-    <string name="password">Password</string>
-    <string name="forget_password">Forget Password</string>
-    <string name="login">Login</string>
-    <string name="enter_otp">Enter OTP</string>
-    <string name="submit_otp">Submit OTP</string>
-    <string name="wight_gain_graph">Wight Gain Graph:</string>
-    <string name="month">Month</string>
-    <string name="add_child">Add Child</string>
-    <string name="first_child">First Child</string>
-    <string name="second_child">Second Child</string>
-    <string name="awc_name">AWC NAME</string>
-    <string name="women_child">Women/Child</string>
-    <string name="count">Count</string>
-    <string name="no_data_to_be_synced">No Data to be Synced</string>
-    <string name="upload_all">UPLOAD ALL</string>
-    <string name="email">Email</string>
-    <string name="name_of_beneficiary">लाभार्थी का नाम</string>
-    <string name="are_you_having_Twin">Are you having Twin ?</string>
-    <string name="DOB">DOB</string>
-    <string name="place_name">Place Name</string>
-    <string name="beneficiary_name">Beneficiary Name</string>
-    <string name="Name">Name</string>
-    <string name="PCTS_ID">PCTS ID</string>
-    <string name="bhamashah_ID_ACK">Bhamashah ID/ACK</string>
-    <string name="LMP_date">LMP Date</string>
-    <string name="Date">Date</string>
-    <string name="Weight">Weight</string>
-    <string name="child_birth">Child Birth</string>
-    <string name="Last_ANC_Date">Last ANC Date</string>
-    <string name="Height_in_inch">Height in inch</string>
-    <string name="Old_Password">Old Password</string>
-    <string name="First_Name">First Name</string>
-    <string name="Last_Name">Last Name</string>
-    <string name="New_Password">New Password</string>
-    <string name="Confirm_New_Password">Confirm New Password</string>
-    <string name="Mobile_Number">Mobile Number</string>
-    <string name="OTP">OTP</string>
-    <string name="MUAC">MUAC</string>
-    <string name="KG">KG</string>
-    <string name="GM">GM</string>
-    <string name="CM">CM</string>
-    <string name="MM">MM</string>
-    <string name="please_enter">Please Enter *</string>
-    <string name="Please_Select">Please Select</string>
-    <string name="Women">Women</string>
-    <string name="Child">Child</string>
-    <string name="New">New</string>
-    <string name="Edit">Edit</string>
-
-    <string name="discharge_slip">Discharge Slip</string>
-    <string name="mamta_mcp_card">Mamta/MCP Card</string>
-    <string name="invalid_pcts">Invalid PCTS</string>
-    <string name="invalid_bhamasha_id">Invalid Bhamasha Id/ACK</string>
-    <string name="invalid_OPD_IPD">Invalid OPD/IPD</string>
-    <string name="as_in_PCTS">As in PCTS</string>
-    <string name="enter_child_pctsid">Enter Child ID</string>
-    <string name="source_birthwt">Source of Birth Weight</string>
-    <string name="enter_OPD_IPD">Enter OPD/IPD</string>
-    <string name="as_in_discharge_slip">As in Discharge Slip</string>
-    <string name="child_sex">Child Sex</string>
-
 </resources>
+
