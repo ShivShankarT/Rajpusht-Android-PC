@@ -253,5 +253,6 @@
     <string name="source_birthwt">Source of Birth Weight</string>
     <string name="enter_OPD_IPD">Enter OPD/IPD</string>
     <string name="as_in_discharge_slip">As in Discharge Slip</string>
+    <string name="child_sex">Child Sex</string>
 
 </resources>

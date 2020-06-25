@@ -21,8 +21,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 
+import java.io.IOException;
+
 import javax.inject.Inject;
 
+import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.di.PreferenceInfo;
 import in.rajpusht.pc.ui.login.LoginActivity;
 
@@ -144,4 +147,11 @@ public class AppPreferencesHelper {
     public String getStringRes(int stringId) {
         return context.getString(stringId);
     }
+
+    public String readStringFromAsset(String file) throws IOException {
+        return HUtil.readStringFromAsset(context, file);
+    }
+
+
 }
+

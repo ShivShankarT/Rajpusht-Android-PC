@@ -17,6 +17,7 @@ public class ChildEntity {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private long childId;
+    private String childSex;
     private String stage;
     private String subStage;
     private Integer childOrder;
@@ -34,14 +35,11 @@ public class ChildEntity {
     private String pctsChildId;
     private Integer birthWeightSource;
     private Long opdipd;
-
-
-    public ChildEntity() {
-    }
-
     @Ignore
     private List<LMMonitorEntity> lmMonitorEntities;
 
+    public ChildEntity() {
+    }
 
     public long getChildId() {
         return childId;
@@ -201,5 +199,13 @@ public class ChildEntity {
 
     public void setOpdipd(Long opdipd) {
         this.opdipd = opdipd;
+    }
+
+    public String getChildSex() {
+        return childSex;
+    }
+
+    public void setChildSex(String childSex) {
+        this.childSex = childSex;
     }
 }

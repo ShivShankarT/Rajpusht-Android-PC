@@ -54,6 +54,7 @@
     <string name="receive_counselling">Are you willing to receive counselling messages on mobile ?</string>
 
 
+
     <string name="first_cycle_immunization">First cycle of immunization of child completed (as in MAMTA Card)</string>
     <string name="last_record_muac_child">Last recorded MUAC of child </string>
     <string name="date_muac_child">Date of last recorded MUAC of child </string>
@@ -347,6 +348,7 @@
     <string name="source_birthwt">Source of Birth Weight</string>
     <string name="enter_OPD_IPD">Enter OPD/IPD</string>
     <string name="as_in_discharge_slip">As in Discharge Slip</string>
+    <string name="child_sex">Child Sex</string>
 
 
 </resources>

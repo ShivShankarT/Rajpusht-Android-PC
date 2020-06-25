@@ -5,6 +5,7 @@ import android.util.Log;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.List;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
@@ -160,7 +162,7 @@ public class JsonParser {
                     pwmodel.setNaReason(na_reason);
                     pwmodel.setCreatedBy(created_by);
                     pwmodel.setDataStatus(DataStatus.OLD);
-                    pwmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
+                    pwmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
                     pwMonitorModels.add(pwmodel);
 
 
@@ -172,6 +174,7 @@ public class JsonParser {
                     int child_id = getInt(object, "id");
                     String dob = getString(object, "dob");
                     Integer age = getInt(object, "age");
+                    String child_sex = getString(object, "child_sex");
                     String stage = getString(object, "stage");
                     String sub_stage = getString(object, "sub_stage");
                     int mother_id = getInt(object, "mother_id");
@@ -189,6 +192,7 @@ public class JsonParser {
                     cmodel.setChildId(child_id);
                     cmodel.setDob(AppDateTimeUtils.convertDateFromServer(dob));
                     cmodel.setAge(age);
+                    cmodel.setChildSex(child_sex);
                     cmodel.setStage(stage);
                     cmodel.setSubStage(sub_stage);
                     cmodel.setMotherId(mother_id);
@@ -251,7 +255,7 @@ public class JsonParser {
                     lmmodel.setDataStatus(DataStatus.OLD);
                     lmmodel.setNaReason(na_reason);
                     lmmodel.setCreatedAt(mobile_created_at);
-                    lmmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
+                    lmmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
                     lmMonitorModel.add(lmmodel);
 
 
@@ -383,6 +387,7 @@ public class JsonParser {
             childobject.addProperty("motherId", childEntity.getMotherId());
         }
         childobject.addProperty("dob", AppDateTimeUtils.convertServerDate(childEntity.getDob()));
+        childobject.addProperty("childSex", childEntity.getChildSex());
         childobject.addProperty("age", childEntity.getAge());
         childobject.addProperty("stage", childEntity.getStage());
         childobject.addProperty("subStage", childEntity.getSubStage());
@@ -460,4 +465,10 @@ public class JsonParser {
         return pwobject;
     }
 
+    public static List<InstitutionPlaceEntity> parseFacility(String json) {
+
+        return new Gson().fromJson(json, new TypeToken<List<InstitutionPlaceEntity>>() {
+        }.getType());
+
+    }
 }

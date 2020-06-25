@@ -1,0 +1,1430 @@
+﻿[
+  {
+    "S. No.": "1",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "SHC",
+    "Location": "Khtar"
+  },
+  {
+    "S. No.": "2",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "PHC",
+    "Location": "Bedla"
+  },
+  {
+    "S. No.": "3",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "PHC",
+    "Location": "Bhutala"
+  },
+  {
+    "S. No.": "4",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "PHC",
+    "Location": "Dhar"
+  },
+  {
+    "S. No.": "5",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "PHC",
+    "Location": "Kelashpuri"
+  },
+  {
+    "S. No.": "6",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "PHC",
+    "Location": "Losing"
+  },
+  {
+    "S. No.": "7",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "PHC",
+    "Location": "Vati"
+  },
+  {
+    "S. No.": "8",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "SHC",
+    "Location": "Iswal"
+  },
+  {
+    "S. No.": "9",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "SHC",
+    "Location": "Chirava"
+  },
+  {
+    "S. No.": "10",
+    "District": "Udaipur",
+    "Block": "Badgaon",
+    "Type of facility": "CHC",
+    "Location": "Badgaon"
+  },
+  {
+    "S. No.": "11",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "CHC",
+    "Location": "Bhinder"
+  },
+  {
+    "S. No.": "12",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "CHC",
+    "Location": "Kanod"
+  },
+  {
+    "S. No.": "13",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "CHC",
+    "Location": "Menar"
+  },
+  {
+    "S. No.": "14",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "CHC",
+    "Location": "Vallabh nagar"
+  },
+  {
+    "S. No.": "15",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "PHC",
+    "Location": "Adinda"
+  },
+  {
+    "S. No.": "16",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "PHC",
+    "Location": "Bhatewar"
+  },
+  {
+    "S. No.": "17",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "PHC",
+    "Location": "Daroli"
+  },
+  {
+    "S. No.": "18",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "PHC",
+    "Location": "Kheroda"
+  },
+  {
+    "S. No.": "19",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "PHC",
+    "Location": "Loonada"
+  },
+  {
+    "S. No.": "20",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "PHC",
+    "Location": "Modi"
+  },
+  {
+    "S. No.": "21",
+    "District": "Udaipur",
+    "Block": "Bhinder",
+    "Type of facility": "PHC",
+    "Location": "Rundeda"
+  },
+  {
+    "S. No.": "22",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Chanawada"
+  },
+  {
+    "S. No.": "23",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Jagat"
+  },
+  {
+    "S. No.": "24",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "CHC",
+    "Location": "Kurabad"
+  },
+  {
+    "S. No.": "25",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "CHC",
+    "Location": "Nai"
+  },
+  {
+    "S. No.": "26",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "CHC",
+    "Location": "Tidi"
+  },
+  {
+    "S. No.": "27",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Alsigarh"
+  },
+  {
+    "S. No.": "28",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Bachhar"
+  },
+  {
+    "S. No.": "29",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Bambora"
+  },
+  {
+    "S. No.": "30",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Barapal"
+  },
+  {
+    "S. No.": "31",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Bhainsada Khurd"
+  },
+  {
+    "S. No.": "32",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Bhallon Ka Guda"
+  },
+  {
+    "S. No.": "33",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Chansada"
+  },
+  {
+    "S. No.": "34",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Goverdhan Vilas Devali"
+  },
+  {
+    "S. No.": "35",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Lakadwas"
+  },
+  {
+    "S. No.": "36",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Pai"
+  },
+  {
+    "S. No.": "37",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Sakroda Girwa"
+  },
+  {
+    "S. No.": "38",
+    "District": "Udaipur",
+    "Block": "Girwa",
+    "Type of facility": "PHC",
+    "Location": "Savina"
+  },
+  {
+    "S. No.": "39",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "CHC",
+    "Location": "Gogunda"
+  },
+  {
+    "S. No.": "40",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "CHC",
+    "Location": "Padrada"
+  },
+  {
+    "S. No.": "41",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "PHC",
+    "Location": "Barwara"
+  },
+  {
+    "S. No.": "42",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "PHC",
+    "Location": "Bhanpura"
+  },
+  {
+    "S. No.": "43",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "PHC",
+    "Location": "Cheetrawas"
+  },
+  {
+    "S. No.": "44",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "PHC",
+    "Location": "Nandeshma"
+  },
+  {
+    "S. No.": "45",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "PHC",
+    "Location": "Padawali"
+  },
+  {
+    "S. No.": "46",
+    "District": "Udaipur",
+    "Block": "Gogunda",
+    "Type of facility": "PHC",
+    "Location": "Sayara"
+  },
+  {
+    "S. No.": "47",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "CHC",
+    "Location": "Jhadol Ph"
+  },
+  {
+    "S. No.": "48",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "CHC",
+    "Location": "Ogana"
+  },
+  {
+    "S. No.": "49",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "CHC",
+    "Location": "Phalasiya"
+  },
+  {
+    "S. No.": "50",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "PHC",
+    "Location": "Kolyari"
+  },
+  {
+    "S. No.": "51",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "PHC",
+    "Location": "Madri"
+  },
+  {
+    "S. No.": "52",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "PHC",
+    "Location": "Mohamad Phalasiya"
+  },
+  {
+    "S. No.": "53",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "PHC",
+    "Location": "Panarwa"
+  },
+  {
+    "S. No.": "54",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "PHC",
+    "Location": "Peepalbara"
+  },
+  {
+    "S. No.": "55",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "PHC",
+    "Location": "Som"
+  },
+  {
+    "S. No.": "56",
+    "District": "Udaipur",
+    "Block": "Jhadol",
+    "Type of facility": "SHC",
+    "Location": "Dhimdi"
+  },
+  {
+    "S. No.": "57",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Banjariya"
+  },
+  {
+    "S. No.": "58",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Katewari"
+  },
+  {
+    "S. No.": "59",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Chittoura"
+  },
+  {
+    "S. No.": "60",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Mahuwal"
+  },
+  {
+    "S. No.": "61",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Barothi Bhramana"
+  },
+  {
+    "S. No.": "62",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Robia"
+  },
+  {
+    "S. No.": "63",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Kanbai"
+  },
+  {
+    "S. No.": "64",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Ukhedi"
+  },
+  {
+    "S. No.": "65",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Patiya"
+  },
+  {
+    "S. No.": "66",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Saklal"
+  },
+  {
+    "S. No.": "67",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "CHC",
+    "Location": "Kherwada"
+  },
+  {
+    "S. No.": "68",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Balicha"
+  },
+  {
+    "S. No.": "69",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Bawal Wara"
+  },
+  {
+    "S. No.": "70",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Chani"
+  },
+  {
+    "S. No.": "71",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Dabaycha"
+  },
+  {
+    "S. No.": "72",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Jawas"
+  },
+  {
+    "S. No.": "73",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Khandi Ovari"
+  },
+  {
+    "S. No.": "74",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Nayagaon"
+  },
+  {
+    "S. No.": "75",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Pahada"
+  },
+  {
+    "S. No.": "76",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "PHC",
+    "Location": "Sarera"
+  },
+  {
+    "S. No.": "77",
+    "District": "Udaipur",
+    "Block": "Kherwara",
+    "Type of facility": "SHC",
+    "Location": "Badla"
+  },
+  {
+    "S. No.": "78",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Jher"
+  },
+  {
+    "S. No.": "79",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Beran"
+  },
+  {
+    "S. No.": "80",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Mahadi"
+  },
+  {
+    "S. No.": "81",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Sada"
+  },
+  {
+    "S. No.": "82",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Savan Kyara"
+  },
+  {
+    "S. No.": "83",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "CHC",
+    "Location": "Bekariya"
+  },
+  {
+    "S. No.": "84",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "CHC",
+    "Location": "Kotda"
+  },
+  {
+    "S. No.": "85",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "PHC",
+    "Location": "Bikarani"
+  },
+  {
+    "S. No.": "86",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "PHC",
+    "Location": "Devla"
+  },
+  {
+    "S. No.": "87",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "PHC",
+    "Location": "Malwa Ka Chora"
+  },
+  {
+    "S. No.": "88",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "PHC",
+    "Location": "Mamer"
+  },
+  {
+    "S. No.": "89",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "PHC",
+    "Location": "Mandwa"
+  },
+  {
+    "S. No.": "90",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Juda"
+  },
+  {
+    "S. No.": "91",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Jogiwada"
+  },
+  {
+    "S. No.": "92",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Gogrud"
+  },
+  {
+    "S. No.": "93",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Mandawal"
+  },
+  {
+    "S. No.": "94",
+    "District": "Udaipur",
+    "Block": "Kotra",
+    "Type of facility": "SHC",
+    "Location": "Tejawas"
+  },
+  {
+    "S. No.": "95",
+    "District": "Udaipur",
+    "Block": "Lasadia",
+    "Type of facility": "SHC",
+    "Location": "Araniya"
+  },
+  {
+    "S. No.": "96",
+    "District": "Udaipur",
+    "Block": "Lasadia",
+    "Type of facility": "CHC",
+    "Location": "Lasadia"
+  },
+  {
+    "S. No.": "97",
+    "District": "Udaipur",
+    "Block": "Lasadia",
+    "Type of facility": "PHC",
+    "Location": "Kalibhit"
+  },
+  {
+    "S. No.": "98",
+    "District": "Udaipur",
+    "Block": "Lasadia",
+    "Type of facility": "PHC",
+    "Location": "Kun"
+  },
+  {
+    "S. No.": "99",
+    "District": "Udaipur",
+    "Block": "Lasadia",
+    "Type of facility": "SHC",
+    "Location": "Agad"
+  },
+  {
+    "S. No.": "100",
+    "District": "Udaipur",
+    "Block": "Lasadia",
+    "Type of facility": "SHC",
+    "Location": "Devliya"
+  },
+  {
+    "S. No.": "101",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "CHC",
+    "Location": "Dabok"
+  },
+  {
+    "S. No.": "102",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "CHC",
+    "Location": "Khemli"
+  },
+  {
+    "S. No.": "103",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "CHC",
+    "Location": "Mavli"
+  },
+  {
+    "S. No.": "104",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "CHC",
+    "Location": "Sanwad"
+  },
+  {
+    "S. No.": "105",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Chandesra"
+  },
+  {
+    "S. No.": "106",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "Dispensary",
+    "Location": "Fateh Nagar"
+  },
+  {
+    "S. No.": "107",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Gadoli"
+  },
+  {
+    "S. No.": "108",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Ghasa"
+  },
+  {
+    "S. No.": "109",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Gurli"
+  },
+  {
+    "S. No.": "110",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Intali"
+  },
+  {
+    "S. No.": "111",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Palana kala"
+  },
+  {
+    "S. No.": "112",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Sakroda M"
+  },
+  {
+    "S. No.": "113",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Salera Kalan"
+  },
+  {
+    "S. No.": "114",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "PHC",
+    "Location": "Thamla"
+  },
+  {
+    "S. No.": "115",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Maruwas"
+  },
+  {
+    "S. No.": "116",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Nauwa"
+  },
+  {
+    "S. No.": "117",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Vijanwas"
+  },
+  {
+    "S. No.": "118",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Ghanoli"
+  },
+  {
+    "S. No.": "119",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Merta"
+  },
+  {
+    "S. No.": "120",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Namari"
+  },
+  {
+    "S. No.": "121",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Ordi A"
+  },
+  {
+    "S. No.": "122",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Beeka Khera"
+  },
+  {
+    "S. No.": "123",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Changari"
+  },
+  {
+    "S. No.": "124",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Ladana"
+  },
+  {
+    "S. No.": "125",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Ladani"
+  },
+  {
+    "S. No.": "126",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Bansliya"
+  },
+  {
+    "S. No.": "127",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Golwara"
+  },
+  {
+    "S. No.": "128",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Mankyawas"
+  },
+  {
+    "S. No.": "129",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Noorda"
+  },
+  {
+    "S. No.": "130",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Amli"
+  },
+  {
+    "S. No.": "131",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Bargaon"
+  },
+  {
+    "S. No.": "132",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": " Choondawat Kheri"
+  },
+  {
+    "S. No.": "133",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Rampura"
+  },
+  {
+    "S. No.": "134",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Bitholi"
+  },
+  {
+    "S. No.": "135",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Palwas Kalan"
+  },
+  {
+    "S. No.": "136",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Rakhyawal"
+  },
+  {
+    "S. No.": "137",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Virdholiya"
+  },
+  {
+    "S. No.": "138",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Salera Khurd"
+  },
+  {
+    "S. No.": "139",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Garhwara"
+  },
+  {
+    "S. No.": "140",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Mahura"
+  },
+  {
+    "S. No.": "141",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Prakashpura"
+  },
+  {
+    "S. No.": "142",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Badiyar"
+  },
+  {
+    "S. No.": "143",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": " M Mordi"
+  },
+  {
+    "S. No.": "144",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Phali Chara"
+  },
+  {
+    "S. No.": "145",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Bheemal Charnan"
+  },
+  {
+    "S. No.": "146",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Madri Asholyan"
+  },
+  {
+    "S. No.": "147",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Nahar Magra"
+  },
+  {
+    "S. No.": "148",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Basni Khurd"
+  },
+  {
+    "S. No.": "149",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Bhumlawas"
+  },
+  {
+    "S. No.": "150",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Dhaneria"
+  },
+  {
+    "S. No.": "151",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Khartana"
+  },
+  {
+    "S. No.": "152",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Morath"
+  },
+  {
+    "S. No.": "153",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": "Bhansol"
+  },
+  {
+    "S. No.": "154",
+    "District": "Udaipur",
+    "Block": "Mavli",
+    "Type of facility": "SHC",
+    "Location": " Warni"
+  },
+  {
+    "S. No.": "155",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "CHC",
+    "Location": "Dhelana"
+  },
+  {
+    "S. No.": "156",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "CHC",
+    "Location": "Rishabhdev"
+  },
+  {
+    "S. No.": "157",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "PHC",
+    "Location": "Kalyanpur"
+  },
+  {
+    "S. No.": "158",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "PHC",
+    "Location": "Masaro ki ovri"
+  },
+  {
+    "S. No.": "159",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "PHC",
+    "Location": "Paderi B"
+  },
+  {
+    "S. No.": "160",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "PHC",
+    "Location": "Peepli B"
+  },
+  {
+    "S. No.": "161",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "PHC",
+    "Location": "Sagwara"
+  },
+  {
+    "S. No.": "162",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "PHC",
+    "Location": "Kagdar Bhatiya"
+  },
+  {
+    "S. No.": "163",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "SHC",
+    "Location": "Pipli A"
+  },
+  {
+    "S. No.": "164",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "SHC",
+    "Location": "Garnala Kotra"
+  },
+  {
+    "S. No.": "165",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "SHC",
+    "Location": "Kanuwada"
+  },
+  {
+    "S. No.": "166",
+    "District": "Udaipur",
+    "Block": "Rishabhdev",
+    "Type of facility": "SHC",
+    "Location": "Mandwa Falan"
+  },
+  {
+    "S. No.": "167",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "CHC",
+    "Location": "Gingla"
+  },
+  {
+    "S. No.": "168",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "SHC",
+    "Location": "Gaonrapal"
+  },
+  {
+    "S. No.": "169",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "SHC",
+    "Location": "Isarwas Digiyan"
+  },
+  {
+    "S. No.": "170",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "SHC",
+    "Location": "Chibora"
+  },
+  {
+    "S. No.": "171",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "SHC",
+    "Location": "Methudi"
+  },
+  {
+    "S. No.": "172",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "SHC",
+    "Location": "Magrawali Thori"
+  },
+  {
+    "S. No.": "173",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "Sub Division Hospitals",
+    "Location": "Salumber"
+  },
+  {
+    "S. No.": "174",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "PHC",
+    "Location": "Bassi"
+  },
+  {
+    "S. No.": "175",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "PHC",
+    "Location": "Bedawal"
+  },
+  {
+    "S. No.": "176",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "PHC",
+    "Location": "Karawali"
+  },
+  {
+    "S. No.": "177",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "PHC",
+    "Location": "Orwadiya"
+  },
+  {
+    "S. No.": "178",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "PHC",
+    "Location": "Seriya"
+  },
+  {
+    "S. No.": "179",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "PHC",
+    "Location": "Uthrada"
+  },
+  {
+    "S. No.": "180",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "SHC",
+    "Location": "Intalikheda"
+  },
+  {
+    "S. No.": "181",
+    "District": "Udaipur",
+    "Block": "Salumbar",
+    "Type of facility": "SHC",
+    "Location": "Methudi"
+  },
+  {
+    "S. No.": "182",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "SHC",
+    "Location": "Deengri"
+  },
+  {
+    "S. No.": "183",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "CHC",
+    "Location": "Jhadol S"
+  },
+  {
+    "S. No.": "184",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "CHC",
+    "Location": "Parsaad"
+  },
+  {
+    "S. No.": "185",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "CHC",
+    "Location": "Sarada"
+  },
+  {
+    "S. No.": "186",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "CHC",
+    "Location": "Semari"
+  },
+  {
+    "S. No.": "187",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Badawali"
+  },
+  {
+    "S. No.": "188",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Badgaon Jhadol"
+  },
+  {
+    "S. No.": "189",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Chavand"
+  },
+  {
+    "S. No.": "190",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Devpura"
+  },
+  {
+    "S. No.": "191",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Jawad"
+  },
+  {
+    "S. No.": "192",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Palodada"
+  },
+  {
+    "S. No.": "193",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Sagatra"
+  },
+  {
+    "S. No.": "194",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "SHC",
+    "Location": "Balua"
+  },
+  {
+    "S. No.": "195",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "SHC",
+    "Location": "Magra Thori"
+  },
+  {
+    "S. No.": "196",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Jaysamand"
+  },
+  {
+    "S. No.": "197",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Surkhan Kheda"
+  },
+  {
+    "S. No.": "198",
+    "District": "Udaipur",
+    "Block": "Sarada",
+    "Type of facility": "PHC",
+    "Location": "Tokar"
+  },
+  {
+    "S. No.": "199",
+    "District": "Udaipur",
+    "Block": "Udaipur City",
+    "Type of facility": "PHC",
+    "Location": "UPHC Chitrakut Nagar"
+  },
+  {
+    "S. No.": "200",
+    "District": "Udaipur",
+    "Block": "Udaipur City",
+    "Type of facility": "PHC",
+    "Location": "UPHC Pratapnagar"
+  },
+  {
+    "S. No.": "201",
+    "District": "Udaipur",
+    "Block": "Udaipur City",
+    "Type of facility": "District Hospital",
+    "Location": "Sunder Singh Bhandari Hospital Chandpole"
+  },
+  {
+    "S. No.": "202",
+    "District": "Udaipur",
+    "Block": "Udaipur City",
+    "Type of facility": "Satellite Hospital",
+    "Location": "Satelite Hospital Hiran Magri Sec 5, Udaipur"
+  },
+  {
+    "S. No.": "203",
+    "District": "Udaipur",
+    "Block": "Udaipur City",
+    "Type of facility": "Medical Colleges & Hospital",
+    "Location": "Pannadhay Hospital Udaipur"
+  },
+  {
+    "S. No.": "204",
+    "District": "Udaipur",
+    "Block": "Udaipur City",
+    "Type of facility": "CHC",
+    "Location": "Bhuwana"
+  }
+]

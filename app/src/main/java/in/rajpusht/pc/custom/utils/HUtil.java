@@ -1,7 +1,9 @@
 package in.rajpusht.pc.custom.utils;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 
@@ -11,9 +13,14 @@ import androidx.annotation.Nullable;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -216,11 +223,12 @@ public class HUtil {
         bdayThisYear.setTime(birthday);
         bdayThisYear.set(Calendar.YEAR, today.get(Calendar.YEAR));
         int age = today.get(Calendar.YEAR) - bday.get(Calendar.YEAR);
-        if(today.getTimeInMillis() < bdayThisYear.getTimeInMillis())
+        if (today.getTimeInMillis() < bdayThisYear.getTimeInMillis())
             age--;
 
         return age;
     }
+
     public static Tuple<BeneficiaryEntity, PregnantEntity, ChildEntity> staticData() {//todo rm
 
         String j = "{\"t1\":{\"dob\":\"Jun 30, 1984 12:00:00 AM\",\"age\":36,\"bahamashahId\":\"wr6688899\",\"beneficiaryId\":1590818137299,\"caste\":\"SC\",\"childCount\":2,\"collectedDataSubStage\":[],\"counselingProv\":\"YES\",\"counselingSms\":1,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"economic\":\"BPL\",\"husbandMobNo\":\"9736484543\",\"husbandName\":\"Ram Kumar\",\"id\":1,\"mobileNo\":\"9876543218\",\"name\":\"Shavani\",\"pctsId\":\"13466778\",\"pmmvyInstallment\":1,\"stage\":\"PW\",\"subStage\":\"PW\",\"updatedAt\":\"2020-05-30 11:25:37\"},\"t2\":{\"beneficiaryId\":1590818137299,\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"id\":1,\"lmpDate\":\"Jun 4, 2020 12:00:00 AM\",\"pregnancyId\":1590818137299,\"updatedAt\":\"2020-05-30 11:25:37\"},\"t3\":{\"dob\":\"Oct 8, 2019 12:00:00 AM\",\"childId\":15908181372991,\"childOrder\":1,\"collectedDataSubStage\":[],\"createdAt\":\"2020-05-30 11:25:37\",\"dataStatus\":\"NEW\",\"deliveryHome\":0,\"deliveryPlace\":\"Bhavu\",\"id\":1,\"motherId\":1590818137299,\"stage\":\"LM\",\"subStage\":\"LM\",\"updatedAt\":\"2020-05-30 11:25:37\"}}";
@@ -259,6 +267,49 @@ public class HUtil {
                 case "N":
                     return "NO";
             }
+        return null;
+    }
+
+
+    public static String readStringFromAsset(Context context, String name) throws IOException {
+
+    /*    StringBuilder sb = new StringBuilder();
+        InputStream is = context.getAssets().open(json);
+        BufferedReader br = new BufferedReader(new InputStreamReader(is, StandardCharsets.UTF_8));
+        String str;
+        while ((str = br.readLine()) != null) {
+            sb.append(str);
+        }
+        br.close();*/
+
+        BufferedReader in = null;
+        try {
+            StringBuilder buf = new StringBuilder();
+            InputStream is = context.getAssets().open(name);
+            in = new BufferedReader(new InputStreamReader(is));
+
+            String str;
+            boolean isFirst = true;
+            while ( (str = in.readLine()) != null ) {
+                if (isFirst)
+                    isFirst = false;
+                else
+                    buf.append('\n');
+                buf.append(str);
+            }
+            return buf.toString();
+        } catch (IOException e) {
+            Log.e("ss", "Error opening asset " + name);
+        } finally {
+            if (in != null) {
+                try {
+                    in.close();
+                } catch (IOException e) {
+                    Log.e("ss", "Error closing asset " + name);
+                }
+            }
+        }
+
         return null;
     }
 

@@ -90,7 +90,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         PregnancyGraphFragmentBinding pregnancyGraphFragmentBinding = getViewDataBinding();
         int pw_women_weight;
         if (isChild)
-            pw_women_weight=R.string.Child_Weight;
+            pw_women_weight = R.string.Child_Weight;
         else
             pw_women_weight = R.string.PW_Women_Weight;
 
@@ -134,16 +134,32 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
 
+        ///1st Month - +500 GM
+        //2nd Month - +500 GM
+        //3rd Month - +500 GM
+        //6th Month - Double of Birth Weight
+        //1 Yr - 3 times of Birth Weight
+        //2 Yr - (Boy : 10 - 12 KG , Girl : 9 -11 KG)
         ArrayList<Entry> values1 = new ArrayList<>();
+        Pair<ChildEntity, List<LMMonitorEntity>> childEntityListPair = null;
         if (isChild) {
+
+            double childWeight = 3;
+            if (CounsellingMedia.counsellingChildId != 0) {
+                childEntityListPair = dataRepository.getChild(CounsellingMedia.counsellingChildId).toSingle()
+                        .zipWith(dataRepository.lmMonitorsByChildId(CounsellingMedia.counsellingChildId), Pair::new).blockingGet();
+                if (childEntityListPair.first.getBirthWeight() != null)
+                    childWeight = childEntityListPair.first.getBirthWeight();
+            }
+
             values1.add(new Entry(1, 0.5f));
             values1.add(new Entry(2, 0.5f));
             values1.add(new Entry(3, 0.5f));
-            values1.add(new Entry(6, 1f));
-            values1.add(new Entry(12, 2f));
-            values1.add(new Entry(24, 8f));
-        }
-        else {
+            values1.add(new Entry(6, (float) (childWeight * 2)));
+            values1.add(new Entry(12, (float) (childWeight * 3)));
+            values1.add(new Entry(24, 10));
+
+        } else {
             values1.add(new Entry(4, 1.5f));
             values1.add(new Entry(5, 1.5f));
             values1.add(new Entry(6, 2));
@@ -180,10 +196,9 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             }
 
         if (isChild) {
-            if (CounsellingMedia.counsellingChildId != 0) {
-                Pair<ChildEntity, List<LMMonitorEntity>> data = dataRepository.getChild(CounsellingMedia.counsellingChildId).toSingle()
-                        .zipWith(dataRepository.lmMonitorsByChildId(CounsellingMedia.counsellingChildId), Pair::new).blockingGet();
-                values2 = getLMWeightDiff(data);
+            if (CounsellingMedia.counsellingChildId != 0 && childEntityListPair != null) {
+
+                values2 = getLMWeightDiff(childEntityListPair);
                 if (values2.isEmpty())
                     values2.add(new Entry(4, 0));
 
@@ -237,7 +252,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             if (lastWeight != 0) {
                 double v = Math.abs(lastWeight - pwMonitorEntity.getLastWeightInMamta());
                 values2.add(new Entry(lmpMonth, (float) v));
-                Log.i("dssss", "getPWWeightDiff: "+lmpMonth+" === "+v);
+                Log.i("dssss", "getPWWeightDiff: " + lmpMonth + " === " + v);
             }
             lastWeight = pwMonitorEntity.getLastWeightInMamta();
         }
@@ -258,10 +273,10 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 continue;
             Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
             int lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
-            if (lastWeight!=null&&lastWeight != 0) {
+            if (lastWeight != null && lastWeight != 0) {
                 double v = Math.abs(lastWeight - childWeight);
                 values2.add(new Entry(lmpMonth, (float) v));
-                Log.i("dssss", "getLMWeightDiff: "+lmpMonth+" === "+v);
+                Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + v);
             }
             lastWeight = childWeight;
         }

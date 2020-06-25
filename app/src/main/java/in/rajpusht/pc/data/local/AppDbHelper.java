@@ -11,6 +11,7 @@ import in.rajpusht.pc.data.local.db.AppDatabase;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
@@ -227,14 +228,13 @@ public class AppDbHelper {
     }
 
 
-
     public Single<BeneficiaryJoin> getBeneficiaryJoinDataFromPregnancyId(long pregnancyId) {
         return Single.fromCallable(() -> {
             PregnantEntity pregnantEntity = mAppDatabase.pregnantDao().getPregnantByPregnancyId(pregnancyId);
-            BeneficiaryEntity beneficiaryEntity=mAppDatabase.beneficiaryDao().getBeneficiariesById(pregnantEntity.getBeneficiaryId());
+            BeneficiaryEntity beneficiaryEntity = mAppDatabase.beneficiaryDao().getBeneficiariesById(pregnantEntity.getBeneficiaryId());
             List<ChildEntity> childEntities = mAppDatabase.childDao().childEntities(beneficiaryEntity.getBeneficiaryId());
             ChildEntity childEntity = childEntities.isEmpty() ? null : childEntities.get(0);
-            BeneficiaryJoin beneficiaryJoin=new BeneficiaryJoin();
+            BeneficiaryJoin beneficiaryJoin = new BeneficiaryJoin();
             beneficiaryJoin.setBeneficiaryEntity(beneficiaryEntity);
             beneficiaryJoin.setChildEntity(childEntity);
             beneficiaryJoin.setPregnantEntity(pregnantEntity);
@@ -245,9 +245,9 @@ public class AppDbHelper {
     public Single<BeneficiaryJoin> getBeneficiaryJoinDataFromChildId(long childID) {
         return Single.fromCallable(() -> {
             ChildEntity childEntity = mAppDatabase.childDao().childEntityId(childID);
-            BeneficiaryEntity beneficiaryEntity=mAppDatabase.beneficiaryDao().getBeneficiariesById(childEntity.getMotherId());
+            BeneficiaryEntity beneficiaryEntity = mAppDatabase.beneficiaryDao().getBeneficiariesById(childEntity.getMotherId());
             PregnantEntity pregnantEntity = mAppDatabase.pregnantDao().getPregnantByPregnancyId(childEntity.getMotherId());
-            BeneficiaryJoin beneficiaryJoin=new BeneficiaryJoin();
+            BeneficiaryJoin beneficiaryJoin = new BeneficiaryJoin();
             beneficiaryJoin.setBeneficiaryEntity(beneficiaryEntity);
             beneficiaryJoin.setChildEntity(childEntity);
             beneficiaryJoin.setPregnantEntity(pregnantEntity);
@@ -284,7 +284,26 @@ public class AppDbHelper {
         return mAppDatabase.AppDao().awcViceSyncData();
     }
 
-    ;
+    //institution
+
+    public Single<List<String>> getInstitutionLocation(String type) {
+        return mAppDatabase.institutionPlaceDao().getInstitutionLocation(type);
+    }
+
+    public Single<Long> getInstitutionPlaceCount() {
+
+        return mAppDatabase.institutionPlaceDao().getInstitutionPlaceCount();
+    }
+
+    public Completable insertInstitutionPlace(List<InstitutionPlaceEntity> placeEntities) {
+        return Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                mAppDatabase.institutionPlaceDao().deleteAll();
+                mAppDatabase.institutionPlaceDao().insertAll(placeEntities);
+            }
+        });
+    }
 
 
 }

@@ -1,5 +1,7 @@
 package in.rajpusht.pc.data;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
@@ -16,6 +18,7 @@ import in.rajpusht.pc.data.local.AppDbHelper;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
@@ -33,6 +36,7 @@ import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
 import io.reactivex.Single;
+import io.reactivex.SingleSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
 
@@ -160,6 +164,37 @@ public class DataRepository {
     }
 
 
+    public Single<Boolean> insertFacilityData() {
+
+        return getInstitutionPlaceCount().flatMap(new Function<Long, SingleSource<Boolean>>() {
+            @Override
+            public SingleSource<Boolean> apply(Long aLong) throws Exception {
+                if (aLong == 0) {
+                    String json = appPreferencesHelper.readStringFromAsset("other/facilities.json");
+                    Log.i("institutionPla", "apply: "+json);
+                    List<InstitutionPlaceEntity> institutionPlaceEntities = JsonParser.parseFacility(json);
+                    Log.i("institutionPla", "apply: "+institutionPlaceEntities.size());
+                    return appDbHelper.insertInstitutionPlace(institutionPlaceEntities).toSingleDefault(true);
+                } else {
+                    return Single.just(true);
+                }
+            }
+        });
+
+
+    }
+
+    public Single<List<String>> getInstitutionLocation(String type) {
+
+        return appDbHelper.getInstitutionLocation(type);
+    }
+
+    public Single<Long> getInstitutionPlaceCount() {
+
+        return appDbHelper.getInstitutionPlaceCount();
+    }
+
+
     public Single<ApiResponse<JsonObject>> login(String email, String password) {
         return appApiHelper.login(email, password).doOnSuccess(jsonObjectApiResponse -> {
             if (jsonObjectApiResponse != null && jsonObjectApiResponse.isStatus()) {
@@ -274,4 +309,5 @@ public class DataRepository {
     public void logout() {
         appPreferencesHelper.logout();
     }
+
 }

@@ -21,5 +21,21 @@
         <item>@string/lm_na5</item>
         <item>@string/lm_na6</item>
     </string-array>
+    <string-array name="empty"></string-array>
 
+    <string-array name="child_sex">
+        <item>Male</item>
+        <item>Female</item>
+        <item>Other</item>
+    </string-array>
+
+    <string-array name="Institutional_Type">
+        <item>CHC</item>
+        <item>District Hospital</item>
+        <item>Medical Colleges &amp; Hospital</item>
+        <item>PHC</item>
+        <item>Satellite Hospital</item>
+        <item>SHC</item>
+        <item>Sub Division Hospitals</item>
+    </string-array>
 </resources>

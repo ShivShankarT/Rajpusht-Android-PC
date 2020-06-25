@@ -18,6 +18,7 @@ import androidx.core.widget.TextViewCompat;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import in.rajpusht.pc.R;
@@ -79,20 +80,34 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
         for (int i = 0; i < array.length; i++) {
             sectionData.add(String.valueOf(array[i]));
         }
-
         if (ff_label_text_appearance != 0)
             TextViewCompat.setTextAppearance(labelTv, ff_label_text_appearance);
+        setUiData();
+        a.recycle();
+
+    }
+
+    public void setSectionList(List<String> data) {
+        mSelectedPos = -1;
+        sectionData.clear();
+        sectionData.add("Select");
+        sectionData.addAll(data);
+        setUiData();
+    }
+
+    private void setUiData() {
+
+        edf_ch_gp.setOnItemSelectedListener(null);
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getContext(), android.R.layout.simple_spinner_item, sectionData);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         edf_ch_gp.setAdapter(adapter);
         edf_ch_gp.setOnItemSelectedListener(this);
-        a.recycle();
 
     }
 
     public boolean validate() {
         if (required) {
-            if (mSelectedPos == -1) {
+            if (mSelectedPos == -1 || mSelectedPos == 0) {
                 edf_txt_inp_ly.setError(getContext().getString(R.string.Please_Select));
                 return false;
             }
@@ -131,21 +146,34 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
         if (pos == null)
             return;
         edf_ch_gp.setOnItemSelectedListener(null);
+        mSelectedPos = pos;
         edf_ch_gp.setSelection(pos);
         edf_ch_gp.setOnItemSelectedListener(this);
     }
 
     public void setSectionByData(String data) {
+
+        //todo
+        if (sectionData.size()==1)
+            setSectionList(Collections.singletonList(data));
+
+
         int pos = sectionData.indexOf(data);
         if (pos != -1) {
-            pos = pos - 1;
             setSection(pos);
         }
 
     }
 
     public String getSelectedData() {
-        return sectionData.get(mSelectedPos + 1);
+
+        if (mSelectedPos == 0 || mSelectedPos == -1)
+            return null;
+
+        if (mSelectedPos < sectionData.size())
+            return sectionData.get(mSelectedPos);
+
+        return null;
     }
 
 

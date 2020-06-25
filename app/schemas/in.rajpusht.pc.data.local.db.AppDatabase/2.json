@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "a11dbf6e3ed90e7000fa645ae004f395",
+    "identityHash": "5d9da343cac7534a687a126e2825bcc8",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -330,7 +330,7 @@
       },
       {
         "tableName": "child",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER, `isFirstImmunizationComplete` TEXT, `birthWeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `childSex` TEXT, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER, `isFirstImmunizationComplete` TEXT, `birthWeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -343,6 +343,12 @@
             "columnName": "childId",
             "affinity": "INTEGER",
             "notNull": true
+          },
+          {
+            "fieldPath": "childSex",
+            "columnName": "childSex",
+            "affinity": "TEXT",
+            "notNull": false
           },
           {
             "fieldPath": "stage",
@@ -723,12 +729,56 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "institution_place",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `district` TEXT, `block` TEXT, `typeOfFacility` TEXT, `location` TEXT)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "district",
+            "columnName": "district",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "block",
+            "columnName": "block",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "typeOfFacility",
+            "columnName": "typeOfFacility",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "location",
+            "columnName": "location",
+            "affinity": "TEXT",
+            "notNull": false
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a11dbf6e3ed90e7000fa645ae004f395')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5d9da343cac7534a687a126e2825bcc8')"
     ]
   }
 }

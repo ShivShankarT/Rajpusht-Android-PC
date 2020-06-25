@@ -62,6 +62,8 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
                 intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
             startActivity(intent);
         }, 100);
+
+        getViewModel().checkInsetFacilityData();
     }
 
     public boolean isTimeAutomatic() {

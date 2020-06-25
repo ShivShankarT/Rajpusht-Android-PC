@@ -1,7 +1,6 @@
 package in.rajpusht.pc.data.local.db;
 
 import androidx.room.Database;
-import androidx.room.Query;
 import androidx.room.RoomDatabase;
 import androidx.room.TypeConverters;
 
@@ -9,12 +8,14 @@ import in.rajpusht.pc.data.local.db.dao.AppDao;
 import in.rajpusht.pc.data.local.db.dao.AssignedLocationDao;
 import in.rajpusht.pc.data.local.db.dao.BeneficiaryDao;
 import in.rajpusht.pc.data.local.db.dao.ChildDao;
+import in.rajpusht.pc.data.local.db.dao.InstitutionPlaceDao;
 import in.rajpusht.pc.data.local.db.dao.LMMonitorDao;
 import in.rajpusht.pc.data.local.db.dao.PWMonitorDao;
 import in.rajpusht.pc.data.local.db.dao.PregnantDao;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
@@ -24,7 +25,8 @@ import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
         PregnantEntity.class,
         ChildEntity.class,
         PWMonitorEntity.class,
-        LMMonitorEntity.class
+        LMMonitorEntity.class,
+        InstitutionPlaceEntity.class,
 }, version = 2)
 @TypeConverters(value = {DbDataConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -42,4 +44,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract PWMonitorDao pwMonitorDao();
 
     public abstract AppDao AppDao();
+
+    public abstract InstitutionPlaceDao institutionPlaceDao();
 }

@@ -46,11 +46,11 @@
                     android:id="@+id/benf_child_twin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
+                    android:visibility="gone"
                     app:ff_label="@string/are_you_having_Twin"
                     app:ff_required="true"
-                    tools:visibility="visible"
-                    android:visibility="gone"
-                    app:ff_selections="@array/YES_NO" />
+                    app:ff_selections="@array/YES_NO"
+                    tools:visibility="visible" />
 
 
                 <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
@@ -77,10 +77,19 @@
                         style="@style/FormTextMini"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:text="@string/first_child"
                         android:gravity="center"
+                        android:text="@string/first_child"
                         android:textColor="@color/colorAccent"
                         android:textSize="19sp" />
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:id="@+id/benf_child_sex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="@string/child_sex"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_sex"
+                        tools:visibility="visible" />
 
                     <in.rajpusht.pc.custom.ui.FormDatePickerElement
                         android:id="@+id/benf_child_dob"
@@ -99,16 +108,25 @@
                         app:ff_required="true"
                         app:ff_selections="@array/benf_delivery_place" />
 
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_child_institutional_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Select Type of Facility"
+                        app:ff_required="true"
+                        app:ff_selections="@array/Institutional_Type" />
 
-                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+
+                    <in.rajpusht.pc.custom.ui.FormDropDownElement
                         android:id="@+id/benf_child_delivery_place"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ff_hint="@string/place_name"
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
-                        app:ff_show_divider="false"
-                        app:ff_required="true" />
+                        app:ff_required="true"
+                        app:ff_selections="@array/empty"
+                        app:ff_show_divider="false" />
 
                     <View
                         android:layout_width="match_parent"
@@ -131,15 +149,24 @@
                     android:paddingBottom="7dp">
 
                     <TextView
-                        android:gravity="center"
                         android:id="@+id/benf_child2_tv"
                         style="@style/FormTextMini"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="10dp"
+                        android:gravity="center"
                         android:text="@string/second_child"
                         android:textColor="@color/colorAccent"
                         android:textSize="19sp" />
+
+                    <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                        android:id="@+id/benf_child2_sex"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="@string/child_sex"
+                        app:ff_required="true"
+                        app:ff_selections="@array/child_sex"
+                        tools:visibility="visible" />
 
                     <in.rajpusht.pc.custom.ui.FormDatePickerElement
                         android:id="@+id/benf_child2_dob"
@@ -158,16 +185,24 @@
                         app:ff_required="true"
                         app:ff_selections="@array/benf_delivery_place" />
 
+                    <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
+                        android:id="@+id/benf_child2_institutional_type"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_label="Select Type of Facility"
+                        app:ff_required="true"
+                        app:ff_selections="@array/Institutional_Type" />
 
-                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    <in.rajpusht.pc.custom.ui.FormDropDownElement
                         android:id="@+id/benf_child2_delivery_place"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         app:ff_hint="@string/place_name"
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
-                        app:ff_show_divider="false"
-                        app:ff_required="true" />
+                        app:ff_required="true"
+                        app:ff_selections="@array/empty"
+                        app:ff_show_divider="false" />
 
                     <View
                         android:layout_width="match_parent"

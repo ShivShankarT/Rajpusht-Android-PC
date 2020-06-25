@@ -12,6 +12,7 @@ public class FormDataConstant {
     public static List<String> caste = new ArrayList<>();
     public static List<String> pwNaReason = new ArrayList<>();
     public static List<String> lmNaReason = new ArrayList<>();
+    public static List<String> childSex = new ArrayList<>();
 
     static {
         economic.add("APL");
@@ -34,6 +35,10 @@ public class FormDataConstant {
         pwNaReason.add("WD");// women death
         pwNaReason.add("WM");// women migrated
         pwNaReason.add("AC");//anc not completed
+
+        childSex.add("M");
+        childSex.add("F");
+        childSex.add("O");
 
 
     }

@@ -8,15 +8,20 @@ import androidx.room.Update;
 
 import java.util.List;
 
+import io.reactivex.Completable;
+
 @Dao
 abstract class BaseDao<T> {
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insert(T entity);
 
+
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     public abstract void insertAll(List<T> entity);
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    public abstract Completable insertAllCompletable(List<T> entity);
     @Update
     public abstract void update(T entity);
 
