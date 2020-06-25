@@ -154,7 +154,7 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
     public void setSectionByData(String data) {
 
         //todo
-        if (sectionData.size()==1)
+        if (sectionData.size() == 1 && data != null)
             setSectionList(Collections.singletonList(data));
 
 

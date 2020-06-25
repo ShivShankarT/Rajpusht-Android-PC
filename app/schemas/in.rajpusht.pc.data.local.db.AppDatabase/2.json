@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "5d9da343cac7534a687a126e2825bcc8",
+    "identityHash": "ac15f0c6425061dd4bec5907a71ac74c",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -263,7 +263,16 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_beneficiary_beneficiaryId",
+            "unique": false,
+            "columnNames": [
+              "beneficiaryId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_beneficiary_beneficiaryId` ON `${TABLE_NAME}` (`beneficiaryId`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -325,7 +334,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_pregnant_beneficiaryId",
+            "unique": false,
+            "columnNames": [
+              "beneficiaryId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pregnant_beneficiaryId` ON `${TABLE_NAME}` (`beneficiaryId`)"
+          },
+          {
+            "name": "index_pregnant_pregnancyId",
+            "unique": false,
+            "columnNames": [
+              "pregnancyId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pregnant_pregnancyId` ON `${TABLE_NAME}` (`pregnancyId`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -459,7 +485,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_child_childId",
+            "unique": false,
+            "columnNames": [
+              "childId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_child_childId` ON `${TABLE_NAME}` (`childId`)"
+          },
+          {
+            "name": "index_child_motherId",
+            "unique": false,
+            "columnNames": [
+              "motherId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_child_motherId` ON `${TABLE_NAME}` (`motherId`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -593,7 +636,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_pw_monitor_pregnancyId",
+            "unique": false,
+            "columnNames": [
+              "pregnancyId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pw_monitor_pregnancyId` ON `${TABLE_NAME}` (`pregnancyId`)"
+          },
+          {
+            "name": "index_pw_monitor_beneficiaryId",
+            "unique": false,
+            "columnNames": [
+              "beneficiaryId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_pw_monitor_beneficiaryId` ON `${TABLE_NAME}` (`beneficiaryId`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -727,7 +787,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_lm_monitor_childId",
+            "unique": false,
+            "columnNames": [
+              "childId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_lm_monitor_childId` ON `${TABLE_NAME}` (`childId`)"
+          },
+          {
+            "name": "index_lm_monitor_motherId",
+            "unique": false,
+            "columnNames": [
+              "motherId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_lm_monitor_motherId` ON `${TABLE_NAME}` (`motherId`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -778,7 +855,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5d9da343cac7534a687a126e2825bcc8')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'ac15f0c6425061dd4bec5907a71ac74c')"
     ]
   }
 }

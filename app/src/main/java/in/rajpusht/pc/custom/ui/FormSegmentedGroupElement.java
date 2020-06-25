@@ -132,6 +132,10 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
         this.hValueChangedListener = hValueChangedListener;
     }
 
+    public HValueChangedListener<Integer> gethValueChangedListener() {
+        return hValueChangedListener;
+    }
+
     public int getSelectedPos() {
         return mSelectedPos;
     }

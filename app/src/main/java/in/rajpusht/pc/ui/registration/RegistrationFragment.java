@@ -860,17 +860,20 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         else if (pregnantEntity != null)
             vh.benfRegStage.setSection(0);
         vh.benfRegStage.sendChangedListenerValue();//ui hide
-        vh.benfRegStage.setEnableChild(false);//will create conflict
         vh.benfChildCount.sendChangedListenerValue();
         vh.benfChildCount.setEnabled(false);
         vh.benfChildTwin.setEnabled(false);
+        vh.benfRegStage.setEnableChild(false);//will create conflict
+
 
         if (!childEntities.isEmpty()) {
             ChildEntity childEntity = childEntities.get(0);
             vh.benfChildDob.setDate(childEntity.getDob());
             vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace());
-            if (childEntity.getDeliveryHome() != null)
+            if (childEntity.getDeliveryHome() != null) {
                 vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
+                vh.benfChildDeliveryPlaceType.sendChangedListenerValue();
+            }
             vh.benfChildSex.setSection(FormDataConstant.childSex.indexOf(childEntity.getChildSex()));
 
             if (childEntities.size() >= 2) {
@@ -878,10 +881,17 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 vh.benfChild2Dob.setDate(secondChild.getDob());
                 vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace());
                 vh.benfChild2Sex.setSection(FormDataConstant.childSex.indexOf(secondChild.getChildSex()));
-                if (secondChild.getDeliveryHome() != null)
+                if (secondChild.getDeliveryHome() != null) {
                     vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryHome());
+                    vh.benfChild2DeliveryPlaceType.sendChangedListenerValue();
+                }
+            }else  if (beneficiaryEntity.getChildCount()>=2&&childEntities.size() <= 1){
+                //todo hide sec child
+                vh.secondChildLy.setVisibility(View.GONE);
             }
         }
+
+
 
         if (pregnantEntity != null) {
             vh.benfLmp.setDate(pregnantEntity.getLmpDate());

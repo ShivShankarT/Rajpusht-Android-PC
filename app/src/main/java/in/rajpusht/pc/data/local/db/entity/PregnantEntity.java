@@ -2,6 +2,7 @@ package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -10,7 +11,7 @@ import java.util.List;
 import in.rajpusht.pc.model.DataStatus;
 
 
-@Entity(tableName = PregnantEntity.TABLE)
+@Entity(tableName = PregnantEntity.TABLE, indices = {@Index(value = "beneficiaryId"), @Index(value = "pregnancyId")})
 public class PregnantEntity {
     public static final String TABLE = "pregnant";
     @Ignore

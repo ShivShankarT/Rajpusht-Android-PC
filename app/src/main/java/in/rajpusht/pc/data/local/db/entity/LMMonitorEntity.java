@@ -1,13 +1,14 @@
 package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
 import in.rajpusht.pc.model.DataStatus;
 
-@Entity(tableName = LMMonitorEntity.TABLE)
+@Entity(tableName = LMMonitorEntity.TABLE,indices = {@Index(value = "childId"), @Index(value = "motherId")})
 public class LMMonitorEntity {
     public static final String TABLE = "lm_monitor";
     long createdBy;

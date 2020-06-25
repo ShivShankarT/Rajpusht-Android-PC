@@ -79,7 +79,7 @@
                         android:layout_height="wrap_content"
                         android:gravity="center"
                         android:text="@string/first_child"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/text_color_accent"
                         android:textSize="19sp" />
 
                     <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
@@ -156,7 +156,7 @@
                         android:layout_marginLeft="10dp"
                         android:gravity="center"
                         android:text="@string/second_child"
-                        android:textColor="@color/colorAccent"
+                        android:textColor="@color/text_color_accent"
                         android:textSize="19sp" />
 
                     <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement

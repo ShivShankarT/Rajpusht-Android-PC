@@ -1,6 +1,7 @@
 package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
@@ -8,7 +9,7 @@ import java.util.Date;
 import in.rajpusht.pc.model.DataStatus;
 
 
-@Entity(tableName = BeneficiaryEntity.TABLE_NAME)
+@Entity(tableName = BeneficiaryEntity.TABLE_NAME , indices = { @Index(value="beneficiaryId"),})
 public class BeneficiaryEntity {
     public static final String TABLE_NAME = "beneficiary";
 

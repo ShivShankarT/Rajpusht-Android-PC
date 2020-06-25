@@ -1,13 +1,14 @@
 package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
 
 import in.rajpusht.pc.model.DataStatus;
 
-@Entity(tableName = PWMonitorEntity.TABLE)
+@Entity(tableName = PWMonitorEntity.TABLE, indices = {@Index(value = "pregnancyId"), @Index(value = "beneficiaryId")})
 public class PWMonitorEntity {
     public static final String TABLE = "pw_monitor";
 
@@ -32,7 +33,6 @@ public class PWMonitorEntity {
     private long createdBy;
     private String createdAt;
     private String updatedAt;
-
 
 
     public int getId() {

@@ -144,20 +144,37 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         Pair<ChildEntity, List<LMMonitorEntity>> childEntityListPair = null;
         if (isChild) {
 
-            double childWeight = 3;
+            double childBirthWeight = 3;
+            double childWeight = 10;
             if (CounsellingMedia.counsellingChildId != 0) {
                 childEntityListPair = dataRepository.getChild(CounsellingMedia.counsellingChildId).toSingle()
                         .zipWith(dataRepository.lmMonitorsByChildId(CounsellingMedia.counsellingChildId), Pair::new).blockingGet();
-                if (childEntityListPair.first.getBirthWeight() != null)
-                    childWeight = childEntityListPair.first.getBirthWeight();
+                if (childEntityListPair.first.getBirthWeight() != null){
+                    childBirthWeight = childEntityListPair.first.getBirthWeight();
+                }
+
+                if ("M".equals(childEntityListPair.first.getChildSex())){
+                    childWeight=11;
+                }
+
             }
 
+            /*
+
+            1-3.23
+            2-5.12
+            3-5.83
+            6-7.27
+            12-8.94
+            24-11.47
+
+*/
             values1.add(new Entry(1, 0.5f));
-            values1.add(new Entry(2, 0.5f));
-            values1.add(new Entry(3, 0.5f));
-            values1.add(new Entry(6, (float) (childWeight * 2)));
-            values1.add(new Entry(12, (float) (childWeight * 3)));
-            values1.add(new Entry(24, 10));
+            values1.add(new Entry(2, 1.12f));
+            values1.add(new Entry(3, 1.99f));
+            values1.add(new Entry(6, 2.5f));
+            values1.add(new Entry(12, 2.75f));
+            values1.add(new Entry(24, 3.56f));
 
         } else {
             values1.add(new Entry(4, 1.5f));
@@ -204,8 +221,9 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
             } else {
                 values2.add(new Entry(4, 1));
-                values2.add(new Entry(5, 1));
-                values2.add(new Entry(9, 1.9f));
+                values2.add(new Entry(5, 1.6f));
+                values2.add(new Entry(9, 2.9f));
+
             }
         }
 
