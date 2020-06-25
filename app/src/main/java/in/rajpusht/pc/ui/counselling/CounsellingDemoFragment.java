@@ -44,6 +44,7 @@ public class CounsellingDemoFragment extends Fragment {
             CounsellingMedia.isTesting = true;
             CounsellingMedia.counsellingPregId = 0;
             CounsellingMedia.counsellingPregLmp = null;
+            CounsellingMedia.counsellingChildId =  0;
             if (v == vb.pw1Btn) {
                 CounsellingMedia.counsellingSubstage = "PW1";
             } else if (v == vb.pw2Btn) {
@@ -55,7 +56,9 @@ public class CounsellingDemoFragment extends Fragment {
             } else if (v == vb.lmBtn) {
                 CounsellingMedia.counsellingSubstage = "LM1";
             } else if (v == vb.myBtn) {
-                CounsellingMedia.counsellingSubstage = "MY";
+                CounsellingMedia.counsellingSubstage = "MY1";
+            } else if (v == vb.my2Btn) {
+                CounsellingMedia.counsellingSubstage = "MY2";
             }
 
 
@@ -72,16 +75,17 @@ public class CounsellingDemoFragment extends Fragment {
 
         vb.lmBtn.setOnClickListener(onClickListener);
         vb.myBtn.setOnClickListener(onClickListener);
+        vb.my2Btn.setOnClickListener(onClickListener);
 
-        vb.noteTv.setText("PW1 - PMVY\n" +
-                "PW2 - Weight Gain/IFA/PMVY\n" +
-                "PM3 - Weight Gain/IFA/PMVY\n" +
-                "PW4 - Weight Gain/IFA/Birth Preparedness/PMVY\n" +
-                "LM1 - IFA/Exclusive Breastfeeding/Immunization/Diet Diversity/PMVY\n" +
-                "LM2 - IFA/Exclusive Breastfeeding/Immunization/Diet Diversity/PMVY\n" +
-                "MY1 - Diet Diversity\n" +
-                "MY2 - Diet Diversity\n" +
-                "MY3 - Diet Diversity");
+        vb.noteTv.setText(
+                "        PW2 - Weight Gain/IFA/PMMVY\n" +
+                "        PM3 - Weight Gain/IFA/PMMVY\n" +
+                "        PW4 - Weight Gain/IFA/Birth Preparedness/PMMVY\n" +
+                "        LM1 - IFA/Exclusive Breastfeeding/Immunization/Diet Diversity/PMMVY/ Growth monitoring-Child\n" +
+                "        LM2 - IFA/Exclusive Breastfeeding/Immunization/Diet Diversity/PMMVY/ Growth monitoring-Child\n" +
+                "        MY1 - Diet Diversity/ Immunization/ Growth monitoring-Child\n" +
+                "        MY2 - Diet Diversity/ Growth monitoring-Child\n" +
+                "        MY3 - Diet Diversity/ Growth monitoring-Child");
 
 
     }

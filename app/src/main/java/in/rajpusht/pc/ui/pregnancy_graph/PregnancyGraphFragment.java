@@ -3,6 +3,7 @@ package in.rajpusht.pc.ui.pregnancy_graph;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.util.Log;
+import android.util.Pair;
 import android.view.View;
 
 import androidx.annotation.NonNull;
@@ -33,11 +34,14 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.databinding.PregnancyGraphFragmentBinding;
 import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
@@ -53,6 +57,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     DataRepository dataRepository;
     @Inject
     SchedulerProvider schedulerProvider;
+    boolean isChild;
 
     public static PregnancyGraphFragment newInstance() {
         return new PregnancyGraphFragment();
@@ -74,10 +79,22 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isChild = !CounsellingMedia.counsellingSubstage.contains("PW");
+    }
+
+    @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         PregnancyGraphFragmentBinding pregnancyGraphFragmentBinding = getViewDataBinding();
-        pregnancyGraphFragmentBinding.toolbarLy.toolbar.setTitle(R.string.PW_Women_Weight);
+        int pw_women_weight;
+        if (isChild)
+            pw_women_weight=R.string.Child_Weight;
+        else
+            pw_women_weight = R.string.PW_Women_Weight;
+
+        pregnancyGraphFragmentBinding.toolbarLy.toolbar.setTitle(pw_women_weight);
         pregnancyGraphFragmentBinding.toolbarLy.toolbar.setNavigationOnClickListener((v) -> {
             requireActivity().onBackPressed();
         });
@@ -118,14 +135,31 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
 
         ArrayList<Entry> values1 = new ArrayList<>();
-        values1.add(new Entry(4, 1.5f));
-        values1.add(new Entry(5, 1.5f));
-        values1.add(new Entry(6, 2));
-        values1.add(new Entry(7, 2));
-        values1.add(new Entry(8, 2));
-        values1.add(new Entry(9, 1.5f));
+        if (isChild) {
+            values1.add(new Entry(1, 0.5f));
+            values1.add(new Entry(2, 0.5f));
+            values1.add(new Entry(3, 0.5f));
+            values1.add(new Entry(6, 1f));
+            values1.add(new Entry(12, 2f));
+            values1.add(new Entry(24, 8f));
+        }
+        else {
+            values1.add(new Entry(4, 1.5f));
+            values1.add(new Entry(5, 1.5f));
+            values1.add(new Entry(6, 2));
+            values1.add(new Entry(7, 2));
+            values1.add(new Entry(8, 2));
+            values1.add(new Entry(9, 1.5f));
+        }
 
-        LineDataSet d1 = new LineDataSet(values1, getString(R.string.Ideal_Weight_Gain));
+        String string = getString(R.string.Ideal_Weight_Gain);
+        String title;
+        if (isChild)
+            title = getString(R.string.Child_Weight_Gain);
+        else
+            title = getString(R.string.Women_Weight_Gain);
+
+        LineDataSet d1 = new LineDataSet(values1, string);
         d1.setLineWidth(2.5f);
         d1.setCircleRadius(4.5f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
@@ -134,18 +168,34 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         ArrayList<Entry> values2 = new ArrayList<>();
 
 
-        if (CounsellingMedia.counsellingPregId != 0) {
-            List<PWMonitorEntity> listSingle = dataRepository.pwMonitorData(CounsellingMedia.counsellingPregId).blockingGet();
-            values2 = getPwWeightDiff(listSingle);
-            if (values2.isEmpty())
-                values2.add(new Entry(4, 0));
-        }
-        else {
-            values2.add(new Entry(4, 1));
-            values2.add(new Entry(5, 1));
+        if (!isChild)
+            if (CounsellingMedia.counsellingPregId != 0) {
+                List<PWMonitorEntity> listSingle = dataRepository.pwMonitorData(CounsellingMedia.counsellingPregId).blockingGet();
+                values2 = getPwWeightDiff(listSingle);
+                if (values2.isEmpty())
+                    values2.add(new Entry(1, 0));
+            } else {
+                values2.add(new Entry(4, 1));
+                values2.add(new Entry(5, 1));
+            }
+
+        if (isChild) {
+            if (CounsellingMedia.counsellingChildId != 0) {
+                Pair<ChildEntity, List<LMMonitorEntity>> data = dataRepository.getChild(CounsellingMedia.counsellingChildId).toSingle()
+                        .zipWith(dataRepository.lmMonitorsByChildId(CounsellingMedia.counsellingChildId), Pair::new).blockingGet();
+                values2 = getLMWeightDiff(data);
+                if (values2.isEmpty())
+                    values2.add(new Entry(4, 0));
+
+            } else {
+                values2.add(new Entry(4, 1));
+                values2.add(new Entry(5, 1));
+                values2.add(new Entry(9, 1.9f));
+            }
         }
 
-        LineDataSet d2 = new LineDataSet(values2, getString(R.string.Women_Weight_Gain));
+
+        LineDataSet d2 = new LineDataSet(values2, title);
         d2.setLineWidth(2.5f);
         d2.setCircleRadius(4.5f);
         d2.setHighLightColor(Color.rgb(244, 117, 117));
@@ -187,8 +237,33 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             if (lastWeight != 0) {
                 double v = Math.abs(lastWeight - pwMonitorEntity.getLastWeightInMamta());
                 values2.add(new Entry(lmpMonth, (float) v));
+                Log.i("dssss", "getPWWeightDiff: "+lmpMonth+" === "+v);
             }
             lastWeight = pwMonitorEntity.getLastWeightInMamta();
+        }
+
+        return values2;
+    }
+
+    private ArrayList<Entry> getLMWeightDiff(Pair<ChildEntity, List<LMMonitorEntity>> pair) {
+        ChildEntity childEntity = pair.first;
+        List<LMMonitorEntity> lmMonitorEntities = pair.second;
+        Date lmpda = childEntity.getDob();
+        ArrayList<Entry> values2 = new ArrayList<>();
+        Double lastWeight = childEntity.getBirthWeight();
+
+        for (LMMonitorEntity lmMonitorEntity : lmMonitorEntities) {
+            Double childWeight = lmMonitorEntity.getChildWeight();
+            if (!lmMonitorEntity.getAvailable() || lmMonitorEntity.getCreatedAt() == null || childWeight == null)
+                continue;
+            Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
+            int lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
+            if (lastWeight!=null&&lastWeight != 0) {
+                double v = Math.abs(lastWeight - childWeight);
+                values2.add(new Entry(lmpMonth, (float) v));
+                Log.i("dssss", "getLMWeightDiff: "+lmpMonth+" === "+v);
+            }
+            lastWeight = childWeight;
         }
 
         return values2;

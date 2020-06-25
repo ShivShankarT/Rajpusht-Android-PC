@@ -255,7 +255,7 @@
     <string name="InvalidOTP">Invalid OTP</string>
     <string name="please_new_password">Please new password</string>
     <string name="Invalid_new_password">Invalid new password</string>
-    <string name="confirm_password_not_same">Confirm Password is not same</string>
+    <string name="confirm_password_not_same">New Password and Confirm Password is not same</string>
     <string name="LM_Monitoring">LM Monitoring</string>
     <string name="incorrct_Muac">Muac should be from 5 cm to 18cm</string>
     <string name="incorrct_child_height">Child height should be from 10 inch to 30 inch</string>
@@ -263,6 +263,8 @@
     <string name="PW_Women_Weight">PW Women Weight</string>
     <string name="Ideal_Weight_Gain">Ideal Weight Gain</string>
     <string name="Women_Weight_Gain">Women Weight Gain</string>
+    <string name="Child_Weight">Child Weight</string>
+    <string name="Child_Weight_Gain">Child Weight Gain</string>
     <string name="Please_Select_Awc">Please Select Awc</string>
     <string name="incorrect_pw_weight">Weight should be from 30 Kg to 99 Kg</string>
     <string name="Invalid_Anc_Date">Invalid Anc Date</string>

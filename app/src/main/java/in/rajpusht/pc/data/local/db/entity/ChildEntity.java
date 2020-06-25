@@ -29,6 +29,11 @@ public class ChildEntity {
     private String updatedAt;
     private DataStatus dataStatus;
     private Integer age;
+    private String isFirstImmunizationComplete;
+    private Double birthWeight;
+    private String pctsChildId;
+    private Integer birthWeightSource;
+    private Long opdipd;
 
 
     public ChildEntity() {
@@ -156,5 +161,45 @@ public class ChildEntity {
 
     public void setIsActive(String isActive) {
         this.isActive = isActive;
+    }
+
+    public String getIsFirstImmunizationComplete() {
+        return isFirstImmunizationComplete;
+    }
+
+    public void setIsFirstImmunizationComplete(String isFirstImmunizationComplete) {
+        this.isFirstImmunizationComplete = isFirstImmunizationComplete;
+    }
+
+    public Double getBirthWeight() {
+        return birthWeight;
+    }
+
+    public void setBirthWeight(Double birthWeight) {
+        this.birthWeight = birthWeight;
+    }
+
+    public String getPctsChildId() {
+        return pctsChildId;
+    }
+
+    public void setPctsChildId(String pctsChildId) {
+        this.pctsChildId = pctsChildId;
+    }
+
+    public Integer getBirthWeightSource() {
+        return birthWeightSource;
+    }
+
+    public void setBirthWeightSource(Integer birthWeightSource) {
+        this.birthWeightSource = birthWeightSource;
+    }
+
+    public Long getOpdipd() {
+        return opdipd;
+    }
+
+    public void setOpdipd(Long opdipd) {
+        this.opdipd = opdipd;
     }
 }

@@ -223,11 +223,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         viewDataBinding.weightIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                CounsellingMedia.counsellingSubstage = subStage;
-                CounsellingMedia.isTesting = false;
-                FragmentUtils.replaceFragment(requireActivity(),
-                        CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                        true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                launchCounselling();
             }
         });
         viewDataBinding.saveNaBtn.setOnClickListener(v -> save(true));
@@ -283,8 +279,10 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                     if (lmMonitorEntity != null && lmMonitorEntity.getId() != 0) {
                         LMMonitoringFragment.this.mLmMonitorEntity = lmMonitorEntity;
                     }
-                    if (beneficiaryJoin != null)
+                    if (beneficiaryJoin != null) {
                         setBenfui();
+                        setChildDataUi();
+                    }
 
                     if (mLmMonitorEntity != null) {
                         setFormUiData(mLmMonitorEntity);
@@ -341,22 +339,60 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
     }
 
+    private void setChildDataUi() {
+
+        LmMonitoringFragmentBinding vb = getViewDataBinding();
+        LMMonitorEntity lmMonitorEntity = this.mLmMonitorEntity;
+
+        ChildEntity childEntity = beneficiaryJoin.getChildEntity();//todo check
+        boolean isDisableChildEdit = lmMonitorEntity != null && lmMonitorEntity.getDataStatus() != DataStatus.NEW;
+
+        if (childEntity.getBirthWeight() != null) {
+            vb.benfBirthChildWeight.setText(childEntity.getBirthWeight());
+            if (isDisableChildEdit)
+                vb.benfBirthChildWeight.setEnableChild(false);
+        }
+
+        if (!TextUtils.isEmpty(childEntity.getPctsChildId())) {
+            vb.benfPctsChildId.setText(childEntity.getPctsChildId());
+            if (isDisableChildEdit)
+                vb.benfPctsChildId.setEnableChild(false);
+        }
+
+        if (childEntity.getBirthWeightSource() != null) {
+            vb.benfBirthWeightSource.setSection(childEntity.getBirthWeightSource());
+            if (isDisableChildEdit)
+                vb.benfBirthWeightSource.setEnableChild(false);
+        }
+
+
+        if (!TextUtils.isEmpty(childEntity.getIsFirstImmunizationComplete())) {
+            vb.benfChildImmune.setSectionByData(childEntity.getIsFirstImmunizationComplete());
+            if (isDisableChildEdit)
+                vb.benfChildImmune.setEnableChild(false);
+        }
+
+        if (childEntity.getOpdipd() != null) {
+            vb.benfOpdIpd.setText(String.valueOf(childEntity.getOpdipd()));
+            if (isDisableChildEdit)
+                vb.benfOpdIpd.setEnableChild(false);
+
+        }
+    }
+
     private void setFormUiData(LMMonitorEntity lmMonitorEntity) {
+
 
         LmMonitoringFragmentBinding vb = getViewDataBinding();
 
         if (lmMonitorEntity.getAvailable()) {
-            vb.benfChildImmune.setSectionByData(lmMonitorEntity.getIsFirstImmunizationComplete());
+
             vb.benfChildLastRecMuac.setText(lmMonitorEntity.getLastMuac());
             vb.benfChildLastRecMuacDate.setDate(lmMonitorEntity.getLastMuacCheckDate());
             vb.benfChildCurrentMuac.setText(lmMonitorEntity.getCurrentMuac());
-            vb.benfBirthChildWeight.setText(lmMonitorEntity.getBirthWeight());
+
             vb.benfCurrentWeight.setText(lmMonitorEntity.getChildWeight());
             vb.benfCurrentHeight.setText(String.valueOf(lmMonitorEntity.getChildHeight()));
-            vb.benfPctsChildId.setText(lmMonitorEntity.getPctsChildId());
-            vb.benfBirthWeightSource.setSection(lmMonitorEntity.getBirthWeightSource());
-            if (lmMonitorEntity.getOpdipd() != null)
-                vb.benfOpdIpd.setText(String.valueOf(lmMonitorEntity.getOpdipd()));
 
 
             Set<Integer> regScheme = new HashSet<>();
@@ -466,19 +502,19 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         if (!isNa) {
             if (vb.benfChildImmune.isVisibleAndEnable())
-                lmMonitorEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
+                childEntity.setIsFirstImmunizationComplete(vb.benfChildImmune.getSelectedData());
             lmMonitorEntity.setLastMuac(vb.benfChildLastRecMuac.getMeasValue());
             lmMonitorEntity.setLastMuacCheckDate(vb.benfChildLastRecMuacDate.getDate());
             lmMonitorEntity.setCurrentMuac(vb.benfChildCurrentMuac.getMeasValue());
-            lmMonitorEntity.setBirthWeight(vb.benfBirthChildWeight.getMeasValue());
+            childEntity.setBirthWeight(vb.benfBirthChildWeight.getMeasValue());
             lmMonitorEntity.setChildWeight(vb.benfCurrentWeight.getMeasValue());
             lmMonitorEntity.setChildHeight(Double.valueOf(vb.benfCurrentHeight.getText()));
 
-            lmMonitorEntity.setPctsChildId(vb.benfPctsChildId.getText());
-            lmMonitorEntity.setBirthWeightSource(vb.benfBirthWeightSource.getSelectedPos());
+            childEntity.setPctsChildId(vb.benfPctsChildId.getText());
+            childEntity.setBirthWeightSource(vb.benfBirthWeightSource.getSelectedPos());
             String opdIpd = vb.benfOpdIpd.getText().trim();
             if (!opdIpd.isEmpty())
-                lmMonitorEntity.setOpdipd(Long.valueOf(opdIpd));
+                childEntity.setOpdipd(Long.valueOf(opdIpd));
             lmMonitorEntity.setAvailable(true);
         } else {
             lmMonitorEntity.setAvailable(false);
@@ -541,15 +577,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
             showAlertDialog(getString(R.string.beneficiary_child_report_saved), () -> {
                 if (!isNa) {
-                    CounsellingMedia.isTesting = false;
-                    CounsellingMedia.counsellingSubstage = subStage;
-                    requireActivity().getSupportFragmentManager()
-                            .beginTransaction()
-                            .remove(LMMonitoringFragment.this)
-                            .commit();
-                    FragmentUtils.replaceFragment(requireActivity(),
-                            CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
-                            true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
+                    launchCounselling();
                 } else {
                     requireActivity().onBackPressed();
                 }
@@ -557,6 +585,22 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             });
         });
 
+    }
+
+    private void launchCounselling() {
+
+        CounsellingMedia.isTesting = false;
+        CounsellingMedia.counsellingSubstage = subStage;
+        CounsellingMedia.counsellingChildId = childId;
+
+        requireActivity().getSupportFragmentManager()
+                .beginTransaction()
+                .remove(LMMonitoringFragment.this)
+                .commit();
+
+        FragmentUtils.replaceFragment(requireActivity(),
+                CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
+                true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
     }
 
 

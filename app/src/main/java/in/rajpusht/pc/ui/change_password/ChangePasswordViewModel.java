@@ -27,7 +27,7 @@ public class ChangePasswordViewModel extends BaseViewModel {
             statusLiveData.setValue(Event.data(new Pair<>(2,getDataManager().getString(R.string.Invalid_password))));
         } else if (confirmPassword.length() < 8) {
             statusLiveData.setValue(Event.data(new Pair<>(3,getDataManager().getString(R.string.Invalid_password))));
-        } else if (!newPassword.equalsIgnoreCase(confirmPassword)) {
+        } else if (!newPassword.equals(confirmPassword)) {
             statusLiveData.setValue(Event.data(new Pair<>(3, getDataManager().getString(R.string.confirm_password_incorrect))));
         } else {
             progressDialog.setValue(Event.data(true));

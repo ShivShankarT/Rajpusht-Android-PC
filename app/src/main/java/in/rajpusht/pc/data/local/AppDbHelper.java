@@ -23,7 +23,6 @@ import in.rajpusht.pc.model.BeneficiaryWithChild;
 import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Quintet;
-import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 import io.reactivex.Completable;
 import io.reactivex.Maybe;
@@ -191,6 +190,11 @@ public class AppDbHelper {
     public Maybe<LMMonitorEntity> lmMonitorById(long id) {
 
         return mAppDatabase.lmMonitorDao().lmMonitorById(id);
+    }
+
+    public Single<List<LMMonitorEntity>> lmMonitorsByChildId(long childId) {
+
+        return mAppDatabase.lmMonitorDao().lmMonitorList(childId);
     }
 
     // update based on primary key

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "f147eec61c5219eb625524079a3cd3d4",
+    "identityHash": "a11dbf6e3ed90e7000fa645ae004f395",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -330,7 +330,7 @@
       },
       {
         "tableName": "child",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER, `isFirstImmunizationComplete` TEXT, `birthWeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -413,6 +413,36 @@
           {
             "fieldPath": "age",
             "columnName": "age",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isFirstImmunizationComplete",
+            "columnName": "isFirstImmunizationComplete",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "birthWeight",
+            "columnName": "birthWeight",
+            "affinity": "REAL",
+            "notNull": false
+          },
+          {
+            "fieldPath": "pctsChildId",
+            "columnName": "pctsChildId",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "birthWeightSource",
+            "columnName": "birthWeightSource",
+            "affinity": "INTEGER",
+            "notNull": false
+          },
+          {
+            "fieldPath": "opdipd",
+            "columnName": "opdipd",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -562,7 +592,7 @@
       },
       {
         "tableName": "lm_monitor",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`createdBy` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `motherId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `isFirstImmunizationComplete` TEXT, `lastMuac` REAL, `lastMuacCheckDate` TEXT, `currentMuac` REAL, `birthWeight` REAL, `childWeight` REAL, `childHeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `naReason` TEXT, `available` INTEGER, `dataStatus` INTEGER, `createdAt` TEXT, `updatedAt` TEXT)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`createdBy` INTEGER NOT NULL, `id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `motherId` INTEGER NOT NULL, `stage` TEXT, `subStage` TEXT, `lastMuac` REAL, `lastMuacCheckDate` TEXT, `currentMuac` REAL, `childWeight` REAL, `childHeight` REAL, `pmmvyInstallment` INTEGER, `igmpyInstallment` INTEGER, `jsyInstallment` INTEGER, `rajshriInstallment` INTEGER, `naReason` TEXT, `available` INTEGER, `dataStatus` INTEGER, `createdAt` TEXT, `updatedAt` TEXT)",
         "fields": [
           {
             "fieldPath": "createdBy",
@@ -601,12 +631,6 @@
             "notNull": false
           },
           {
-            "fieldPath": "isFirstImmunizationComplete",
-            "columnName": "isFirstImmunizationComplete",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
             "fieldPath": "lastMuac",
             "columnName": "lastMuac",
             "affinity": "REAL",
@@ -625,12 +649,6 @@
             "notNull": false
           },
           {
-            "fieldPath": "birthWeight",
-            "columnName": "birthWeight",
-            "affinity": "REAL",
-            "notNull": false
-          },
-          {
             "fieldPath": "childWeight",
             "columnName": "childWeight",
             "affinity": "REAL",
@@ -640,24 +658,6 @@
             "fieldPath": "childHeight",
             "columnName": "childHeight",
             "affinity": "REAL",
-            "notNull": false
-          },
-          {
-            "fieldPath": "pctsChildId",
-            "columnName": "pctsChildId",
-            "affinity": "TEXT",
-            "notNull": false
-          },
-          {
-            "fieldPath": "birthWeightSource",
-            "columnName": "birthWeightSource",
-            "affinity": "INTEGER",
-            "notNull": false
-          },
-          {
-            "fieldPath": "opdipd",
-            "columnName": "opdipd",
-            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -728,7 +728,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'f147eec61c5219eb625524079a3cd3d4')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a11dbf6e3ed90e7000fa645ae004f395')"
     ]
   }
 }

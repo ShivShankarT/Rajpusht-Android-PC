@@ -47,5 +47,16 @@ public class AppDateTimeUtils {
             return null;
     }
 
+    public static Date convertServerTimeStampDate(String date) {
+        if (date != null) {
+            try {
+                return timestamp.parse(date);
+            } catch (ParseException e) {
+                e.printStackTrace();
+            }
+        }
+        return null;
+    }
+
 
 }

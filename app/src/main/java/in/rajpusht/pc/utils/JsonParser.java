@@ -179,6 +179,11 @@ public class JsonParser {
                     String delivery_place = getString(object, "delivery_place");
                     Integer child_order = getInt(object, "child_order");
                     String is_active = getString(object, "is_active");
+                    String is_first_immunization_complete = getString(object, "is_first_immunization_complete");
+                    String pcts_child_id = getString(object, "pcts_child_id");
+                    Integer birth_weight_source = getInt(object, "birth_weight_source");
+                    Long opd_ipd = getLong(object, "opd_ipd");
+                    Double birth_weight = getDouble(object, "birth_weight");
 
 
                     cmodel.setChildId(child_id);
@@ -193,6 +198,12 @@ public class JsonParser {
                     cmodel.setDataStatus(DataStatus.OLD);
                     cmodel.setIsActive(is_active);
 
+                    cmodel.setBirthWeight(birth_weight);
+                    cmodel.setIsFirstImmunizationComplete(HUtil.convYtoYes(is_first_immunization_complete));
+                    cmodel.setPctsChildId(pcts_child_id);
+                    cmodel.setBirthWeightSource(birth_weight_source);
+                    cmodel.setOpdipd(opd_ipd);
+
                     childModel.add(cmodel);
 
 
@@ -203,11 +214,11 @@ public class JsonParser {
 
                     int id = getInt(object, "id");
                     int child_id = getInt(object, "child_id");
-                    String is_first_immunization_complete = getString(object, "is_first_immunization_complete");
+
                     Double last_muac = getDouble(object, "last_muac");
                     String last_muac_check_date = getString(object, "last_muac_check_date");
                     Double current_muac = getDouble(object, "current_muac");
-                    Double birth_weight = getDouble(object, "birth_weight");
+
                     Double child_weight = getDouble(object, "child_weight");
                     Double child_height = getDouble(object, "child_height");
                     Integer pmmvy_installment = getInt(object, "pmmvy_installment");
@@ -217,23 +228,17 @@ public class JsonParser {
                     int created_by = getInt(object, "created_by");
                     String stage = getString(object, "stage");
                     String sub_stage = getString(object, "sub_stage");
+                    String mobile_created_at = getString(object, "mobile_created_at");
                     String is_available = getString(object, "is_available");
                     String na_reason = getString(object, "na_reason");
-
-                    String pcts_child_id = getString(object, "pcts_child_id");
-                    Integer birth_weight_source = getInt(object, "birth_weight_source");
-                    Long opd_ipd = getLong(object, "opd_ipd");
-
 
 
                     LMMonitorEntity lmmodel = new LMMonitorEntity();
                     lmmodel.setId(id);
                     lmmodel.setChildId(child_id);
-                    lmmodel.setIsFirstImmunizationComplete(HUtil.convYtoYes(is_first_immunization_complete));
                     lmmodel.setLastMuac(last_muac);
                     lmmodel.setLastMuacCheckDate(AppDateTimeUtils.convertDateFromServer(last_muac_check_date));
                     lmmodel.setCurrentMuac(current_muac);
-                    lmmodel.setBirthWeight(birth_weight);
                     lmmodel.setChildWeight(child_weight);
                     lmmodel.setChildHeight(child_height);
                     lmmodel.setPmmvyInstallment(pmmvy_installment);
@@ -243,11 +248,9 @@ public class JsonParser {
                     lmmodel.setCreatedBy(created_by);
                     lmmodel.setStage(stage);
                     lmmodel.setSubStage(sub_stage);
-                    lmmodel.setPctsChildId(pcts_child_id);
-                    lmmodel.setBirthWeightSource(birth_weight_source);
-                    lmmodel.setOpdipd(opd_ipd);
                     lmmodel.setDataStatus(DataStatus.OLD);
                     lmmodel.setNaReason(na_reason);
+                    lmmodel.setCreatedAt(mobile_created_at);
                     lmmodel.setAvailable(is_available==null?null:is_available.equalsIgnoreCase("Y"));
                     lmMonitorModel.add(lmmodel);
 
@@ -387,6 +390,11 @@ public class JsonParser {
         childobject.addProperty("deliveryPlace", childEntity.getDeliveryPlace());
         childobject.addProperty("childOrder", childEntity.getChildOrder());
         childobject.addProperty("isActive", childEntity.getIsActive());
+        childobject.addProperty("birthWeight", childEntity.getBirthWeight());
+        childobject.addProperty("isFirstImmunizationComplete", HUtil.convYestoY(childEntity.getIsFirstImmunizationComplete()));
+        childobject.addProperty("pctsChildId", childEntity.getPctsChildId());
+        childobject.addProperty("birthWeightSource", childEntity.getBirthWeightSource());
+        childobject.addProperty("opdIpd", childEntity.getOpdipd());
         childobject.addProperty("createdAt", childEntity.getCreatedAt());
         childobject.addProperty("updatedAt", childEntity.getUpdatedAt());
         childobject.addProperty("dataStatus", childEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
@@ -400,11 +408,10 @@ public class JsonParser {
         }
         if (lmMonitorEntity.getDataStatus() != DataStatus.NEW)
             lmObject.addProperty("lmId", lmMonitorEntity.getId());
-        lmObject.addProperty("isFirstImmunizationComplete", HUtil.convYestoY(lmMonitorEntity.getIsFirstImmunizationComplete()));
+
         lmObject.addProperty("lastMuac", lmMonitorEntity.getLastMuac());
         lmObject.addProperty("lastMuacCheckDate", AppDateTimeUtils.convertServerDate(lmMonitorEntity.getLastMuacCheckDate()));
         lmObject.addProperty("currentMuac", lmMonitorEntity.getCurrentMuac());
-        lmObject.addProperty("birthWeight", lmMonitorEntity.getBirthWeight());
         lmObject.addProperty("childWeight", lmMonitorEntity.getChildWeight());
         lmObject.addProperty("childHeight", lmMonitorEntity.getChildHeight());
         lmObject.addProperty("pmmvyInstallment", lmMonitorEntity.getPmmvyInstallment());
@@ -414,9 +421,6 @@ public class JsonParser {
         lmObject.addProperty("createdBy", lmMonitorEntity.getCreatedBy());
         lmObject.addProperty("stage", lmMonitorEntity.getStage());
         lmObject.addProperty("subStage", lmMonitorEntity.getSubStage());
-        lmObject.addProperty("pctsChildId", lmMonitorEntity.getPctsChildId());
-        lmObject.addProperty("birthWeightSource", lmMonitorEntity.getBirthWeightSource());
-        lmObject.addProperty("opdIpd", lmMonitorEntity.getOpdipd());
 
         lmObject.addProperty("isAvailable", lmMonitorEntity.getAvailable() != null && lmMonitorEntity.getAvailable() ? "Y" : "N");
         lmObject.addProperty("naReason", lmMonitorEntity.getNaReason());

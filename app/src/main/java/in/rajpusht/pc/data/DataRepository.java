@@ -113,6 +113,11 @@ public class DataRepository {
         return appDbHelper.lmMonitorById(id);
     }
 
+    public Single<List<LMMonitorEntity>> lmMonitorsByChildId(long childId) {
+
+        return appDbHelper.lmMonitorsByChildId(childId);
+    }
+
     public Completable insertOrUpdateLmMonitor(LMMonitorEntity lmMonitorEntity) {
         return appDbHelper.insertOrUpdateLmMonitor(lmMonitorEntity);
     }

@@ -145,6 +145,8 @@
     <string name="PW_Women_Weight">PW Women Weight</string>
     <string name="Ideal_Weight_Gain">Ideal Weight Gain</string>
     <string name="Women_Weight_Gain">Women Weight Gain</string>
+    <string name="Child_Weight">Child Weight</string>
+    <string name="Child_Weight_Gain">Child Weight Gain</string>
     <string name="Please_Select_Awc">Please Select Awc</string>
     <string name="incorrect_pw_weight">Weight should be from 30 Kg to 99 Kg</string>
     <string name="Invalid_Anc_Date">Invalid Anc Date</string>
