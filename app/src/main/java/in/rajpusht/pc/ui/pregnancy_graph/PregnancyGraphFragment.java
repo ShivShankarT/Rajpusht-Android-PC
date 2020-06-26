@@ -58,9 +58,25 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     @Inject
     SchedulerProvider schedulerProvider;
     boolean isChild;
+    private int pos;
 
-    public static PregnancyGraphFragment newInstance() {
-        return new PregnancyGraphFragment();
+    public static PregnancyGraphFragment newInstance(int pos) {
+        PregnancyGraphFragment pregnancyGraphFragment = new PregnancyGraphFragment();
+        Bundle bundle = new Bundle();
+        bundle.putInt("data", pos);
+        pregnancyGraphFragment.setArguments(bundle);
+        return pregnancyGraphFragment;
+
+
+    }
+
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        isChild = !CounsellingMedia.counsellingSubstage.contains("PW");
+        if (getArguments() != null) {
+            pos = getArguments().getInt("data");
+        }
     }
 
     @Override
@@ -78,11 +94,6 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         return new ViewModelProvider(this, factory).get(PregnancyGraphViewModel.class);
     }
 
-    @Override
-    public void onCreate(@Nullable Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        isChild = !CounsellingMedia.counsellingSubstage.contains("PW");
-    }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
@@ -102,7 +113,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         pregnancyGraphFragmentBinding.nxtBtn.setOnClickListener(v -> {
 
             FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
-                    CounsellingAnimationFragment.newInstance(3), R.id.fragment_container,
+                    CounsellingAnimationFragment.newInstance(pos + 1), R.id.fragment_container,
                     true, true, FragmentUtils.TRANSITION_POP);
         });
 
@@ -149,12 +160,12 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             if (CounsellingMedia.counsellingChildId != 0) {
                 childEntityListPair = dataRepository.getChild(CounsellingMedia.counsellingChildId).toSingle()
                         .zipWith(dataRepository.lmMonitorsByChildId(CounsellingMedia.counsellingChildId), Pair::new).blockingGet();
-                if (childEntityListPair.first.getBirthWeight() != null){
+                if (childEntityListPair.first.getBirthWeight() != null) {
                     childBirthWeight = childEntityListPair.first.getBirthWeight();
                 }
 
-                if ("M".equals(childEntityListPair.first.getChildSex())){
-                    childWeight=11;
+                if ("M".equals(childEntityListPair.first.getChildSex())) {
+                    childWeight = 11;
                 }
 
             }
@@ -279,6 +290,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     }
 
     private ArrayList<Entry> getLMWeightDiff(Pair<ChildEntity, List<LMMonitorEntity>> pair) {
+        Log.i("ssss", "getLMWeightDiff: " + pair.first);
         ChildEntity childEntity = pair.first;
         List<LMMonitorEntity> lmMonitorEntities = pair.second;
         Date lmpda = childEntity.getDob();
@@ -290,13 +302,14 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             if (!lmMonitorEntity.getAvailable() || lmMonitorEntity.getCreatedAt() == null || childWeight == null)
                 continue;
             Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
-            int lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
-            if (lastWeight != null && lastWeight != 0) {
-                double v = Math.abs(lastWeight - childWeight);
-                values2.add(new Entry(lmpMonth, (float) v));
-                Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + v);
+            if (date != null) {
+                int lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
+                if (lastWeight != null && lastWeight != 0) {
+                    double v = Math.abs(lastWeight - childWeight);
+                    values2.add(new Entry(lmpMonth, (float) v));
+                    Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + v);
+                }
             }
-            lastWeight = childWeight;
         }
 
         return values2;

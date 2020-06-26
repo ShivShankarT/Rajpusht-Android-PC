@@ -201,6 +201,9 @@
     <string name="child_sex">चाइल्ड सेक्स का चयन करें</string>
     <string name="Child_Weight">बच्चे का वजन</string>
     <string name="Child_Weight_Gain">बाल वजन</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Exit">Exit</string>
+    <string name="sync_successfully">Sync Successfully</string>
 
     <string-array name="benf_currently">
         <item>गर्भवती</item>

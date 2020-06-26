@@ -198,6 +198,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                     viewDataBinding.benfJsyCount.setVisibility(View.GONE);
                     viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
                     viewDataBinding.benfInstalLy.setVisibility(View.GONE);
+                } else if (data.isEmpty()) {
+                    viewDataBinding.benfInstalLy.setVisibility(View.GONE);
                 } else {
                     viewDataBinding.benfInstalLy.setVisibility(View.VISIBLE);
 
@@ -295,6 +297,10 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     private void setBenfui() {
 
         ChildEntity childEntity = beneficiaryJoin.getChildEntity();
+
+        if (!"F".equals(childEntity.getChildSex()))
+            getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(3, true));//todo always IGMPY
+
         int days = HUtil.daysBetween(childEntity.getDob(), new Date());//106.458 ==3.5 month
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         vb.benfChildImmune.setVisibility(days >= 106 ? View.VISIBLE : View.GONE);
@@ -310,24 +316,43 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         vb.pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
 
 
-        if (mLmMonitorEntity == null) {
-            Set<Integer> regScheme = new HashSet<>();
-            if (beneficiaryEntity.getPmmvyInstallment() != null) {
-                regScheme.add(0);
-            }
-            if (beneficiaryEntity.getIgmpyInstallment() != null) {
-                regScheme.add(1);
-            }
-            if (beneficiaryEntity.getJsyInstallment() != null) {
-                regScheme.add(2);
-            }
-            if (beneficiaryEntity.getRajshriInstallment() != null) {
-                regScheme.add(3);
-            }
-            if (regScheme.isEmpty()) {
-                regScheme.add(4);
-            }
+        Set<Integer> regScheme = new HashSet<>();
+        //set max values because reg screen user select max values
+        if (beneficiaryEntity.getPmmvyInstallment() != null) {
+            vb.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+            vb.benfPmmvvyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getPmmvyInstallment()));
+            regScheme.add(0);
+        }
+        if (beneficiaryEntity.getIgmpyInstallment() != null) {
+            vb.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_4_dot));
+            vb.benfIgmpyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getIgmpyInstallment()));
+            regScheme.add(1);
+        }
+        if (beneficiaryEntity.getJsyInstallment() != null) {
+            vb.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            vb.benfJsyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getJsyInstallment()));
+            regScheme.add(2);
+        }
+        if (beneficiaryEntity.getRajshriInstallment() != null) {
+            vb.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            vb.benfRajshriCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getRajshriInstallment()));
+            regScheme.add(3);
+        }
+
+
+        if (regScheme.isEmpty()) {
+            //regScheme.add(4);
+            vb.benfRegisteredProgramme.setVisibility(View.VISIBLE);
+        } else {
             vb.benfRegisteredProgramme.setSelectedIds(regScheme);
+            vb.benfInstalLy.setVisibility(View.GONE);
+            vb.benfRegisteredProgramme.setVisibility(View.GONE);
+            vb.benfPmmvvyCount.setVisibility(View.GONE);
+            vb.benfIgmpyCount.setVisibility(View.GONE);
+            vb.benfRajshriCount.setVisibility(View.GONE);
+            vb.benfJsyCount.setVisibility(View.GONE);
+
+
         }
 
 
@@ -344,9 +369,9 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         LMMonitorEntity lmMonitorEntity = this.mLmMonitorEntity;
 
-        ChildEntity childEntity = beneficiaryJoin.getChildEntity();//todo check
-        boolean isDisableChildEdit = lmMonitorEntity != null && lmMonitorEntity.getDataStatus() != DataStatus.NEW;
-
+        ChildEntity childEntity = beneficiaryJoin.getChildEntity();
+        //boolean isDisableChildEdit = lmMonitorEntity != null && lmMonitorEntity.getDataStatus() != DataStatus.NEW;
+        boolean isDisableChildEdit = true;//todo check
         if (childEntity.getBirthWeight() != null) {
             vb.benfBirthChildWeight.setText(childEntity.getBirthWeight());
             if (isDisableChildEdit)
@@ -454,8 +479,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             validateElement.add(vb.benfCurrentWeight.validateWthView());
             validateElement.add(vb.benfCurrentHeight.validateWthView());
 
-
-            validateElement.add(vb.benfRegisteredProgramme.validateWthView());
+            if (vb.benfRegisteredProgramme.isVisible())
+                validateElement.add(vb.benfRegisteredProgramme.validateWthView());
             if (vb.benfPmmvvyCount.isVisible())
                 validateElement.add(vb.benfPmmvvyCount.validateWthView());
             if (vb.benfIgmpyCount.isVisible())
@@ -554,19 +579,24 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         if (data.contains(0)) {
             lmMonitorEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
+            beneficiaryEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
         }
 
         if (data.contains(1)) {
             lmMonitorEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
+            beneficiaryEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
         }
 
         if (data.contains(2)) {
             lmMonitorEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
+            beneficiaryEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
         }
 
         if (data.contains(3)) {
             lmMonitorEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
+            beneficiaryEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
         }
+
         lmMonitorEntity.setMotherId(motherId);
 
 

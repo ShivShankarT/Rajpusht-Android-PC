@@ -201,6 +201,16 @@
                         app:ff_required="true"
                         app:ff_selections="@array/birthWeightSource" />
 
+                    <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
+                        android:id="@+id/benf_birth_child_weight"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="@string/Weight"
+                        app:ff_input_type="numberDecimal"
+                        app:ff_label="@string/birth_weight_child"
+                        app:ff_maxLength="5"
+                        app:ff_required="true" />
+
                     <in.rajpusht.pc.custom.ui.FormEditFieldElement
                         android:id="@+id/benf_opd_ipd"
                         android:layout_width="match_parent"
@@ -210,8 +220,6 @@
                         app:ff_label="@string/enter_OPD_IPD"
                         app:ff_maxLength="15"
                         app:ff_required="true" />
-
-
 
 
                     <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
@@ -243,16 +251,6 @@
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/current_muac_child"
                         app:ff_measurement_type="length"
-                        app:ff_required="true" />
-
-                    <in.rajpusht.pc.custom.ui.FormEditFieldMeasElement
-                        android:id="@+id/benf_birth_child_weight"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        app:ff_hint="@string/Weight"
-                        app:ff_input_type="numberDecimal"
-                        app:ff_label="@string/birth_weight_child"
-                        app:ff_maxLength="5"
                         app:ff_required="true" />
 
 

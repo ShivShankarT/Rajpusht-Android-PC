@@ -122,6 +122,21 @@ public class FormMultiSelectorElement extends FrameLayout implements CompoundBut
         return selectedId.toArray(new Integer[0]);
     }
 
+    public boolean removeSelectedValue(int pos) {
+
+        if (pos < edf_ch_gp.getChildCount()) {
+            CheckBox checkBox = (CheckBox) edf_ch_gp.getChildAt(pos);
+            checkBox.setChecked(false);
+        }
+
+        return selectedId.remove(pos);
+    }
+
+    public void sendChangedListenerValue() {
+        if (hValueChangedListener != null && selectedId != null)
+            hValueChangedListener.onValueChanged(selectedId);
+    }
+
 
     public Set<Integer> selectedIds() {
         return selectedId;
@@ -196,4 +211,12 @@ public class FormMultiSelectorElement extends FrameLayout implements CompoundBut
     }
 
 
+    public boolean isVisible() {
+        return getVisibility() == VISIBLE;
+    }
+
+
+    public boolean isVisibleAndEnable() {
+        return getVisibility() == VISIBLE && isEnabled();
+    }
 }

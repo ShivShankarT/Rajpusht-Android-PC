@@ -209,4 +209,31 @@ public class ChildEntity {
     public void setChildSex(String childSex) {
         this.childSex = childSex;
     }
+
+    @Override
+    public String toString() {
+        return "ChildEntity{" +
+                "id=" + id +
+                ", childId=" + childId +
+                ", childSex='" + childSex + '\'' +
+                ", stage='" + stage + '\'' +
+                ", subStage='" + subStage + '\'' +
+                ", childOrder=" + childOrder +
+                ", dob=" + dob +
+                ", motherId=" + motherId +
+                ", deliveryPlace='" + deliveryPlace + '\'' +
+                ", deliveryHome=" + deliveryHome +
+                ", isActive='" + isActive + '\'' +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", dataStatus=" + dataStatus +
+                ", age=" + age +
+                ", isFirstImmunizationComplete='" + isFirstImmunizationComplete + '\'' +
+                ", birthWeight=" + birthWeight +
+                ", pctsChildId='" + pctsChildId + '\'' +
+                ", birthWeightSource=" + birthWeightSource +
+                ", opdipd=" + opdipd +
+                ", lmMonitorEntities=" + lmMonitorEntities +
+                '}';
+    }
 }

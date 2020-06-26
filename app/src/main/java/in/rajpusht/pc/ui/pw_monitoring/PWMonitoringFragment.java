@@ -195,6 +195,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                     viewDataBinding.benfJsyCount.setVisibility(View.GONE);
                     viewDataBinding.benfRajshriCount.setVisibility(View.GONE);
                     viewDataBinding.benfInstalLy.setVisibility(View.GONE);
+                } else if (data.isEmpty()) {
+                    viewDataBinding.benfInstalLy.setVisibility(View.GONE);
                 } else {
                     viewDataBinding.benfInstalLy.setVisibility(View.VISIBLE);
 
@@ -306,24 +308,43 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         });
 
 
-        if (mPwMonitorEntity == null) {
-            Set<Integer> regScheme = new HashSet<>();
-            if (beneficiaryEntity.getPmmvyInstallment() != null) {
-                regScheme.add(0);
-            }
-            if (beneficiaryEntity.getIgmpyInstallment() != null) {
-                regScheme.add(1);
-            }
-            if (beneficiaryEntity.getJsyInstallment() != null) {
-                regScheme.add(2);
-            }
-            if (beneficiaryEntity.getRajshriInstallment() != null) {
-                regScheme.add(3);
-            }
-            if (regScheme.isEmpty()) {
-                regScheme.add(4);
-            }
+        Set<Integer> regScheme = new HashSet<>();
+        //set max values because reg screen user select max values
+        if (beneficiaryEntity.getPmmvyInstallment() != null) {
+            vb.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+            vb.benfPmmvvyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getPmmvyInstallment()));
+            regScheme.add(0);
+        }
+        if (beneficiaryEntity.getIgmpyInstallment() != null) {
+            vb.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_4_dot));
+            vb.benfIgmpyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getIgmpyInstallment()));
+            regScheme.add(1);
+        }
+        if (beneficiaryEntity.getJsyInstallment() != null) {
+            vb.benfJsyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            vb.benfJsyCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getJsyInstallment()));
+            regScheme.add(2);
+        }
+        if (beneficiaryEntity.getRajshriInstallment() != null) {
+            vb.benfRajshriCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            vb.benfRajshriCount.setSectionByData(instalmentValConvt(beneficiaryEntity.getRajshriInstallment()));
+            regScheme.add(3);
+        }
+
+
+        if (regScheme.isEmpty()) {
+            //regScheme.add(4);
+            vb.benfRegisteredProgramme.setVisibility(View.VISIBLE);
+        } else {
             vb.benfRegisteredProgramme.setSelectedIds(regScheme);
+            vb.benfInstalLy.setVisibility(View.GONE);
+            vb.benfRegisteredProgramme.setVisibility(View.GONE);
+            vb.benfPmmvvyCount.setVisibility(View.GONE);
+            vb.benfIgmpyCount.setVisibility(View.GONE);
+            vb.benfRajshriCount.setVisibility(View.GONE);
+            vb.benfJsyCount.setVisibility(View.GONE);
+
+
         }
 
 
@@ -437,7 +458,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             validateElement.add(vb.benfCurrentWeight.validateWthView());
 
 
-            validateElement.add(vb.benfRegisteredProgramme.validateWthView());
+            if (vb.benfRegisteredProgramme.isVisibleAndEnable())
+                validateElement.add(vb.benfRegisteredProgramme.validateWthView());
             if (vb.benfPmmvvyCount.isVisible())
                 validateElement.add(vb.benfPmmvvyCount.validateWthView());
             if (vb.benfIgmpyCount.isVisible())
@@ -492,18 +514,22 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
             if (data.contains(0)) {
                 pwMonitorEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
+                beneficiaryEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
             }
 
             if (data.contains(1)) {
                 pwMonitorEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
+                beneficiaryEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
             }
 
             if (data.contains(2)) {
                 pwMonitorEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
+                beneficiaryEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
             }
 
             if (data.contains(3)) {
                 pwMonitorEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
+                beneficiaryEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
             }
 
         } else {

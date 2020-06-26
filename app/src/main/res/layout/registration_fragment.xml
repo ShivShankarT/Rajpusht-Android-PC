@@ -114,6 +114,8 @@
                         android:layout_height="wrap_content"
                         app:ff_label="Select Type of Facility"
                         app:ff_required="true"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         app:ff_selections="@array/Institutional_Type" />
 
 
@@ -125,6 +127,8 @@
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
                         app:ff_required="true"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         app:ff_selections="@array/empty"
                         app:ff_show_divider="false" />
 
@@ -191,6 +195,8 @@
                         android:layout_height="wrap_content"
                         app:ff_label="Select Type of Facility"
                         app:ff_required="true"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         app:ff_selections="@array/Institutional_Type" />
 
                     <in.rajpusht.pc.custom.ui.FormDropDownElement
@@ -201,6 +207,8 @@
                         app:ff_label="@string/institutional_delivery"
                         app:ff_maxLength="130"
                         app:ff_required="true"
+                        android:visibility="gone"
+                        tools:visibility="visible"
                         app:ff_selections="@array/empty"
                         app:ff_show_divider="false" />
 

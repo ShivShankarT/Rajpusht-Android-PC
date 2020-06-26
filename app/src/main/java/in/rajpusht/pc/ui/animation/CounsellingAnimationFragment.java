@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.animation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -36,9 +37,9 @@ import in.rajpusht.pc.utils.ui.CustomVideoView;
 public class CounsellingAnimationFragment extends Fragment {
 
 
-    private  final int delayMillis = CounsellingMedia.isTesting ? 500 : 2000;
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
+    private final int delayMillis = CounsellingMedia.isTesting ? 200 : 20;
     private Handler handler = new Handler();
     private CounsellingMedia counsellingMedia;
     private int mediaPos = 0;
@@ -216,7 +217,7 @@ public class CounsellingAnimationFragment extends Fragment {
                     if (nextCounsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA || nextCounsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
                         FragmentUtils.replaceFragment(requireActivity(), CounsellingAnimationFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
                     } else {
-                        FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
+                        FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
                     }
 
 
@@ -256,8 +257,11 @@ public class CounsellingAnimationFragment extends Fragment {
 
     protected void showAlertDialog(String message, Runnable runnable) {//todo add basefragment impl
         new AlertDialog.Builder(requireContext()).setTitle(R.string.alert).setMessage(message).setCancelable(false).setPositiveButton(R.string.ok, (dialog, which) -> {
-            if (runnable != null)
-                runnable.run();
+            Context context = getContext();
+            if (context != null) {
+                if (runnable != null)
+                    runnable.run();
+            }
         }).show();
     }
 

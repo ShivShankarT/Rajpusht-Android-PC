@@ -47,8 +47,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="KG"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>
@@ -68,8 +68,8 @@
                     android:layout_height="wrap_content"
                     android:ems="10"
                     android:hint="Gram"
-                    android:imeOptions="actionNext"
-                    android:inputType="textPersonName"
+                    android:imeOptions="actionDone"
+                    android:inputType="number"
                     android:maxLines="1" />
 
             </com.google.android.material.textfield.TextInputLayout>

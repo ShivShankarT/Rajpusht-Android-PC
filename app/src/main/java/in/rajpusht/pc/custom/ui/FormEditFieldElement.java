@@ -85,7 +85,7 @@ public class FormEditFieldElement extends FrameLayout {
             edf_text.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
             edf_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
         } else if (inputType == 1) {
-            edf_text.setInputType(InputType.TYPE_CLASS_PHONE);
+            edf_text.setInputType(InputType.TYPE_CLASS_NUMBER);//TYPE_CLASS_PHONE
         } else if (inputType == 2) {
             edf_text.setInputType(InputType.TYPE_CLASS_NUMBER);
         } else if (inputType == 3) {

@@ -204,6 +204,11 @@
     <string name="radioselecteng" translatable="false">English</string>
     <string name="radioselecthin" translatable="false">Hindi</string>
 
+    <string name="alert_exit_form">Do you want to discard changes?</string>
+    <string name="Cancel">Cancel</string>
+    <string name="Exit">Exit</string>
+    <string name="sync_successfully">Sync Successfully</string>
+
     <string-array name="child_count">
         <item>0</item>
         <item>1</item>
@@ -330,8 +335,8 @@
     </string-array>
 
     <string-array name="pw_na_reasons">
-        <item>The respondent/ pregnant woman not done antenatal checkup (ANC)</item>
-        <item>The respondent/ pregnant woman not available for interview</item>
+        <item>Antenatal checkup (ANC) Not Done</item>
+        <item>Respondent not available for interview</item>
     </string-array>
 </resources>
 

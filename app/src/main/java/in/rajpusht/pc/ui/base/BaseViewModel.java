@@ -1,12 +1,10 @@
 package in.rajpusht.pc.ui.base;
 
-import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import java.lang.ref.WeakReference;
 
 import in.rajpusht.pc.data.DataRepository;
-import in.rajpusht.pc.utils.Event;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.disposables.CompositeDisposable;
 
@@ -51,5 +49,9 @@ public abstract class BaseViewModel<N> extends ViewModel {
 
     public SchedulerProvider getSchedulerProvider() {
         return mSchedulerProvider;
+    }
+
+    protected String getString(int id) {
+        return dataRepository.getString(id);
     }
 }

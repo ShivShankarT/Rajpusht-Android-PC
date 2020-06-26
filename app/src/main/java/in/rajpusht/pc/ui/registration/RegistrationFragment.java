@@ -74,6 +74,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        forceExit = false;
         if (getArguments() != null) {
             beneficiaryId = getArguments().getLong("id");
         }
@@ -126,7 +127,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         });
 
         viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));//todo always IGMPY
-
+        viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
         viewDataBinding.benfChildCount.sethValidatorListener(FormValidatorUtils.valueBwValidator(0, 2, "NOT ELIGIBLE"));
         viewDataBinding.benfChildCount.sethValueChangedListener(new HValueChangedListener<Integer>() {
             @Override
@@ -136,8 +137,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 if (data == 2) {
                     viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.GONE);
                     viewDataBinding.benfChildDeliveryPlace.setVisibility(View.GONE);
+                    viewDataBinding.benfChildInstitutionalType.setVisibility(View.GONE);
                     viewDataBinding.benfChildTwin.setVisibility(View.VISIBLE);
                 } else {
+                    viewDataBinding.benfChildInstitutionalType.setVisibility(View.VISIBLE);
                     viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.VISIBLE);
                     viewDataBinding.benfChildDeliveryPlace.setVisibility(View.VISIBLE);
                     viewDataBinding.benfChildTwin.setVisibility(View.GONE);
@@ -184,7 +187,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                         showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
                             @Override
                             public void run() {
-                                requireActivity().onBackPressed();
+                                forceExit();
                             }
                         });
                     }
@@ -201,7 +204,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     showAlertDialog(getString(R.string.beneficiary_not_eligible), new Runnable() {
                         @Override
                         public void run() {
-                            requireActivity().onBackPressed();
+                            forceExit();
                         }
                     });
 
@@ -281,13 +284,13 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         viewDataBinding.benfRegStage.sethValueChangedListener(new HValueChangedListener<Integer>() {
             @Override
-            public void onValueChanged(Integer data) {
-                if (data == 0) {
+            public void onValueChanged(Integer regType) {
+                if (regType == 0) {
                     viewDataBinding.firstChildLy.setVisibility(View.GONE);
                     viewDataBinding.secondChildLy.setVisibility(View.GONE);
                     viewDataBinding.benfLmp.setVisibility(View.VISIBLE);
 
-                } else if (data == 1) {
+                } else if (regType == 1) {
                     viewDataBinding.firstChildLy.setVisibility(View.VISIBLE);
                     viewDataBinding.benfLmp.setVisibility(View.GONE);
                     if (viewDataBinding.benfChildCount.getSelectedPos() >= 2) {
@@ -313,18 +316,16 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
 
                 int childCount = viewDataBinding.benfChildCount.getSelectedPos();
-
-                //setting
+                //resetting
                 viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
-                viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, true));
 
                 if (childCount == 0) {
                     viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
-                } else if (childCount == 1 && data == 0) {
+                } else if (childCount == 1 && regType == 0) {
 
-                } else if (childCount == 1 && data == 1) {
-                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
-                } else if (childCount == 1 && data == 2) {
+                } else if (childCount == 1 && regType == 1) {
+
+                } else if (childCount == 1 && regType == 2) {
 
                 } else if (childCount == 2) {
 
@@ -340,6 +341,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
                 if (data == 0) {
                     HUtil.recursiveSetEnabled(viewDataBinding.firstChildLy, false);
+                    HUtil.recursiveSetEnabled(viewDataBinding.benfChildSex, true);
                 } else {
                     HUtil.recursiveSetEnabled(viewDataBinding.firstChildLy, true);
                 }
@@ -358,6 +360,26 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 }
             }
         });
+
+        HValueChangedListener<Integer> benfChildSexListener = new HValueChangedListener<Integer>() {
+            @Override
+            public void onValueChanged(Integer data) {
+                //to handle rajsri
+                if ((viewDataBinding.benfChildSex.getSelectedPos() == 1 || viewDataBinding.benfChild2Sex.getSelectedPos() == 1)) {
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, true));
+                } else {
+
+                    viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
+                    boolean isRm = viewDataBinding.benfRegisteredProgramme.removeSelectedValue(3);
+                    if (isRm)
+                        viewDataBinding.benfRegisteredProgramme.sendChangedListenerValue();
+
+                }
+            }
+        };
+        viewDataBinding.benfChildSex.sethValueChangedListener(benfChildSexListener);
+        viewDataBinding.benfChild2Sex.sethValueChangedListener(benfChildSexListener);
+
         viewDataBinding.benfPmmvvyCount.setVisibility(View.GONE);
         viewDataBinding.benfIgmpyCount.setVisibility(View.GONE);
         viewDataBinding.benfJsyCount.setVisibility(View.GONE);
@@ -507,6 +529,11 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                         }
                     });
 
+    }
+
+    private void forceExit() {
+        forceExit = true;
+        requireActivity().onBackPressed();
     }
 
     private void setLocationData(String ftype, FormDropDownElement formDropDownElement) {
@@ -711,8 +738,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 .toList()
                 .subscribe(aBoolean -> {
                     if (!aBoolean.isEmpty()) {//todo check
-                        showAlertDialog(getResources().getString(R.string.benf_success_reg), () -> {
-                            requireActivity().onBackPressed();
+                        int benf_success_reg = RegistrationFragment.this.beneficiaryId == 0 ? R.string.benf_success_reg : R.string.benf_success_update;
+                        showAlertDialog(getResources().getString(benf_success_reg), () -> {
+                            forceExit();
                         });
                     }
 
@@ -752,9 +780,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (hasChild) {
             validateElement.add(vb.benfChildSex.validateWthView());
             validateElement.add(vb.benfChildDob.validateWthView());
-            if (vb.benfChildDeliveryPlaceType.isVisible())
+            if (vb.benfChildDeliveryPlaceType.isVisibleAndEnable())
                 validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
-            if (vb.benfChildInstitutionalType.isVisible())
+            if (vb.benfChildInstitutionalType.isVisibleAndEnable())
                 validateElement.add(vb.benfChildInstitutionalType.validateWthView());
 
             if (vb.benfChildDeliveryPlace.isVisible())
@@ -861,8 +889,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             vh.benfRegStage.setSection(0);
         vh.benfRegStage.sendChangedListenerValue();//ui hide
         vh.benfChildCount.sendChangedListenerValue();
-        vh.benfChildCount.setEnabled(false);
-        vh.benfChildTwin.setEnabled(false);
+        vh.benfChildCount.setEnableChild(false);
+        vh.benfChildTwin.setEnableChild(false);
         vh.benfRegStage.setEnableChild(false);//will create conflict
 
 
@@ -885,12 +913,12 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryHome());
                     vh.benfChild2DeliveryPlaceType.sendChangedListenerValue();
                 }
-            }else  if (beneficiaryEntity.getChildCount()>=2&&childEntities.size() <= 1){
+            } else if (beneficiaryEntity.getChildCount() >= 2 && childEntities.size() <= 1) {
                 //todo hide sec child
                 vh.secondChildLy.setVisibility(View.GONE);
             }
+            vh.benfChildSex.sendChangedListenerValue();
         }
-
 
 
         if (pregnantEntity != null) {
@@ -961,6 +989,15 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
     }
 
+    @Override
+    public boolean onBackPressed() {
+        if (forceExit) {
+           return super.onBackPressed();
+        } else {
+            showEditDialog();
+            return false;
+        }
 
+    }
 }
 

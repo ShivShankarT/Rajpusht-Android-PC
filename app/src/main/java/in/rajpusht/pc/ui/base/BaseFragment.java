@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.base;
 
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -18,6 +19,7 @@ import androidx.databinding.DataBindingUtil;
 import androidx.databinding.ViewDataBinding;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
 import dagger.android.support.AndroidSupportInjection;
@@ -27,6 +29,7 @@ import in.rajpusht.pc.utils.MyProgressDialogFragment;
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
 
+   protected boolean forceExit=true;
     private BaseActivity mActivity;
     private View mRootView;
     private T mViewDataBinding;
@@ -151,9 +154,21 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         snack.show();
     }
 
+    public void showEditDialog() {
+        new MaterialAlertDialogBuilder(requireContext())
+                .setTitle(R.string.alert)
+                .setMessage(R.string.alert_exit_form)
+                .setPositiveButton(R.string.Cancel, null)
+                .setNegativeButton(R.string.Exit, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        forceExit=true;
+                        requireActivity().onBackPressed();
+                    }
+                }).show();
+    }
+
     public boolean onBackPressed() {
         return true;
     }
-
-    ;
 }
