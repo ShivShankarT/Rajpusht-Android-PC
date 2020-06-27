@@ -11,7 +11,6 @@ import in.rajpusht.pc.model.DataStatus;
 @Entity(tableName = LMMonitorEntity.TABLE,indices = {@Index(value = "childId"), @Index(value = "motherId")})
 public class LMMonitorEntity {
     public static final String TABLE = "lm_monitor";
-    long createdBy;
     @PrimaryKey(autoGenerate = true)
     private int id;
     private long childId;
@@ -23,11 +22,11 @@ public class LMMonitorEntity {
     private Double currentMuac;
     private Double childWeight;
     private Double childHeight;
-
     private Integer pmmvyInstallment;
     private Integer igmpyInstallment;
     private Integer jsyInstallment;
     private Integer rajshriInstallment;
+    private  Long createdBy;
     private String naReason;
     private Boolean available;
     private DataStatus dataStatus;
@@ -158,11 +157,11 @@ public class LMMonitorEntity {
         this.updatedAt = updatedAt;
     }
 
-    public long getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(long createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 

@@ -57,23 +57,23 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
             holder1.textviewLocation.setText(locationEntity.getAwcEnglishName());
             holder1.textviewSector.setText(locationEntity.getSectorName());
 
-            if (locationEntity.getPwCount()!=null){
+            if (locationEntity.getPwCount() != null) {
                 holder1.pw_count.setText(String.valueOf(locationEntity.getPwCount()));
-            }else {
+            } else {
                 holder1.pw_count.setText("0");
 
             }
 
-            if (locationEntity.getLmCount()!=null){
+            if (locationEntity.getLmCount() != null) {
                 holder1.lm_count.setText(String.valueOf(locationEntity.getLmCount()));
-            }else {
+            } else {
                 holder1.lm_count.setText("0");
 
             }
 
-            if (locationEntity.getMyCount()!=null){
+            if (locationEntity.getMyCount() != null) {
                 holder1.my_count.setText(String.valueOf(locationEntity.getMyCount()));
-            }else {
+            } else {
                 holder1.my_count.setText("0");
 
             }
@@ -123,12 +123,14 @@ public class AwcLocationAdapter extends ExpandableRecyclerAdapter<ProfileFragmen
 
         @Override
         public void onClick(View v) {
-                AssignedLocationEntity locationEntity = visibleItems.get(getAdapterPosition()).assignedLocationEntity;
+            int adapterPosition = getAdapterPosition();
+            if (adapterPosition != -1) {
+                AssignedLocationEntity locationEntity = visibleItems.get(adapterPosition).assignedLocationEntity;
                 selectedAWC = locationEntity.getAwcCode();
                 awcChangeLister.onAwcChange(locationEntity.getAwcCode(), locationEntity.getAwcEnglishName());
                 new Handler().postDelayed(AwcLocationAdapter.this::notifyDataSetChanged, 500);
 
-
+            }
         }
     }
 

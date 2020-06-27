@@ -902,6 +902,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
                 vh.benfChildDeliveryPlaceType.sendChangedListenerValue();
             }
+
             vh.benfChildSex.setSection(FormDataConstant.childSex.indexOf(childEntity.getChildSex()));
 
             if (childEntities.size() >= 2) {
@@ -913,7 +914,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryHome());
                     vh.benfChild2DeliveryPlaceType.sendChangedListenerValue();
                 }
-            } else if (beneficiaryEntity.getChildCount() >= 2 && childEntities.size() <= 1) {
+            } else if (beneficiaryEntity.getChildCount() != null && beneficiaryEntity.getChildCount() >= 2 && childEntities.size() <= 1) {
                 //todo hide sec child
                 vh.secondChildLy.setVisibility(View.GONE);
             }
@@ -992,7 +993,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     @Override
     public boolean onBackPressed() {
         if (forceExit) {
-           return super.onBackPressed();
+            return super.onBackPressed();
         } else {
             showEditDialog();
             return false;

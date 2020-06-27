@@ -128,12 +128,12 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
         this.hValidatorListener = hValidatorListener;
     }
 
-    public void sethValueChangedListener(HValueChangedListener<Integer> hValueChangedListener) {
-        this.hValueChangedListener = hValueChangedListener;
-    }
-
     public HValueChangedListener<Integer> gethValueChangedListener() {
         return hValueChangedListener;
+    }
+
+    public void sethValueChangedListener(HValueChangedListener<Integer> hValueChangedListener) {
+        this.hValueChangedListener = hValueChangedListener;
     }
 
     public int getSelectedPos() {
@@ -141,8 +141,7 @@ public class FormSegmentedGroupElement extends FrameLayout implements RadioGroup
     }
 
     public void setSection(Integer pos) {
-
-        if (pos == null)
+        if (pos == null || pos < 0)
             return;
         edf_ch_gp.setOnCheckedChangeListener(null);
         if (pos < edf_ch_gp.getChildCount()) {

@@ -77,7 +77,7 @@ public class JsonParser {
                     Integer counseling_sms = getInt(object, "counseling_sms");
 
 
-                    Integer created_by = getInt(object, "created_by");
+                    Long created_by = getLong(object, "created_by");
                     bmodel.setBeneficiaryId(id);
                     bmodel.setAwcCode(awc_code);
                     bmodel.setName(name);
@@ -141,7 +141,7 @@ public class JsonParser {
                     Integer igmpy_installment = getInt(object, "igmpy_installment");
                     Integer jsy_installment = getInt(object, "jsy_installment");
                     Integer rajshri_installment = getInt(object, "rajshri_installment");
-                    Integer created_by = getInt(object, "created_by");
+                    Long created_by = getLong(object, "created_by");
                     String is_available = getString(object, "is_available");
                     String na_reason = getString(object, "na_reason");
 
@@ -229,7 +229,7 @@ public class JsonParser {
                     Integer igmpy_installment = getInt(object, "igmpy_installment");
                     Integer jsy_installment = getInt(object, "jsy_installment");
                     Integer rajshri_installment = getInt(object, "rajshri_installment");
-                    int created_by = getInt(object, "created_by");
+                    Long created_by = getLong(object, "created_by");
                     String stage = getString(object, "stage");
                     String sub_stage = getString(object, "sub_stage");
                     String mobile_created_at = getString(object, "mobile_created_at");

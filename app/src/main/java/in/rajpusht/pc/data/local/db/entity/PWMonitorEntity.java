@@ -30,7 +30,7 @@ public class PWMonitorEntity {
     private DataStatus dataStatus;
     private Boolean available;
     private String naReason;
-    private long createdBy;
+    private Long createdBy;
     private String createdAt;
     private String updatedAt;
 
@@ -164,11 +164,11 @@ public class PWMonitorEntity {
         this.updatedAt = updatedAt;
     }
 
-    public long getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(long createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 

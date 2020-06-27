@@ -22,11 +22,9 @@ import javax.inject.Inject;
 
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
-import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.custom.validator.FormValidatorUtils;
-import in.rajpusht.pc.custom.validator.ValidationStatus;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
@@ -144,6 +142,17 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             }
         });
 
+        viewDataBinding.benfAncCount.sethValueChangedListener(new HValueChangedListener<Integer>() {
+            @Override
+            public void onValueChanged(Integer data) {
+                if (data == 0 || data == -1)
+                    viewDataBinding.benfAncDate.setVisibility(View.GONE);
+                else
+                    viewDataBinding.benfAncDate.setVisibility(View.VISIBLE);
+
+            }
+        });
+
         viewDataBinding.weightIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -256,17 +265,21 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         if (subStage.equalsIgnoreCase("PW1")) {
             viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
             viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_1_dot));
+            viewDataBinding.benfAncCount.setSectionList(getResources().getStringArray(R.array.count_0_2));
 
         } else if (subStage.equalsIgnoreCase("PW2")) {
             viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
             viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
+            viewDataBinding.benfAncCount.setSectionList(getResources().getStringArray(R.array.count_0_4));
 
         } else if (subStage.equalsIgnoreCase("PW3")) {
             viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
             viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+            viewDataBinding.benfAncCount.setSectionList(getResources().getStringArray(R.array.count_0_6));
         } else if (subStage.equalsIgnoreCase("PW4")) {
             viewDataBinding.benfPmmvvyCount.setSectionList(getResources().getStringArray(R.array.count_0_2_dot));
             viewDataBinding.benfIgmpyCount.setSectionList(getResources().getStringArray(R.array.count_0_3_dot));
+            viewDataBinding.benfAncCount.setSectionList(getResources().getStringArray(R.array.count_0_8));
         }
 
 
@@ -282,7 +295,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         vb.benfName.setText(beneficiaryEntity.getName());
         vb.pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
         vb.benfLastcheckupdate.setMinDate(pregnantEntity.getLmpDate().getTime());
-
+        vb.benfAncDate.setMinDate(pregnantEntity.getLmpDate().getTime());
         vb.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
                 getString(R.string.incorrect_pw_weight)));
 
@@ -290,22 +303,6 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         b. 2nd visit: Between 14 and 26 weeks
         c. 3rd visit: Between 28 and 34 weeks
         d. 4th visit: Between 36 weeks and term*/
-
-        //FormValidator
-        vb.benfAncDate.sethValidatorListener(new HValidatorListener<Date>() {
-            @Override
-            public ValidationStatus isValid(Date data) {
-                boolean isValid = true;
-                int lmpWek = HUtil.daysBetween(pregnantEntity.getLmpDate(), data) / 7;
-                if ("PW1".equalsIgnoreCase(subStage) && lmpWek <= 12 ||
-                        "PW2".equalsIgnoreCase(subStage) && lmpWek >= 14 && lmpWek <= 26 ||
-                        "PW3".equalsIgnoreCase(subStage) && lmpWek >= 28 && lmpWek <= 34 ||
-                        "PW4".equalsIgnoreCase(subStage) && lmpWek >= 36 && lmpWek <= 40) {
-
-                } else isValid = false;
-                return new ValidationStatus(isValid, getString(R.string.Invalid_Anc_Date));
-            }
-        });
 
 
         Set<Integer> regScheme = new HashSet<>();
@@ -452,7 +449,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
         if (!isNa) {
             validateElement.add(vb.benfAncCount.validateWthView());
-            validateElement.add(vb.benfAncDate.validateWthView());
+            if (vb.benfAncDate.isVisibleAndEnable())
+                validateElement.add(vb.benfAncDate.validateWthView());
             validateElement.add(vb.benfMamtaCdWeight.validateWthView());
             validateElement.add(vb.benfLastcheckupdate.validateWthView());
             validateElement.add(vb.benfCurrentWeight.validateWthView());
@@ -505,7 +503,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         if (!isNa) {
             pwMonitorEntity.setAvailable(true);
             pwMonitorEntity.setAncCount(vb.benfAncCount.getSelectedPos());
-            pwMonitorEntity.setLastAnc(vb.benfAncDate.getDate());
+            if (vb.benfAncDate.isVisibleAndEnable())
+                pwMonitorEntity.setLastAnc(vb.benfAncDate.getDate());
             pwMonitorEntity.setLastWeightInMamta(vb.benfMamtaCdWeight.getMeasValue());
             pwMonitorEntity.setLastWeightCheckDate(vb.benfLastcheckupdate.getDate());
             pwMonitorEntity.setCurrentWeight(vb.benfCurrentWeight.getMeasValue());

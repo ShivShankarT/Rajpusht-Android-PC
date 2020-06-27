@@ -10,6 +10,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.github.mikephil.charting.charts.LineChart;
@@ -41,6 +42,7 @@ import in.rajpusht.pc.databinding.PregnancyGraphFragmentBinding;
 import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
+import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
@@ -59,6 +61,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     SchedulerProvider schedulerProvider;
     boolean isChild;
     private int pos;
+    private List<CounsellingMedia> counsellingMediaArrayList;
 
     public static PregnancyGraphFragment newInstance(int pos) {
         PregnancyGraphFragment pregnancyGraphFragment = new PregnancyGraphFragment();
@@ -73,11 +76,13 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        counsellingMediaArrayList = CounsellingMedia.counsellingMediaData();
         isChild = !CounsellingMedia.counsellingSubstage.contains("PW");
         if (getArguments() != null) {
             pos = getArguments().getInt("data");
         }
     }
+
 
     @Override
     public int getBindingVariable() {
@@ -110,11 +115,32 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             requireActivity().onBackPressed();
         });
 
-        pregnancyGraphFragmentBinding.nxtBtn.setOnClickListener(v -> {
+        int nextCounPos = pos + 1;
+        if (!(nextCounPos < counsellingMediaArrayList.size())) {
+            pregnancyGraphFragmentBinding.nxtBtn.setText(R.string.finish);
+        }
 
-            FragmentUtils.replaceFragment((AppCompatActivity) requireActivity(),
-                    CounsellingAnimationFragment.newInstance(pos + 1), R.id.fragment_container,
-                    true, true, FragmentUtils.TRANSITION_POP);
+        pregnancyGraphFragmentBinding.nxtBtn.setOnClickListener(v -> {
+            if (nextCounPos < counsellingMediaArrayList.size()) {
+                CounsellingMedia nextCounsellingMedia = counsellingMediaArrayList.get(nextCounPos);
+
+                if (nextCounsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA || nextCounsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
+                    FragmentUtils.replaceFragment(requireActivity(), CounsellingAnimationFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
+                } else {
+                    FragmentUtils.replaceFragment(requireActivity(), PregnancyGraphFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
+                }
+
+
+            } else {
+
+                showAlertDialog(getString(R.string.counselling_completed), new Runnable() {
+                    @Override
+                    public void run() {
+                        requireActivity().getSupportFragmentManager().popBackStack(null, FragmentManager.POP_BACK_STACK_INCLUSIVE);
+                        FragmentUtils.replaceFragment(requireActivity(), new BeneficiaryFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_FADE_IN_OUT);
+                    }
+                });
+            }
         });
 
 
@@ -204,8 +230,8 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             title = getString(R.string.Women_Weight_Gain);
 
         LineDataSet d1 = new LineDataSet(values1, string);
-        d1.setLineWidth(2.5f);
-        d1.setCircleRadius(4.5f);
+        d1.setLineWidth(4.5f);
+        d1.setCircleRadius(7.5f);
         d1.setHighLightColor(Color.rgb(244, 117, 117));
         d1.setDrawValues(false);
 
@@ -240,8 +266,8 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
 
         LineDataSet d2 = new LineDataSet(values2, title);
-        d2.setLineWidth(2.5f);
-        d2.setCircleRadius(4.5f);
+        d2.setLineWidth(4.5f);
+        d2.setCircleRadius(7.5f);
         d2.setHighLightColor(Color.rgb(244, 117, 117));
         d2.setColor(ColorTemplate.VORDIPLOM_COLORS[0]);
         d2.setCircleColor(ColorTemplate.VORDIPLOM_COLORS[0]);

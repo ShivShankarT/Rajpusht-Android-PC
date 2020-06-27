@@ -37,7 +37,7 @@ public class BeneficiaryEntity {
     private DataStatus dataStatus;
     private String awcCode;
     private String isActive;
-    private long createdBy;
+    private Long createdBy;
     private String createdAt;
     private String updatedAt;
 
@@ -236,11 +236,11 @@ public class BeneficiaryEntity {
         this.awcCode = awcCode;
     }
 
-    public long getCreatedBy() {
+    public Long getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(long createdBy) {
+    public void setCreatedBy(Long createdBy) {
         this.createdBy = createdBy;
     }
 

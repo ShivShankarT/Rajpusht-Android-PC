@@ -18,6 +18,7 @@ import androidx.core.widget.TextViewCompat;
 import com.google.android.material.textfield.TextInputLayout;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -76,7 +77,7 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
         CharSequence[] array = a.getTextArray(R.styleable.FormField_ff_selections);
         edf_ch_gp = view.findViewById(R.id.edf_rad_gp);
 
-        sectionData.add("Select");
+        sectionData.add(getResources().getString(R.string.Select));
         for (int i = 0; i < array.length; i++) {
             sectionData.add(String.valueOf(array[i]));
         }
@@ -86,11 +87,14 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
         a.recycle();
 
     }
-
+    public void setSectionList(String[] data) {
+        List<String> data1 = Arrays.asList(data);
+        setSectionList(data1);
+    }
     public void setSectionList(List<String> data) {
         mSelectedPos = -1;
         sectionData.clear();
-        sectionData.add("Select");
+        sectionData.add(getResources().getString(R.string.Select));
         sectionData.addAll(data);
         setUiData();
     }
@@ -139,15 +143,23 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
     }
 
     public int getSelectedPos() {
-        return mSelectedPos;
+        if ((mSelectedPos == 0) || (mSelectedPos == -1))
+            return -1;
+        else
+            return mSelectedPos - 1;
     }
 
+    // select
     public void setSection(Integer pos) {
-        if (pos == null)
+        if (pos == null || pos < 0)
             return;
         edf_ch_gp.setOnItemSelectedListener(null);
-        mSelectedPos = pos;
-        edf_ch_gp.setSelection(pos);
+
+        if ((pos + 1) < sectionData.size()) {
+            mSelectedPos = pos + 1;
+            edf_ch_gp.setSelection(mSelectedPos);
+        }
+
         edf_ch_gp.setOnItemSelectedListener(this);
     }
 
@@ -198,7 +210,7 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
         mSelectedPos = position;//todo
         if (hValueChangedListener != null)
-            hValueChangedListener.onValueChanged(mSelectedPos);
+            hValueChangedListener.onValueChanged(getSelectedPos());
         edf_txt_inp_ly.setError(null);
 
     }

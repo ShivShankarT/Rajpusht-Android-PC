@@ -25,6 +25,9 @@ import androidx.transition.TransitionManager;
 import com.bumptech.glide.request.target.Target;
 import com.squareup.picasso.Picasso;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.databinding.FragmentCounsellingAnimationBinding;
 import in.rajpusht.pc.model.CounsellingMedia;
@@ -39,7 +42,8 @@ public class CounsellingAnimationFragment extends Fragment {
 
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
-    private final int delayMillis = CounsellingMedia.isTesting ? 200 : 20;
+    private final int delayMillis = CounsellingMedia.isTesting ? 200 : 2000;
+    List<CounsellingMedia> counsellingMediaArrayList = new ArrayList<>();
     private Handler handler = new Handler();
     private CounsellingMedia counsellingMedia;
     private int mediaPos = 0;
@@ -73,7 +77,6 @@ public class CounsellingAnimationFragment extends Fragment {
     };
     private int videoCurrentPos = 0;
 
-
     public CounsellingAnimationFragment() {
         // Required empty public constructor
     }
@@ -91,8 +94,9 @@ public class CounsellingAnimationFragment extends Fragment {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
             pos = getArguments().getInt("data");
-            counsellingMedia = CounsellingMedia.counsellingMediaData().get(pos);
-            Log.i("imagedd", "" + counsellingMedia.toString());
+            counsellingMediaArrayList = CounsellingMedia.counsellingMediaData();
+            this.counsellingMedia = counsellingMediaArrayList.get(pos);
+            Log.i("imagedd", "" + this.counsellingMedia.toString());
         }
     }
 
@@ -202,7 +206,7 @@ public class CounsellingAnimationFragment extends Fragment {
         }
 
         int nextCounPos = pos + 1;
-        if (!(nextCounPos < CounsellingMedia.counsellingMediaData().size())) {
+        if (!(nextCounPos < counsellingMediaArrayList.size())) {
             vb.nxtBtn.setText(R.string.finish);
         }
 
@@ -211,8 +215,8 @@ public class CounsellingAnimationFragment extends Fragment {
             public void onClick(View v) {
 
                 int nextCounPos = pos + 1;
-                if (nextCounPos < CounsellingMedia.counsellingMediaData().size()) {
-                    CounsellingMedia nextCounsellingMedia = CounsellingMedia.counsellingMediaData().get(nextCounPos);
+                if (nextCounPos < counsellingMediaArrayList.size()) {
+                    CounsellingMedia nextCounsellingMedia = counsellingMediaArrayList.get(nextCounPos);
 
                     if (nextCounsellingMedia.getType() == CounsellingMedia.IMAGE_MEDIA || nextCounsellingMedia.getType() == CounsellingMedia.VIDEO_MEDIA) {
                         FragmentUtils.replaceFragment(requireActivity(), CounsellingAnimationFragment.newInstance(nextCounPos), R.id.fragment_container, true, true, FragmentUtils.TRANSITION_POP);
