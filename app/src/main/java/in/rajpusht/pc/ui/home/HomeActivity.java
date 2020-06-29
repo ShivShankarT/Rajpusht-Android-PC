@@ -3,6 +3,7 @@ package in.rajpusht.pc.ui.home;
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
@@ -11,9 +12,19 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.Constraints;
+import androidx.work.ExistingPeriodicWorkPolicy;
+import androidx.work.NetworkType;
+import androidx.work.PeriodicWorkRequest;
+import androidx.work.WorkInfo;
+import androidx.work.WorkManager;
 
 import com.google.android.material.navigation.NavigationView;
+
+import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
 
@@ -22,6 +33,7 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
+import in.rajpusht.pc.data.remote.AppConstants;
 import in.rajpusht.pc.databinding.ActivityHomeBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
@@ -32,6 +44,7 @@ import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.ui.sync.SyncFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import in.rajpusht.pc.worker.SyncDataWorker;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 
@@ -109,7 +122,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             } else if (item.getItemId() == R.id.nav_sync) {
                 FragmentUtils.replaceFragment(this, new SyncFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
                 //syncData();
-            }  if (item.getItemId() == R.id.nav_counselling) {
+            }
+            if (item.getItemId() == R.id.nav_counselling) {
                 FragmentUtils.replaceFragment(this, new CounsellingDemoFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
                 //syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {
@@ -144,6 +158,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
 
             }
         });
+        syncData();
+        logger();
 
     }
 
@@ -164,4 +180,36 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     public void onConfigurationChanged(@NonNull Configuration newConfig) {
         super.onConfigurationChanged(newConfig);
     }
+
+    void syncData() {
+
+        PeriodicWorkRequest periodicWorkRequest =
+                new PeriodicWorkRequest.Builder(SyncDataWorker.class,
+                        AppConstants.REPEAT_TIME_INTERVAL_IN_HOURS, AppConstants.REPEAT_TIME_INTERVAL_UNITS, 15, TimeUnit.MINUTES
+                )
+                        .addTag(AppConstants.SYNC_WORK)
+                        .setConstraints(new Constraints.Builder()
+                                .setRequiredNetworkType(NetworkType.CONNECTED)
+                                .build())
+                        .build();
+
+        WorkManager.getInstance(this).enqueueUniquePeriodicWork(AppConstants.SYNC_WORK, ExistingPeriodicWorkPolicy.KEEP, periodicWorkRequest);
+
+    }
+
+    void logger() {
+        WorkManager.getInstance(this).getWorkInfosByTagLiveData("sync").observe(this, new Observer<List<WorkInfo>>() {
+            @Override
+            public void onChanged(List<WorkInfo> workInfos) {
+                Log.i("syncsync", "onChanged: " + workInfos.size());
+                for (int i = 0; i < workInfos.size(); i++) {
+                    WorkInfo w = workInfos.get(i);
+                    Log.i("syncsync", "onChanged: " + i + w.toString());
+                }
+
+            }
+        });
+    }
+
+
 }

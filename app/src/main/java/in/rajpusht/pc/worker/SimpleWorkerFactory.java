@@ -1,6 +1,7 @@
 package in.rajpusht.pc.worker;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -21,11 +22,13 @@ public class SimpleWorkerFactory extends WorkerFactory {
     @Inject
     public SimpleWorkerFactory(Map<Class<? extends ListenableWorker>, Provider<ChildWorkerFactory>> workersFactories) {
         this.workersFactories = workersFactories;
+        Log.i("workkkkk", "dinjjjjj: ");
     }
 
     @Nullable
     @Override
     public ListenableWorker createWorker(@NonNull Context appContext, @NonNull String workerClassName, @NonNull WorkerParameters workerParameters) {
+        Log.i("workkkkk", "configureWorkManager: creattt");
         Provider<ChildWorkerFactory> factoryProvider = getWorkerFactoryProviderByKey(workersFactories, workerClassName);
         return factoryProvider.get().create(appContext, workerParameters);
     }

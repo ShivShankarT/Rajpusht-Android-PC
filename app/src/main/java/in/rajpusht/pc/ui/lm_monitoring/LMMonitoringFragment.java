@@ -454,7 +454,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         }
 
-        if (lmMonitorEntity.getDataStatus() != DataStatus.NEW) {
+        if (true || lmMonitorEntity.getDataStatus() != DataStatus.NEW) {//todo
             HUtil.recursiveSetEnabled(vb.formContainer, false, R.id.benf_dt_ly, R.id.weight_iv);
         }
     }

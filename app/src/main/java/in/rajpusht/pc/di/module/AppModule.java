@@ -17,7 +17,7 @@ import dagger.Module;
 import dagger.Provides;
 import in.rajpusht.pc.data.local.db.AppDatabase;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
-import in.rajpusht.pc.data.remote.ApiConstants;
+import in.rajpusht.pc.data.remote.AppConstants;
 import in.rajpusht.pc.data.remote.ApiService;
 import in.rajpusht.pc.data.remote.RequestInterceptor;
 import in.rajpusht.pc.di.DatabaseInfo;
@@ -72,9 +72,9 @@ public class AppModule {
     @Singleton
     OkHttpClient provideOkHttpClient(AppPreferencesHelper appPreferencesHelper) {
         OkHttpClient.Builder okHttpClient = new OkHttpClient.Builder();
-        okHttpClient.connectTimeout(ApiConstants.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);
-        okHttpClient.readTimeout(ApiConstants.READ_TIMEOUT, TimeUnit.MILLISECONDS);
-        okHttpClient.writeTimeout(ApiConstants.WRITE_TIMEOUT, TimeUnit.MILLISECONDS);
+        okHttpClient.connectTimeout(AppConstants.CONNECT_TIMEOUT, TimeUnit.MILLISECONDS);
+        okHttpClient.readTimeout(AppConstants.READ_TIMEOUT, TimeUnit.MILLISECONDS);
+        okHttpClient.writeTimeout(AppConstants.WRITE_TIMEOUT, TimeUnit.MILLISECONDS);
         okHttpClient.addInterceptor(new RequestInterceptor(appPreferencesHelper));
         okHttpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
         return okHttpClient.build();
@@ -94,7 +94,7 @@ public class AppModule {
     @Singleton
     ApiService provideRetrofit(OkHttpClient okHttpClient,Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
-                .baseUrl(ApiConstants.BASE_URL)
+                .baseUrl(AppConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
                 .client(okHttpClient)

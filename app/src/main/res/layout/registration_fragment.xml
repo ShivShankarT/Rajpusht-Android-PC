@@ -112,7 +112,7 @@
                         android:id="@+id/benf_child_institutional_type"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_label="Select Type of Facility"
+                        app:ff_label="@string/select_type_facility"
                         app:ff_required="true"
                         android:visibility="gone"
                         tools:visibility="visible"

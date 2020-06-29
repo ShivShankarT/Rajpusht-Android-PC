@@ -1,6 +1,5 @@
 package in.rajpusht.pc.ui.home;
 
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.lifecycle.MutableLiveData;
@@ -29,7 +28,7 @@ public class HomeViewModel extends BaseViewModel {
         progressLive.postValue(Event.data(new Pair<>(true, "")));
         getCompositeDisposable().add(getDataManager().uploadDataToServer()
                 .flatMap((Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>) jsonObjectApiResponse -> {
-                    if (jsonObjectApiResponse.isStatus()&&!isLogOut) {
+                    if (jsonObjectApiResponse.isStatus() && !isLogOut) {
                         ApiResponse<JsonObject> completionValue = new ApiResponse<>();
                         completionValue.setStatus(true);
                         return getDataManager().profileAndBulkDownload().toSingleDefault(completionValue);
@@ -41,8 +40,10 @@ public class HomeViewModel extends BaseViewModel {
                     if (throwable != null)
                         throwable.printStackTrace();
                     if (jsonObjectApiResponse != null) {
-                        if(isLogOut)
+
+                        if (isLogOut && (jsonObjectApiResponse.isStatus() || jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC))
                             getDataManager().logout();
+
                         if (jsonObjectApiResponse.isStatus()) {
                             progressLive.postValue(Event.data(new Pair<>(false, getString(R.string.sync_successfully))));
                         } else {
@@ -54,7 +55,6 @@ public class HomeViewModel extends BaseViewModel {
 
                 }));
     }
-
 
 
 }

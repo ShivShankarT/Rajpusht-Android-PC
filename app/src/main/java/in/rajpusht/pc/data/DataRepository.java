@@ -171,9 +171,9 @@ public class DataRepository {
             public SingleSource<Boolean> apply(Long aLong) throws Exception {
                 if (aLong == 0) {
                     String json = appPreferencesHelper.readStringFromAsset("other/facilities.json");
-                    Log.i("institutionPla", "apply: "+json);
+                    Log.i("institutionPla", "apply: " + json);
                     List<InstitutionPlaceEntity> institutionPlaceEntities = JsonParser.parseFacility(json);
-                    Log.i("institutionPla", "apply: "+institutionPlaceEntities.size());
+                    Log.i("institutionPla", "apply: " + institutionPlaceEntities.size());
                     return appDbHelper.insertInstitutionPlace(institutionPlaceEntities).toSingleDefault(true);
                 } else {
                     return Single.just(true);
@@ -235,12 +235,31 @@ public class DataRepository {
     }
 
     public Single<ApiResponse<JsonObject>> bulkUpload(JsonArray jsonArray) {
-        return appApiHelper.bulkUpload(jsonArray);
+        return appApiHelper.bulkUpload(jsonArray).flatMap(new Function<ApiResponse<JsonObject>, SingleSource<? extends ApiResponse<JsonObject>>>() {
+            @Override
+            public SingleSource<? extends ApiResponse<JsonObject>> apply(ApiResponse<JsonObject> jsonObjectApiResponse) throws Exception {
+                if (jsonObjectApiResponse.isStatus())
+                    return appDbHelper.deleteAllBeneficiaryData().toSingleDefault(jsonObjectApiResponse);//if success delete all data
+                else
+                    return Single.just(jsonObjectApiResponse);
+            }
+        });
     }
 
     public Single<ApiResponse<JsonObject>> uploadDataToServer() {
         return appDbHelper.getNotSyncBenfData()
-                .map(JsonParser::convertBenfUploadJson).flatMapSingle(jsonElements -> appApiHelper.bulkUpload(jsonElements));
+                .map(JsonParser::convertBenfUploadJson).flatMapSingle(jsonElements -> {
+
+                    if (jsonElements.size() > 0)
+                        return bulkUpload(jsonElements);
+                    else {
+                        ApiResponse<JsonObject> jsonObjectApiResponse = new ApiResponse<>();
+                        jsonObjectApiResponse.setInternalErrorCode(ApiResponse.NO_DATA_SYNC);
+                        jsonObjectApiResponse.setStatus(false);
+                        jsonObjectApiResponse.setInternalError(true);
+                        return Single.just(jsonObjectApiResponse);
+                    }
+                });
     }
 
     public Observable<List<AwcSyncCount>> awcViceSyncData() {
@@ -308,6 +327,11 @@ public class DataRepository {
 
     public void logout() {
         appPreferencesHelper.logout();
+    }
+
+    public void putPrefString(String key, String value) {
+
+        appPreferencesHelper.putString(key, value);
     }
 
 }

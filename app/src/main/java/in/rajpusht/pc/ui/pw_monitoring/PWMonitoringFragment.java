@@ -435,7 +435,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                     vb.benfNaOtherReason.setSection(FormDataConstant.pwNaReason.indexOf(naReason));
                 }
         }
-        if (pwMonitorEntity.getDataStatus() != DataStatus.NEW) {
+        if (true || pwMonitorEntity.getDataStatus() != DataStatus.NEW) {//todo
             HUtil.recursiveSetEnabled(vb.formContainer, false, R.id.benf_dt_ly, R.id.weight_iv);
         }
     }

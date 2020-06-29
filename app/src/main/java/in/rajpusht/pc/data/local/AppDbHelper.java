@@ -52,6 +52,17 @@ public class AppDbHelper {
         });
     }
 
+    public Completable deleteAllBeneficiaryData() {
+
+        return Completable.fromAction(() -> {
+            mAppDatabase.beneficiaryDao().deleteAll();
+            mAppDatabase.pregnantDao().deleteAll();
+            mAppDatabase.childDao().deleteAll();
+            mAppDatabase.pwMonitorDao().deleteAll();
+            mAppDatabase.lmMonitorDao().deleteAll();
+        });
+    }
+
     public Completable insertAndDeleteBenfData(Quintet<List<BeneficiaryEntity>, List<PregnantEntity>, List<ChildEntity>, List<PWMonitorEntity>, List<LMMonitorEntity>> quintet) {
 
         return Completable.fromAction(() -> {

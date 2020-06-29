@@ -204,6 +204,7 @@
     <string name="Cancel">Cancel</string>
     <string name="Exit">Exit</string>
     <string name="sync_successfully">Sync Successfully</string>
+    <string name="select_type_facility">Select Type of Facility</string>
 
     <string-array name="benf_currently">
         <item>गर्भवती</item>

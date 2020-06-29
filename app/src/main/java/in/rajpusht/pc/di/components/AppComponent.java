@@ -9,6 +9,7 @@ import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
 import dagger.android.DaggerApplication;
+import in.rajpusht.pc.RajpushtApp;
 import in.rajpusht.pc.di.builder.ActivityBuilderModule;
 import in.rajpusht.pc.di.builder.WorkerBindingModule;
 import in.rajpusht.pc.di.module.AppModule;
@@ -18,14 +19,7 @@ import in.rajpusht.pc.di.module.AppModule;
         AppModule.class,
         AndroidInjectionModule.class,
         ActivityBuilderModule.class, WorkerBindingModule.class})
-public interface AppComponent extends AndroidInjector<DaggerApplication> {
-
-    // void inject(RajpushtApp nyTimesApp);
-
-   /* @Component.Factory
-    interface Factory {
-        public  AppComponent application(@BindsInstance DaggerApplication  daggerApplication);
-    }*/
+public interface AppComponent extends AndroidInjector<RajpushtApp> {
 
     @Component.Builder
     interface Builder {

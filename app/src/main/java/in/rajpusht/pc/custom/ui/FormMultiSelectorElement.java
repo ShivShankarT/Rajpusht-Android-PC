@@ -143,7 +143,6 @@ public class FormMultiSelectorElement extends FrameLayout implements CompoundBut
     }
 
     public void setSelectedIds(Set<Integer> selectedPos) {
-
         for (Integer pos : selectedPos) {
 
             if (pos < edf_ch_gp.getChildCount()) {

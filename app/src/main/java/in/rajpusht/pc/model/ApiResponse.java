@@ -6,6 +6,8 @@ import com.google.gson.annotations.SerializedName;
 public class ApiResponse<T> {
 //Json response: { data: {} /[] /null, message:””, status:true/false }
 
+
+    public static final int NO_DATA_SYNC = -12;
     @SerializedName("data")
     @Expose
     private T data = null;
@@ -19,6 +21,7 @@ public class ApiResponse<T> {
     private boolean status;
 
     private boolean internalError = false;
+    private int internalErrorCode;
 
     public T getData() {
         return data;
@@ -51,6 +54,14 @@ public class ApiResponse<T> {
 
     public void setInternalError(boolean internalError) {
         this.internalError = internalError;
+    }
+
+    public int getInternalErrorCode() {
+        return internalErrorCode;
+    }
+
+    public void setInternalErrorCode(int internalErrorCode) {
+        this.internalErrorCode = internalErrorCode;
     }
 
     @Override

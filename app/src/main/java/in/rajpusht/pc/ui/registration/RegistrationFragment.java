@@ -471,14 +471,18 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                     viewDataBinding.benfSelfMobile.setVisibility(View.VISIBLE);
                     viewDataBinding.benfHusMobile.setVisibility(View.VISIBLE);
                 } else if (data.isEmpty()) {
+                    viewDataBinding.benfSelfMobile.setText(null);
+                    viewDataBinding.benfHusMobile.setText(null);
                     viewDataBinding.benfSelfMobile.setVisibility(View.GONE);
                     viewDataBinding.benfHusMobile.setVisibility(View.GONE);
                 } else if (data.contains(0)) {
                     viewDataBinding.benfSelfMobile.setVisibility(View.VISIBLE);
                     viewDataBinding.benfHusMobile.setVisibility(View.GONE);
+                    viewDataBinding.benfHusMobile.setText(null);
                 } else if (data.contains(1)) {
                     viewDataBinding.benfHusMobile.setVisibility(View.VISIBLE);
                     viewDataBinding.benfSelfMobile.setVisibility(View.GONE);
+                    viewDataBinding.benfSelfMobile.setText(null);
                 }
 
 
@@ -965,9 +969,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         }
 
 
-        vh.benfSelfMobile.setText(beneficiaryEntity.getMobileNo());
-        vh.benfHusMobile.setText(beneficiaryEntity.getHusbandMobNo());
-
         if (!TextUtils.isEmpty(beneficiaryEntity.getMobileNo()) && !TextUtils.isEmpty(beneficiaryEntity.getHusbandMobNo())) {
             vh.benfMobileSelector.setSelectedIds(new HashSet<>(Arrays.asList(0, 1)));
         } else if (!TextUtils.isEmpty(beneficiaryEntity.getMobileNo())) {
@@ -975,6 +976,10 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         } else if (!TextUtils.isEmpty(beneficiaryEntity.getHusbandMobNo())) {
             vh.benfMobileSelector.setSelectedIds(new HashSet<>(Collections.singletonList(1)));
         }
+
+        vh.benfSelfMobile.setText(beneficiaryEntity.getMobileNo());
+        vh.benfHusMobile.setText(beneficiaryEntity.getHusbandMobNo());
+
 
         vh.benfCaste.setSection(FormDataConstant.caste.indexOf(beneficiaryEntity.getCaste()));
         vh.benfEcon.setSection(FormDataConstant.economic.indexOf(beneficiaryEntity.getEconomic()));

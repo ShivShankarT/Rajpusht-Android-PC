@@ -8,6 +8,9 @@ import android.provider.Settings;
 
 import androidx.annotation.Nullable;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.work.OneTimeWorkRequest;
+import androidx.work.WorkManager;
+import androidx.work.WorkRequest;
 
 import javax.inject.Inject;
 
@@ -20,6 +23,7 @@ import in.rajpusht.pc.databinding.ActivitySplashScreenBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.login.LoginActivity;
+import in.rajpusht.pc.worker.SyncDataWorker;
 
 public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBinding, SplashScreenViewModel> {
 
@@ -64,6 +68,11 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
         }, 100);
 
         getViewModel().checkInsetFacilityData();
+
+        WorkRequest uploadWorkRequest =
+                new OneTimeWorkRequest.Builder(SyncDataWorker.class)
+                        .build();
+        WorkManager.getInstance(this).enqueue(uploadWorkRequest);
     }
 
     public boolean isTimeAutomatic() {
