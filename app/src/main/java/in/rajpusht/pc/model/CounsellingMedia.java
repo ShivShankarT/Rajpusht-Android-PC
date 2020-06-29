@@ -77,7 +77,6 @@ public class CounsellingMedia implements Parcelable {
             counsellingMedia.addAll(prefBirth());
             counsellingMedia.addAll(pmmvy());
         } else if (subStage.contains("LM")) {
-            counsellingMedia.add(new CounsellingMedia(26, Arrays.asList("file:///android_asset/img/exclusive breast feeding/Gfx05_t.webp", "file:///android_asset/img/exclusive breast feeding/Gfx05.webp")));
             counsellingMedia.addAll(ifa());
             counsellingMedia.addAll(ebf());
             counsellingMedia.addAll(immutation());
