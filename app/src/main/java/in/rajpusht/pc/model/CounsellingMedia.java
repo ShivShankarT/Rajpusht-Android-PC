@@ -77,21 +77,22 @@ public class CounsellingMedia implements Parcelable {
             counsellingMedia.addAll(prefBirth());
             counsellingMedia.addAll(pmmvy());
         } else if (subStage.contains("LM")) {
+            counsellingMedia.add(new CounsellingMedia(26, Arrays.asList("file:///android_asset/img/exclusive breast feeding/Gfx05_t.webp", "file:///android_asset/img/exclusive breast feeding/Gfx05.webp")));
             counsellingMedia.addAll(ifa());
             counsellingMedia.addAll(ebf());
             counsellingMedia.addAll(immutation());
-            counsellingMedia.addAll(dietDi());
+            counsellingMedia.addAll(dietDi(subStage));
             counsellingMedia.addAll(pmmvy());
             counsellingMedia.addAll(childGrowth(subStage));
         } else if (subStage.equals("MY1")) {
-            counsellingMedia.addAll(dietDi());
+            counsellingMedia.addAll(dietDi(subStage));
             counsellingMedia.addAll(immutation());
             counsellingMedia.addAll(childGrowth(subStage));
         } else if (subStage.equals("MY2")) {
-            counsellingMedia.addAll(dietDi());
+            counsellingMedia.addAll(dietDi(subStage));
             counsellingMedia.addAll(childGrowth(subStage));
         } else if (subStage.equals("MY3")) {
-            counsellingMedia.addAll(dietDi());
+            counsellingMedia.addAll(dietDi(subStage));
             counsellingMedia.addAll(childGrowth(subStage));
         }
 
@@ -113,12 +114,14 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/3_t.webp", "file:///android_asset/img/childgrowth/3.webp")));
         counsellingMedia.add(new CounsellingMedia(312, CounsellingMedia.GRAPH_MEDIA));
 
-        counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/1_t.webp", "file:///android_asset/img/childgrowth/1.webp")));
-        counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/2_t.webp", "file:///android_asset/img/childgrowth/2.webp")));
+        if (subStage.equals("LM1"))
+            counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/1_t.webp", "file:///android_asset/img/childgrowth/1.webp")));
+        if (subStage.equals("LM2"))
+            counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/2_t.webp", "file:///android_asset/img/childgrowth/2.webp")));
 
         if (subStage.equals("MY1"))
             counsellingMedia.add(new CounsellingMedia(222, Arrays.asList("file:///android_asset/img/childgrowth/4_t.webp", "file:///android_asset/img/childgrowth/4.webp")));
-        if (subStage.equals("MY2"))
+        if (subStage.equals("MY2") || subStage.equals("MY3"))
             counsellingMedia.add(new CounsellingMedia(123, Arrays.asList("file:///android_asset/img/childgrowth/5_t.webp", "file:///android_asset/img/childgrowth/5.webp")));
 
 
@@ -126,10 +129,11 @@ public class CounsellingMedia implements Parcelable {
     }
 
 
-    public static List<CounsellingMedia> dietDi() {
+    public static List<CounsellingMedia> dietDi(String subStage) {
         List<CounsellingMedia> counsellingMedia = new ArrayList<>();
         counsellingMedia.add(new CounsellingMedia(29, Arrays.asList("file:///android_asset/img/exclusive breast feeding/Gfx08_t.webp", "file:///android_asset/img/exclusive breast feeding/Gfx08.webp")));
-        counsellingMedia.add(new CounsellingMedia(25, Arrays.asList("file:///android_asset/img/Mother Of 4-6 month children/Gfx10_t.webp", "file:///android_asset/img/Mother Of 4-6 month children/Gfx10.webp")));
+        if (subStage.equals("LM2") || subStage.equals("MY1"))
+            counsellingMedia.add(new CounsellingMedia(25, Arrays.asList("file:///android_asset/img/Mother Of 4-6 month children/Gfx10_t.webp", "file:///android_asset/img/Mother Of 4-6 month children/Gfx10.webp")));
 
         return counsellingMedia;
     }
@@ -230,12 +234,18 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(21, Arrays.asList(
                 "file:///android_asset/counseling/ifa/t/9.webp",
                 "file:///android_asset/counseling/ifa/12.webp")));//1
-        counsellingMedia.add(new CounsellingMedia(22, Arrays.asList(
-                "file:///android_asset/counseling/ifa/t/9.webp",
-                "file:///android_asset/counseling/ifa/14.webp")));
+
         counsellingMedia.add(new CounsellingMedia(23, Arrays.asList(
                 "file:///android_asset/counseling/ifa/t/9.webp",
                 "file:///android_asset/counseling/ifa/13.webp")));
+
+        counsellingMedia.add(new CounsellingMedia(22, Arrays.asList(
+                "file:///android_asset/counseling/ifa/t/9.webp",
+                "file:///android_asset/counseling/ifa/14.webp")));
+
+
+
+
         counsellingMedia.add(new CounsellingMedia(24, Arrays.asList(
                 "file:///android_asset/counseling/ifa/t/9.webp",
                 "file:///android_asset/counseling/ifa/8.webp")));
@@ -244,7 +254,7 @@ public class CounsellingMedia implements Parcelable {
                 "file:///android_asset/counseling/ifa/11.webp")));
         counsellingMedia.add(new CounsellingMedia(18, Arrays.asList(
                 "file:///android_asset/counseling/ifa/t/7.webp",
-                "file:///android_asset/counseling/ifa/3.webp")));
+                "file:///android_asset/counseling/ifa/9.webp")));
         counsellingMedia.add(new CounsellingMedia(27, Arrays.asList(
                 "file:///android_asset/counseling/ifa/t/9.webp",
                 "file:///android_asset/counseling/ifa/10.webp")));
@@ -281,7 +291,9 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(44, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx02_t.webp", "file:///android_asset/img/preparing for birth/Gfx02.webp")));
         counsellingMedia.add(new CounsellingMedia(46, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx04_t.webp", "file:///android_asset/img/preparing for birth/Gfx04.webp")));
         counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx03_t.webp", "file:///android_asset/img/preparing for birth/gfx03_low.webp")));
-        counsellingMedia.add(new CounsellingMedia(26, Arrays.asList("file:///android_asset/img/exclusive breast feeding/Gfx05_t.webp", "file:///android_asset/img/exclusive breast feeding/Gfx05.webp")));
+
+        if (false)//todo
+            counsellingMedia.add(new CounsellingMedia(26, Arrays.asList("file:///android_asset/img/exclusive breast feeding/Gfx05_t.webp", "file:///android_asset/img/exclusive breast feeding/Gfx05.webp")));
 
 
         return counsellingMedia;

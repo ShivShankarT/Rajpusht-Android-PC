@@ -8,7 +8,6 @@ import android.view.View;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.databinding.library.baseAdapters.BR;
 import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
@@ -170,24 +169,18 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         rightAxis.setDrawGridLines(false);
         rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
-
-        ///1st Month - +500 GM
-        //2nd Month - +500 GM
-        //3rd Month - +500 GM
-        //6th Month - Double of Birth Weight
-        //1 Yr - 3 times of Birth Weight
-        //2 Yr - (Boy : 10 - 12 KG , Girl : 9 -11 KG)
         ArrayList<Entry> values1 = new ArrayList<>();
         Pair<ChildEntity, List<LMMonitorEntity>> childEntityListPair = null;
         if (isChild) {
 
-            double childBirthWeight = 3;
-            double childWeight = 10;
+            float childBirthWeight = 3;
+            float childWeight = 10;
             if (CounsellingMedia.counsellingChildId != 0) {
                 childEntityListPair = dataRepository.getChild(CounsellingMedia.counsellingChildId).toSingle()
                         .zipWith(dataRepository.lmMonitorsByChildId(CounsellingMedia.counsellingChildId), Pair::new).blockingGet();
                 if (childEntityListPair.first.getBirthWeight() != null) {
-                    childBirthWeight = childEntityListPair.first.getBirthWeight();
+                    double birthWeight = childEntityListPair.first.getBirthWeight();
+                    childBirthWeight = (float) birthWeight;
                 }
 
                 if ("M".equals(childEntityListPair.first.getChildSex())) {
@@ -196,22 +189,13 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
             }
 
-            /*
-
-            1-3.23
-            2-5.12
-            3-5.83
-            6-7.27
-            12-8.94
-            24-11.47
-
-*/
-            values1.add(new Entry(1, 0.5f));
-            values1.add(new Entry(2, 1.12f));
-            values1.add(new Entry(3, 1.99f));
-            values1.add(new Entry(6, 2.5f));
-            values1.add(new Entry(12, 2.75f));
-            values1.add(new Entry(24, 3.56f));
+            values1.add(new Entry(0, 0));
+            values1.add(new Entry(1, childBirthWeight + 0.5f));
+            values1.add(new Entry(2, childBirthWeight + 1.0f));
+            values1.add(new Entry(3, childBirthWeight + 1.5f));
+            values1.add(new Entry(5, childBirthWeight * 2));
+            values1.add(new Entry(12, 3 * childBirthWeight));
+            values1.add(new Entry(24, childWeight));
 
         } else {
             values1.add(new Entry(4, 1.5f));
@@ -257,6 +241,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                     values2.add(new Entry(4, 0));
 
             } else {
+                values2.add(new Entry(0, 0));
                 values2.add(new Entry(4, 1));
                 values2.add(new Entry(5, 1.6f));
                 values2.add(new Entry(9, 2.9f));
@@ -298,6 +283,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     private ArrayList<Entry> getPwWeightDiff(List<PWMonitorEntity> pwMonitorEntities) {
         Date lmpda = counsellingPregLmp;
         ArrayList<Entry> values2 = new ArrayList<>();
+        values2.add(new Entry(0, 0));
         Double lastWeight = 0D;
 
         for (PWMonitorEntity pwMonitorEntity : pwMonitorEntities) {
@@ -307,7 +293,6 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             if (lastWeight != 0) {
                 double v = Math.abs(lastWeight - pwMonitorEntity.getLastWeightInMamta());
                 values2.add(new Entry(lmpMonth, (float) v));
-                Log.i("dssss", "getPWWeightDiff: " + lmpMonth + " === " + v);
             }
             lastWeight = pwMonitorEntity.getLastWeightInMamta();
         }
@@ -316,12 +301,11 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     }
 
     private ArrayList<Entry> getLMWeightDiff(Pair<ChildEntity, List<LMMonitorEntity>> pair) {
-        Log.i("ssss", "getLMWeightDiff: " + pair.first);
         ChildEntity childEntity = pair.first;
         List<LMMonitorEntity> lmMonitorEntities = pair.second;
-        Date lmpda = childEntity.getDob();
+        Date dob = childEntity.getDob();
         ArrayList<Entry> values2 = new ArrayList<>();
-        Double lastWeight = childEntity.getBirthWeight();
+
 
         for (LMMonitorEntity lmMonitorEntity : lmMonitorEntities) {
             Double childWeight = lmMonitorEntity.getChildWeight();
@@ -329,13 +313,12 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 continue;
             Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
             if (date != null) {
-                int lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
-                if (lastWeight != null && lastWeight != 0) {
-                    double v = Math.abs(lastWeight - childWeight);
-                    values2.add(new Entry(lmpMonth, (float) v));
-                    Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + v);
-                }
+                int lmpMonth = HUtil.daysBetween(dob, date) / 30;
+                double childWeight1 = childWeight;
+                values2.add(new Entry(lmpMonth, (float) childWeight1));
+                Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + childWeight1);
             }
+
         }
 
         return values2;

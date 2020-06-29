@@ -9,7 +9,7 @@ import java.util.Date;
 import in.rajpusht.pc.model.DataStatus;
 
 
-@Entity(tableName = BeneficiaryEntity.TABLE_NAME , indices = { @Index(value="beneficiaryId"),})
+@Entity(tableName = BeneficiaryEntity.TABLE_NAME , indices = { @Index(value="beneficiaryId"), @Index(value="awcCode"),})
 public class BeneficiaryEntity {
     public static final String TABLE_NAME = "beneficiary";
 

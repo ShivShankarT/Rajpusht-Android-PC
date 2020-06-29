@@ -44,7 +44,7 @@ public class CounsellingDemoFragment extends Fragment {
             CounsellingMedia.isTesting = true;
             CounsellingMedia.counsellingPregId = 0;
             CounsellingMedia.counsellingPregLmp = null;
-            CounsellingMedia.counsellingChildId = 0;
+            //CounsellingMedia.counsellingChildId = 0;
             if (v == vb.pw1Btn) {
                 CounsellingMedia.counsellingSubstage = "PW1";
             } else if (v == vb.pw2Btn) {

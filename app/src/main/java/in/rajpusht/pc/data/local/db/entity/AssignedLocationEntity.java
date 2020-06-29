@@ -2,12 +2,13 @@ package in.rajpusht.pc.data.local.db.entity;
 
 import androidx.room.Entity;
 import androidx.room.Ignore;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-@Entity(tableName = AssignedLocationEntity.TABLE_NAME)
+@Entity(tableName = AssignedLocationEntity.TABLE_NAME , indices = { @Index(value="awcCode"), @Index(value="sectorCode"),})
 public class AssignedLocationEntity {
     public static final String TABLE_NAME = "assigned_location";
 

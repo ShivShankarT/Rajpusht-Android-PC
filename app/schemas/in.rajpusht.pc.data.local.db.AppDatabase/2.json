@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "a5d64af04589e544e6b44e4c8a512c90",
+    "identityHash": "d5fda20abe8e0d7a6044bac577571116",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -93,7 +93,24 @@
           ],
           "autoGenerate": true
         },
-        "indices": [],
+        "indices": [
+          {
+            "name": "index_assigned_location_awcCode",
+            "unique": false,
+            "columnNames": [
+              "awcCode"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_assigned_location_awcCode` ON `${TABLE_NAME}` (`awcCode`)"
+          },
+          {
+            "name": "index_assigned_location_sectorCode",
+            "unique": false,
+            "columnNames": [
+              "sectorCode"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_assigned_location_sectorCode` ON `${TABLE_NAME}` (`sectorCode`)"
+          }
+        ],
         "foreignKeys": []
       },
       {
@@ -271,6 +288,14 @@
               "beneficiaryId"
             ],
             "createSql": "CREATE INDEX IF NOT EXISTS `index_beneficiary_beneficiaryId` ON `${TABLE_NAME}` (`beneficiaryId`)"
+          },
+          {
+            "name": "index_beneficiary_awcCode",
+            "unique": false,
+            "columnNames": [
+              "awcCode"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_beneficiary_awcCode` ON `${TABLE_NAME}` (`awcCode`)"
           }
         ],
         "foreignKeys": []
@@ -855,7 +880,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a5d64af04589e544e6b44e4c8a512c90')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5fda20abe8e0d7a6044bac577571116')"
     ]
   }
 }
