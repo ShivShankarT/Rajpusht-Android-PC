@@ -48,7 +48,10 @@ public class FormDataConstant {
         if (!TextUtils.isEmpty(value)) {
             if (value.equalsIgnoreCase("Don't Know") || value.equalsIgnoreCase("hin")) {
                 return -1;
-            } else {
+            }
+            if (value.equalsIgnoreCase("2 OR More") || value.equalsIgnoreCase("hind")) {
+                return 2;
+            }else {
                 return Integer.valueOf(value);//todo
             }
         }

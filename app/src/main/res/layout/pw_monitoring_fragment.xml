@@ -167,7 +167,7 @@
                         android:layout_height="wrap_content"
                         app:ff_label="@string/child_birth"
                         app:ff_required="true"
-                        app:ff_selections="@array/child_1_3" />
+                        app:ff_selections="@array/child_1_2" />
 
 
                     <in.rajpusht.pc.custom.ui.FormDatePickerElement

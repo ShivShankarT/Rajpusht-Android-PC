@@ -163,7 +163,6 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             }
         });
 
-        viewDataBinding.benfChildCount.setEnableChild(false);//todo check
         viewDataBinding.benfPmmvvyCount.setVisibility(View.GONE);
         viewDataBinding.benfIgmpyCount.setVisibility(View.GONE);
         viewDataBinding.benfJsyCount.setVisibility(View.GONE);
