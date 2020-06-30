@@ -136,7 +136,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         viewDataBinding.benfChildLastRecMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0, 18.00,
                 getString(R.string.incorrct_Muac)));
 
-        viewDataBinding.benfCurrentHeight.sethValidatorListener(FormValidatorUtils.valueBwValidatorForStringNumber(10.0, 30.00,
+        viewDataBinding.benfCurrentHeight.sethValidatorListener(FormValidatorUtils.valueBwValidatorForStringNumber(30d, 100d,
                 getString(R.string.incorrct_child_height)));
 
         viewDataBinding.benfBirthChildWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(.5, 15.0,

@@ -25,6 +25,7 @@ public class CounsellingMedia implements Parcelable {
     };
     public static final int IMAGE_MEDIA = 1;
     public static final int GRAPH_MEDIA = 2;
+    public static final int GRAPH_HEIGHT_MEDIA = 4;
     public static final int VIDEO_MEDIA = 3;
     public static String counsellingSubstage = "PW1";
     public static long counsellingPregId = 0;
@@ -112,6 +113,7 @@ public class CounsellingMedia implements Parcelable {
 
         counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/3_t.webp", "file:///android_asset/img/childgrowth/3.webp")));
         counsellingMedia.add(new CounsellingMedia(312, CounsellingMedia.GRAPH_MEDIA));
+        counsellingMedia.add(new CounsellingMedia(32, CounsellingMedia.GRAPH_HEIGHT_MEDIA));
 
         if (subStage.equals("LM1"))
             counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/1_t.webp", "file:///android_asset/img/childgrowth/1.webp")));

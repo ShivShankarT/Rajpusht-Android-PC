@@ -8,7 +8,6 @@
 -->
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
-    <string name="app_name" translatable="false">Rajpusht PC</string>
     <string name="invalid_password">Password must be &gt;5 characters</string>
     <string name="login_failed">Login failed</string>
     <string name="menu_home">Home</string>
@@ -114,8 +113,6 @@
     <string name="incorrct_child_height">Child Height is wrong, please enter again</string>
     <string name="incorrct_child_weight">Child Weight is wrong, please enter again</string>
     <string name="PW_Women_Weight">PW Women Weight</string>
-    <string name="Ideal_Weight_Gain">Ideal Weight Gain</string>
-    <string name="Women_Weight_Gain">Women Weight Gain</string>
     <string name="Please_Select_Awc">Please Select Awc</string>
     <string name="incorrect_pw_weight">Weight should be from 30 Kg to 99 Kg</string>
     <string name="Invalid_Anc_Date">Invalid Anc Date</string>
@@ -145,7 +142,6 @@
     <string name="login">Login</string>
     <string name="enter_otp">Enter OTP</string>
     <string name="submit_otp">Submit OTP</string>
-    <string name="wight_gain_graph">Weight Gain Graph</string>
     <string name="month">Month</string>
     <string name="add_child">Add Child</string>
     <string name="first_child">First Child</string>
@@ -168,7 +164,7 @@
     <string name="Weight">Weight</string>
     <string name="child_birth">Child Birth</string>
     <string name="Last_ANC_Date">Last ANC Date</string>
-    <string name="Height_in_inch">Height in inch</string>
+    <string name="Height_in_centimetre">Height in centimetre</string>
     <string name="Old_Password">Old Password</string>
     <string name="First_Name">First Name</string>
     <string name="Last_Name">Last Name</string>
@@ -199,7 +195,7 @@
     <string name="as_in_discharge_slip">As in Discharge Slip</string>
     <string name="child_sex">Select Child Sex</string>
     <string name="Child_Weight">Child Weight</string>
-    <string name="Child_Weight_Gain">Child Weight Gain</string>
+    <string name="Child_Height">Child Height</string>
 
     <string name="radioselecteng" translatable="false">English</string>
     <string name="radioselecthin" translatable="false">Hindi</string>

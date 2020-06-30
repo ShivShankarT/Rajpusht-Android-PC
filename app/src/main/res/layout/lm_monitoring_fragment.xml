@@ -268,7 +268,7 @@
                         android:id="@+id/benf_current_height"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="@string/Height_in_inch"
+                        app:ff_hint="@string/Height_in_centimetre"
                         app:ff_input_type="numberDecimal"
                         app:ff_label="@string/child_current_height"
                         app:ff_maxLength="5"

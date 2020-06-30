@@ -1,5 +1,7 @@
 apply plugin: 'com.android.application'
-
+static def getDate() {
+    return new Date().format('dd-MM')
+}
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -19,9 +21,43 @@ android {
     }
 
     buildTypes {
+
+        debug {
+            applicationIdSuffix ".testing"
+            versionNameSuffix "-d-testing-" +defaultConfig.versionCode+"-" + getDate()
+            resValue 'string', "app_name", "Rajpusht PC Test"
+            buildConfigField 'boolean', 'PRODUCTION_SERVER', 'false'
+            debuggable true
+        }
+        debugProductionServer {
+            resValue 'string', "app_name", "RajPusht PC.debug"
+            buildConfigField 'boolean', 'PRODUCTION_SERVER', 'true'
+            matchingFallbacks = ['debug']
+            debuggable true
+            signingConfig signingConfigs.debug
+        }
+
         release {
+            resValue 'string', "app_name", "RajPusht PC"
+            buildConfigField 'boolean', 'PRODUCTION_SERVER', 'true'
+            debuggable false
             minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        releaseTestServer {
+            versionNameSuffix "-testing-" +defaultConfig.versionCode+"-" + getDate()
+            applicationIdSuffix ".testing"
+            resValue 'string', "app_name", "RajPusht PC Test"
+            buildConfigField 'boolean', 'PRODUCTION_SERVER', 'false'
+            debuggable false
+            minifyEnabled false
+            shrinkResources false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            matchingFallbacks = ['release']
+            signingConfig signingConfigs.debug
+
+
         }
     }
 

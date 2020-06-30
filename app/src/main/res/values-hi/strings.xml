@@ -114,8 +114,6 @@
     <string name="incorrct_child_height">Child Height is wrong, please enter again</string>
     <string name="incorrct_child_weight">Child Weight is wrong, please enter again</string>
     <string name="PW_Women_Weight">महिला का वज़न</string>
-    <string name="Ideal_Weight_Gain">अपेक्षित वृद्धि</string>
-    <string name="Women_Weight_Gain">महिला के वज़न में वृद्धि\u0020</string>
     <string name="Please_Select_Awc">आंगनबाड़ी चुनिये</string>
     <string name="incorrect_pw_weight">Weight should be from 30 Kg to 99 Kg</string>
     <string name="Invalid_Anc_Date">प्रसव पूर्व जांच की तिथि गलत है\u0020</string>
@@ -145,7 +143,6 @@
     <string name="login">लॉगिन</string>
     <string name="enter_otp">ओ.टी.पी डालें\u0020</string>
     <string name="submit_otp">ओ.टी.पी जमा करें\u0020</string>
-    <string name="wight_gain_graph">वज़न वृद्धि ग्राफ</string>
     <string name="month">माह</string>
     <string name="add_child">शिशु जोड़ें</string>
     <string name="first_child">पहला बच्चा\u0020</string>
@@ -168,7 +165,7 @@
     <string name="Weight">वज़न</string>
     <string name="child_birth">Child Birth</string>
     <string name="Last_ANC_Date">प्रसव पूर्व जांच की तिथि (आखरी)</string>
-    <string name="Height_in_inch">लंबाई (इंच में )</string>
+    <string name="Height_in_centimetre">लंबाई (सेंटीमीटर)</string>
     <string name="Old_Password">पुराना पासवर्ड</string>
     <string name="First_Name">नाम</string>
     <string name="Last_Name">सरनेम</string>
@@ -200,7 +197,6 @@
 
     <string name="child_sex">चाइल्ड सेक्स का चयन करें</string>
     <string name="Child_Weight">बच्चे का वजन</string>
-    <string name="Child_Weight_Gain">बाल वजन</string>
     <string name="Cancel">Cancel</string>
     <string name="Exit">Exit</string>
     <string name="sync_successfully">Sync Successfully</string>

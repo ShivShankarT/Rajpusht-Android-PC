@@ -293,6 +293,7 @@
                     app:ff_hint="@string/beneficiary_name"
                     app:ff_label="@string/name_of_beneficiary"
                     app:ff_maxLength="30"
+                    app:ff_input_type="textPersonName"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormEditFieldElement
@@ -302,6 +303,7 @@
                     app:ff_hint="@string/Name"
                     app:ff_label="@string/benef_husband_name"
                     app:ff_maxLength="30"
+                    app:ff_input_type="textPersonName"
                     app:ff_required="true" />
 
                 <in.rajpusht.pc.custom.ui.FormSingleSelectorElement
@@ -392,7 +394,6 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     app:ff_hint="@string/bhamashah_ID_ACK"
-                    app:ff_input_type="textPersonName"
                     app:ff_label="@string/bahamashah_id"
                     app:ff_maxLength="15"
                     app:ff_required="true" />

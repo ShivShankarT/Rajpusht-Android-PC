@@ -59,6 +59,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     @Inject
     SchedulerProvider schedulerProvider;
     boolean isChild;
+    boolean isWeightMode = true;
     private int pos;
     private List<CounsellingMedia> counsellingMediaArrayList;
 
@@ -79,6 +80,12 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         isChild = !CounsellingMedia.counsellingSubstage.contains("PW");
         if (getArguments() != null) {
             pos = getArguments().getInt("data");
+            CounsellingMedia counsellingMedia = counsellingMediaArrayList.get(pos);
+            if (counsellingMedia.getType() == CounsellingMedia.GRAPH_HEIGHT_MEDIA) {
+                isWeightMode = false;
+            } else {
+                isWeightMode = true;
+            }
         }
     }
 
@@ -105,7 +112,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         PregnancyGraphFragmentBinding pregnancyGraphFragmentBinding = getViewDataBinding();
         int pw_women_weight;
         if (isChild)
-            pw_women_weight = R.string.Child_Weight;
+            pw_women_weight = isWeightMode ? R.string.Child_Weight : R.string.Child_Height;
         else
             pw_women_weight = R.string.PW_Women_Weight;
 
@@ -113,6 +120,8 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         pregnancyGraphFragmentBinding.toolbarLy.toolbar.setNavigationOnClickListener((v) -> {
             requireActivity().onBackPressed();
         });
+
+        pregnancyGraphFragmentBinding.titleTv.setText("Graph");
 
         int nextCounPos = pos + 1;
         if (!(nextCounPos < counsellingMediaArrayList.size())) {
@@ -169,55 +178,164 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         rightAxis.setDrawGridLines(false);
         rightAxis.setAxisMinimum(0f); // this replaces setStartAtZero(true)
 
-        ArrayList<Entry> values1 = new ArrayList<>();
+        ArrayList<Entry> idealValues1 = new ArrayList<>();
+        ArrayList<Entry> minValues1 = new ArrayList<>();
         Pair<ChildEntity, List<LMMonitorEntity>> childEntityListPair = null;
-        if (isChild) {
 
-            float childBirthWeight = 3;
-            float childWeight = 10;
+
+        double birthWeight = 0.d;
+        if (isChild) {
+            boolean isMale = true;
             if (CounsellingMedia.counsellingChildId != 0) {
                 childEntityListPair = dataRepository.getChild(CounsellingMedia.counsellingChildId).toSingle()
                         .zipWith(dataRepository.lmMonitorsByChildId(CounsellingMedia.counsellingChildId), Pair::new).blockingGet();
-                if (childEntityListPair.first.getBirthWeight() != null) {
-                    double birthWeight = childEntityListPair.first.getBirthWeight();
-                    childBirthWeight = (float) birthWeight;
-                }
-
                 if ("M".equals(childEntityListPair.first.getChildSex())) {
-                    childWeight = 11;
+                    isMale = false;
+                }
+                if (childEntityListPair.first.getBirthWeight() != null)
+                    birthWeight = childEntityListPair.first.getBirthWeight();
+
+            }
+
+
+            if (isWeightMode) {//weight
+
+                if (isMale) {
+
+                    idealValues1.add(new Entry(0, 3.3f));
+                    idealValues1.add(new Entry(3, 6.4f));
+                    idealValues1.add(new Entry(6, 7.9f));
+                    idealValues1.add(new Entry(9, 8.90f));
+                    idealValues1.add(new Entry(12, 9.6f));
+                    idealValues1.add(new Entry(15, 10.3f));
+                    idealValues1.add(new Entry(18, 10.9f));
+                    idealValues1.add(new Entry(21, 11.5f));
+                    idealValues1.add(new Entry(24, 12.2f));
+
+
+                    minValues1.add(new Entry(0, 2.5f));
+                    minValues1.add(new Entry(3, 5.0f));
+                    minValues1.add(new Entry(6, 6.40f));
+                    minValues1.add(new Entry(9, 7.1f));
+                    minValues1.add(new Entry(12, 7.7f));
+                    minValues1.add(new Entry(15, 8.3f));
+                    minValues1.add(new Entry(18, 8.8f));
+                    minValues1.add(new Entry(21, 9.2f));
+                    minValues1.add(new Entry(24, 9.7f));
+                } else {
+
+
+                    idealValues1.add(new Entry(0, 3.2f));
+                    idealValues1.add(new Entry(3, 5.8f));
+                    idealValues1.add(new Entry(6, 7.3f));
+                    idealValues1.add(new Entry(9, 8.2f));
+                    idealValues1.add(new Entry(12, 8.9f));
+                    idealValues1.add(new Entry(15, 9.6f));
+                    idealValues1.add(new Entry(18, 10.2f));
+                    idealValues1.add(new Entry(21, 10.9f));
+                    idealValues1.add(new Entry(24, 11.5f));
+
+
+                    minValues1.add(new Entry(0, 2.4f));
+                    minValues1.add(new Entry(3, 4.5f));
+                    minValues1.add(new Entry(6, 5.7f));
+                    minValues1.add(new Entry(9, 6.5f));
+                    minValues1.add(new Entry(12, 7f));
+                    minValues1.add(new Entry(15, 7.6f));
+                    minValues1.add(new Entry(18, 8.1f));
+                    minValues1.add(new Entry(21, 8.6f));
+                    minValues1.add(new Entry(24, 9f));
+
+                }
+            } else {
+
+
+                if (isMale) {
+
+                    idealValues1.add(new Entry(0, 49.9f));
+                    idealValues1.add(new Entry(3, 61.4f));
+                    idealValues1.add(new Entry(6, 67.6f));
+                    idealValues1.add(new Entry(9, 72f));
+                    idealValues1.add(new Entry(12, 75.7f));
+                    idealValues1.add(new Entry(15, 79.1f));
+                    idealValues1.add(new Entry(18, 82.3f));
+                    idealValues1.add(new Entry(21, 85.1f));
+                    idealValues1.add(new Entry(24, 87.8f));
+
+
+                    minValues1.add(new Entry(0, 46.1f));
+                    minValues1.add(new Entry(3, 57.3f));
+                    minValues1.add(new Entry(6, 63.3f));
+                    minValues1.add(new Entry(9, 67.5f));
+                    minValues1.add(new Entry(12, 71f));
+                    minValues1.add(new Entry(15, 74.1f));
+                    minValues1.add(new Entry(18, 76.9f));
+                    minValues1.add(new Entry(21, 79.4f));
+                    minValues1.add(new Entry(24, 81.7f));
+
+                } else {
+
+
+                    idealValues1.add(new Entry(0, 45.4f));
+                    idealValues1.add(new Entry(3, 55.6f));
+                    idealValues1.add(new Entry(6, 61.2f));
+                    idealValues1.add(new Entry(9, 65.3f));
+                    idealValues1.add(new Entry(12, 68.9f));
+                    idealValues1.add(new Entry(15, 72f));
+                    idealValues1.add(new Entry(18, 74.9f));
+                    idealValues1.add(new Entry(21, 77.5f));
+                    idealValues1.add(new Entry(24, 80f));
+
+
+                    minValues1.add(new Entry(0, 49.1f));
+                    minValues1.add(new Entry(3, 59.8f));
+                    minValues1.add(new Entry(6, 65.7f));
+                    minValues1.add(new Entry(9, 70.1f));
+                    minValues1.add(new Entry(12, 74f));
+                    minValues1.add(new Entry(15, 77.5f));
+                    minValues1.add(new Entry(18, 80.7f));
+                    minValues1.add(new Entry(21, 83.7f));
+                    minValues1.add(new Entry(24, 86.4f));
+
                 }
 
             }
 
-            values1.add(new Entry(0, 0));
-            values1.add(new Entry(1, childBirthWeight + 0.5f));
-            values1.add(new Entry(2, childBirthWeight + 1.0f));
-            values1.add(new Entry(3, childBirthWeight + 1.5f));
-            values1.add(new Entry(5, childBirthWeight * 2));
-            values1.add(new Entry(12, 3 * childBirthWeight));
-            values1.add(new Entry(24, childWeight));
 
         } else {
-            values1.add(new Entry(4, 1.5f));
-            values1.add(new Entry(5, 1.5f));
-            values1.add(new Entry(6, 2));
-            values1.add(new Entry(7, 2));
-            values1.add(new Entry(8, 2));
-            values1.add(new Entry(9, 1.5f));
+
+            float initialWeight = 60f;
+            idealValues1.add(new Entry(0, initialWeight));
+            initialWeight += +1.5;
+            idealValues1.add(new Entry(4, initialWeight));
+            initialWeight += +1.5;
+            idealValues1.add(new Entry(5, initialWeight));
+            initialWeight += 2;
+            idealValues1.add(new Entry(6, initialWeight));
+            initialWeight += 2;
+            idealValues1.add(new Entry(7, initialWeight));
+            initialWeight += 2;
+            idealValues1.add(new Entry(8, initialWeight));
+            initialWeight += 1.5;
+            idealValues1.add(new Entry(9, initialWeight));
         }
 
-        String string = getString(R.string.Ideal_Weight_Gain);
-        String title;
-        if (isChild)
-            title = getString(R.string.Child_Weight_Gain);
-        else
-            title = getString(R.string.Women_Weight_Gain);
+        String string = isWeightMode ? "Ideal Weight" : " Ideal Height";
 
-        LineDataSet d1 = new LineDataSet(values1, string);
+        LineDataSet d1 = new LineDataSet(idealValues1, string);
         d1.setLineWidth(4.5f);
-        d1.setCircleRadius(7.5f);
-        d1.setHighLightColor(Color.rgb(244, 117, 117));
+        d1.setCircleRadius(2.5f);
+        d1.setHighLightColor(Color.rgb(0, 100, 0));
+        d1.setColor(Color.rgb(0, 100, 0));
         d1.setDrawValues(false);
+
+        LineDataSet minDataset = new LineDataSet(minValues1, isWeightMode ? "Min Weight" : "Min Height");
+        minDataset.setLineWidth(4.5f);
+        minDataset.setCircleRadius(2.5f);
+        minDataset.setHighLightColor(Color.rgb(255, 99, 71));
+        minDataset.setColor(Color.rgb(255, 99, 71));
+        minDataset.setDrawValues(false);
+
 
         ArrayList<Entry> values2 = new ArrayList<>();
 
@@ -229,38 +347,41 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 if (values2.isEmpty())
                     values2.add(new Entry(1, 0));
             } else {
-                values2.add(new Entry(4, 1));
-                values2.add(new Entry(5, 1));
+                values2.add(new Entry(4, 44));
+                values2.add(new Entry(5, 48));
             }
 
         if (isChild) {
             if (CounsellingMedia.counsellingChildId != 0 && childEntityListPair != null) {
 
-                values2 = getLMWeightDiff(childEntityListPair);
+                values2 = isWeightMode ? getLMWeightDiff(birthWeight, childEntityListPair) : getLMWHeightDiff(childEntityListPair);
                 if (values2.isEmpty())
                     values2.add(new Entry(4, 0));
 
             } else {
-                values2.add(new Entry(0, 0));
-                values2.add(new Entry(4, 1));
-                values2.add(new Entry(5, 1.6f));
-                values2.add(new Entry(9, 2.9f));
-
+                values2.add(new Entry(0, 3.0f));
+                values2.add(new Entry(3, 6.0f));
+                values2.add(new Entry(6, 6.8f));
             }
         }
 
-
+        String title;
+        if (isChild)
+            title = isWeightMode ? "Child Weight" : " Child Height";
+        else
+            title = "Women Weight";
         LineDataSet d2 = new LineDataSet(values2, title);
         d2.setLineWidth(4.5f);
-        d2.setCircleRadius(7.5f);
-        d2.setHighLightColor(Color.rgb(244, 117, 117));
-        d2.setColor(ColorTemplate.VORDIPLOM_COLORS[0]);
+        d2.setCircleRadius(2.5f);
+        d2.setHighLightColor(Color.rgb(0, 0, 139));
         d2.setCircleColor(ColorTemplate.VORDIPLOM_COLORS[0]);
+        d2.setColor(Color.rgb(0, 0, 139));
         d2.setDrawValues(false);
 
         ArrayList<ILineDataSet> sets = new ArrayList<>();
         sets.add(d1);
         sets.add(d2);
+        sets.add(minDataset);
 
         LineData data = new LineData(sets);
         chart.setData(data);
@@ -270,7 +391,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 return String.valueOf((int) value);
             }
         });
-        xAxis.setLabelCount(values1.size(), true);
+        xAxis.setLabelCount(idealValues1.size(), true);
         chart.invalidate();
         chart.animateXY(2000, 2000);
     }
@@ -284,29 +405,45 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         Date lmpda = counsellingPregLmp;
         ArrayList<Entry> values2 = new ArrayList<>();
         values2.add(new Entry(0, 0));
-        Double lastWeight = 0D;
 
         for (PWMonitorEntity pwMonitorEntity : pwMonitorEntities) {
-            if (!pwMonitorEntity.getAvailable() || pwMonitorEntity.getLastWeightCheckDate() == null)
+            if (!pwMonitorEntity.getAvailable() || pwMonitorEntity.getCurrentWeight() == null)
                 continue;
-            int lmpMonth = HUtil.daysBetween(lmpda, pwMonitorEntity.getLastWeightCheckDate()) / 30;
-            if (lastWeight != 0) {
-                double v = Math.abs(lastWeight - pwMonitorEntity.getLastWeightInMamta());
-                values2.add(new Entry(lmpMonth, (float) v));
+
+            int lmpMonth = 0;
+            if (pwMonitorEntity.getCreatedAt() == null) {
+                if (pwMonitorEntity.getSubStage().equals("PW1")) {
+                    lmpMonth = 0;
+                } else if (pwMonitorEntity.getSubStage().equals("PW2")) {
+                    lmpMonth = 3;
+                } else if (pwMonitorEntity.getSubStage().equals("PW3")) {
+                    lmpMonth = 6;
+                } else if (pwMonitorEntity.getSubStage().equals("PW4")) {
+                    lmpMonth = 7;
+                } else
+                    continue;
+
+            } else {
+                Date date = AppDateTimeUtils.convertServerTimeStampDate(pwMonitorEntity.getCreatedAt());
+                if (date == null)
+                    continue;
+                lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
             }
-            lastWeight = pwMonitorEntity.getLastWeightInMamta();
+            double v = pwMonitorEntity.getCurrentWeight();
+            values2.add(new Entry(lmpMonth, (float) v));
+
         }
 
         return values2;
     }
 
-    private ArrayList<Entry> getLMWeightDiff(Pair<ChildEntity, List<LMMonitorEntity>> pair) {
+    private ArrayList<Entry> getLMWeightDiff(double birthWeight, Pair<ChildEntity, List<LMMonitorEntity>> pair) {
         ChildEntity childEntity = pair.first;
         List<LMMonitorEntity> lmMonitorEntities = pair.second;
         Date dob = childEntity.getDob();
         ArrayList<Entry> values2 = new ArrayList<>();
 
-
+        values2.add(new Entry(0, (float) birthWeight));
         for (LMMonitorEntity lmMonitorEntity : lmMonitorEntities) {
             Double childWeight = lmMonitorEntity.getChildWeight();
             if (!lmMonitorEntity.getAvailable() || lmMonitorEntity.getCreatedAt() == null || childWeight == null)
@@ -314,9 +451,35 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
             if (date != null) {
                 int lmpMonth = HUtil.daysBetween(dob, date) / 30;
+                lmpMonth = Math.max(1, lmpMonth);
                 double childWeight1 = childWeight;
                 values2.add(new Entry(lmpMonth, (float) childWeight1));
                 Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + childWeight1);
+            }
+
+        }
+
+        return values2;
+    }
+
+
+    private ArrayList<Entry> getLMWHeightDiff(Pair<ChildEntity, List<LMMonitorEntity>> pair) {
+        ChildEntity childEntity = pair.first;
+        List<LMMonitorEntity> lmMonitorEntities = pair.second;
+        Date dob = childEntity.getDob();
+        ArrayList<Entry> values2 = new ArrayList<>();
+        values2.add(new Entry(0, (float) 0));
+        for (LMMonitorEntity lmMonitorEntity : lmMonitorEntities) {
+            Double height = lmMonitorEntity.getChildHeight();
+            if (!lmMonitorEntity.getAvailable() || lmMonitorEntity.getCreatedAt() == null || height == null)
+                continue;
+            Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
+            if (date != null) {
+                int lmpMonth = HUtil.daysBetween(dob, date) / 30;
+                lmpMonth = Math.max(1, lmpMonth);
+                double height1 = height;
+                values2.add(new Entry(lmpMonth, (float) height1));
+                Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + height1);
             }
 
         }

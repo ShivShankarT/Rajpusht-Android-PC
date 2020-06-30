@@ -297,6 +297,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         vb.benfAncDate.setMinDate(pregnantEntity.getLmpDate().getTime());
         vb.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
                 getString(R.string.incorrect_pw_weight)));
+        vb.benfMamtaCdWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
+                getString(R.string.incorrect_pw_weight)));
 
        /* a. 1st visit: Within 12 weeks—preferably as soon as pregnancy is suspected—for registration of pregnancy and first ANC
         b. 2nd visit: Between 14 and 26 weeks

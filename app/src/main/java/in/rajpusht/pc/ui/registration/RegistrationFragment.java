@@ -136,13 +136,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
                 if (data == 2) {
                     viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.GONE);
-                    viewDataBinding.benfChildDeliveryPlace.setVisibility(View.GONE);
-                    viewDataBinding.benfChildInstitutionalType.setVisibility(View.GONE);
                     viewDataBinding.benfChildTwin.setVisibility(View.VISIBLE);
                 } else {
-                    viewDataBinding.benfChildInstitutionalType.setVisibility(View.VISIBLE);
                     viewDataBinding.benfChildDeliveryPlaceType.setVisibility(View.VISIBLE);
-                    viewDataBinding.benfChildDeliveryPlace.setVisibility(View.VISIBLE);
                     viewDataBinding.benfChildTwin.setVisibility(View.GONE);
                 }
 
@@ -263,8 +259,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
-        viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
-        viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 100, getResources().getString(R.string.error_invalid_name)));
+        viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
+        viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
         viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_pcts)));
         viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_bhamasha_id)));
 
@@ -276,9 +272,9 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         instance = Calendar.getInstance();
         instance.add(Calendar.YEAR, -13);
         viewDataBinding.benfAgeDob.setMaxDate(instance.getTime().getTime());
-
         instance = Calendar.getInstance();
-        instance.add(Calendar.YEAR, -278);
+        viewDataBinding.benfLmp.setMaxDate(instance.getTime().getTime());
+        instance.add(Calendar.DATE, -280);
         viewDataBinding.benfLmp.setMinDate(instance.getTime().getTime());
 
 
@@ -988,7 +984,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         vh.benfCousSms.setSection(beneficiaryEntity.getCounselingSms());
 
 
-        if (beneficiaryEntity.getDataStatus() != DataStatus.NEW) {
+        if (true || beneficiaryEntity.getDataStatus() != DataStatus.NEW) {//todo always
             vh.save.setEnabled(false);
             HUtil.recursiveSetEnabled(vh.formContainer, false);
         }

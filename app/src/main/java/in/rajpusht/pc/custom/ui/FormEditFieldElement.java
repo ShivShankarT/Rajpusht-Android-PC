@@ -5,14 +5,13 @@ import android.content.res.TypedArray;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.InputType;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.util.AttributeSet;
-import android.util.Log;
 import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.TextView;
@@ -80,10 +79,32 @@ public class FormEditFieldElement extends FrameLayout {
 
         }
 
-
         if (inputType == 0) {
             edf_text.setInputType(InputType.TYPE_TEXT_VARIATION_PERSON_NAME);
             edf_text.setInputType(InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_FLAG_CAP_SENTENCES);
+
+
+            InputFilter inputFilterName = new InputFilter() {
+                @Override
+                public CharSequence filter(CharSequence cs, int start, int end, Spanned spanned, int dStart, int dEnd) {
+                    if (cs.equals("")) { // for backspace
+                        return cs;
+                    }
+                    if (cs.toString().matches("[a-zA-Z ]+")) {
+                        return cs;
+                    }
+                    return "";
+                }
+            };
+
+            if (maxLength != -1) {
+                edf_text.setFilters(new InputFilter[]{inputFilterName, new InputFilter.LengthFilter(maxLength)});
+
+            } else {
+                edf_text.setFilters(new InputFilter[]{inputFilterName});
+            }
+
+
         } else if (inputType == 1) {
             edf_text.setInputType(InputType.TYPE_CLASS_NUMBER);//TYPE_CLASS_PHONE
         } else if (inputType == 2) {
@@ -193,4 +214,6 @@ public class FormEditFieldElement extends FrameLayout {
     public void setError(String error) {
         edf_txt_inp_ly.setError(error);
     }
+
+
 }
