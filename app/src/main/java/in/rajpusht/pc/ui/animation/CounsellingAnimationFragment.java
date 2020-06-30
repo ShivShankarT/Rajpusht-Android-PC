@@ -53,7 +53,9 @@ public class CounsellingAnimationFragment extends Fragment {
         @Override
         public void run() {
             if (mediaPos < counsellingMedia.getMediaImage().size()) {
-                Picasso.get().load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
+                Picasso picasso = Picasso.get();
+                picasso.setLoggingEnabled(true);
+                picasso.load(counsellingMedia.getMediaImage().get(mediaPos)).noPlaceholder().into(vb.imageview);
                 /*Glide.with(requireContext()).asBitmap()
                         .load(counsellingMedia.getMediaImage().get(mediaPos))
                         .diskCacheStrategy(DiskCacheStrategy.NONE)

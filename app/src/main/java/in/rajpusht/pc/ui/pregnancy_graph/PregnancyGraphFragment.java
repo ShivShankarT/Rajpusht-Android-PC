@@ -287,7 +287,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         Double lastWeight = 0D;
 
         for (PWMonitorEntity pwMonitorEntity : pwMonitorEntities) {
-            if (!pwMonitorEntity.getAvailable())
+            if (!pwMonitorEntity.getAvailable() || pwMonitorEntity.getLastWeightCheckDate() == null)
                 continue;
             int lmpMonth = HUtil.daysBetween(lmpda, pwMonitorEntity.getLastWeightCheckDate()) / 30;
             if (lastWeight != 0) {
