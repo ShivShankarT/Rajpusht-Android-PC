@@ -72,7 +72,7 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
         WorkRequest uploadWorkRequest =
                 new OneTimeWorkRequest.Builder(SyncDataWorker.class)
                         .build();
-        WorkManager.getInstance(this).enqueue(uploadWorkRequest);
+        //WorkManager.getInstance(this).enqueue(uploadWorkRequest);
     }
 
     public boolean isTimeAutomatic() {

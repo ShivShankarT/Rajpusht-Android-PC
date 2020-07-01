@@ -178,7 +178,7 @@ public class JsonParser {
                     String stage = getString(object, "stage");
                     String sub_stage = getString(object, "sub_stage");
                     int mother_id = getInt(object, "mother_id");
-                    Integer delivery_home = getInt(object, "delivery_place_type");
+                    Integer delivery_place_type = getInt(object, "delivery_place_type");
                     String delivery_place = getString(object, "delivery_place");
                     Integer child_order = getInt(object, "child_order");
                     String is_active = getString(object, "is_active");
@@ -196,7 +196,7 @@ public class JsonParser {
                     cmodel.setStage(stage);
                     cmodel.setSubStage(sub_stage);
                     cmodel.setMotherId(mother_id);
-                    cmodel.setDeliveryHome(delivery_home);
+                    cmodel.setDeliveryPlaceType(delivery_place_type);
                     cmodel.setDeliveryPlace(delivery_place);
                     cmodel.setChildOrder(child_order);
                     cmodel.setDataStatus(DataStatus.OLD);
@@ -391,7 +391,7 @@ public class JsonParser {
         childobject.addProperty("age", childEntity.getAge());
         childobject.addProperty("stage", childEntity.getStage());
         childobject.addProperty("subStage", childEntity.getSubStage());
-        childobject.addProperty("deliveryPlaceType", childEntity.getDeliveryHome());
+        childobject.addProperty("deliveryPlaceType", childEntity.getDeliveryPlaceType());
         childobject.addProperty("deliveryPlace", childEntity.getDeliveryPlace());
         childobject.addProperty("childOrder", childEntity.getChildOrder());
         childobject.addProperty("isActive", childEntity.getIsActive());

@@ -324,16 +324,18 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
         LineDataSet d1 = new LineDataSet(idealValues1, string);
         d1.setLineWidth(4.5f);
-        d1.setCircleRadius(2.5f);
+        d1.setCircleRadius(5.5f);
         d1.setHighLightColor(Color.rgb(0, 100, 0));
         d1.setColor(Color.rgb(0, 100, 0));
+        d1.setCircleColor(Color.rgb(0, 100, 0));
         d1.setDrawValues(false);
 
         LineDataSet minDataset = new LineDataSet(minValues1, isWeightMode ? "Min Weight" : "Min Height");
         minDataset.setLineWidth(4.5f);
-        minDataset.setCircleRadius(2.5f);
+        minDataset.setCircleRadius(5.5f);
         minDataset.setHighLightColor(Color.rgb(255, 99, 71));
         minDataset.setColor(Color.rgb(255, 99, 71));
+        minDataset.setCircleColor(Color.rgb(255, 99, 71));
         minDataset.setDrawValues(false);
 
 
@@ -359,9 +361,16 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                     values2.add(new Entry(4, 0));
 
             } else {
-                values2.add(new Entry(0, 3.0f));
-                values2.add(new Entry(3, 6.0f));
-                values2.add(new Entry(6, 6.8f));
+                if (isWeightMode) {
+                    values2.add(new Entry(0, 3.0f));
+                    values2.add(new Entry(3, 6.0f));
+                    values2.add(new Entry(6, 6.8f));
+                } else {
+
+                    values2.add(new Entry(0, 41.4f));
+                    values2.add(new Entry(3, 56.6f));
+                    values2.add(new Entry(6, 60.2f));
+                }
             }
         }
 
@@ -372,9 +381,9 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             title = "Women Weight";
         LineDataSet d2 = new LineDataSet(values2, title);
         d2.setLineWidth(4.5f);
-        d2.setCircleRadius(2.5f);
+        d2.setCircleRadius(5.5f);
         d2.setHighLightColor(Color.rgb(0, 0, 139));
-        d2.setCircleColor(ColorTemplate.VORDIPLOM_COLORS[0]);
+        d2.setCircleColor(Color.rgb(0, 0, 139));
         d2.setColor(Color.rgb(0, 0, 139));
         d2.setDrawValues(false);
 
@@ -404,7 +413,6 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
     private ArrayList<Entry> getPwWeightDiff(List<PWMonitorEntity> pwMonitorEntities) {
         Date lmpda = counsellingPregLmp;
         ArrayList<Entry> values2 = new ArrayList<>();
-        values2.add(new Entry(0, 0));
 
         for (PWMonitorEntity pwMonitorEntity : pwMonitorEntities) {
             if (!pwMonitorEntity.getAvailable() || pwMonitorEntity.getCurrentWeight() == null)
@@ -430,6 +438,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
             }
             double v = pwMonitorEntity.getCurrentWeight();
+            lmpMonth = Math.max(1, lmpMonth);
             values2.add(new Entry(lmpMonth, (float) v));
 
         }

@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "d5fda20abe8e0d7a6044bac577571116",
+    "identityHash": "a69fe88be6c95daa78e9e18e155fbd08",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -381,7 +381,7 @@
       },
       {
         "tableName": "child",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `childSex` TEXT, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryHome` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER, `isFirstImmunizationComplete` TEXT, `birthWeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `childSex` TEXT, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryPlaceType` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER, `isFirstImmunizationComplete` TEXT, `birthWeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -438,8 +438,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "deliveryHome",
-            "columnName": "deliveryHome",
+            "fieldPath": "deliveryPlaceType",
+            "columnName": "deliveryPlaceType",
             "affinity": "INTEGER",
             "notNull": false
           },
@@ -880,7 +880,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'd5fda20abe8e0d7a6044bac577571116')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a69fe88be6c95daa78e9e18e155fbd08')"
     ]
   }
 }

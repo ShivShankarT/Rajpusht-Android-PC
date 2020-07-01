@@ -261,8 +261,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
         viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
-        viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_pcts)));
-        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_bhamasha_id)));
+        viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
+        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator( 5,  12,getResources().getString(R.string.invalid_bhamasha_id)));
 
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.YEAR, -1);
@@ -682,7 +682,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             childEntity.setDob(date);
             childEntity.setMotherId(beneficiaryId);
-            childEntity.setDeliveryHome(vb.benfChildDeliveryPlaceType.getSelectedPos());
+            childEntity.setDeliveryPlaceType(vb.benfChildDeliveryPlaceType.getSelectedPos());
             childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getSelectedData());
 
 
@@ -718,7 +718,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             secondChildEntity.setDob(date);
             secondChildEntity.setMotherId(beneficiaryId);
-            secondChildEntity.setDeliveryHome(vb.benfChild2DeliveryPlaceType.getSelectedPos());
+            secondChildEntity.setDeliveryPlaceType(vb.benfChild2DeliveryPlaceType.getSelectedPos());
             secondChildEntity.setDeliveryPlace(vb.benfChild2DeliveryPlace.getSelectedData());
             secondChildEntity.setChildSex(FormDataConstant.childSex.get(vb.benfChild2Sex.getSelectedPos()));
 
@@ -898,8 +898,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             ChildEntity childEntity = childEntities.get(0);
             vh.benfChildDob.setDate(childEntity.getDob());
             vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace());
-            if (childEntity.getDeliveryHome() != null) {
-                vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryHome());
+            if (childEntity.getDeliveryPlaceType() != null) {
+                vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryPlaceType());
                 vh.benfChildDeliveryPlaceType.sendChangedListenerValue();
             }
 
@@ -910,8 +910,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 vh.benfChild2Dob.setDate(secondChild.getDob());
                 vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace());
                 vh.benfChild2Sex.setSection(FormDataConstant.childSex.indexOf(secondChild.getChildSex()));
-                if (secondChild.getDeliveryHome() != null) {
-                    vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryHome());
+                if (secondChild.getDeliveryPlaceType() != null) {
+                    vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryPlaceType());
                     vh.benfChild2DeliveryPlaceType.sendChangedListenerValue();
                 }
             } else if (beneficiaryEntity.getChildCount() != null && beneficiaryEntity.getChildCount() >= 2 && childEntities.size() <= 1) {

@@ -23,7 +23,7 @@ android {
     buildTypes {
 
         debug {
-            applicationIdSuffix ".testing"
+          //  applicationIdSuffix ".testing"
             versionNameSuffix "-d-testing-" +defaultConfig.versionCode+"-" + getDate()
             resValue 'string', "app_name", "Rajpusht PC Test"
             buildConfigField 'boolean', 'PRODUCTION_SERVER', 'false'

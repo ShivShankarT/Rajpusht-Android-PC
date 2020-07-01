@@ -1,14 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android">
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_enabled="false">
+        <shape>
+            <gradient android:angle="45" android:endColor="#7C7C7C" android:startColor="#222222" android:type="linear" />
+            <corners android:radius="30dp" />
+
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+
+            <gradient android:angle="45" android:endColor="#f67062" android:startColor="#fc5296" android:type="linear" />
+            <corners android:radius="30dp" />
+
+        </shape>
+    </item>
 
 
-    <!-- //background-color: #fc5296;
-   //  background-image: linear-gradient(315deg, #fc5296 0%, #f67062 74%);-->
-    <gradient
-        android:angle="45"
-        android:endColor="#f67062"
-        android:startColor="#fc5296"
-        android:type="linear" />
-    <corners android:radius="30dp" />
-
-</shape>
+</selector>

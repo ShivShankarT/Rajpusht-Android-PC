@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.pw_monitoring;
 
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,6 +24,7 @@ import javax.inject.Inject;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
+import in.rajpusht.pc.custom.ui.FormDropDownElement;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.custom.validator.FormValidatorUtils;
 import in.rajpusht.pc.data.DataRepository;
@@ -43,6 +45,7 @@ import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.BiConsumer;
 
 import static in.rajpusht.pc.utils.FormDataConstant.ANC_NOT_COMPLETED;
 import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
@@ -162,6 +165,14 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 }
             }
         });
+
+        viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
+        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator( 5,  12,getResources().getString(R.string.invalid_bhamasha_id)));
+        viewDataBinding.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
+                getString(R.string.incorrect_pw_weight)));
+        viewDataBinding.benfMamtaCdWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
+                getString(R.string.incorrect_pw_weight)));
+
 
         viewDataBinding.benfPmmvvyCount.setVisibility(View.GONE);
         viewDataBinding.benfIgmpyCount.setVisibility(View.GONE);
@@ -295,10 +306,43 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         vb.pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
         vb.benfLastcheckupdate.setMinDate(pregnantEntity.getLmpDate().getTime());
         vb.benfAncDate.setMinDate(pregnantEntity.getLmpDate().getTime());
-        vb.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
-                getString(R.string.incorrect_pw_weight)));
-        vb.benfMamtaCdWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
-                getString(R.string.incorrect_pw_weight)));
+
+
+        vb.benfChildDeliveryPlaceType.sethValueChangedListener(new HValueChangedListener<Integer>() {
+            @Override
+            public void onValueChanged(Integer data) {
+                if (data == 0) {
+                    vb.benfChildInstitutionalType.setVisibility(View.VISIBLE);
+                    vb.benfChildDeliveryPlace.setVisibility(View.VISIBLE);
+                } else {
+                    vb.benfChildInstitutionalType.setVisibility(View.GONE);
+                    vb.benfChildDeliveryPlace.setVisibility(View.GONE);
+                }
+            }
+        });
+
+        vb.benfChildInstitutionalType.sethValueChangedListener(new HValueChangedListener<Integer>() {
+            @Override
+            public void onValueChanged(Integer data) {
+                String ftype = vb.benfChildInstitutionalType.getSelectedData();
+                setLocationData(ftype, vb.benfChildDeliveryPlace);
+
+            }
+        });
+        vb.benfPctsid.setText(beneficiaryEntity.getPctsId());
+        vb.benfBhamashaId.setText(beneficiaryEntity.getBahamashahId());
+        if (TextUtils.isEmpty(beneficiaryEntity.getPctsId()))
+            vb.benfPctsid.setEnableChild(true);
+        else
+            vb.benfPctsid.setEnableChild(false);
+
+        if (TextUtils.isEmpty(beneficiaryEntity.getBahamashahId()))
+            vb.benfBhamashaId.setVisibility(View.VISIBLE);
+        else
+            vb.benfBhamashaId.setVisibility(View.GONE);
+
+
+
 
        /* a. 1st visit: Within 12 weeks—preferably as soon as pregnancy is suspected—for registration of pregnancy and first ANC
         b. 2nd visit: Between 14 and 26 weeks
@@ -357,6 +401,22 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         if (beneficiaryEntity.getRajshriInstallment() == null)
             getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false)); */
 
+    }
+
+    private void setLocationData(String ftype, FormDropDownElement formDropDownElement) {
+        dataRepository.getInstitutionLocation(ftype)
+                .observeOn(schedulerProvider.ui())
+                .subscribeOn(schedulerProvider.io()).subscribe(new BiConsumer<List<String>, Throwable>() {
+            @Override
+            public void accept(List<String> strings, Throwable throwable) throws Exception {
+                Log.i("ssss", "accept: " + strings.size());
+                if (throwable != null)
+                    throwable.printStackTrace();
+                if (strings != null)
+                    formDropDownElement.setSectionList(strings);
+
+            }
+        });
     }
 
     private void fetchFormUiData() {
@@ -449,6 +509,12 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         PwMonitoringFragmentBinding vb = getViewDataBinding();
 
         if (!isNa) {
+
+            if (vb.benfPctsid.isVisibleAndEnable())
+                validateElement.add(vb.benfPctsid.validateWthView());
+            if (vb.benfBhamashaId.isVisibleAndEnable())
+                validateElement.add(vb.benfBhamashaId.validateWthView());
+
             validateElement.add(vb.benfAncCount.validateWthView());
             if (vb.benfAncDate.isVisibleAndEnable())
                 validateElement.add(vb.benfAncDate.validateWthView());
@@ -509,6 +575,13 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             pwMonitorEntity.setLastWeightInMamta(vb.benfMamtaCdWeight.getMeasValue());
             pwMonitorEntity.setLastWeightCheckDate(vb.benfLastcheckupdate.getDate());
             pwMonitorEntity.setCurrentWeight(vb.benfCurrentWeight.getMeasValue());
+
+            if (vb.benfPctsid.isVisibleAndEnable())
+                beneficiaryEntity.setPctsId(vb.benfPctsid.getText());
+
+            if (vb.benfBhamashaId.isVisibleAndEnable())
+                beneficiaryEntity.setBahamashahId(vb.benfBhamashaId.getText());
+
 
             Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
@@ -609,8 +682,10 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         PwMonitoringFragmentBinding vb = getViewDataBinding();
         validateElement.add(vb.benfChildCount.validateWthView());
         validateElement.add(vb.benfChildDob.validateWthView());
-        validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
-        validateElement.add(vb.benfChildDeliveryPlace.validateWthView());
+        if (vb.benfChildDeliveryPlaceType.isVisibleAndEnable())
+            validateElement.add(vb.benfChildDeliveryPlaceType.validateWthView());
+        if (vb.benfChildDeliveryPlace.isVisible())
+            validateElement.add(vb.benfChildDeliveryPlace.validateWthView());
 
 
         for (Pair<Boolean, View> viewPair : validateElement) {
@@ -646,8 +721,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
             childEntity.setDob(date);
             childEntity.setMotherId(beneficiaryId);
-            childEntity.setDeliveryHome(vb.benfChildDeliveryPlaceType.getSelectedPos());
-            childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getText());
+            childEntity.setDeliveryPlaceType(vb.benfChildDeliveryPlaceType.getSelectedPos());
+            childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getSelectedData());//todo
 
             beneficiaryEntity.setStage(childEntity.getStage());
             beneficiaryEntity.setSubStage(childEntity.getStage());//todo

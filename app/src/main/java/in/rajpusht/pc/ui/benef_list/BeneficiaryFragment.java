@@ -3,6 +3,7 @@ package in.rajpusht.pc.ui.benef_list;
 import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
 
@@ -154,7 +155,8 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
 
     @Override
     public void onListFragmentInteraction(BefModel item) {
-        if (item.getStage().equals("PW")) {
+        Log.i("ddddd", "onListFragmentInteraction: "+item);
+        if (item.getCurrentSubStage().contains("PW")) {
             FragmentUtils.replaceFragment(requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage(), item.getPwFormId()), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
 
         } else {

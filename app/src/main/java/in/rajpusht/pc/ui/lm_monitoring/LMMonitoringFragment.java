@@ -130,6 +130,9 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             }
         });
 
+        viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
+        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 12, getResources().getString(R.string.invalid_bhamasha_id)));
+
         //FormValidator
         viewDataBinding.benfChildCurrentMuac.sethValidatorListener(FormValidatorUtils.valueBwValidator(5.0, 18.00,
                 getString(R.string.incorrct_Muac)));
@@ -145,8 +148,25 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         viewDataBinding.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(.5, 15.0,
                 getString(R.string.incorrct_child_weight)));
 
-        viewDataBinding.benfPctsChildId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_pcts)));
-        viewDataBinding.benfOpdIpd.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 25, getResources().getString(R.string.invalid_OPD_IPD)));
+        viewDataBinding.benfPctsChildId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(1, 2, getResources().getString(R.string.invalid_pcts)));
+        viewDataBinding.benfOpdIpd.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(1, 25, getResources().getString(R.string.invalid_OPD_IPD)));
+
+        viewDataBinding.benfBirthWeightSource.sethValueChangedListener(new HValueChangedListener<Integer>() {
+            @Override
+            public void onValueChanged(Integer data) {
+
+                //If Discharge Slip selected then OPD/IPD is mandatory.
+                //child ID mandatory if institute delivery else optional.
+                viewDataBinding.benfPctsChildId.setRequired(false);
+                if (data == 0) {//discharge_slip-->0 ; mamta_mcp_card->1
+                    viewDataBinding.benfOpdIpd.setRequired(true);
+                } else {
+                    viewDataBinding.benfOpdIpd.setRequired(false);
+                }
+
+
+            }
+        });
 
 
         viewDataBinding.benfDtLy.setOnClickListener(new View.OnClickListener() {
@@ -206,6 +226,13 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 }
 
 
+            }
+        });
+
+        viewDataBinding.benfPctsid.sethValueChangedListener(new HValueChangedListener<String>() {
+            @Override
+            public void onValueChanged(String data) {
+                viewDataBinding.benfPctsChildId.setPrefixText(data);
             }
         });
         viewDataBinding.naBtn.setOnClickListener(new View.OnClickListener() {
@@ -315,6 +342,24 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         vb.benfName.setText(beneficiaryEntity.getName());
         vb.pctsId.setText("PCTS ID: " + beneficiaryEntity.getPctsId());
 
+        vb.benfPctsid.setText(beneficiaryEntity.getPctsId());
+        vb.benfBhamashaId.setText(beneficiaryEntity.getBahamashahId());
+        if (TextUtils.isEmpty(beneficiaryEntity.getPctsId()))
+            vb.benfPctsid.setEnableChild(true);
+        else
+            vb.benfPctsid.setEnableChild(false);
+
+        if (TextUtils.isEmpty(beneficiaryEntity.getBahamashahId()))
+            vb.benfBhamashaId.setVisibility(View.VISIBLE);
+        else
+            vb.benfBhamashaId.setVisibility(View.GONE);
+
+
+        //child ID mandatory if institute delivery else optional.
+        if (childEntity.getDeliveryPlaceType() != null && childEntity.getDeliveryPlaceType() == 0)
+            vb.benfPctsChildId.setRequired(true);
+        else
+            vb.benfPctsChildId.setRequired(false);
 
         Set<Integer> regScheme = new HashSet<>();
         //set max values because reg screen user select max values
@@ -464,9 +509,16 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         List<Pair<Boolean, View>> validateElement = new ArrayList<>();
 
         if (!isNa) {
+
+            if (vb.benfPctsid.isVisibleAndEnable())
+                validateElement.add(vb.benfPctsid.validateWthView());
+            if (vb.benfBhamashaId.isVisibleAndEnable())
+                validateElement.add(vb.benfBhamashaId.validateWthView());
+
             if (vb.benfChildImmune.isVisibleAndEnable())
                 validateElement.add(vb.benfChildImmune.validateWthView());
-            validateElement.add(vb.benfPctsChildId.validateWthView());
+            if (vb.benfPctsChildId.isVisibleAndEnable())
+                validateElement.add(vb.benfPctsChildId.validateWthView());
             validateElement.add(vb.benfBirthWeightSource.validateWthView());
             validateElement.add(vb.benfOpdIpd.validateWthView());
             if (vb.benfChildLastRecMuac.isVisibleAndEnable())
@@ -535,12 +587,47 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             lmMonitorEntity.setChildWeight(vb.benfCurrentWeight.getMeasValue());
             lmMonitorEntity.setChildHeight(Double.valueOf(vb.benfCurrentHeight.getText()));
 
-            childEntity.setPctsChildId(vb.benfPctsChildId.getText());
+            if (vb.benfPctsChildId.isVisibleAndEnable() && !TextUtils.isEmpty(vb.benfPctsChildId.getText())) {
+                String text = vb.benfPctsid.getText() + vb.benfPctsChildId.getText();
+                childEntity.setPctsChildId(text);
+            }
+
             childEntity.setBirthWeightSource(vb.benfBirthWeightSource.getSelectedPos());
             String opdIpd = vb.benfOpdIpd.getText().trim();
             if (!opdIpd.isEmpty())
                 childEntity.setOpdipd(Long.valueOf(opdIpd));
             lmMonitorEntity.setAvailable(true);
+
+            if (vb.benfPctsid.isVisibleAndEnable())
+                beneficiaryEntity.setPctsId(vb.benfPctsid.getText());
+
+            if (vb.benfBhamashaId.isVisibleAndEnable())
+                beneficiaryEntity.setBahamashahId(vb.benfBhamashaId.getText());
+
+
+            Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
+
+            if (data.contains(0)) {
+                lmMonitorEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
+                beneficiaryEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
+            }
+
+            if (data.contains(1)) {
+                lmMonitorEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
+                beneficiaryEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
+            }
+
+            if (data.contains(2)) {
+                lmMonitorEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
+                beneficiaryEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
+            }
+
+            if (data.contains(3)) {
+                lmMonitorEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
+                beneficiaryEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
+            }
+
+
         } else {
             lmMonitorEntity.setAvailable(false);
             int res = vb.benfNaOtherReason.getSelectedPos();
@@ -564,38 +651,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 beneficiaryEntity.setIsActive("N");
                 childEntity.setIsActive("N");//both migrated
             }
-
-/*            lmNaReason.add("MD");//mother death
-            lmNaReason.add("MM");//mother migrated
-            lmNaReason.add("CD");//child death
-            lmNaReason.add("CM");//child migrated
-            lmNaReason.add("BD");//both death
-            lmNaReason.add("BM");//both migrated*/
-
-
         }
 
-        Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
-
-        if (data.contains(0)) {
-            lmMonitorEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
-            beneficiaryEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
-        }
-
-        if (data.contains(1)) {
-            lmMonitorEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
-            beneficiaryEntity.setIgmpyInstallment(instalmentValConvt(vb.benfIgmpyCount.getSelectedData()));
-        }
-
-        if (data.contains(2)) {
-            lmMonitorEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
-            beneficiaryEntity.setJsyInstallment(instalmentValConvt(vb.benfJsyCount.getSelectedData()));
-        }
-
-        if (data.contains(3)) {
-            lmMonitorEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
-            beneficiaryEntity.setRajshriInstallment(instalmentValConvt(vb.benfRajshriCount.getSelectedData()));
-        }
 
         lmMonitorEntity.setMotherId(motherId);
 

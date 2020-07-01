@@ -11,7 +11,7 @@ import java.util.List;
 import in.rajpusht.pc.model.DataStatus;
 
 
-@Entity(tableName = ChildEntity.TABLE,indices = { @Index(value="childId"), @Index(value="motherId") })
+@Entity(tableName = ChildEntity.TABLE, indices = {@Index(value = "childId"), @Index(value = "motherId")})
 public class ChildEntity {
     public static final String TABLE = "child";
 
@@ -25,7 +25,7 @@ public class ChildEntity {
     private Date dob;
     private long motherId;
     private String deliveryPlace;
-    private Integer deliveryHome;
+    private Integer deliveryPlaceType;// institute or home
     private String isActive;
     private String createdAt;
     private String updatedAt;
@@ -138,12 +138,12 @@ public class ChildEntity {
         this.updatedAt = updatedAt;
     }
 
-    public Integer getDeliveryHome() {
-        return deliveryHome;
+    public Integer getDeliveryPlaceType() {
+        return deliveryPlaceType;
     }
 
-    public void setDeliveryHome(Integer deliveryHome) {
-        this.deliveryHome = deliveryHome;
+    public void setDeliveryPlaceType(Integer deliveryPlaceType) {
+        this.deliveryPlaceType = deliveryPlaceType;
     }
 
     public Integer getAge() {
@@ -222,7 +222,7 @@ public class ChildEntity {
                 ", dob=" + dob +
                 ", motherId=" + motherId +
                 ", deliveryPlace='" + deliveryPlace + '\'' +
-                ", deliveryHome=" + deliveryHome +
+                ", deliveryPlaceType=" + deliveryPlaceType +
                 ", isActive='" + isActive + '\'' +
                 ", createdAt='" + createdAt + '\'' +
                 ", updatedAt='" + updatedAt + '\'' +

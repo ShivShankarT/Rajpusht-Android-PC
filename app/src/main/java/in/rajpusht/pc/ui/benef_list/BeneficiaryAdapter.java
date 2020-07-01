@@ -50,7 +50,7 @@ public class BeneficiaryAdapter extends RecyclerView.Adapter<BeneficiaryAdapter.
         holder.mItem = befModel;
 
 
-        if (befModel.getStage().equals("PW")) {
+        if (befModel.getCurrentSubStage().contains("PW")) {
             holder.benf_name.setText(befModel.getName());
             holder.date.setText("LMP Date :" + AppDateTimeUtils.convertLocalDate(befModel.getLmpDate()));
         } else {

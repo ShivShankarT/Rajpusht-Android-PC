@@ -174,6 +174,25 @@
                     android:animateLayoutChanges="true"
                     android:orientation="vertical">
 
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:id="@+id/benf_pctsid"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="@string/PCTS_ID"
+                        app:ff_input_type="number"
+                        app:ff_label="@string/benef_pcts_id"
+                        app:ff_maxLength="26"
+                        app:ff_required="true" />
+
+                    <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                        android:id="@+id/benf_bhamasha_id"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:ff_hint="@string/bhamashah_ID_ACK"
+                        app:ff_label="@string/bahamashah_id"
+                        app:ff_maxLength="12"
+                        app:ff_required="true" />
+
                     <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
                         android:id="@+id/benf_child_immune"
                         android:layout_width="match_parent"
@@ -190,7 +209,7 @@
                         app:ff_hint="@string/as_in_PCTS"
                         app:ff_input_type="number"
                         app:ff_label="@string/enter_child_pctsid"
-                        app:ff_maxLength="15"
+                        app:ff_maxLength="2"
                         app:ff_required="true" />
 
                     <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement

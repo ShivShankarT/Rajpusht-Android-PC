@@ -167,4 +167,28 @@ public class BefModel {
     public void setChildOrder(Integer childOrder) {
         this.childOrder = childOrder;
     }
+
+    @Override
+    public String toString() {
+        return "BefModel{" +
+                "beneficiaryId=" + beneficiaryId +
+                ", name='" + name + '\'' +
+                ", dob=" + dob +
+                ", stage='" + stage + '\'' +
+                ", subStage='" + subStage + '\'' +
+                ", motherId=" + motherId +
+                ", husbandName='" + husbandName + '\'' +
+                ", motherName='" + motherName + '\'' +
+                ", pregnancyId=" + pregnancyId +
+                ", pctsId='" + pctsId + '\'' +
+                ", lmpDate=" + lmpDate +
+                ", currentSubStage='" + currentSubStage + '\'' +
+                ", lmFormId=" + lmFormId +
+                ", pwFormId=" + pwFormId +
+                ", naReason='" + naReason + '\'' +
+                ", available=" + available +
+                ", childOrder=" + childOrder +
+                ", dataStatus=" + dataStatus +
+                '}';
+    }
 }

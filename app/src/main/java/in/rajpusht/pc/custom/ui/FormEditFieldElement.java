@@ -145,6 +145,10 @@ public class FormEditFieldElement extends FrameLayout {
 
     }
 
+    public void setPrefixText(String prefixText) {
+        edf_txt_inp_ly.setPrefixText(prefixText);
+    }
+
     public boolean validate() {
 
 
@@ -152,6 +156,11 @@ public class FormEditFieldElement extends FrameLayout {
             if (TextUtils.isEmpty(getText())) {
                 edf_txt_inp_ly.setError(getContext().getString(R.string.please_enter));
                 return false;
+            }
+        } else {
+            if (TextUtils.isEmpty(getText())) {
+                edf_txt_inp_ly.setError(null);
+                return true;
             }
         }
 
@@ -176,6 +185,13 @@ public class FormEditFieldElement extends FrameLayout {
         this.hValidatorListener = hValidatorListener;
     }
 
+    public HValueChangedListener<String> gethValueChangedListener() {
+        return hValueChangedListener;
+    }
+
+    public void sethValueChangedListener(HValueChangedListener<String> hValueChangedListener) {
+        this.hValueChangedListener = hValueChangedListener;
+    }
 
     public String getText() {
         return edf_text.getText().toString();
@@ -215,5 +231,11 @@ public class FormEditFieldElement extends FrameLayout {
         edf_txt_inp_ly.setError(error);
     }
 
+    public boolean isRequired() {
+        return required;
+    }
 
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
 }
