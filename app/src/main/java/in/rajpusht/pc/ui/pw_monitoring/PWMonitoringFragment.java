@@ -167,7 +167,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         });
 
         viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
-        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator( 5,  12,getResources().getString(R.string.invalid_bhamasha_id)));
+        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 12, getResources().getString(R.string.invalid_bhamasha_id)));
         viewDataBinding.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
                 getString(R.string.incorrect_pw_weight)));
         viewDataBinding.benfMamtaCdWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
@@ -332,9 +332,9 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         vb.benfPctsid.setText(beneficiaryEntity.getPctsId());
         vb.benfBhamashaId.setText(beneficiaryEntity.getBahamashahId());
         if (TextUtils.isEmpty(beneficiaryEntity.getPctsId()))
-            vb.benfPctsid.setEnableChild(true);
+            vb.benfPctsid.setVisibility(View.VISIBLE);
         else
-            vb.benfPctsid.setEnableChild(false);
+            vb.benfPctsid.setVisibility(View.GONE);
 
         if (TextUtils.isEmpty(beneficiaryEntity.getBahamashahId()))
             vb.benfBhamashaId.setVisibility(View.VISIBLE);

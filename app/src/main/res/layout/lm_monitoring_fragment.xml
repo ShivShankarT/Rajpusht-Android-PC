@@ -206,7 +206,7 @@
                         android:id="@+id/benf_pcts_child_id"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        app:ff_hint="@string/as_in_PCTS"
+                        app:ff_hint="@string/Id"
                         app:ff_input_type="number"
                         app:ff_label="@string/enter_child_pctsid"
                         app:ff_maxLength="2"

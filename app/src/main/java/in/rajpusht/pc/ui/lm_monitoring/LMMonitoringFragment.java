@@ -345,9 +345,9 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         vb.benfPctsid.setText(beneficiaryEntity.getPctsId());
         vb.benfBhamashaId.setText(beneficiaryEntity.getBahamashahId());
         if (TextUtils.isEmpty(beneficiaryEntity.getPctsId()))
-            vb.benfPctsid.setEnableChild(true);
+            vb.benfPctsid.setVisibility(View.VISIBLE);
         else
-            vb.benfPctsid.setEnableChild(false);
+            vb.benfPctsid.setVisibility(View.GONE);
 
         if (TextUtils.isEmpty(beneficiaryEntity.getBahamashahId()))
             vb.benfBhamashaId.setVisibility(View.VISIBLE);

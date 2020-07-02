@@ -237,5 +237,14 @@ public class FormEditFieldElement extends FrameLayout {
 
     public void setRequired(boolean required) {
         this.required = required;
+        CharSequence charSequence = edf_txt_inp_ly.getHint();
+        String hint = String.valueOf(charSequence);
+        hint = hint.replace("*", "");
+        if (required) {
+            edf_txt_inp_ly.setHint(hint + " *");
+        } else {
+            edf_txt_inp_ly.setHint(hint);
+        }
+
     }
 }

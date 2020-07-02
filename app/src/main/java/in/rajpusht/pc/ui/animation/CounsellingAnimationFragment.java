@@ -42,7 +42,7 @@ public class CounsellingAnimationFragment extends Fragment {
 
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
-    private final int delayMillis = CounsellingMedia.isTesting ? 200 : 2000;
+    private final int delayMillis = CounsellingMedia.isTesting ? 750 : 2000;
     List<CounsellingMedia> counsellingMediaArrayList = new ArrayList<>();
     private Handler handler = new Handler();
     private CounsellingMedia counsellingMedia;

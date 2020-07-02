@@ -61,6 +61,8 @@ public class CounsellingDemoFragment extends Fragment {
                 CounsellingMedia.counsellingSubstage = "MY2";
             } else if (v == vb.my3Btn) {
                 CounsellingMedia.counsellingSubstage = "MY3";
+            }else if (v == vb.allBtn) {
+                CounsellingMedia.counsellingSubstage = "all";
             }
 
 
@@ -79,6 +81,7 @@ public class CounsellingDemoFragment extends Fragment {
         vb.my1Btn.setOnClickListener(onClickListener);
         vb.my2Btn.setOnClickListener(onClickListener);
         vb.my3Btn.setOnClickListener(onClickListener);
+        vb.allBtn.setOnClickListener(onClickListener);
 
         vb.noteTv.setText(
                 "        PW2 - Weight Gain/IFA/PMMVY\n" +

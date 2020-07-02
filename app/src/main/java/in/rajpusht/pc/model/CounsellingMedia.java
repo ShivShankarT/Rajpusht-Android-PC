@@ -94,6 +94,20 @@ public class CounsellingMedia implements Parcelable {
         } else if (subStage.equals("MY3")) {
             counsellingMedia.addAll(dietDi(subStage));
             counsellingMedia.addAll(childGrowth(subStage));
+        } else if (subStage.equals("all")) {//testing
+            counsellingMedia.addAll(wg());
+            counsellingMedia.addAll(ifa());
+            counsellingMedia.addAll(prefBirth());
+            counsellingMedia.addAll(pmmvy());
+            counsellingMedia.addAll(ebf());
+            counsellingMedia.addAll(immutation());
+            counsellingMedia.addAll(dietDi("MY1"));
+            counsellingMedia.addAll(childGrowth(subStage));
+            counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/1_t.webp", "file:///android_asset/img/childgrowth/1.webp")));
+            counsellingMedia.add(new CounsellingMedia(28, Arrays.asList("file:///android_asset/img/childgrowth/2_t.webp", "file:///android_asset/img/childgrowth/2.webp")));
+            counsellingMedia.add(new CounsellingMedia(222, Arrays.asList("file:///android_asset/img/childgrowth/4_t.webp", "file:///android_asset/img/childgrowth/4.webp")));
+            counsellingMedia.add(new CounsellingMedia(123, Arrays.asList("file:///android_asset/img/childgrowth/5_t.webp", "file:///android_asset/img/childgrowth/5.webp")));
+
         }
 
 
@@ -187,8 +201,6 @@ public class CounsellingMedia implements Parcelable {
 
 
         counsellingMedia.add(new CounsellingMedia(1, Arrays.asList("file:///android_asset/img/ifa_calcium/Gfx06_t.webp", "file:///android_asset/img/ifa_calcium/Gfx06.webp")));
-
-
         counsellingMedia.add(new CounsellingMedia(6, Arrays.asList("file:///android_asset/img/ifa_calcium/Gfx08_t.webp", "file:///android_asset/img/ifa_calcium/Gfx08.webp")));
         counsellingMedia.add(new CounsellingMedia(7, Arrays.asList("file:///android_asset/img/ifa_calcium/Gfx08a_t.webp", "file:///android_asset/img/ifa_calcium/Gfx08a.webp")));
         counsellingMedia.add(new CounsellingMedia(2, Arrays.asList("file:///android_asset/img/ifa_calcium/Gfx07_t.webp", "file:///android_asset/img/ifa_calcium/Gfx07.webp")));
