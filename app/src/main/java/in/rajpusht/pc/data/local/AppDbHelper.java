@@ -1,5 +1,8 @@
 package in.rajpusht.pc.data.local;
 
+import android.util.Pair;
+
+import androidx.collection.LongSparseArray;
 import androidx.lifecycle.LiveData;
 
 import java.util.Date;
@@ -11,6 +14,7 @@ import in.rajpusht.pc.data.local.db.AppDatabase;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
@@ -60,6 +64,7 @@ public class AppDbHelper {
             mAppDatabase.childDao().deleteAll();
             mAppDatabase.pwMonitorDao().deleteAll();
             mAppDatabase.lmMonitorDao().deleteAll();
+            mAppDatabase.counsellingTrackingDao().deleteAll();
         });
     }
 
@@ -180,7 +185,7 @@ public class AppDbHelper {
     public Completable insertOrUpdatePwMonitor(PWMonitorEntity pwMonitorEntity) {
 
         return Completable.fromAction(() -> {
-            if (pwMonitorEntity.getId() == 0) {
+            if (pwMonitorEntity.getDataStatus() == null || pwMonitorEntity.getDataStatus() == DataStatus.NEW) {
                 if (pwMonitorEntity.getDataStatus() == null)
                     pwMonitorEntity.setDataStatus(DataStatus.NEW);
                 pwMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
@@ -213,7 +218,7 @@ public class AppDbHelper {
     public Completable insertOrUpdateLmMonitor(LMMonitorEntity lmMonitorEntity) {
 
         return Completable.fromAction(() -> {
-            if (lmMonitorEntity.getId() == 0) {
+            if (lmMonitorEntity.getDataStatus() == null || lmMonitorEntity.getDataStatus() == DataStatus.NEW) {
                 if (lmMonitorEntity.getDataStatus() == null)
                     lmMonitorEntity.setDataStatus(DataStatus.NEW);
                 lmMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
@@ -227,6 +232,25 @@ public class AppDbHelper {
                 mAppDatabase.lmMonitorDao().update(lmMonitorEntity);
             }
         });
+    }
+
+    // update based on primary key
+    public Single<CounselingTrackingEntity> insertOrUpdateCounsellingTracking(CounselingTrackingEntity counselingTrackingEntity) {
+
+        if (counselingTrackingEntity.getId() == 0) {
+            counselingTrackingEntity.setStartTime( new Date());
+            counselingTrackingEntity.setLastKnowUpdateTime( new Date());
+            return mAppDatabase.counsellingTrackingDao().insertAndReturn(counselingTrackingEntity);
+        } else {
+
+            return mAppDatabase.counsellingTrackingDao().updateViaCompletable(counselingTrackingEntity).toSingleDefault(counselingTrackingEntity);
+        }
+
+    }
+
+    public Single<Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>>> counselingTrackingListPairForm() {
+
+        return mAppDatabase.counsellingTrackingDao().counselingTrackingListPairForm();
     }
 
 
@@ -287,9 +311,10 @@ public class AppDbHelper {
 
     // upload data sync
 
-    public Maybe<List<BeneficiaryWithRelation>> getNotSyncBenfData() {
+    public Single<List<BeneficiaryWithRelation>> getNotSyncBenfData() {
         return mAppDatabase.AppDao().getAllNotSyncBeneficiaryWithRelation();
     }
+
 
     public Observable<List<AwcSyncCount>> awcViceSyncData() {
         return mAppDatabase.AppDao().awcViceSyncData();

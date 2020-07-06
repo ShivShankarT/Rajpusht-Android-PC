@@ -1,10 +1,12 @@
 package in.rajpusht.pc.data.local.db.entity;
 
+import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
+import java.util.List;
 
 import in.rajpusht.pc.model.DataStatus;
 

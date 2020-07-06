@@ -201,7 +201,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         WorkManager.getInstance(this).getWorkInfosByTagLiveData("sync").observe(this, new Observer<List<WorkInfo>>() {
             @Override
             public void onChanged(List<WorkInfo> workInfos) {
-                Log.i("syncsync", "onChanged: " + workInfos.size());
                 for (int i = 0; i < workInfos.size(); i++) {
                     WorkInfo w = workInfos.get(i);
                     Log.i("syncsync", "onChanged: " + i + w.toString());

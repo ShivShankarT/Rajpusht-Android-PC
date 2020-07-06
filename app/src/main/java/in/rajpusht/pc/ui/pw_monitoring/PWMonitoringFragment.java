@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.pw_monitoring;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -409,7 +410,6 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 .subscribeOn(schedulerProvider.io()).subscribe(new BiConsumer<List<String>, Throwable>() {
             @Override
             public void accept(List<String> strings, Throwable throwable) throws Exception {
-                Log.i("ssss", "accept: " + strings.size());
                 if (throwable != null)
                     throwable.printStackTrace();
                 if (strings != null)
@@ -450,6 +450,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
     private void setFormUiData(PWMonitorEntity pwMonitorEntity) {
         PwMonitoringFragmentBinding vb = getViewDataBinding();
+        vb.weightIv.setVisibility(View.VISIBLE);
 
         if (pwMonitorEntity.getAvailable()) {
             vb.benfAncCount.setSection(pwMonitorEntity.getAncCount());
@@ -555,11 +556,12 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
         PregnantEntity pregnantEntity = beneficiaryJoin.getPregnantEntity();
 
-
+        long pwFormId = mPwMonitorEntity != null ? mPwMonitorEntity.getId() : System.currentTimeMillis();
         PWMonitorEntity pwMonitorEntity;
-        if (mPwMonitorEntity == null)
+        if (mPwMonitorEntity == null) {
             pwMonitorEntity = new PWMonitorEntity();
-        else
+            pwMonitorEntity.setId(pwFormId);
+        } else
             pwMonitorEntity = mPwMonitorEntity;
 
         pwMonitorEntity.setStage("PW");
@@ -643,10 +645,11 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
+                    mPwMonitorEntity = pwMonitorEntity;
+                    vb.saveBtn.setEnabled(false);
                     showAlertDialog(getString(R.string.beneficiary_report_save), () -> {
-
-
                         if (!isNa) {
+                            PWMonitoringFragment.this.pwFormId = pwFormId;
                             launchCounselling(pregnantEntity);
                         } else {
                             requireActivity().onBackPressed();
@@ -656,9 +659,22 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
     }
 
+    @SuppressLint("CheckResult")
     private void launchCounselling(PregnantEntity pregnantEntity) {
+
+        if (mPwMonitorEntity != null && mPwMonitorEntity.getDataStatus() == DataStatus.OLD) {
+            mPwMonitorEntity.setBeneficiaryId(beneficiaryId);
+            Completable.concatArray(dataRepository.insertOrUpdateBeneficiary(beneficiaryJoin.getBeneficiaryEntity()).ignoreElements(),
+                    dataRepository.insertOrUpdatePwMonitor(mPwMonitorEntity))
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe(() -> {
+                        ///
+                    });
+        }
         CounsellingMedia.counsellingSubstage = subStage;
         CounsellingMedia.isTesting = false;
+        CounsellingMedia.counsellingFormId = pwFormId;
         CounsellingMedia.counsellingPregId = pregnancyId;
         CounsellingMedia.counsellingPregLmp = pregnantEntity.getLmpDate();
         FragmentUtils.replaceFragment(requireActivity(),

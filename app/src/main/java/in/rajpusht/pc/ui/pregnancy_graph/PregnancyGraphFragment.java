@@ -22,7 +22,6 @@ import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.highlight.Highlight;
 import com.github.mikephil.charting.interfaces.datasets.ILineDataSet;
 import com.github.mikephil.charting.listener.OnChartValueSelectedListener;
-import com.github.mikephil.charting.utils.ColorTemplate;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -31,6 +30,7 @@ import java.util.List;
 import javax.inject.Inject;
 
 import in.rajpusht.pc.R;
+import in.rajpusht.pc.RajpushtApp;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.DataRepository;
@@ -47,6 +47,7 @@ import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 import static in.rajpusht.pc.model.CounsellingMedia.counsellingPregLmp;
+import static in.rajpusht.pc.ui.animation.CounsellingAnimationFragment.updateCounsellingTracking;
 
 public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentBinding, PregnancyGraphViewModel> implements OnChartValueSelectedListener {
 
@@ -140,7 +141,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
 
             } else {
-
+                updateCounsellingTracking(pos, (RajpushtApp) requireContext().getApplicationContext(), true);
                 showAlertDialog(getString(R.string.counselling_completed), new Runnable() {
                     @Override
                     public void run() {
@@ -153,6 +154,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
 
         setWeightGainGraph();
+        updateCounsellingTracking(pos, (RajpushtApp) requireContext().getApplicationContext(), false);
     }
 
     private void setWeightGainGraph() {
@@ -463,7 +465,6 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 lmpMonth = Math.max(1, lmpMonth);
                 double childWeight1 = childWeight;
                 values2.add(new Entry(lmpMonth, (float) childWeight1));
-                Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + childWeight1);
             }
 
         }
@@ -488,7 +489,6 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 lmpMonth = Math.max(1, lmpMonth);
                 double height1 = height;
                 values2.add(new Entry(lmpMonth, (float) height1));
-                Log.i("dssss", "getLMWeightDiff: " + lmpMonth + " === " + height1);
             }
 
         }

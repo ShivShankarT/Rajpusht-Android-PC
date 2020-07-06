@@ -13,6 +13,7 @@ import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.utils.SqlQueryConstant;
 import io.reactivex.Maybe;
 import io.reactivex.Observable;
+import io.reactivex.Single;
 
 @Dao
 public abstract class AppDao {
@@ -29,16 +30,16 @@ public abstract class AppDao {
             "                         when julianday('now') - julianday(p.lmpDate) <=252 then 'PW3'                                                            \n" +
             "                         when julianday('now') - julianday(p.lmpDate) <=280 then 'PW4'                                                            \n" +
             "        END                                                                                                                                       \n" +
-            "       END AS currentSubStage, p.lmpDate,lm.id as lmFormId,pw.id as pwFormId,b.dataStatus,u.childOrder,      " +
+            "       END AS currentSubStage, p.lmpDate,lm.id as lmFormId,pw.id as pwFormId,u.dataStatus,u.childOrder,      " +
             "                                                  \n" +
             "           CASE WHEN u.motherId IS NOT NULL  THEN  lm.naReason ELSE    pw.naReason  end  as  naReason,                                            \n" +
             "           CASE WHEN u.motherId IS NOT NULL  THEN  lm.available ELSE    pw.available  end  as  available                                          \n" +
             "                                                                                                                                                  \n" +
             "                                                                                                                                                  \n" +
             " from                                                                                                                                             \n" +
-            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId,NULL as childOrder from beneficiary where isActive='Y'                        \n" +
+            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId,NULL as childOrder,dataStatus from beneficiary where isActive='Y'                        \n" +
             "UNION                                                                                                                                             \n" +
-            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId, childOrder from child where isActive='Y' ) u                              \n" +
+            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId, childOrder,dataStatus from child where isActive='Y' ) u                              \n" +
             "Left Join (select * from  pregnant where isActive='Y') p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                               \n" +
             "inner join  beneficiary b on (u.motherId is NULL  and b.beneficiaryId=u.beneficiaryId ) OR((u.motherId is NOT NULL  and b.beneficiaryId=u.motherId ))                                                                                                                                   \n" +
             "left join pw_monitor pw on pw.pregnancyId=p.pregnancyId and currentSubStage=pw.substage\n" +
@@ -57,7 +58,7 @@ public abstract class AppDao {
             "   where b.dataStatus!=0 or c.dataStatus!=0 or p.dataStatus!=0 \n" +
             "  )")
     @Transaction
-    public  abstract Maybe<List<BeneficiaryWithRelation>> getAllNotSyncBeneficiaryWithRelation();
+    public  abstract Single<List<BeneficiaryWithRelation>> getAllNotSyncBeneficiaryWithRelation();
 
     @Query("select al.awcCode, al.awcEnglishName, u.dataStatus,ismother as isMother,  case when  ismother is not null then  count(*) else 0 end as count from assigned_location al\n" +
             "left join  (select beneficiaryId ,'Y' as ismother,  NULL AS motherId, awcCode,dataStatus from beneficiary                                                              \n" +

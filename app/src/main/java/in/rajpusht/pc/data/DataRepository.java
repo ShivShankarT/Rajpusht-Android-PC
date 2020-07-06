@@ -1,6 +1,7 @@
 package in.rajpusht.pc.data;
 
 import android.util.Log;
+import android.util.Pair;
 
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
@@ -18,6 +19,7 @@ import in.rajpusht.pc.data.local.AppDbHelper;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
@@ -126,6 +128,11 @@ public class DataRepository {
         return appDbHelper.insertOrUpdateLmMonitor(lmMonitorEntity);
     }
 
+    public Single<CounselingTrackingEntity> insertOrUpdateCounsellingTracking(CounselingTrackingEntity counselingTrackingEntity) {
+        return appDbHelper.insertOrUpdateCounsellingTracking(counselingTrackingEntity);
+    }
+
+
     public LiveData<List<BefModel>> getBefModels() {
 
         return appDbHelper.getBefModels();
@@ -171,9 +178,7 @@ public class DataRepository {
             public SingleSource<Boolean> apply(Long aLong) throws Exception {
                 if (aLong == 0) {
                     String json = appPreferencesHelper.readStringFromAsset("other/facilities.json");
-                    Log.i("institutionPla", "apply: " + json);
                     List<InstitutionPlaceEntity> institutionPlaceEntities = JsonParser.parseFacility(json);
-                    Log.i("institutionPla", "apply: " + institutionPlaceEntities.size());
                     return appDbHelper.insertInstitutionPlace(institutionPlaceEntities).toSingleDefault(true);
                 } else {
                     return Single.just(true);
@@ -247,9 +252,8 @@ public class DataRepository {
     }
 
     public Single<ApiResponse<JsonObject>> uploadDataToServer() {
-        return appDbHelper.getNotSyncBenfData()
-                .map(JsonParser::convertBenfUploadJson).flatMapSingle(jsonElements -> {
-
+        return appDbHelper.getNotSyncBenfData().zipWith(appDbHelper.counselingTrackingListPairForm(), Pair::new)
+                .map(JsonParser::convertBenfUploadJson).flatMap(jsonElements -> {
                     if (jsonElements.size() > 0)
                         return bulkUpload(jsonElements);
                     else {

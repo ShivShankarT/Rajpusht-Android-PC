@@ -30,8 +30,8 @@ public class CounsellingMedia implements Parcelable {
     public static String counsellingSubstage = "PW1";
     public static long counsellingPregId = 0;
     public static Date counsellingPregLmp = null;
-
     public static long counsellingChildId = 0;
+    public static long counsellingFormId = 0;
 
 
     public static boolean isTesting = false;

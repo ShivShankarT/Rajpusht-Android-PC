@@ -87,7 +87,9 @@
                             android:layout_toLeftOf="@+id/na_btn"
                             android:background="@color/white"
                             android:src="@drawable/ic_weighing_machine"
-                            android:tint="@color/colorAccent" />
+                            android:tint="@color/colorAccent"
+                            android:visibility="gone"
+                            tools:visibility="visible" />
 
                         <TextView
                             android:id="@+id/na_btn"

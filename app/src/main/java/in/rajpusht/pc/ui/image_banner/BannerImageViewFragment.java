@@ -157,7 +157,6 @@ public class BannerImageViewFragment extends Fragment {
             holder.bigImageView.setProgressIndicator(new ProgressPieIndicator());
             Uri parse = Uri.parse(image.get(position).getImageLg());
             holder.bigImageView.showImage(parse);
-            Log.i("bannerImf", "onBindViewHolder: " + parse.toString());
 
 
         }

@@ -542,7 +542,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
                 .subscribeOn(schedulerProvider.io()).subscribe(new BiConsumer<List<String>, Throwable>() {
             @Override
             public void accept(List<String> strings, Throwable throwable) throws Exception {
-                Log.i("ssss", "accept: " + strings.size());
                 if (throwable != null)
                     throwable.printStackTrace();
                 if (strings != null)

@@ -1,7 +1,6 @@
 package in.rajpusht.pc;
 
 import android.content.Context;
-import android.util.Log;
 
 import androidx.work.Configuration;
 import androidx.work.WorkManager;
@@ -14,6 +13,7 @@ import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.di.components.AppComponent;
 import in.rajpusht.pc.di.components.DaggerAppComponent;
 import in.rajpusht.pc.utils.ContextWrapper;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import in.rajpusht.pc.worker.SimpleWorkerFactory;
 import io.reactivex.functions.Consumer;
 import io.reactivex.plugins.RxJavaPlugins;
@@ -23,8 +23,6 @@ public class RajpushtApp extends DaggerApplication {
     @Inject
     SimpleWorkerFactory simpleWorkerFactory;
 
-    @Inject
-    DataRepository dataRepository;
     private AppComponent applicationInjector = DaggerAppComponent.builder().application(this).build();
 
     @Override
@@ -62,6 +60,14 @@ public class RajpushtApp extends DaggerApplication {
         WorkManager.initialize(this, config);
     }
 
+    public DataRepository getDataRepository() {
+        return applicationInjector.getDataRepository();
+    }
+
+
+    public SchedulerProvider getSchedulerProvider() {
+        return applicationInjector.getSchedulerProvider();
+    }
 }
 
 

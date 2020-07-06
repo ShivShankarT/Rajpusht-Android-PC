@@ -20,7 +20,7 @@ import in.rajpusht.pc.model.DataStatus;
 
 public class DbDataConverters {
 
-    private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd", Locale.ENGLISH);
+    private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
     private Gson gson = new Gson();
 
     @TypeConverter

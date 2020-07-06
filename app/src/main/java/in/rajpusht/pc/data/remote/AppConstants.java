@@ -3,7 +3,7 @@ package in.rajpusht.pc.data.remote;
 import java.util.concurrent.TimeUnit;
 
 public class AppConstants {
-    public static final String BASE_URL = "http://test.rajpusht.in/survey-server/api/PC/";
+    public static final String BASE_URL = "http://dev.rajpusht.in/survey-server/api/PC/";
     public static final long CONNECT_TIMEOUT = 1000;
     public static final long READ_TIMEOUT = 1000;
     public static final long WRITE_TIMEOUT = 30000;

@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.lm_monitoring;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -98,7 +99,6 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         motherId = getArguments().getLong("motherId");
         subStage = getArguments().getString("subStage");
         lmFormId = (Long) getArguments().getSerializable("lmFormId");
-        Log.i("motherId", "newInstance: motherIddd" + motherId);
     }
 
     @Override
@@ -451,10 +451,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     }
 
     private void setFormUiData(LMMonitorEntity lmMonitorEntity) {
-
-
         LmMonitoringFragmentBinding vb = getViewDataBinding();
-
+        vb.weightIv.setVisibility(View.VISIBLE);
         if (lmMonitorEntity.getAvailable()) {
 
             vb.benfChildLastRecMuac.setText(lmMonitorEntity.getLastMuac());
@@ -504,6 +502,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         }
     }
 
+    @SuppressLint("CheckResult")
     private void save(boolean isNa) {
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         List<Pair<Boolean, View>> validateElement = new ArrayList<>();
@@ -555,10 +554,12 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             }
         }
 
+        long lmFormId = mLmMonitorEntity != null ? mLmMonitorEntity.getId() : System.currentTimeMillis();
         LMMonitorEntity lmMonitorEntity;
-        if (mLmMonitorEntity == null)
+        if (mLmMonitorEntity == null) {
             lmMonitorEntity = new LMMonitorEntity();
-        else
+            lmMonitorEntity.setId(lmFormId);
+        } else
             lmMonitorEntity = mLmMonitorEntity;
 
         lmMonitorEntity.setChildId(childId);
@@ -662,8 +663,11 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
                 dataRepository.insertOrUpdateLmMonitor(lmMonitorEntity))
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
+            mLmMonitorEntity = lmMonitorEntity;
+            vb.saveBtn.setEnabled(false);
             showAlertDialog(getString(R.string.beneficiary_child_report_saved), () -> {
                 if (!isNa) {
+                    LMMonitoringFragment.this.lmFormId = lmFormId;
                     launchCounselling();
                 } else {
                     requireActivity().onBackPressed();
@@ -674,11 +678,24 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
     }
 
+    @SuppressLint("CheckResult")
     private void launchCounselling() {
+
+        if (mLmMonitorEntity != null && mLmMonitorEntity.getDataStatus() == DataStatus.OLD) {
+            mLmMonitorEntity.setMotherId(motherId);
+            Completable.concatArray(
+                    dataRepository.insertOrUpdateChild(beneficiaryJoin.getChildEntity()).ignoreElements(),
+                    dataRepository.insertOrUpdateLmMonitor(mLmMonitorEntity))
+                    .subscribeOn(schedulerProvider.io())
+                    .observeOn(schedulerProvider.ui())
+                    .subscribe(() -> {
+                    });
+        }
 
         CounsellingMedia.isTesting = false;
         CounsellingMedia.counsellingSubstage = subStage;
         CounsellingMedia.counsellingChildId = childId;
+        CounsellingMedia.counsellingFormId = lmFormId;
 
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()

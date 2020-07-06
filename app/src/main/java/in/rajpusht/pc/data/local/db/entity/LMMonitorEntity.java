@@ -12,7 +12,7 @@ import in.rajpusht.pc.model.DataStatus;
 public class LMMonitorEntity {
     public static final String TABLE = "lm_monitor";
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     private long childId;
     private long motherId;
     private String stage;
@@ -34,11 +34,11 @@ public class LMMonitorEntity {
     private String updatedAt;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

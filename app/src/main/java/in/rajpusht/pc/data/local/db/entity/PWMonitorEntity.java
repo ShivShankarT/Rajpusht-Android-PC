@@ -13,7 +13,7 @@ public class PWMonitorEntity {
     public static final String TABLE = "pw_monitor";
 
     @PrimaryKey(autoGenerate = true)
-    private int id;
+    private long id;
     private long pregnancyId;
     private long beneficiaryId;
     private String stage;
@@ -35,11 +35,11 @@ public class PWMonitorEntity {
     private String updatedAt;
 
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

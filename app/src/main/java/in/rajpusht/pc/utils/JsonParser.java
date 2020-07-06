@@ -1,6 +1,9 @@
 package in.rajpusht.pc.utils;
 
 import android.util.Log;
+import android.util.Pair;
+
+import androidx.collection.LongSparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
@@ -13,6 +16,7 @@ import java.util.List;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
@@ -29,6 +33,8 @@ import static in.rajpusht.pc.utils.JsonUtils.getString;
 
 public class JsonParser {
 
+
+    private static final String TAG = JsonParser.class.getName();
 
     public static Quintet<List<BeneficiaryEntity>, List<PregnantEntity>,
             List<ChildEntity>,
@@ -48,6 +54,9 @@ public class JsonParser {
                 List<PWMonitorEntity> pwMonitorModels = new ArrayList<>();
                 List<ChildEntity> childModel = new ArrayList<>();
                 List<LMMonitorEntity> lmMonitorModel = new ArrayList<>();
+
+                LongSparseArray<Long> childMotherId = new LongSparseArray<>();
+                LongSparseArray<Long> pregnantBenfId = new LongSparseArray<>();
 
 
                 for (int i = 0; i < beneficiarylist.size(); i++) {
@@ -121,6 +130,7 @@ public class JsonParser {
                     pmodel.setIsActive(is_active);
                     pmodel.setDataStatus(DataStatus.OLD);
                     pregnantModels.add(pmodel);
+                    pregnantBenfId.put(pmodel.getPregnancyId(), pmodel.getBeneficiaryId());
 
                 }
 
@@ -163,6 +173,7 @@ public class JsonParser {
                     pwmodel.setCreatedBy(created_by);
                     pwmodel.setDataStatus(DataStatus.OLD);
                     pwmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
+                    pwmodel.setBeneficiaryId(pregnantBenfId.get(pregnancy_id, 0L));
                     pwMonitorModels.add(pwmodel);
 
 
@@ -207,8 +218,8 @@ public class JsonParser {
                     cmodel.setPctsChildId(pcts_child_id);
                     cmodel.setBirthWeightSource(birth_weight_source);
                     cmodel.setOpdipd(opd_ipd);
-
                     childModel.add(cmodel);
+                    childMotherId.put(cmodel.getChildId(), cmodel.getMotherId());
 
 
                 }
@@ -255,6 +266,7 @@ public class JsonParser {
                     lmmodel.setDataStatus(DataStatus.OLD);
                     lmmodel.setNaReason(na_reason);
                     lmmodel.setCreatedAt(mobile_created_at);
+                    lmmodel.setMotherId(childMotherId.get(lmmodel.getChildId(), 0L));
                     lmmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
                     lmMonitorModel.add(lmmodel);
 
@@ -264,7 +276,6 @@ public class JsonParser {
                 Quintet<List<BeneficiaryEntity>, List<PregnantEntity>, List<ChildEntity>, List<PWMonitorEntity>, List<LMMonitorEntity>> quintet = new Quintet<>(beneficiaryModels, pregnantModels, childModel, pwMonitorModels, lmMonitorModel);
                 return quintet;
             } catch (Exception e) {
-                Log.i("dd", "bulkdownload: rr");
                 e.printStackTrace();
             }
 
@@ -273,20 +284,19 @@ public class JsonParser {
     }
 
 
-    public static JsonArray convertBenfUploadJson(List<BeneficiaryWithRelation> beneficiaryWithRelations) {
-
+    public static JsonArray convertBenfUploadJson(Pair<List<BeneficiaryWithRelation>, Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>>> listPair) {
+        List<BeneficiaryWithRelation> beneficiaryWithRelations = listPair.first;
+        Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>> counsellingTracking = listPair.second;
         JsonArray jsonArray = new JsonArray();
         for (BeneficiaryWithRelation beneficiaryWithRelation : beneficiaryWithRelations) {
-            JsonObject json = dataFor(beneficiaryWithRelation);
+            JsonObject json = dataFor(beneficiaryWithRelation, counsellingTracking);
             if (json != null)//if null no changes
                 jsonArray.add(json);
         }
-        Log.i("sss", "convertBenfUploadJson: " + jsonArray.toString());
         return jsonArray;
     }
 
-    private static JsonObject dataFor(BeneficiaryWithRelation beneficiaryWithRelation) {
-        Log.i("ddd", "dataFor: " + new Gson().toJson(beneficiaryWithRelation));
+    private static JsonObject dataFor(BeneficiaryWithRelation beneficiaryWithRelation, Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>> counsellingTracking) {
         BeneficiaryEntity benfBeneficiaryEntity = beneficiaryWithRelation.beneficiaryEntity;
         JsonObject bjson = getBeneficiaryJson(benfBeneficiaryEntity);
         JsonArray pregJsonArray = new JsonArray();
@@ -298,7 +308,7 @@ public class JsonParser {
             for (PWMonitorEntity pwMonitorEntity : beneficiaryWithRelation.pwMonitorEntities) {
                 if (pwMonitorEntity.getPregnancyId() == pregnantEntity.getPregnancyId()) {
                     if (pwMonitorEntity.getDataStatus() != DataStatus.OLD)
-                        pwArray.add(getPwJson(pwMonitorEntity, pregnantEntity.getDataStatus() == DataStatus.NEW));
+                        pwArray.add(getPwJson(pwMonitorEntity, pregnantEntity.getDataStatus() == DataStatus.NEW, counsellingTracking.first));
                 }
             }
             if (pwArray.size() != 0 || pregnantEntity.getDataStatus() != DataStatus.OLD) {
@@ -311,18 +321,20 @@ public class JsonParser {
 
 
         for (ChildEntity childEntity : beneficiaryWithRelation.childEntities) {
-            if (childEntity.getDataStatus() == DataStatus.OLD)
-                continue;
+
             JsonObject childJson = getChildJson(childEntity);
             JsonArray lmArray = new JsonArray();
             for (LMMonitorEntity lmMonitorEntity : beneficiaryWithRelation.lmMonitorEntities) {
                 if (lmMonitorEntity.getChildId() == childEntity.getChildId()) {
                     if (lmMonitorEntity.getDataStatus() != DataStatus.OLD)
-                        lmArray.add(getLmJson(lmMonitorEntity, childEntity.getDataStatus() == DataStatus.NEW));
+                        lmArray.add(getLmJson(lmMonitorEntity, childEntity.getDataStatus() == DataStatus.NEW, counsellingTracking.second));
                 }
             }
-            childJson.add("lmMonitorForms", lmArray);
-            childJsonArray.add(childJson);
+            if (lmArray.size() != 0 || childEntity.getDataStatus() != DataStatus.OLD) {
+                childJson.add("lmMonitorForms", lmArray);
+                childJsonArray.add(childJson);
+            }
+
         }
         bjson.add("child", childJsonArray);
 
@@ -406,7 +418,7 @@ public class JsonParser {
         return childobject;
     }
 
-    private static JsonObject getLmJson(LMMonitorEntity lmMonitorEntity, boolean isNew) {
+    private static JsonObject getLmJson(LMMonitorEntity lmMonitorEntity, boolean isNew, LongSparseArray<List<CounselingTrackingEntity>> listLongSparseArray) {
         JsonObject lmObject = new JsonObject();
         if (!isNew) {
             lmObject.addProperty("childId", lmMonitorEntity.getChildId());
@@ -432,12 +444,13 @@ public class JsonParser {
         lmObject.addProperty("createdAt", lmMonitorEntity.getCreatedAt());
         lmObject.addProperty("updatedAt", lmMonitorEntity.getUpdatedAt());
         lmObject.addProperty("dataStatus", lmMonitorEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
+        lmObject.add("counselingTracking", counselingTrackingJson(listLongSparseArray.get(lmMonitorEntity.getId(), new ArrayList<>())));
 
 
         return lmObject;
     }
 
-    private static JsonObject getPwJson(PWMonitorEntity pwMonitorEntity, boolean isNew) {
+    private static JsonObject getPwJson(PWMonitorEntity pwMonitorEntity, boolean isNew, LongSparseArray<List<CounselingTrackingEntity>> listLongSparseArray) {
         JsonObject pwobject = new JsonObject();
         if (!isNew)
             pwobject.addProperty("pregnancyId", pwMonitorEntity.getPregnancyId());
@@ -461,8 +474,23 @@ public class JsonParser {
         pwobject.addProperty("createdAt", pwMonitorEntity.getCreatedAt());
         pwobject.addProperty("updatedAt", pwMonitorEntity.getUpdatedAt());
         pwobject.addProperty("dataStatus", pwMonitorEntity.getDataStatus() == DataStatus.NEW ? "NEW" : "EDIT");
+        pwobject.add("counselingTracking", counselingTrackingJson(listLongSparseArray.get(pwMonitorEntity.getId(), new ArrayList<>())));
+
 
         return pwobject;
+    }
+
+    private static JsonArray counselingTrackingJson(List<CounselingTrackingEntity> counselingTrackingEntities) {
+        JsonArray jsonArray = new JsonArray();
+        for (CounselingTrackingEntity entity : counselingTrackingEntities) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("completed", entity.isCompleted() ? "Y" : "N");
+            jsonObject.addProperty("formType", entity.isPwType() ? 0 : 1);
+            jsonObject.addProperty("startTime", AppDateTimeUtils.convertServerTimeStampDate(entity.getStartTime()));
+            jsonObject.addProperty("lastKnowUpdatedTime", AppDateTimeUtils.convertServerTimeStampDate(entity.getLastKnowUpdateTime()));
+            jsonArray.add(jsonObject);
+        }
+        return jsonArray;
     }
 
     public static List<InstitutionPlaceEntity> parseFacility(String json) {

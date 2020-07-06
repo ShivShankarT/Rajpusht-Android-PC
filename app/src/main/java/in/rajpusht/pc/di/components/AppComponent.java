@@ -8,11 +8,13 @@ import dagger.BindsInstance;
 import dagger.Component;
 import dagger.android.AndroidInjectionModule;
 import dagger.android.AndroidInjector;
-import dagger.android.DaggerApplication;
 import in.rajpusht.pc.RajpushtApp;
+import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.di.builder.ActivityBuilderModule;
 import in.rajpusht.pc.di.builder.WorkerBindingModule;
 import in.rajpusht.pc.di.module.AppModule;
+import in.rajpusht.pc.utils.rx.AppSchedulerProvider;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
 
 @Singleton
 @Component(modules = {
@@ -20,6 +22,10 @@ import in.rajpusht.pc.di.module.AppModule;
         AndroidInjectionModule.class,
         ActivityBuilderModule.class, WorkerBindingModule.class})
 public interface AppComponent extends AndroidInjector<RajpushtApp> {
+
+    DataRepository getDataRepository();
+
+    SchedulerProvider  getSchedulerProvider();
 
     @Component.Builder
     interface Builder {

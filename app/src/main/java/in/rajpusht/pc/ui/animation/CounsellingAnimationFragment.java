@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.animation;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.media.MediaPlayer;
@@ -26,15 +27,21 @@ import com.bumptech.glide.request.target.Target;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import in.rajpusht.pc.R;
+import in.rajpusht.pc.RajpushtApp;
+import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.databinding.FragmentCounsellingAnimationBinding;
 import in.rajpusht.pc.model.CounsellingMedia;
 import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.ui.pregnancy_graph.PregnancyGraphFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import in.rajpusht.pc.utils.ui.CustomVideoView;
+import io.reactivex.functions.BiConsumer;
 
 
 public class CounsellingAnimationFragment extends Fragment {
@@ -42,8 +49,9 @@ public class CounsellingAnimationFragment extends Fragment {
 
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
+    private static CounselingTrackingEntity mCounselingTrackingEntity;
     private final int delayMillis = CounsellingMedia.isTesting ? 750 : 2000;
-    List<CounsellingMedia> counsellingMediaArrayList = new ArrayList<>();
+    private List<CounsellingMedia> counsellingMediaArrayList = new ArrayList<>();
     private Handler handler = new Handler();
     private CounsellingMedia counsellingMedia;
     private int mediaPos = 0;
@@ -84,11 +92,48 @@ public class CounsellingAnimationFragment extends Fragment {
     }
 
     public static CounsellingAnimationFragment newInstance(int pos) {
+        if (pos == 0)
+            mCounselingTrackingEntity = null;
         CounsellingAnimationFragment testAnimationFragment = new CounsellingAnimationFragment();
         Bundle bundle = new Bundle();
         bundle.putInt("data", pos);
         testAnimationFragment.setArguments(bundle);
         return testAnimationFragment;
+    }
+
+    @SuppressLint("CheckResult")
+    public static void updateCounsellingTracking(int pos, RajpushtApp rajpushtApp, boolean isCompleted) {
+        DataRepository dataRepository = rajpushtApp.getDataRepository();
+        SchedulerProvider appSchedulerProvider = rajpushtApp.getSchedulerProvider();
+        CounselingTrackingEntity ct;
+        if (pos == 0 && mCounselingTrackingEntity == null) {
+            ct = new CounselingTrackingEntity();
+            ct.setFormId(CounsellingMedia.counsellingFormId);
+            if (CounsellingMedia.counsellingSubstage.contains("PW")) {
+                ct.setPwType(true);
+            } else {
+                ct.setPwType(false);
+
+            }
+
+        } else {
+            ct = mCounselingTrackingEntity;
+            ct.setLastKnowUpdateTime(new Date());
+            if (isCompleted) {
+                ct.setCompleted(true);
+            }
+        }
+
+        dataRepository.insertOrUpdateCounsellingTracking(ct)
+                .subscribeOn(appSchedulerProvider.ui())
+                .observeOn(appSchedulerProvider.ui())
+                .subscribe(new BiConsumer<CounselingTrackingEntity, Throwable>() {
+                    @Override
+                    public void accept(CounselingTrackingEntity counselingTrackingEntity, Throwable throwable) throws Exception {
+                        mCounselingTrackingEntity = counselingTrackingEntity;
+                    }
+                });
+
     }
 
     @Override
@@ -98,7 +143,6 @@ public class CounsellingAnimationFragment extends Fragment {
             pos = getArguments().getInt("data");
             counsellingMediaArrayList = CounsellingMedia.counsellingMediaData();
             this.counsellingMedia = counsellingMediaArrayList.get(pos);
-            Log.i("imagedd", "" + this.counsellingMedia.toString());
         }
     }
 
@@ -228,7 +272,7 @@ public class CounsellingAnimationFragment extends Fragment {
 
 
                 } else {
-
+                    updateCounsellingTracking(pos, (RajpushtApp) requireContext().getApplicationContext(), true);
                     showAlertDialog(getString(R.string.counselling_completed), new Runnable() {
                         @Override
                         public void run() {
@@ -239,6 +283,8 @@ public class CounsellingAnimationFragment extends Fragment {
                 }
             }
         });
+
+        updateCounsellingTracking(pos, (RajpushtApp) requireContext().getApplicationContext(), false);
     }
 
     @Override

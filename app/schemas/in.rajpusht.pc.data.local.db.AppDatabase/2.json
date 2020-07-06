@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "a69fe88be6c95daa78e9e18e155fbd08",
+    "identityHash": "6c255f165c28f2497e397fcd235909a0",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -875,12 +875,71 @@
         },
         "indices": [],
         "foreignKeys": []
+      },
+      {
+        "tableName": "counseling_tracking",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `formId` INTEGER NOT NULL, `isPwType` INTEGER NOT NULL, `startTime` TEXT, `lastKnowUpdateTime` TEXT, `isCompleted` INTEGER NOT NULL)",
+        "fields": [
+          {
+            "fieldPath": "id",
+            "columnName": "id",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "formId",
+            "columnName": "formId",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "isPwType",
+            "columnName": "isPwType",
+            "affinity": "INTEGER",
+            "notNull": true
+          },
+          {
+            "fieldPath": "startTime",
+            "columnName": "startTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "lastKnowUpdateTime",
+            "columnName": "lastKnowUpdateTime",
+            "affinity": "TEXT",
+            "notNull": false
+          },
+          {
+            "fieldPath": "isCompleted",
+            "columnName": "isCompleted",
+            "affinity": "INTEGER",
+            "notNull": true
+          }
+        ],
+        "primaryKey": {
+          "columnNames": [
+            "id"
+          ],
+          "autoGenerate": true
+        },
+        "indices": [
+          {
+            "name": "index_counseling_tracking_formId",
+            "unique": false,
+            "columnNames": [
+              "formId"
+            ],
+            "createSql": "CREATE INDEX IF NOT EXISTS `index_counseling_tracking_formId` ON `${TABLE_NAME}` (`formId`)"
+          }
+        ],
+        "foreignKeys": []
       }
     ],
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'a69fe88be6c95daa78e9e18e155fbd08')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6c255f165c28f2497e397fcd235909a0')"
     ]
   }
 }
