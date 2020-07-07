@@ -10,6 +10,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import in.rajpusht.pc.custom.ui.DropDownModel;
 import in.rajpusht.pc.data.local.db.AppDatabase;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
@@ -322,7 +323,7 @@ public class AppDbHelper {
 
     //institution
 
-    public Single<List<String>> getInstitutionLocation(String type) {
+    public Single<List<DropDownModel>> getInstitutionLocation(String type) {
         return mAppDatabase.institutionPlaceDao().getInstitutionLocation(type);
     }
 

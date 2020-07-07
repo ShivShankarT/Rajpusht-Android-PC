@@ -1,6 +1,5 @@
 package in.rajpusht.pc.data;
 
-import android.util.Log;
 import android.util.Pair;
 
 import androidx.annotation.Nullable;
@@ -15,6 +14,7 @@ import java.util.List;
 
 import javax.inject.Inject;
 
+import in.rajpusht.pc.custom.ui.DropDownModel;
 import in.rajpusht.pc.data.local.AppDbHelper;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
@@ -171,32 +171,23 @@ public class DataRepository {
     }
 
 
-    public Single<Boolean> insertFacilityData() {
+    public Single<ApiResponse<List<InstitutionPlaceEntity>>> fetchInsertFacilityData() {
 
-        return getInstitutionPlaceCount().flatMap(new Function<Long, SingleSource<Boolean>>() {
-            @Override
-            public SingleSource<Boolean> apply(Long aLong) throws Exception {
-                if (aLong == 0) {
-                    String json = appPreferencesHelper.readStringFromAsset("other/facilities.json");
-                    List<InstitutionPlaceEntity> institutionPlaceEntities = JsonParser.parseFacility(json);
-                    return appDbHelper.insertInstitutionPlace(institutionPlaceEntities).toSingleDefault(true);
-                } else {
-                    return Single.just(true);
-                }
-            }
-        });
+      return   appApiHelper.fetchInstitutionPlaceEntity()
+                .flatMap(listApiResponse -> {
+                    if (listApiResponse.isStatus())
+                        return appDbHelper.insertInstitutionPlace(listApiResponse.getData()).toSingleDefault(listApiResponse);
+                    else
+                        return Single.error(new Exception());
+                });
+
 
 
     }
 
-    public Single<List<String>> getInstitutionLocation(String type) {
+    public Single<List<DropDownModel>> getInstitutionLocation(String type) {
 
         return appDbHelper.getInstitutionLocation(type);
-    }
-
-    public Single<Long> getInstitutionPlaceCount() {
-
-        return appDbHelper.getInstitutionPlaceCount();
     }
 
 

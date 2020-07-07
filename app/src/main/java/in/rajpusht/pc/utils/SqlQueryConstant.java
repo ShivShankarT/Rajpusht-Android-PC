@@ -14,16 +14,16 @@ public class SqlQueryConstant {
             "                         when julianday('now') - julianday(p.lmpDate) <=252 then 'PW3'                                                            \n" +
             "                         when julianday('now') - julianday(p.lmpDate) <=280 then 'PW4'                                                            \n" +
             "        END                                                                                                                                       \n" +
-            "       END AS currentSubStage, p.lmpDate,lm.id as lmFormId,pw.id as pwFormId,b.dataStatus,      " +
+            "       END AS currentSubStage, p.lmpDate,lm.id as lmFormId,pw.id as pwFormId,u.childOrder,b.dataStatus,      " +
             "                                                  \n" +
             "           CASE WHEN u.motherId IS NOT NULL  THEN  lm.naReason ELSE    pw.naReason  end  as  naReason,                                            \n" +
             "           CASE WHEN u.motherId IS NOT NULL  THEN  lm.available ELSE    pw.available  end  as  available                                          \n" +
             "                                                                                                                                                  \n" +
             "                                                                                                                                                  \n" +
             " from                                                                                                                                             \n" +
-            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId from beneficiary where isActive='N'                                           \n" +
+            "(select beneficiaryId , name,stage,subStage, dob,  NULL AS motherId,NULL as childOrder from beneficiary where isActive='N'                                           \n" +
             "UNION                                                                                                                                             \n" +
-            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId from child where isActive='N' ) u                                          \n" +
+            "select childId, NULL AS name,stage,subStage, dob, motherId AS motherId,childOrder from child where isActive='N' ) u                                          \n" +
             "Left Join (select * from  pregnant) p on p.beneficiaryId= u.beneficiaryId and u.motherId is NULL                               \n" +
             "inner join  beneficiary b on (u.motherId is NULL  and b.beneficiaryId=u.beneficiaryId ) OR((u.motherId is NOT NULL  and b.beneficiaryId=u.motherId ))                                                                                                                                   \n" +
             "left join pw_monitor pw on pw.pregnancyId=p.pregnancyId and currentSubStage=pw.substage\n" +

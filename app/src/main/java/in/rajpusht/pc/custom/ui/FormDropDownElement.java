@@ -36,6 +36,7 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
     private HValueChangedListener<Integer> hValueChangedListener;
     private boolean required;
     private List<String> sectionData = new ArrayList<>();
+    private List<DropDownModel> dropDownModels = new ArrayList<>();
     private Spinner edf_ch_gp;
 
     public FormDropDownElement(Context context) {
@@ -87,10 +88,12 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
         a.recycle();
 
     }
+
     public void setSectionList(String[] data) {
         List<String> data1 = Arrays.asList(data);
         setSectionList(data1);
     }
+
     public void setSectionList(List<String> data) {
         mSelectedPos = -1;
         sectionData.clear();
@@ -155,8 +158,8 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
             return;
         edf_ch_gp.setOnItemSelectedListener(null);
 
-        if ((pos + 1) < sectionData.size()) {
-            mSelectedPos = pos + 1;
+        if (pos < sectionData.size()) {
+            mSelectedPos = pos;
             edf_ch_gp.setSelection(mSelectedPos);
         }
 
@@ -188,6 +191,29 @@ public class FormDropDownElement extends FrameLayout implements AdapterView.OnIt
         return null;
     }
 
+    public DropDownModel getSelectedModel() {
+        if (mSelectedPos == 0 || mSelectedPos == -1)
+            return null;
+
+        if (mSelectedPos < dropDownModels.size())
+            return dropDownModels.get(mSelectedPos);
+
+        return null;
+    }
+
+    public List<DropDownModel> getDropDownModels() {
+        return dropDownModels;
+    }
+
+    public void setDropDownModels(List<DropDownModel> dropDownModels) {
+        this.dropDownModels = dropDownModels;
+        List<String> list = new ArrayList<>();
+        for (DropDownModel dropDownModel : dropDownModels) {
+            list.add(dropDownModel.getTitle());
+        }
+        setSectionList(list);
+
+    }
 
     public void requestFocusAndScroll() {
         View targetView = this;

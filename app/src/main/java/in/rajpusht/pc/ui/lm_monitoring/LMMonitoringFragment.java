@@ -157,7 +157,6 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
                 //If Discharge Slip selected then OPD/IPD is mandatory.
                 //child ID mandatory if institute delivery else optional.
-                viewDataBinding.benfPctsChildId.setRequired(false);
                 if (data == 0) {//discharge_slip-->0 ; mamta_mcp_card->1
                     viewDataBinding.benfOpdIpd.setRequired(true);
                 } else {

@@ -6,9 +6,12 @@ import com.google.gson.JsonObject;
 
 import org.json.JSONObject;
 
+import java.util.List;
+
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.ProfileDetail;
 import io.reactivex.Single;
@@ -68,7 +71,7 @@ public class AppApiHelper {
 
 
     public Single<ApiResponse<JsonElement>> changePassword(String oldPassword,
-                                                          String newPassword) {
+                                                           String newPassword) {
         return networkErrorWrapper(apiService.changePassword(oldPassword, newPassword));
     }
 
@@ -98,7 +101,6 @@ public class AppApiHelper {
     }
 
 
-
     public Single<ApiResponse<JsonObject>> logout() {
         return networkErrorWrapper(apiService.logout());
     }
@@ -106,6 +108,10 @@ public class AppApiHelper {
 
     public Single<ApiResponse<JsonObject>> bulkDownload() {
         return networkErrorWrapper(apiService.bulkDownload());
+    }
+
+    public Single<ApiResponse<List<InstitutionPlaceEntity>>> fetchInstitutionPlaceEntity() {
+        return networkErrorWrapper(apiService.fetchInstitutionPlaceEntity());
     }
 
     public Single<ApiResponse<JsonObject>> bulkUpload(JsonArray jsonArray) {

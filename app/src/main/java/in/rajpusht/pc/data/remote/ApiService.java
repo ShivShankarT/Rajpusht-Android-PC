@@ -5,6 +5,9 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.List;
+
+import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.ProfileDetail;
 import io.reactivex.Single;
@@ -30,7 +33,7 @@ public interface ApiService {
     @POST("changePassword")
     @FormUrlEncoded
     Single<ApiResponse<JsonElement>> changePassword(@Field("oldPassword") String oldPassword,
-                                                   @Field("newPassword") String newPassword);
+                                                    @Field("newPassword") String newPassword);
 
 
     @POST("forgotPassword")
@@ -41,7 +44,7 @@ public interface ApiService {
     @POST("setPassword")
     @FormUrlEncoded
     Single<ApiResponse<JsonElement>> setPassword(@Field("resetOtp") String resetOtp,
-                                                @Field("newPassword") String newPassword);
+                                                 @Field("newPassword") String newPassword);
 
 
     @POST("resendOtp")
@@ -51,7 +54,7 @@ public interface ApiService {
 
     @GET("profileDetail")
     Single<ApiResponse<ProfileDetail>> profileDetail();
-   
+
 
     @PATCH("profileUpdate")
     @FormUrlEncoded
@@ -63,6 +66,9 @@ public interface ApiService {
 
     @GET("bulkDownload")
     Single<ApiResponse<JsonObject>> bulkDownload();
+
+    @GET("getAllDeliveryInstitute")
+    Single<ApiResponse<List<InstitutionPlaceEntity>>> fetchInstitutionPlaceEntity();
 
     @POST("bulkUpload")
     Single<ApiResponse<JsonObject>> bulkUpload(@Body JsonArray jsonArray);

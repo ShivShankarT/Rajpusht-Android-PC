@@ -11,13 +11,6 @@ public class SplashScreenViewModel extends BaseViewModel {
     }
 
     public void checkInsetFacilityData() {
-        getDataManager().insertFacilityData().subscribeOn(getSchedulerProvider().io()).subscribeOn(getSchedulerProvider().ui()).subscribe(new BiConsumer<Boolean, Throwable>() {
-            @Override
-            public void accept(Boolean aBoolean, Throwable throwable) throws Exception {
-                if (throwable != null)
-                    throwable.printStackTrace();
 
-            }
-        });
     }
 }

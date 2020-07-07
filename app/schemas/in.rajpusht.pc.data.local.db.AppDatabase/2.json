@@ -2,7 +2,7 @@
   "formatVersion": 1,
   "database": {
     "version": 2,
-    "identityHash": "6c255f165c28f2497e397fcd235909a0",
+    "identityHash": "eb3d473168bdfa81de578079940752a9",
     "entities": [
       {
         "tableName": "assigned_location",
@@ -381,7 +381,7 @@
       },
       {
         "tableName": "child",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `childSex` TEXT, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` TEXT, `deliveryPlaceType` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER, `isFirstImmunizationComplete` TEXT, `birthWeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `childId` INTEGER NOT NULL, `childSex` TEXT, `stage` TEXT, `subStage` TEXT, `childOrder` INTEGER, `dob` TEXT, `motherId` INTEGER NOT NULL, `deliveryPlace` INTEGER, `deliveryPlaceType` INTEGER, `isActive` TEXT, `createdAt` TEXT, `updatedAt` TEXT, `dataStatus` INTEGER, `age` INTEGER, `isFirstImmunizationComplete` TEXT, `birthWeight` REAL, `pctsChildId` TEXT, `birthWeightSource` INTEGER, `opdipd` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -434,7 +434,7 @@
           {
             "fieldPath": "deliveryPlace",
             "columnName": "deliveryPlace",
-            "affinity": "TEXT",
+            "affinity": "INTEGER",
             "notNull": false
           },
           {
@@ -939,7 +939,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '6c255f165c28f2497e397fcd235909a0')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'eb3d473168bdfa81de578079940752a9')"
     ]
   }
 }

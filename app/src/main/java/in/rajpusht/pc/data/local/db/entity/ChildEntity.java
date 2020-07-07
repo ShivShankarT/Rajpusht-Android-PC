@@ -24,7 +24,7 @@ public class ChildEntity {
     private Integer childOrder;
     private Date dob;
     private long motherId;
-    private String deliveryPlace;
+    private Long deliveryPlace;
     private Integer deliveryPlaceType;// institute or home
     private String isActive;
     private String createdAt;
@@ -90,11 +90,11 @@ public class ChildEntity {
         this.motherId = motherId;
     }
 
-    public String getDeliveryPlace() {
+    public Long getDeliveryPlace() {
         return deliveryPlace;
     }
 
-    public void setDeliveryPlace(String deliveryPlace) {
+    public void setDeliveryPlace(Long deliveryPlace) {
         this.deliveryPlace = deliveryPlace;
     }
 

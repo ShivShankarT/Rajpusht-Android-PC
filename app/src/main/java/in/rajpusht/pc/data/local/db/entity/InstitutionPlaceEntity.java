@@ -10,14 +10,15 @@ public class InstitutionPlaceEntity {
 
     public static final String TABLE_NAME = "institution_place";
     @PrimaryKey(autoGenerate = true)
+    @SerializedName("id")
     private int id;
-    @SerializedName("District")
+    @SerializedName("district")
     private String district;
-    @SerializedName("Block")
+    @SerializedName("block")
     private String block;
-    @SerializedName("Type of facility")
+    @SerializedName("type")
     private String typeOfFacility;
-    @SerializedName("Location")
+    @SerializedName("location_name")
     private String location;
 
 

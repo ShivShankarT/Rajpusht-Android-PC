@@ -25,6 +25,7 @@ import javax.inject.Inject;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
+import in.rajpusht.pc.custom.ui.DropDownModel;
 import in.rajpusht.pc.custom.ui.FormDropDownElement;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.custom.validator.FormValidatorUtils;
@@ -407,13 +408,13 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     private void setLocationData(String ftype, FormDropDownElement formDropDownElement) {
         dataRepository.getInstitutionLocation(ftype)
                 .observeOn(schedulerProvider.ui())
-                .subscribeOn(schedulerProvider.io()).subscribe(new BiConsumer<List<String>, Throwable>() {
+                .subscribeOn(schedulerProvider.io()).subscribe(new BiConsumer<List<DropDownModel>, Throwable>() {
             @Override
-            public void accept(List<String> strings, Throwable throwable) throws Exception {
+            public void accept(List<DropDownModel> strings, Throwable throwable) throws Exception {
                 if (throwable != null)
                     throwable.printStackTrace();
                 if (strings != null)
-                    formDropDownElement.setSectionList(strings);
+                    formDropDownElement.setDropDownModels(strings);
 
             }
         });
@@ -738,8 +739,8 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
             childEntity.setDob(date);
             childEntity.setMotherId(beneficiaryId);
             childEntity.setDeliveryPlaceType(vb.benfChildDeliveryPlaceType.getSelectedPos());
-            childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getSelectedData());//todo
-
+            DropDownModel placeSelectedModel = vb.benfChildDeliveryPlace.getSelectedModel();
+            childEntity.setDeliveryPlace(placeSelectedModel != null ? placeSelectedModel.getId() : null);
             beneficiaryEntity.setStage(childEntity.getStage());
             beneficiaryEntity.setSubStage(childEntity.getStage());//todo
 

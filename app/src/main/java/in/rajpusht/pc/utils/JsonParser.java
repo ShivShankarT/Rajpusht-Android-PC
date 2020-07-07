@@ -190,7 +190,7 @@ public class JsonParser {
                     String sub_stage = getString(object, "sub_stage");
                     int mother_id = getInt(object, "mother_id");
                     Integer delivery_place_type = getInt(object, "delivery_place_type");
-                    String delivery_place = getString(object, "delivery_place");
+                    Long delivery_place = getLong(object, "institute_place_id");
                     Integer child_order = getInt(object, "child_order");
                     String is_active = getString(object, "is_active");
                     String is_first_immunization_complete = getString(object, "is_first_immunization_complete");
@@ -404,7 +404,8 @@ public class JsonParser {
         childobject.addProperty("stage", childEntity.getStage());
         childobject.addProperty("subStage", childEntity.getSubStage());
         childobject.addProperty("deliveryPlaceType", childEntity.getDeliveryPlaceType());
-        childobject.addProperty("deliveryPlace", childEntity.getDeliveryPlace());
+        childobject.addProperty("institutePlaceId", childEntity.getDeliveryPlace());
+        childobject.addProperty("deliveryPlace", childEntity.getDeliveryPlace());//todo institutePlaceId  new key
         childobject.addProperty("childOrder", childEntity.getChildOrder());
         childobject.addProperty("isActive", childEntity.getIsActive());
         childobject.addProperty("birthWeight", childEntity.getBirthWeight());

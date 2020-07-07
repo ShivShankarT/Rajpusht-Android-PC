@@ -29,6 +29,7 @@ import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.custom.callback.HValidatorListener;
 import in.rajpusht.pc.custom.callback.HValueChangedListener;
+import in.rajpusht.pc.custom.ui.DropDownModel;
 import in.rajpusht.pc.custom.ui.FormDropDownElement;
 import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.custom.validator.FormValidatorUtils;
@@ -262,7 +263,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
         viewDataBinding.benfHusName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
         viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
-        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator( 5,  12,getResources().getString(R.string.invalid_bhamasha_id)));
+        viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 12, getResources().getString(R.string.invalid_bhamasha_id)));
 
         Calendar instance = Calendar.getInstance();
         instance.add(Calendar.YEAR, -1);
@@ -539,13 +540,13 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     private void setLocationData(String ftype, FormDropDownElement formDropDownElement) {
         dataRepository.getInstitutionLocation(ftype)
                 .observeOn(schedulerProvider.ui())
-                .subscribeOn(schedulerProvider.io()).subscribe(new BiConsumer<List<String>, Throwable>() {
+                .subscribeOn(schedulerProvider.io()).subscribe(new BiConsumer<List<DropDownModel>, Throwable>() {
             @Override
-            public void accept(List<String> strings, Throwable throwable) throws Exception {
+            public void accept(List<DropDownModel> strings, Throwable throwable) throws Exception {
                 if (throwable != null)
                     throwable.printStackTrace();
                 if (strings != null)
-                    formDropDownElement.setSectionList(strings);
+                    formDropDownElement.setDropDownModels(strings);
 
             }
         });
@@ -682,7 +683,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             childEntity.setDob(date);
             childEntity.setMotherId(beneficiaryId);
             childEntity.setDeliveryPlaceType(vb.benfChildDeliveryPlaceType.getSelectedPos());
-            childEntity.setDeliveryPlace(vb.benfChildDeliveryPlace.getSelectedData());
+            DropDownModel placeSelectedModel = vb.benfChildDeliveryPlace.getSelectedModel();
+            childEntity.setDeliveryPlace(placeSelectedModel != null ? placeSelectedModel.getId() : null);
 
 
         }
@@ -718,7 +720,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             secondChildEntity.setDob(date);
             secondChildEntity.setMotherId(beneficiaryId);
             secondChildEntity.setDeliveryPlaceType(vb.benfChild2DeliveryPlaceType.getSelectedPos());
-            secondChildEntity.setDeliveryPlace(vb.benfChild2DeliveryPlace.getSelectedData());
+            DropDownModel placeSelectedModel = vb.benfChild2DeliveryPlace.getSelectedModel();
+            secondChildEntity.setDeliveryPlace(placeSelectedModel != null ? placeSelectedModel.getId() : null);
             secondChildEntity.setChildSex(FormDataConstant.childSex.get(vb.benfChild2Sex.getSelectedPos()));
 
         }
@@ -896,7 +899,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (!childEntities.isEmpty()) {
             ChildEntity childEntity = childEntities.get(0);
             vh.benfChildDob.setDate(childEntity.getDob());
-            vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace());
+            vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace()+"");//todo fetch  from db
             if (childEntity.getDeliveryPlaceType() != null) {
                 vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryPlaceType());
                 vh.benfChildDeliveryPlaceType.sendChangedListenerValue();
@@ -907,7 +910,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             if (childEntities.size() >= 2) {
                 ChildEntity secondChild = childEntities.get(1);
                 vh.benfChild2Dob.setDate(secondChild.getDob());
-                vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace());
+                vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace()+"");////todo fetch  from db
                 vh.benfChild2Sex.setSection(FormDataConstant.childSex.indexOf(secondChild.getChildSex()));
                 if (secondChild.getDeliveryPlaceType() != null) {
                     vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryPlaceType());
