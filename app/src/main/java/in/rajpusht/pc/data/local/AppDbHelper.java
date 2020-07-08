@@ -7,6 +7,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -122,6 +123,7 @@ public class AppDbHelper {
                 beneficiaryEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 beneficiaryEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 beneficiaryEntity.setCreatedBy(appPreferencesHelper.getCurrentUserId());
+                beneficiaryEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.beneficiaryDao().insert(beneficiaryEntity);
             } else {
                 if (beneficiaryEntity.getDataStatus() == null || beneficiaryEntity.getDataStatus() == DataStatus.OLD)
@@ -141,6 +143,7 @@ public class AppDbHelper {
                     pregnantEntity.setDataStatus(DataStatus.NEW);
                 pregnantEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 pregnantEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+                pregnantEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.pregnantDao().insert(pregnantEntity);
             } else {
                 if (pregnantEntity.getDataStatus() == null || pregnantEntity.getDataStatus() == DataStatus.OLD)
@@ -160,6 +163,7 @@ public class AppDbHelper {
                     childEntity.setDataStatus(DataStatus.NEW);
                 childEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 childEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+                childEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.childDao().insert(childEntity);
             } else {
                 if (childEntity.getDataStatus() == null || childEntity.getDataStatus() == DataStatus.OLD)
@@ -192,6 +196,7 @@ public class AppDbHelper {
                 pwMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 pwMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 pwMonitorEntity.setCreatedBy(appPreferencesHelper.getCurrentUserId());
+                pwMonitorEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.pwMonitorDao().insert(pwMonitorEntity);
             } else {
                 if (pwMonitorEntity.getDataStatus() == null || pwMonitorEntity.getDataStatus() == DataStatus.OLD)
@@ -225,6 +230,7 @@ public class AppDbHelper {
                 lmMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 lmMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 lmMonitorEntity.setCreatedBy(appPreferencesHelper.getCurrentUserId());
+                lmMonitorEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.lmMonitorDao().insert(lmMonitorEntity);
             } else {
                 if (lmMonitorEntity.getDataStatus() == null || lmMonitorEntity.getDataStatus() == DataStatus.OLD)
@@ -241,6 +247,7 @@ public class AppDbHelper {
         if (counselingTrackingEntity.getId() == 0) {
             counselingTrackingEntity.setStartTime( new Date());
             counselingTrackingEntity.setLastKnowUpdateTime( new Date());
+            counselingTrackingEntity.setUuid(UUID.randomUUID().toString());
             return mAppDatabase.counsellingTrackingDao().insertAndReturn(counselingTrackingEntity);
         } else {
 

@@ -42,7 +42,7 @@ public class AppModule {
     @Provides
     @DatabaseInfo
     String dbName() {
-        return "pc-test1.1.11.db";
+        return "pc-testv1.db";
     }
 
 

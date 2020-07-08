@@ -646,8 +646,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             int days = HUtil.daysBetween(lmpdate, new Date());
             beneficiaryEntity.setStage("PW");
-            // beneficiaryEntity.setSubStage(HUtil.getPWSubStage(days));
-            beneficiaryEntity.setSubStage("PW");//todo check
+            beneficiaryEntity.setSubStage(HUtil.getPWSubStage(days));
         }
 
         if (hasChild) {
@@ -663,19 +662,17 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             int days = HUtil.daysBetween(date, new Date());
             String lmmySubStage = HUtil.getLMMYSubStage(days);
-            //childEntity.setSubStage(lmmySubStage);//todo
+            childEntity.setSubStage(lmmySubStage);
 
 
             if (lmmySubStage.contains("LM")) {
                 childEntity.setStage("LM");
-                childEntity.setSubStage("LM");
             } else {
                 childEntity.setStage("MY");
-                childEntity.setSubStage("MY");
             }
 
             if (!isPregnant) {
-                beneficiaryEntity.setSubStage(childEntity.getStage());//todo
+                beneficiaryEntity.setSubStage(childEntity.getSubStage());
                 beneficiaryEntity.setStage(childEntity.getStage());
             }
 
@@ -701,15 +698,11 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
             int days = HUtil.daysBetween(date, new Date());
             String lmmySubStage = HUtil.getLMMYSubStage(days);
-            //childEntity.setSubStage(lmmySubStage);//todo
-
-
+            childEntity.setSubStage(lmmySubStage);//todo
             if (lmmySubStage.contains("LM")) {
                 secondChildEntity.setStage("LM");
-                secondChildEntity.setSubStage("LM");
             } else {
                 secondChildEntity.setStage("MY");
-                secondChildEntity.setSubStage("MY");
             }
 
             if (!isPregnant) {
@@ -899,7 +892,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (!childEntities.isEmpty()) {
             ChildEntity childEntity = childEntities.get(0);
             vh.benfChildDob.setDate(childEntity.getDob());
-            vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace()+"");//todo fetch  from db
+            vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace() + "");//todo fetch  from db
             if (childEntity.getDeliveryPlaceType() != null) {
                 vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryPlaceType());
                 vh.benfChildDeliveryPlaceType.sendChangedListenerValue();
@@ -910,7 +903,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             if (childEntities.size() >= 2) {
                 ChildEntity secondChild = childEntities.get(1);
                 vh.benfChild2Dob.setDate(secondChild.getDob());
-                vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace()+"");////todo fetch  from db
+                vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace() + "");////todo fetch  from db
                 vh.benfChild2Sex.setSection(FormDataConstant.childSex.indexOf(secondChild.getChildSex()));
                 if (secondChild.getDeliveryPlaceType() != null) {
                     vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryPlaceType());
@@ -987,8 +980,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
 
         if (true || beneficiaryEntity.getDataStatus() != DataStatus.NEW) {//todo always
-            vh.save.setEnabled(false);
-            HUtil.recursiveSetEnabled(vh.formContainer, false);
+           // vh.save.setEnabled(false);
+            //HUtil.recursiveSetEnabled(vh.formContainer, false);
         }
 
     }

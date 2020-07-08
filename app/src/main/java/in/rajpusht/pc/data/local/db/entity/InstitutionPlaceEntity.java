@@ -20,6 +20,7 @@ public class InstitutionPlaceEntity {
     private String typeOfFacility;
     @SerializedName("location_name")
     private String location;
+    private String uuid;
 
 
     public int getId() {
@@ -60,5 +61,12 @@ public class InstitutionPlaceEntity {
 
     public void setLocation(String location) {
         this.location = location;
+    }
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

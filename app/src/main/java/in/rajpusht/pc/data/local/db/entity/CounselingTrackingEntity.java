@@ -1,5 +1,6 @@
 package in.rajpusht.pc.data.local.db.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
@@ -17,6 +18,7 @@ public class CounselingTrackingEntity {
     private Date startTime;
     private Date lastKnowUpdateTime;
     private boolean isCompleted;
+    private String uuid;
 
     public int getId() {
         return id;
@@ -67,15 +69,18 @@ public class CounselingTrackingEntity {
         isCompleted = completed;
     }
 
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
+
+    @NonNull
     @Override
     public String toString() {
-        return "CounselingTrackingEntity{" +
-                "id=" + id +
-                ", formId=" + formId +
-                ", isPwType=" + isPwType +
-                ", startTime=" + startTime +
-                ", lastKnowUpdateTime=" + lastKnowUpdateTime +
-                ", isCompleted=" + isCompleted +
-                '}';
+        return super.toString();
     }
 }

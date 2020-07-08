@@ -1,17 +1,15 @@
 package in.rajpusht.pc.data.local.db.entity;
 
-import androidx.room.Embedded;
 import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 import java.util.Date;
-import java.util.List;
 
 import in.rajpusht.pc.model.DataStatus;
 
 
-@Entity(tableName = BeneficiaryEntity.TABLE_NAME , indices = { @Index(value="beneficiaryId"), @Index(value="awcCode"),})
+@Entity(tableName = BeneficiaryEntity.TABLE_NAME, indices = {@Index(value = "beneficiaryId"), @Index(value = "awcCode"),})
 public class BeneficiaryEntity {
     public static final String TABLE_NAME = "beneficiary";
 
@@ -42,6 +40,7 @@ public class BeneficiaryEntity {
     private Long createdBy;
     private String createdAt;
     private String updatedAt;
+    private String uuid;
 
     public int getId() {
         return id;
@@ -252,5 +251,13 @@ public class BeneficiaryEntity {
 
     public void setIsActive(String isActive) {
         this.isActive = isActive;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

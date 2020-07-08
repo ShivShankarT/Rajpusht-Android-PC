@@ -8,7 +8,6 @@ import com.google.gson.JsonObject;
 public class JsonUtils {
 
     public static String getString(JsonObject jsonObject, String childKey) {
-        Log.i("jsonvalue", ": k:" + childKey + "==" + jsonObject.get(childKey));
         JsonElement valuejson = jsonObject.get(childKey);
         if (valuejson != null && !valuejson.isJsonNull()) {
             return valuejson.getAsString();
@@ -17,7 +16,6 @@ public class JsonUtils {
     }
 
     public static Integer getInt(JsonObject jsonObject, String childKey) {
-        Log.i("jsonvalue", ": k:" + childKey + "==" + jsonObject.get(childKey));
         JsonElement valuejson = jsonObject.get(childKey);
         if (valuejson != null && !valuejson.isJsonNull()) {
             return valuejson.getAsInt();
@@ -26,7 +24,6 @@ public class JsonUtils {
     }
 
     public static Long getLong(JsonObject jsonObject, String childKey) {
-        Log.i("jsonvalue", ": k:" + childKey + "==" + jsonObject.get(childKey));
         JsonElement valuejson = jsonObject.get(childKey);
         if (valuejson != null && !valuejson.isJsonNull()) {
             return valuejson.getAsLong();
@@ -35,7 +32,6 @@ public class JsonUtils {
     }
 
     public static Double getDouble(JsonObject jsonObject, String childKey) {
-        Log.i("jsonvalue", ": k:" + childKey + "==" + jsonObject.get(childKey));
         JsonElement valuejson = jsonObject.get(childKey);
         if (valuejson != null && !valuejson.isJsonNull()) {
             return valuejson.getAsDouble();

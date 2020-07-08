@@ -36,6 +36,7 @@ public class ChildEntity {
     private String pctsChildId;
     private Integer birthWeightSource;
     private Long opdipd;
+    private String uuid;
     @Ignore
     private List<LMMonitorEntity> lmMonitorEntities;
 
@@ -209,7 +210,13 @@ public class ChildEntity {
     public void setChildSex(String childSex) {
         this.childSex = childSex;
     }
+    public String getUuid() {
+        return uuid;
+    }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
     @Override
     public String toString() {
         return "ChildEntity{" +

@@ -33,6 +33,7 @@ public class PWMonitorEntity {
     private Long createdBy;
     private String createdAt;
     private String updatedAt;
+    private String uuid;
 
 
     public long getId() {
@@ -194,5 +195,13 @@ public class PWMonitorEntity {
 
     public void setNaReason(String naReason) {
         this.naReason = naReason;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

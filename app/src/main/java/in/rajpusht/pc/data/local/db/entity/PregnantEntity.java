@@ -25,6 +25,7 @@ public class PregnantEntity {
     private String isActive;
     private String createdAt;
     private String updatedAt;
+    private String uuid;
 
 
     public long getBeneficiaryId() {
@@ -97,5 +98,12 @@ public class PregnantEntity {
 
     public void setIsActive(String isActive) {
         this.isActive = isActive;
+    }
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 }

@@ -1,0 +1,127 @@
+{
+  "project_info": {
+    "project_number": "327472586201",
+    "firebase_url": "https://rajpusht-testing.firebaseio.com",
+    "project_id": "rajpusht-testing",
+    "storage_bucket": "rajpusht-testing.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327472586201:android:09d392f7c18839848c0dc8",
+        "android_client_info": {
+          "package_name": "in.co.rajpusht.cashtransfer.testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcSc9Fz2aMIKemP4xmu7ekQ19-bjGStVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327472586201:android:2012b99d4c14163c8c0dc8",
+        "android_client_info": {
+          "package_name": "in.co.rajpusht.ladysuperviser.testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcSc9Fz2aMIKemP4xmu7ekQ19-bjGStVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327472586201:android:f7e06a91fed2d0328c0dc8",
+        "android_client_info": {
+          "package_name": "in.co.rajpusht.rajpusht.testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcSc9Fz2aMIKemP4xmu7ekQ19-bjGStVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:327472586201:android:f2b6aa0f18db4c578c0dc8",
+        "android_client_info": {
+          "package_name": "in.rajpusht.pc.testing"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDcSc9Fz2aMIKemP4xmu7ekQ19-bjGStVw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "327472586201-673muirqu2tkalkifc2oi9vkse071h0j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

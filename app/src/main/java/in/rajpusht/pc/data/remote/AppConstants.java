@@ -4,9 +4,9 @@ import java.util.concurrent.TimeUnit;
 
 public class AppConstants {
     public static final String BASE_URL = "http://dev.rajpusht.in/survey-server/api/PC/";
-    public static final long CONNECT_TIMEOUT = 1000;
-    public static final long READ_TIMEOUT = 1000;
-    public static final long WRITE_TIMEOUT = 30000;
+    public static final long CONNECT_TIMEOUT = 30000;// 30esc
+    public static final long READ_TIMEOUT = 300000;//5 min
+    public static final long WRITE_TIMEOUT = 300000;//
 
     public static final long REPEAT_TIME_INTERVAL_IN_HOURS = 20;
     public static final TimeUnit REPEAT_TIME_INTERVAL_UNITS = TimeUnit.MINUTES;

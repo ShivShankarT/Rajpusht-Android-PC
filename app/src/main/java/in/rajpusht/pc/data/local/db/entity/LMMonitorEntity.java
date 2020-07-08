@@ -32,6 +32,7 @@ public class LMMonitorEntity {
     private DataStatus dataStatus;
     private String createdAt;
     private String updatedAt;
+    private String uuid;
 
 
     public long getId() {
@@ -195,6 +196,14 @@ public class LMMonitorEntity {
 
     public void setNaReason(String naReason) {
         this.naReason = naReason;
+    }
+
+    public String getUuid() {
+        return uuid;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
 

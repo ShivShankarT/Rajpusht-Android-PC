@@ -1,4 +1,7 @@
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.gms.google-services'
+apply plugin: 'com.google.firebase.crashlytics'
+
 static def getDate() {
     return new Date().format('dd-MM')
 }
@@ -23,7 +26,7 @@ android {
     buildTypes {
 
         debug {
-          //  applicationIdSuffix ".testing"
+            applicationIdSuffix ".testing"
             versionNameSuffix "-d-testing-" +defaultConfig.versionCode+"-" + getDate()
             resValue 'string', "app_name", "Rajpusht PC Test"
             buildConfigField 'boolean', 'PRODUCTION_SERVER', 'false'
@@ -89,6 +92,9 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0-alpha01'
 
     implementation 'androidx.constraintlayout:constraintlayout:2.0.0-beta6'
+    implementation 'com.google.firebase:firebase-analytics:17.2.2'
+    implementation 'com.google.firebase:firebase-crashlytics:17.1.0'
+
 
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     implementation 'androidx.lifecycle:lifecycle-extensions:2.2.0'

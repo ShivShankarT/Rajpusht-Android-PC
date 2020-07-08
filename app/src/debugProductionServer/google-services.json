@@ -1,0 +1,127 @@
+{
+  "project_info": {
+    "project_number": "635459388599",
+    "firebase_url": "https://rajpusht-app.firebaseio.com",
+    "project_id": "rajpusht-app",
+    "storage_bucket": "rajpusht-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635459388599:android:eae1207541ff5927ab7932",
+        "android_client_info": {
+          "package_name": "in.co.rajpusht.cashtransfer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Pl4PEa_buR9MBiCT8cIO01o0P8mNOTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635459388599:android:eb3ca282cc9384f5ab7932",
+        "android_client_info": {
+          "package_name": "in.co.rajpusht.ladysuperviser"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Pl4PEa_buR9MBiCT8cIO01o0P8mNOTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635459388599:android:9a3e46d352ea7b24ab7932",
+        "android_client_info": {
+          "package_name": "in.co.rajpusht.rajpusht"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Pl4PEa_buR9MBiCT8cIO01o0P8mNOTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:635459388599:android:c928e31d92cb97edab7932",
+        "android_client_info": {
+          "package_name": "in.rajpusht.pc"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA1Pl4PEa_buR9MBiCT8cIO01o0P8mNOTE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "635459388599-ieeds8pg2ri648324l6nel96d09gji4h.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
