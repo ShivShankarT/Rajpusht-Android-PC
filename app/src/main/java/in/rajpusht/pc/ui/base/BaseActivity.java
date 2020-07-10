@@ -3,6 +3,7 @@ package in.rajpusht.pc.ui.base;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.os.Build;
@@ -146,11 +147,17 @@ public abstract class BaseActivity<T extends ViewDataBinding, V extends BaseView
         showMessage(findViewById(android.R.id.content), message);
     }
 
-    public void showAlertDialog(String message) {
+    public void showAlertDialog(String message, Runnable runnable) {
         new AlertDialog.Builder(this)
                 .setTitle(R.string.alert)
                 .setMessage(message)
-                .setPositiveButton(R.string.ok, null)
+                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (runnable != null)
+                            runnable.run();
+                    }
+                })
                 .show();
     }
 

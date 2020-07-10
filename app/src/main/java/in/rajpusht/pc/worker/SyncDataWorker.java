@@ -10,11 +10,14 @@ import androidx.work.WorkerParameters;
 
 import com.google.gson.JsonObject;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 import javax.inject.Provider;
 
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.model.ApiResponse;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
@@ -35,10 +38,10 @@ public class SyncDataWorker extends RxWorker {
 
     private Single<Result> syncData() {
         DataRepository dataManager = dataRepository;
+        dataManager.putPrefString(""+ AppDateTimeUtils.convertLocalDateTime(new Date()),"---");
         return dataManager.uploadDataToServer()
                 .flatMap((Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>) jsonObjectApiResponse -> {
                     Log.i(TAG, "syncData: " + jsonObjectApiResponse.toString());
-                    dataRepository.putPrefString(getId().toString() + "->" + System.currentTimeMillis(), jsonObjectApiResponse.toString());
                     if (jsonObjectApiResponse.isStatus()) {
                         ApiResponse<JsonObject> completionValue = new ApiResponse<>();
                         completionValue.setStatus(true);
@@ -60,6 +63,7 @@ public class SyncDataWorker extends RxWorker {
     @NonNull
     @Override
     public Single<Result> createWork() {
+
         return syncData();
     }
 

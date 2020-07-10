@@ -1,29 +1,30 @@
 package in.rajpusht.pc.ui.home;
 
+import android.content.Intent;
 import android.content.res.Configuration;
+import android.location.LocationManager;
 import android.os.Bundle;
+import android.provider.Settings;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
 import androidx.work.NetworkType;
 import androidx.work.PeriodicWorkRequest;
-import androidx.work.WorkInfo;
 import androidx.work.WorkManager;
 
+import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.navigation.NavigationView;
 
-import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Inject;
@@ -58,6 +59,7 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     DataRepository dataRepository;
     @Inject
     SchedulerProvider schedulerProvider;
+    boolean isGpsDialog;
     private HomeViewModel mViewModel;
     private TextView awcName;
     private TextView name;
@@ -72,7 +74,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         return R.layout.activity_home;
     }
 
-
     @Override
     public HomeViewModel getViewModel() {
         mViewModel = new ViewModelProvider(this, factory).get(HomeViewModel.class);
@@ -83,8 +84,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         Fragment fragment = new BeneficiaryFragment();
-        //fragment= PregnancyGraphFragment.newInstance();
-        //fragment=new TestAnimationFragment();
         if (savedInstanceState == null)
             FragmentUtils.replaceFragment(this, fragment, R.id.fragment_container, false, false, FragmentUtils.TRANSITION_NONE);
 
@@ -108,7 +107,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
         name.setText(appPreferencesHelper.getCurrentUserName());
         email.setText(appPreferencesHelper.getCurrentUserEmail());
         setNavUiData();
-
         navigationView1.setNavigationItemSelectedListener(item -> {
             getViewDataBinding().drawerLayout.closeDrawer(GravityCompat.START);
             if (item.getItemId() == R.id.nav_select_awc) {
@@ -121,11 +119,9 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 FragmentUtils.replaceFragment(HomeActivity.this, new ChangePasswordFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_sync) {
                 FragmentUtils.replaceFragment(this, new SyncFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
-                //syncData();
             }
             if (item.getItemId() == R.id.nav_counselling) {
                 FragmentUtils.replaceFragment(this, new CounsellingDemoFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
-                //syncData();
             } else if (item.getItemId() == R.id.nav_Logout) {
                 syncData(true);
             } else if (item.getItemId() == R.id.nav_download) {
@@ -159,8 +155,13 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
             }
         });
         syncData();
-        logger();
 
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        checkGpsOnAndLocPermission();
     }
 
     public void setNavUiData() {
@@ -182,7 +183,6 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     }
 
     void syncData() {
-
         PeriodicWorkRequest periodicWorkRequest =
                 new PeriodicWorkRequest.Builder(SyncDataWorker.class,
                         AppConstants.REPEAT_TIME_INTERVAL_IN_HOURS, AppConstants.REPEAT_TIME_INTERVAL_UNITS, 15, TimeUnit.MINUTES
@@ -197,17 +197,38 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
 
     }
 
-    void logger() {
-        WorkManager.getInstance(this).getWorkInfosByTagLiveData("sync").observe(this, new Observer<List<WorkInfo>>() {
-            @Override
-            public void onChanged(List<WorkInfo> workInfos) {
-                for (int i = 0; i < workInfos.size(); i++) {
-                    WorkInfo w = workInfos.get(i);
-                    Log.i("syncsync", "onChanged: " + i + w.toString());
+    public void checkGpsOnAndLocPermission() {
+        try {
+            LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
+            boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
+            if (!isGPSEnabled) {
+                if (!isGpsDialog) {
+                    showSettingsAlert();
+                    isGpsDialog = true;
                 }
-
             }
-        });
+        } catch (SecurityException e) {
+            e.printStackTrace();
+
+        }
+
+    }
+
+
+    public void showSettingsAlert() {
+        MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this)
+                .setTitle("GPS Location")
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setCancelable(false)
+                .setMessage("Allow Application To Access your Location?")
+                .setPositiveButton("Setting", (dialog, which) -> {
+                    dialog.dismiss();
+                    Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    startActivity(intent);
+                    isGpsDialog = false;
+                });
+        AlertDialog alertDialog = materialAlertDialogBuilder.show();
+
     }
 
 

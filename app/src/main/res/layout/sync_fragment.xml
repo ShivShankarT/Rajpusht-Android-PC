@@ -13,6 +13,8 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:clickable="true"
+        android:focusable="true"
         android:background="@color/white"
         tools:context=".ui.sync.SyncFragment">
 
@@ -21,11 +23,24 @@
             layout="@layout/toolbar_ly"
             tools:viewBindingIgnore="true" />
 
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:orientation="vertical"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+
+            <TextView
+                android:id="@+id/last_sync_date"
+                style="@style/FormTextSmall"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Last Sync:-"
+                android:layout_marginTop="3dp"
+                android:layout_marginLeft="3dp"
+                android:textStyle="bold"
+                android:textColor="@color/black" />
 
 
             <LinearLayout

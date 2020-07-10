@@ -39,7 +39,7 @@
     <string name="jsy">JSY</string>
     <string name="none">None</string>
     <string name="benef_husband_name">Beneficiary\'s Husband\'s Name</string>
-    <string name="benef_age">Age Of beneficiary\"</string>
+    <string name="benef_age">Age Of beneficiary</string>
     <string name="benef_dob">Enter DOB</string>
     <string name="benef_age_enter">Enter Age (e.g 25)</string>
     <string name="mobile_number">Beneficiary Mobile Number</string>
@@ -206,6 +206,9 @@
     <string name="sync_successfully">Sync Successfully</string>
     <string name="select_type_facility">Select Type of Facility</string>
     <string name="Id">Id</string>
+    <string name="runtime_permissions_txt">Allow Permission for accessing location and storage</string>
+
+    <string name="MY_Monitoring">MY Monitoring</string>
 
     <string-array name="child_count">
         <item>0</item>

@@ -5,6 +5,7 @@ import android.util.Pair;
 import androidx.collection.LongSparseArray;
 import androidx.lifecycle.LiveData;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.UUID;
@@ -19,6 +20,7 @@ import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
+import in.rajpusht.pc.data.local.db.entity.LocationEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
@@ -37,6 +39,7 @@ import io.reactivex.Observable;
 import io.reactivex.Single;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.BiFunction;
+import io.reactivex.functions.Function;
 
 public class AppDbHelper {
     private AppDatabase mAppDatabase;
@@ -123,7 +126,6 @@ public class AppDbHelper {
                 beneficiaryEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 beneficiaryEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 beneficiaryEntity.setCreatedBy(appPreferencesHelper.getCurrentUserId());
-                beneficiaryEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.beneficiaryDao().insert(beneficiaryEntity);
             } else {
                 if (beneficiaryEntity.getDataStatus() == null || beneficiaryEntity.getDataStatus() == DataStatus.OLD)
@@ -196,7 +198,6 @@ public class AppDbHelper {
                 pwMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 pwMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 pwMonitorEntity.setCreatedBy(appPreferencesHelper.getCurrentUserId());
-                pwMonitorEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.pwMonitorDao().insert(pwMonitorEntity);
             } else {
                 if (pwMonitorEntity.getDataStatus() == null || pwMonitorEntity.getDataStatus() == DataStatus.OLD)
@@ -230,7 +231,6 @@ public class AppDbHelper {
                 lmMonitorEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 lmMonitorEntity.setUpdatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
                 lmMonitorEntity.setCreatedBy(appPreferencesHelper.getCurrentUserId());
-                lmMonitorEntity.setUuid(UUID.randomUUID().toString());
                 mAppDatabase.lmMonitorDao().insert(lmMonitorEntity);
             } else {
                 if (lmMonitorEntity.getDataStatus() == null || lmMonitorEntity.getDataStatus() == DataStatus.OLD)
@@ -245,8 +245,8 @@ public class AppDbHelper {
     public Single<CounselingTrackingEntity> insertOrUpdateCounsellingTracking(CounselingTrackingEntity counselingTrackingEntity) {
 
         if (counselingTrackingEntity.getId() == 0) {
-            counselingTrackingEntity.setStartTime( new Date());
-            counselingTrackingEntity.setLastKnowUpdateTime( new Date());
+            counselingTrackingEntity.setStartTime(new Date());
+            counselingTrackingEntity.setLastKnowUpdateTime(new Date());
             counselingTrackingEntity.setUuid(UUID.randomUUID().toString());
             return mAppDatabase.counsellingTrackingDao().insertAndReturn(counselingTrackingEntity);
         } else {
@@ -259,6 +259,27 @@ public class AppDbHelper {
     public Single<Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>>> counselingTrackingListPairForm() {
 
         return mAppDatabase.counsellingTrackingDao().counselingTrackingListPairForm();
+    }
+
+    public Single<Long> insertBeneficiaryLocation(LocationEntity locationEntity) {
+        locationEntity.setCreatedAt(AppDateTimeUtils.convertServerTimeStampDate(new Date()));
+        return mAppDatabase.locationDao().insertSingle(locationEntity);
+    }
+
+    public Single<LongSparseArray<List<LocationEntity>>> getBeneficiaryLocation() {
+
+        return mAppDatabase.locationDao().getLocationEntities().map(new Function<List<LocationEntity>, LongSparseArray<List<LocationEntity>>>() {
+            @Override
+            public LongSparseArray<List<LocationEntity>> apply(List<LocationEntity> locationEntities) throws Exception {
+                LongSparseArray<List<LocationEntity>> listLongSparseArray = new LongSparseArray<>();
+                for (LocationEntity locationEntity : locationEntities) {
+                    List<LocationEntity> ll = listLongSparseArray.get(locationEntity.getBeneficiaryId(), new ArrayList<>());
+                    ll.add(locationEntity);
+                    listLongSparseArray.put(locationEntity.getBeneficiaryId(), ll);
+                }
+                return listLongSparseArray;
+            }
+        });
     }
 
 

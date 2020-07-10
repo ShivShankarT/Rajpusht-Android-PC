@@ -23,12 +23,9 @@ public abstract class AssignedLocationDao extends BaseDao<AssignedLocationEntity
             "select b.awcCode, CASE WHEN u.motherId IS NOT NULL                                                                                                             \n" +
             "       THEN case when julianday('now') - julianday(u.dob) <=91 then 'LM1'                                                                         \n" +
             "                 when julianday('now') - julianday(u.dob) <=182 then 'LM2'                                                                        \n" +
-            "                     when julianday('now') - julianday(u.dob) <=365 then 'LM3'                                                                    \n" +
-            "                     when julianday('now') - julianday(u.dob) <=547 then 'MY1'                                                                    \n" +
-            "                         when julianday('now') - julianday(u.dob) <=730 then 'MY2'                                                                \n" +
-            "                         when julianday('now') - julianday(u.dob) <=912 then 'MY3'                                                                \n" +
-            "                         when julianday('now') - julianday(u.dob) <=1095 then 'MY4'                                                               \n" +
-            "             when julianday('now') - julianday(u.dob) <=1155 then 'MY5'                                                                           \n" +
+            "                     when julianday('now') - julianday(u.dob) <=365 then 'MY1'                                                                    \n" +
+            "                         when julianday('now') - julianday(u.dob) <=547 then 'MY2'                                                                \n" +
+            "                         when julianday('now') - julianday(u.dob) <=730 then 'MY3'                                                                \n" +
             "                        END                                                                                                                       \n" +
             "       ELSE case when julianday('now') - julianday(p.lmpDate) <=98 then 'PW1'                                                                     \n" +
             "                         when julianday('now') - julianday(p.lmpDate) <=196 then 'PW2'                                                            \n" +

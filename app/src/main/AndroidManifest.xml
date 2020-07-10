@@ -4,22 +4,26 @@
     package="in.rajpusht.pc">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+
     <application
-        android:largeHeap="true"
-        android:allowBackup="false"
         android:name=".RajpushtApp"
+        android:allowBackup="false"
+        android:allowClearUserData="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:largeHeap="true"
+        android:networkSecurityConfig="@xml/network_security_config"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:allowClearUserData="true"
-        android:networkSecurityConfig="@xml/network_security_config"
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:allowBackup">
         <activity
-            android:screenOrientation="portrait"
+            android:launchMode="singleTop"
+            android:name=".ui.login.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".ui.login.LoginActivity" />
+            android:screenOrientation="portrait" />
         <activity android:name=".ui.splash.SplashScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -28,14 +32,14 @@
             </intent-filter>
         </activity>
         <activity
-            android:screenOrientation="portrait"
+            android:name=".ui.home.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".ui.home.HomeActivity" />
+            android:screenOrientation="portrait" />
 
         <activity
-            android:screenOrientation="landscape"
+            android:name=".ui.animation.ActivityVideoPlay"
             android:configChanges="keyboardHidden|orientation|screenSize"
-            android:name=".ui.animation.ActivityVideoPlay" />
+            android:screenOrientation="landscape" />
 
 
         <meta-data
@@ -45,7 +49,7 @@
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"
             android:exported="false"
-            tools:node="remove"/>
+            tools:node="remove" />
     </application>
 
 </manifest>

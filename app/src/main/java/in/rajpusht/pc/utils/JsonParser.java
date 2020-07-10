@@ -6,10 +6,12 @@ import androidx.collection.LongSparseArray;
 
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
+import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.reflect.TypeToken;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import in.rajpusht.pc.custom.utils.HUtil;
@@ -18,12 +20,14 @@ import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
+import in.rajpusht.pc.data.local.db.entity.LocationEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.BeneficiaryWithRelation;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.model.Quintet;
+import in.rajpusht.pc.model.Tuple;
 
 import static in.rajpusht.pc.utils.JsonUtils.getDouble;
 import static in.rajpusht.pc.utils.JsonUtils.getInt;
@@ -82,6 +86,7 @@ public class JsonParser {
                     String pcts_id = getString(object, "pcts_id");
                     String bahamashah_id = getString(object, "bahamashah_or_ack_id");
                     String is_active = getString(object, "is_active");
+                    String uuid = getString(object, "uuid");
                     Integer counseling_sms = getInt(object, "counseling_sms");
 
 
@@ -109,6 +114,7 @@ public class JsonParser {
                     bmodel.setCreatedBy(created_by);
                     bmodel.setIsActive(is_active);
                     bmodel.setDataStatus(DataStatus.OLD);
+                    bmodel.setUuid(uuid);
                     beneficiaryModels.add(bmodel);
 
 
@@ -123,11 +129,13 @@ public class JsonParser {
                     int beneficiary_id = getInt(object, "beneficiary_id");
                     long pregnancy_id = getLong(object, "id");
                     String is_active = getString(object, "is_active");
+                    String uuid = getString(object, "uuid");
                     pmodel.setPregnancyId(pregnancy_id);
                     pmodel.setLmpDate(AppDateTimeUtils.convertDateFromServer(lmp_date));
                     pmodel.setBeneficiaryId(beneficiary_id);
                     pmodel.setIsActive(is_active);
                     pmodel.setDataStatus(DataStatus.OLD);
+                    pmodel.setUuid(uuid);
                     pregnantModels.add(pmodel);
                     pregnantBenfId.put(pmodel.getPregnancyId(), pmodel.getBeneficiaryId());
 
@@ -153,6 +161,7 @@ public class JsonParser {
                     Long created_by = getLong(object, "created_by");
                     String is_available = getString(object, "is_available");
                     String na_reason = getString(object, "na_reason");
+                    String uuid = getString(object, "uuid");
 
 
                     pwmodel.setId(id);
@@ -173,6 +182,7 @@ public class JsonParser {
                     pwmodel.setDataStatus(DataStatus.OLD);
                     pwmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
                     pwmodel.setBeneficiaryId(pregnantBenfId.get(pregnancy_id, 0L));
+                    pwmodel.setUuid(uuid);
                     pwMonitorModels.add(pwmodel);
 
 
@@ -197,6 +207,7 @@ public class JsonParser {
                     Integer birth_weight_source = getInt(object, "birth_weight_source");
                     Long opd_ipd = getLong(object, "opd_ipd");
                     Double birth_weight = getDouble(object, "birth_weight");
+                    String uuid = getString(object, "uuid");
 
 
                     cmodel.setChildId(child_id);
@@ -217,6 +228,7 @@ public class JsonParser {
                     cmodel.setPctsChildId(pcts_child_id);
                     cmodel.setBirthWeightSource(birth_weight_source);
                     cmodel.setOpdipd(opd_ipd);
+                    cmodel.setUuid(uuid);
                     childModel.add(cmodel);
                     childMotherId.put(cmodel.getChildId(), cmodel.getMotherId());
 
@@ -245,6 +257,7 @@ public class JsonParser {
                     String mobile_created_at = getString(object, "mobile_created_at");
                     String is_available = getString(object, "is_available");
                     String na_reason = getString(object, "na_reason");
+                    String uuid = getString(object, "uuid");
 
 
                     LMMonitorEntity lmmodel = new LMMonitorEntity();
@@ -267,6 +280,8 @@ public class JsonParser {
                     lmmodel.setCreatedAt(mobile_created_at);
                     lmmodel.setMotherId(childMotherId.get(lmmodel.getChildId(), 0L));
                     lmmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
+                    lmmodel.setUuid(uuid);
+
                     lmMonitorModel.add(lmmodel);
 
 
@@ -283,23 +298,24 @@ public class JsonParser {
     }
 
 
-    public static JsonArray convertBenfUploadJson(Pair<List<BeneficiaryWithRelation>, Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>>> listPair) {
-        List<BeneficiaryWithRelation> beneficiaryWithRelations = listPair.first;
-        Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>> counsellingTracking = listPair.second;
+    public static JsonArray convertBenfUploadJson(Tuple<List<BeneficiaryWithRelation>, Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>>, LongSparseArray<List<LocationEntity>>> listPair) {
+        List<BeneficiaryWithRelation> beneficiaryWithRelations = listPair.getT1();
+        Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>> counsellingTracking = listPair.getT2();
         JsonArray jsonArray = new JsonArray();
         for (BeneficiaryWithRelation beneficiaryWithRelation : beneficiaryWithRelations) {
-            JsonObject json = dataFor(beneficiaryWithRelation, counsellingTracking);
+            JsonObject json = beneficiaryWholejsonData(beneficiaryWithRelation, counsellingTracking, listPair.getT3());
             if (json != null)//if null no changes
                 jsonArray.add(json);
         }
         return jsonArray;
     }
 
-    private static JsonObject dataFor(BeneficiaryWithRelation beneficiaryWithRelation, Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>> counsellingTracking) {
+    private static JsonObject beneficiaryWholejsonData(BeneficiaryWithRelation beneficiaryWithRelation, Pair<LongSparseArray<List<CounselingTrackingEntity>>, LongSparseArray<List<CounselingTrackingEntity>>> counsellingTracking, LongSparseArray<List<LocationEntity>> befLocations) {
         BeneficiaryEntity benfBeneficiaryEntity = beneficiaryWithRelation.beneficiaryEntity;
         JsonObject bjson = getBeneficiaryJson(benfBeneficiaryEntity);
         JsonArray pregJsonArray = new JsonArray();
         JsonArray childJsonArray = new JsonArray();
+        bjson.add("location", getBenefLocationJson(befLocations.get(benfBeneficiaryEntity.getBeneficiaryId(), Collections.emptyList())));
         for (PregnantEntity pregnantEntity : beneficiaryWithRelation.pregnantEntities) {
 
             JsonObject pregJson = getPregnantJson(pregnantEntity, benfBeneficiaryEntity.getDataStatus() == DataStatus.NEW);
@@ -341,6 +357,21 @@ public class JsonParser {
             return null;
         return bjson;
 
+    }
+
+    private static JsonElement getBenefLocationJson(List<LocationEntity> locationEntities) {
+        JsonArray jsonElements = new JsonArray();
+        for (LocationEntity locationEntity : locationEntities) {
+            JsonObject jsonObject = new JsonObject();
+            jsonObject.addProperty("uuid", locationEntity.getUuid());
+            jsonObject.addProperty("type", locationEntity.getType());
+            jsonObject.addProperty("networkParam", locationEntity.getNetworkParam());
+            jsonObject.addProperty("gpsLocation", locationEntity.getGpsLocation());
+            jsonObject.addProperty("createdAt", locationEntity.getCreatedAt());
+            jsonElements.add(jsonObject);
+        }
+
+        return jsonElements;
     }
 
     private static JsonObject getBeneficiaryJson(BeneficiaryEntity beneficiaryEntity) {

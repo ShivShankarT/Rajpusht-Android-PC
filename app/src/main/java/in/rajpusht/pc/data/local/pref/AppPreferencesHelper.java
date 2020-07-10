@@ -34,7 +34,7 @@ import in.rajpusht.pc.ui.login.LoginActivity;
  */
 
 public class AppPreferencesHelper {
-    public static final String PREF_NAME = "app-prefv1";
+    public static final String PREF_NAME = "app-prefv11";
 
     public static final long NULL_INDEX = -1L;
     public static final String PREF_FIRST_NAME = "first_name";
@@ -44,6 +44,7 @@ public class AppPreferencesHelper {
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
     private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
+    public static final String PREF_LAST_SYNC = "last_sync";
     @SuppressLint("StaticFieldLeak")//application context
     private static AppPreferencesHelper appPreferencesHelper;
     private final SharedPreferences mPrefs;

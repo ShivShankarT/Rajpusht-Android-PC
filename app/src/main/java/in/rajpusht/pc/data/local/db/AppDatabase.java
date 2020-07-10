@@ -11,6 +11,7 @@ import in.rajpusht.pc.data.local.db.dao.ChildDao;
 import in.rajpusht.pc.data.local.db.dao.CounsellingTrackingDao;
 import in.rajpusht.pc.data.local.db.dao.InstitutionPlaceDao;
 import in.rajpusht.pc.data.local.db.dao.LMMonitorDao;
+import in.rajpusht.pc.data.local.db.dao.LocationDao;
 import in.rajpusht.pc.data.local.db.dao.PWMonitorDao;
 import in.rajpusht.pc.data.local.db.dao.PregnantDao;
 import in.rajpusht.pc.data.local.db.entity.AssignedLocationEntity;
@@ -19,6 +20,7 @@ import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
+import in.rajpusht.pc.data.local.db.entity.LocationEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 
@@ -30,6 +32,7 @@ import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
         LMMonitorEntity.class,
         InstitutionPlaceEntity.class,
         CounselingTrackingEntity.class,
+        LocationEntity.class
 }, version = 2)
 @TypeConverters(value = {DbDataConverters.class})
 public abstract class AppDatabase extends RoomDatabase {
@@ -51,4 +54,6 @@ public abstract class AppDatabase extends RoomDatabase {
     public abstract InstitutionPlaceDao institutionPlaceDao();
 
     public abstract CounsellingTrackingDao counsellingTrackingDao();
+
+    public  abstract LocationDao locationDao();
 }

@@ -1,7 +1,5 @@
 package in.rajpusht.pc.data;
 
-import android.util.Pair;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
@@ -10,6 +8,7 @@ import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.inject.Inject;
@@ -22,6 +21,7 @@ import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.CounselingTrackingEntity;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
+import in.rajpusht.pc.data.local.db.entity.LocationEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
@@ -32,7 +32,11 @@ import in.rajpusht.pc.model.BefModel;
 import in.rajpusht.pc.model.BeneficiaryJoin;
 import in.rajpusht.pc.model.BeneficiaryWithChild;
 import in.rajpusht.pc.model.ProfileDetail;
+import in.rajpusht.pc.model.Tuple;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.JsonParser;
+import in.rajpusht.pc.utils.event_bus.EventBusLiveData;
+import in.rajpusht.pc.utils.event_bus.MessageEvent;
 import io.reactivex.Completable;
 import io.reactivex.CompletableSource;
 import io.reactivex.Maybe;
@@ -132,6 +136,10 @@ public class DataRepository {
         return appDbHelper.insertOrUpdateCounsellingTracking(counselingTrackingEntity);
     }
 
+    public Single<Long> insertBeneficiaryLocation(LocationEntity locationEntity) {
+        return appDbHelper.insertBeneficiaryLocation(locationEntity);
+    }
+
 
     public LiveData<List<BefModel>> getBefModels() {
 
@@ -173,14 +181,13 @@ public class DataRepository {
 
     public Single<ApiResponse<List<InstitutionPlaceEntity>>> fetchInsertFacilityData() {
 
-      return   appApiHelper.fetchInstitutionPlaceEntity()
+        return appApiHelper.fetchInstitutionPlaceEntity()
                 .flatMap(listApiResponse -> {
                     if (listApiResponse.isStatus())
                         return appDbHelper.insertInstitutionPlace(listApiResponse.getData()).toSingleDefault(listApiResponse);
                     else
                         return Single.error(new Exception());
                 });
-
 
 
     }
@@ -231,7 +238,14 @@ public class DataRepository {
     }
 
     public Single<ApiResponse<JsonObject>> bulkUpload(JsonArray jsonArray) {
-        return appApiHelper.bulkUpload(jsonArray).flatMap(new Function<ApiResponse<JsonObject>, SingleSource<? extends ApiResponse<JsonObject>>>() {
+        return appApiHelper.bulkUpload(jsonArray).doAfterSuccess(new Consumer<ApiResponse<JsonObject>>() {
+            @Override
+            public void accept(ApiResponse<JsonObject> jsonObjectApiResponse) throws Exception {
+                putPrefString(AppPreferencesHelper.PREF_LAST_SYNC, AppDateTimeUtils.convertLocalDateTime(new Date()));
+                EventBusLiveData.postMessage(MessageEvent.getMessageEvent(MessageEvent.MessageEventType.SYNC_SUCCESS));
+
+            }
+        }).flatMap(new Function<ApiResponse<JsonObject>, SingleSource<? extends ApiResponse<JsonObject>>>() {
             @Override
             public SingleSource<? extends ApiResponse<JsonObject>> apply(ApiResponse<JsonObject> jsonObjectApiResponse) throws Exception {
                 if (jsonObjectApiResponse.isStatus())
@@ -243,7 +257,8 @@ public class DataRepository {
     }
 
     public Single<ApiResponse<JsonObject>> uploadDataToServer() {
-        return appDbHelper.getNotSyncBenfData().zipWith(appDbHelper.counselingTrackingListPairForm(), Pair::new)
+
+        return Single.zip(appDbHelper.getNotSyncBenfData(), appDbHelper.counselingTrackingListPairForm(), appDbHelper.getBeneficiaryLocation(), Tuple::new)
                 .map(JsonParser::convertBenfUploadJson).flatMap(jsonElements -> {
                     if (jsonElements.size() > 0)
                         return bulkUpload(jsonElements);
@@ -327,6 +342,11 @@ public class DataRepository {
     public void putPrefString(String key, String value) {
 
         appPreferencesHelper.putString(key, value);
+    }
+
+    public String getPrefString(String key) {
+
+        return appPreferencesHelper.getString(key);
     }
 
 }

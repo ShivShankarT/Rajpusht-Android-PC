@@ -1,9 +1,9 @@
 package in.rajpusht.pc.ui.pw_monitoring;
 
 import android.annotation.SuppressLint;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,13 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -32,6 +35,7 @@ import in.rajpusht.pc.custom.validator.FormValidatorUtils;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.LocationEntity;
 import in.rajpusht.pc.data.local.db.entity.PWMonitorEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.PwMonitoringFragmentBinding;
@@ -43,6 +47,7 @@ import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.FragmentUtils;
+import in.rajpusht.pc.utils.LocationLiveData;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -67,6 +72,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
     private Long pwFormId;
     private PWMonitorEntity mPwMonitorEntity;
     private BeneficiaryJoin beneficiaryJoin;
+    private Location mLocation;
 
     public static PWMonitoringFragment newInstance(long beneficiaryId, long pregnancyId, String subStage, Long pwFormId) {
         PWMonitoringFragment pwMonitoringFragment = new PWMonitoringFragment();
@@ -562,6 +568,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         if (mPwMonitorEntity == null) {
             pwMonitorEntity = new PWMonitorEntity();
             pwMonitorEntity.setId(pwFormId);
+            pwMonitorEntity.setUuid(UUID.randomUUID().toString());
         } else
             pwMonitorEntity = mPwMonitorEntity;
 
@@ -640,9 +647,21 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         }
 
 
-        Disposable disposable = Completable.concatArray(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements(),
+        List<Completable> completableSources = new ArrayList<>(Arrays.asList(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements(),
                 dataRepository.insertOrUpdatePregnant(pregnantEntity).ignoreElements(),
-                dataRepository.insertOrUpdatePwMonitor(pwMonitorEntity))
+                dataRepository.insertOrUpdatePwMonitor(pwMonitorEntity)));
+
+        LocationEntity locationEntity = new LocationEntity(pwMonitorEntity.getUuid(), 1);
+        locationEntity.setBeneficiaryId(beneficiaryId);
+        if (mLocation != null)
+            locationEntity.setGpsLocation(mLocation.getLatitude() + "," + mLocation.getLongitude());
+        String networkParam = LocationLiveData.getNetworkParam(requireContext());
+        if (!TextUtils.isEmpty(networkParam))
+            locationEntity.setNetworkParam(networkParam);
+        if (locationEntity.getGpsLocation() != null || locationEntity.getNetworkParam() != null)
+            completableSources.add(dataRepository.insertBeneficiaryLocation(locationEntity).ignoreElement());
+
+        Disposable disposable = Completable.concat(completableSources)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
                 .subscribe(() -> {
@@ -657,6 +676,12 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                         }
                     });
                 });
+        LocationLiveData.getInstance(requireContext()).observe(getViewLifecycleOwner(), new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                mLocation = location;
+            }
+        });
 
     }
 

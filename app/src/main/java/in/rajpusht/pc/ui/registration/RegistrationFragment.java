@@ -1,5 +1,6 @@
 package in.rajpusht.pc.ui.registration;
 
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -9,6 +10,7 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.google.gson.Gson;
@@ -21,6 +23,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -37,12 +40,14 @@ import in.rajpusht.pc.custom.validator.ValidationStatus;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
+import in.rajpusht.pc.data.local.db.entity.LocationEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.RegistrationFragmentBinding;
 import in.rajpusht.pc.model.BeneficiaryWithChild;
 import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.utils.FormDataConstant;
+import in.rajpusht.pc.utils.LocationLiveData;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.Observable;
 import io.reactivex.disposables.Disposable;
@@ -62,6 +67,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
     private RegistrationViewModel mViewModel;
     private long beneficiaryId;
     private BeneficiaryWithChild beneficiaryJoin;
+    private Location mLocation;
 
     public static RegistrationFragment newInstance(long beneficiaryId) {
         RegistrationFragment registrationFragment = new RegistrationFragment();
@@ -127,6 +133,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         });
 
+        viewDataBinding.benfAge.sethValidatorListener(FormValidatorUtils.valueBwValidatorForStringNumber(13D, 99D,
+                getString(R.string.beneficiary_age_limit)));
         viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(1, false));//todo always IGMPY
         viewDataBinding.benfRegisteredProgramme.changeEleVisible(new Pair<>(3, false));
         viewDataBinding.benfChildCount.sethValidatorListener(FormValidatorUtils.valueBwValidator(0, 2, "NOT ELIGIBLE"));
@@ -518,6 +526,12 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             }
         });
 
+        LocationLiveData.getInstance(requireContext()).observe(getViewLifecycleOwner(), new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                mLocation = location;
+            }
+        });
 
         if (beneficiaryId != 0)
             dataRepository.getBeneficiaryChildDataById(beneficiaryId)
@@ -574,6 +588,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (beneficiaryEntity == null) {
             beneficiaryEntity = new BeneficiaryEntity();
             beneficiaryEntity.setIsActive("Y");
+            beneficiaryEntity.setUuid(UUID.randomUUID().toString());
         }
         beneficiaryEntity.setBeneficiaryId(beneficiaryId);
         beneficiaryEntity.setName(vb.benfName.getText());
@@ -727,6 +742,17 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             insertOrUpdate.add(dataRepository.insertOrUpdateChild(childEntity));
         if (secondChildEntity != null)
             insertOrUpdate.add(dataRepository.insertOrUpdateChild(secondChildEntity));
+
+        LocationEntity locationEntity = new LocationEntity(beneficiaryEntity.getUuid(), 0);
+        locationEntity.setBeneficiaryId(beneficiaryId);
+        if (mLocation != null)
+            locationEntity.setGpsLocation(mLocation.getLatitude() + "," + mLocation.getLongitude());
+        String networkParam = LocationLiveData.getNetworkParam(requireContext());
+        if (!TextUtils.isEmpty(networkParam))
+            locationEntity.setNetworkParam(networkParam);
+        if (locationEntity.getGpsLocation() != null || locationEntity.getNetworkParam() != null)
+            insertOrUpdate.add(dataRepository.insertBeneficiaryLocation(locationEntity).map(aLong -> true).toObservable());
+
         Disposable sDisposable = Observable.merge(insertOrUpdate)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
@@ -980,8 +1006,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
 
         if (true || beneficiaryEntity.getDataStatus() != DataStatus.NEW) {//todo always
-           // vh.save.setEnabled(false);
-            //HUtil.recursiveSetEnabled(vh.formContainer, false);
+            vh.save.setEnabled(false);
+            HUtil.recursiveSetEnabled(vh.formContainer, false);
         }
 
     }

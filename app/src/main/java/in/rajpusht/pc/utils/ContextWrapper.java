@@ -46,7 +46,7 @@ public class ContextWrapper extends android.content.ContextWrapper {
         return new ContextWrapper(context);
     }
 
-    public static void setLocale(Activity context) {
+    public static void setLocale(Context context) {
 
         try {
             AppPreferencesHelper appPreferencesHelper = AppPreferencesHelper.getAppPreferencesHelper();

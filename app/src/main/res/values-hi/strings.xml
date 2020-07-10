@@ -202,6 +202,8 @@
     <string name="sync_successfully">Sync Successfully</string>
     <string name="select_type_facility">Select Type of Facility</string>
     <string name="Id">Id</string>
+    <string name="runtime_permissions_txt">allow pe</string>
+    <string name="MY_Monitoring">MY Monitoring</string>
 
     <string-array name="benf_currently">
         <item>गर्भवती</item>

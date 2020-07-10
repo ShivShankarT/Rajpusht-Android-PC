@@ -4,31 +4,39 @@ package in.rajpusht.pc.di.module;
 import android.app.Application;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
 
 import dagger.Module;
 import dagger.Provides;
+import in.rajpusht.pc.BuildConfig;
 import in.rajpusht.pc.data.local.db.AppDatabase;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
-import in.rajpusht.pc.data.remote.AppConstants;
 import in.rajpusht.pc.data.remote.ApiService;
+import in.rajpusht.pc.data.remote.AppConstants;
 import in.rajpusht.pc.data.remote.RequestInterceptor;
 import in.rajpusht.pc.di.DatabaseInfo;
 import in.rajpusht.pc.di.PreferenceInfo;
 import in.rajpusht.pc.utils.rx.AppSchedulerProvider;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
+import timber.log.Timber;
 
 @Module
 public class AppModule {
@@ -42,7 +50,7 @@ public class AppModule {
     @Provides
     @DatabaseInfo
     String dbName() {
-        return "pc-testv1.db";
+        return "pc-testv11.db";
     }
 
 
@@ -76,13 +84,16 @@ public class AppModule {
         okHttpClient.readTimeout(AppConstants.READ_TIMEOUT, TimeUnit.MILLISECONDS);
         okHttpClient.writeTimeout(AppConstants.WRITE_TIMEOUT, TimeUnit.MILLISECONDS);
         okHttpClient.addInterceptor(new RequestInterceptor(appPreferencesHelper));
-        okHttpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        if (BuildConfig.DEBUG)
+            okHttpClient.addInterceptor(new HttpLoggingInterceptor().setLevel(HttpLoggingInterceptor.Level.BODY));
+        okHttpClient.addInterceptor(new HttpLoggingInterceptor(message -> Timber.i(message)).setLevel(HttpLoggingInterceptor.Level.BASIC));//timber
+
         return okHttpClient.build();
     }
 
     @Provides
     @Singleton
-    Gson gson(){
+    Gson gson() {
         Gson gson = new GsonBuilder()
                 .serializeNulls()
                 .create();
@@ -92,7 +103,7 @@ public class AppModule {
 
     @Provides
     @Singleton
-    ApiService provideRetrofit(OkHttpClient okHttpClient,Gson gson) {
+    ApiService provideRetrofit(OkHttpClient okHttpClient, Gson gson) {
         Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(AppConstants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create(gson))

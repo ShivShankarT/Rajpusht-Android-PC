@@ -10,7 +10,4 @@ public class SplashScreenViewModel extends BaseViewModel {
         super(dataManager, schedulerProvider);
     }
 
-    public void checkInsetFacilityData() {
-
-    }
 }

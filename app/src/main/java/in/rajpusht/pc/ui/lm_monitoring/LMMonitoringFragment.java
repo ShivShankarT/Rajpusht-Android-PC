@@ -1,9 +1,9 @@
 package in.rajpusht.pc.ui.lm_monitoring;
 
 import android.annotation.SuppressLint;
+import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,13 +12,16 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.UUID;
 
 import javax.inject.Inject;
 
@@ -31,6 +34,7 @@ import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
 import in.rajpusht.pc.data.local.db.entity.ChildEntity;
 import in.rajpusht.pc.data.local.db.entity.LMMonitorEntity;
+import in.rajpusht.pc.data.local.db.entity.LocationEntity;
 import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.LmMonitoringFragmentBinding;
 import in.rajpusht.pc.model.BeneficiaryJoin;
@@ -41,6 +45,7 @@ import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.FragmentUtils;
+import in.rajpusht.pc.utils.LocationLiveData;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.Completable;
 import io.reactivex.Single;
@@ -64,6 +69,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
     private LMMonitorEntity mLmMonitorEntity;
     private long motherId;
     private BeneficiaryJoin beneficiaryJoin;
+    private Location mLocation;
 
     public static LMMonitoringFragment newInstance(long childId, long motherId, String subStage, Long lmFormId) {
         LMMonitoringFragment lmMonitoringFragment = new LMMonitoringFragment();
@@ -108,7 +114,10 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         LmMonitoringFragmentBinding viewDataBinding = getViewDataBinding();
         Toolbar toolbar = viewDataBinding.toolbarLy.toolbar;
-        toolbar.setTitle(R.string.LM_Monitoring);
+        if (subStage.contains("LM"))
+            toolbar.setTitle(R.string.LM_Monitoring);
+        else
+            toolbar.setTitle(R.string.MY_Monitoring);
         toolbar.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem item) {
@@ -291,6 +300,13 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
 
         fetchFormUiData();
+
+        LocationLiveData.getInstance(requireContext()).observe(getViewLifecycleOwner(), new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                mLocation = location;
+            }
+        });
 
 
     }
@@ -558,6 +574,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         if (mLmMonitorEntity == null) {
             lmMonitorEntity = new LMMonitorEntity();
             lmMonitorEntity.setId(lmFormId);
+            lmMonitorEntity.setUuid(UUID.randomUUID().toString());
         } else
             lmMonitorEntity = mLmMonitorEntity;
 
@@ -654,12 +671,22 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         }
 
 
-        lmMonitorEntity.setMotherId(motherId);
-
-
-        Completable.concatArray(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements(),
+        List<Completable> completableSources = new ArrayList<>(Arrays.asList(dataRepository.insertOrUpdateBeneficiary(beneficiaryEntity).ignoreElements(),
                 dataRepository.insertOrUpdateChild(childEntity).ignoreElements(),
-                dataRepository.insertOrUpdateLmMonitor(lmMonitorEntity))
+                dataRepository.insertOrUpdateLmMonitor(lmMonitorEntity)));
+
+        lmMonitorEntity.setMotherId(motherId);
+        LocationEntity locationEntity = new LocationEntity(lmMonitorEntity.getUuid(), 2);
+        locationEntity.setBeneficiaryId(motherId);
+        if (mLocation != null)
+            locationEntity.setGpsLocation(mLocation.getLatitude() + "," + mLocation.getLongitude());
+        String networkParam = LocationLiveData.getNetworkParam(requireContext());
+        if (!TextUtils.isEmpty(networkParam))
+            locationEntity.setNetworkParam(networkParam);
+        if (locationEntity.getGpsLocation() != null || locationEntity.getNetworkParam() != null)
+            completableSources.add(dataRepository.insertBeneficiaryLocation(locationEntity).ignoreElement());
+
+        Completable.concat(completableSources)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui()).subscribe(() -> {
             mLmMonitorEntity = lmMonitorEntity;
