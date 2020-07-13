@@ -22,7 +22,12 @@ public class DbDataConverters {
 
     private static final DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
     private Gson gson = new Gson();
-
+    private static final ThreadLocal<SimpleDateFormat> dateformatter1 =
+            new ThreadLocal<SimpleDateFormat>() {
+                @Override protected SimpleDateFormat initialValue() {
+                    return new SimpleDateFormat("ddMMM");
+                }
+            };
     @TypeConverter
     public static DataStatus dataStatus(Integer dataStatus) {
         if (dataStatus == null)

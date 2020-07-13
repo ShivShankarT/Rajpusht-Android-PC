@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.pregnancy_graph;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.util.Pair;
 import android.view.View;
@@ -45,6 +46,7 @@ import in.rajpusht.pc.ui.benef_list.BeneficiaryFragment;
 import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import timber.log.Timber;
 
 import static in.rajpusht.pc.model.CounsellingMedia.counsellingPregLmp;
 import static in.rajpusht.pc.ui.animation.CounsellingAnimationFragment.updateCounsellingTracking;
@@ -205,56 +207,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             if (isWeightMode) {//weight
                 setWeightData(idealValues1, minValues1, isMale);
             } else {
-
-
-                if (isMale) {
-
-                    idealValues1.add(new Entry(0, 49.9f));
-                    idealValues1.add(new Entry(3, 61.4f));
-                    idealValues1.add(new Entry(6, 67.6f));
-                    idealValues1.add(new Entry(9, 72f));
-                    idealValues1.add(new Entry(12, 75.7f));
-                    idealValues1.add(new Entry(15, 79.1f));
-                    idealValues1.add(new Entry(18, 82.3f));
-                    idealValues1.add(new Entry(21, 85.1f));
-                    idealValues1.add(new Entry(24, 87.8f));
-
-
-                    minValues1.add(new Entry(0, 46.1f));
-                    minValues1.add(new Entry(3, 57.3f));
-                    minValues1.add(new Entry(6, 63.3f));
-                    minValues1.add(new Entry(9, 67.5f));
-                    minValues1.add(new Entry(12, 71f));
-                    minValues1.add(new Entry(15, 74.1f));
-                    minValues1.add(new Entry(18, 76.9f));
-                    minValues1.add(new Entry(21, 79.4f));
-                    minValues1.add(new Entry(24, 81.7f));
-
-                } else {
-
-
-                    idealValues1.add(new Entry(0, 45.4f));
-                    idealValues1.add(new Entry(3, 55.6f));
-                    idealValues1.add(new Entry(6, 61.2f));
-                    idealValues1.add(new Entry(9, 65.3f));
-                    idealValues1.add(new Entry(12, 68.9f));
-                    idealValues1.add(new Entry(15, 72f));
-                    idealValues1.add(new Entry(18, 74.9f));
-                    idealValues1.add(new Entry(21, 77.5f));
-                    idealValues1.add(new Entry(24, 80f));
-
-
-                    minValues1.add(new Entry(0, 49.1f));
-                    minValues1.add(new Entry(3, 59.8f));
-                    minValues1.add(new Entry(6, 65.7f));
-                    minValues1.add(new Entry(9, 70.1f));
-                    minValues1.add(new Entry(12, 74f));
-                    minValues1.add(new Entry(15, 77.5f));
-                    minValues1.add(new Entry(18, 80.7f));
-                    minValues1.add(new Entry(21, 83.7f));
-                    minValues1.add(new Entry(24, 86.4f));
-
-                }
+                setChildHeight(idealValues1, minValues1, isMale);
 
             }
 
@@ -312,8 +265,8 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                     futureValue = getFutueValue(idealValues1, entry);
                 }
             } else {
-                values2.add(new Entry(4, 44));
-                values2.add(new Entry(5, 48));
+                values2.add(new Entry(4, 60));
+                values2.add(new Entry(5, 63));
 
                 Entry entry = values2.get(values2.size() - 1);
                 futureValue = getFutueValue(idealValues1, entry);
@@ -335,12 +288,11 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 if (isWeightMode) {
                     values2.add(new Entry(0, 3.0f));
                     values2.add(new Entry(3, 6.0f));
-                    values2.add(new Entry(6, 6.8f));
+                    values2.add(new Entry(6, 9.2f));
                 } else {
-
                     values2.add(new Entry(0, 41.4f));
                     values2.add(new Entry(3, 56.6f));
-                    values2.add(new Entry(6, 60.2f));
+                    values2.add(new Entry(6, 80f));
                 }
 
                 Entry entry = values2.get(values2.size() - 1);
@@ -365,7 +317,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         LineDataSet d3 = new LineDataSet(futureValue, "Trending");
         d3.setLineWidth(4.5f);
         d3.setCircleRadius(5.5f);
-        d3.enableDashedLine(10,5,0);
+        d3.enableDashedLine(10, 5, 0);
         d3.setHighLightColor(Color.rgb(250, 0, 139));
         d3.setCircleColor(Color.rgb(250, 0, 139));
         d3.setColor(Color.rgb(250, 0, 139));
@@ -391,6 +343,57 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         chart.animateXY(2000, 2000);
 
 
+    }
+
+    private void setChildHeight(ArrayList<Entry> idealValues1, ArrayList<Entry> minValues1, boolean isMale) {
+        if (isMale) {
+
+            idealValues1.add(new Entry(0, 49.9f));
+            idealValues1.add(new Entry(3, 61.4f));
+            idealValues1.add(new Entry(6, 67.6f));
+            idealValues1.add(new Entry(9, 72f));
+            idealValues1.add(new Entry(12, 75.7f));
+            idealValues1.add(new Entry(15, 79.1f));
+            idealValues1.add(new Entry(18, 82.3f));
+            idealValues1.add(new Entry(21, 85.1f));
+            idealValues1.add(new Entry(24, 87.8f));
+
+
+            minValues1.add(new Entry(0, 46.1f));
+            minValues1.add(new Entry(3, 57.3f));
+            minValues1.add(new Entry(6, 63.3f));
+            minValues1.add(new Entry(9, 67.5f));
+            minValues1.add(new Entry(12, 71f));
+            minValues1.add(new Entry(15, 74.1f));
+            minValues1.add(new Entry(18, 76.9f));
+            minValues1.add(new Entry(21, 79.4f));
+            minValues1.add(new Entry(24, 81.7f));
+
+        } else {
+
+
+            idealValues1.add(new Entry(0, 45.4f));
+            idealValues1.add(new Entry(3, 55.6f));
+            idealValues1.add(new Entry(6, 61.2f));
+            idealValues1.add(new Entry(9, 65.3f));
+            idealValues1.add(new Entry(12, 68.9f));
+            idealValues1.add(new Entry(15, 72f));
+            idealValues1.add(new Entry(18, 74.9f));
+            idealValues1.add(new Entry(21, 77.5f));
+            idealValues1.add(new Entry(24, 80f));
+
+
+            minValues1.add(new Entry(0, 49.1f));
+            minValues1.add(new Entry(3, 59.8f));
+            minValues1.add(new Entry(6, 65.7f));
+            minValues1.add(new Entry(9, 70.1f));
+            minValues1.add(new Entry(12, 74f));
+            minValues1.add(new Entry(15, 77.5f));
+            minValues1.add(new Entry(18, 80.7f));
+            minValues1.add(new Entry(21, 83.7f));
+            minValues1.add(new Entry(24, 86.4f));
+
+        }
     }
 
     private void setWeightData(ArrayList<Entry> idealValues1, ArrayList<Entry> minValues1, boolean isMale) {
@@ -448,8 +451,16 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         futureValue.add(entry);
         double lastW = entry.getY();
         for (Entry v : getGainPercentageValueWithMonth(idealValues1)) {
+
+            float percentage = v.getY();
+            float dif = v.getX() - entry.getX();
+            Log.i(TAG, "getFutueValue: "+dif +"dddd"+percentage);
+            if(dif<=3) {
+                percentage = (percentage/3)*(dif);
+                Log.i(TAG, "getFutueValue: per:"+percentage);
+            }
             if (v.getX() > entry.getX()) {
-                double v1 = lastW + ((lastW * v.getY()) / 100);
+                double v1 = lastW + ((lastW * percentage) / 100);
                 futureValue.add(new Entry(v.getX(), (float) v1));
                 lastW = v1;
 
@@ -468,11 +479,12 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
         ArrayList<Entry> values2 = new ArrayList<>();
 
         for (PWMonitorEntity pwMonitorEntity : pwMonitorEntities) {
+            Timber.d(pwMonitorEntity.toString());
             if (!pwMonitorEntity.getAvailable() || pwMonitorEntity.getCurrentWeight() == null)
                 continue;
 
-            int lmpMonth = 0;
-            if (pwMonitorEntity.getCreatedAt() == null) {
+            float lmpMonth = 0;
+            if (TextUtils.isEmpty(pwMonitorEntity.getCreatedAt())) {
                 if (pwMonitorEntity.getSubStage().equals("PW1")) {
                     lmpMonth = 0;
                 } else if (pwMonitorEntity.getSubStage().equals("PW2")) {
@@ -488,10 +500,10 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 Date date = AppDateTimeUtils.convertServerTimeStampDate(pwMonitorEntity.getCreatedAt());
                 if (date == null)
                     continue;
-                lmpMonth = HUtil.daysBetween(lmpda, date) / 30;
+                lmpMonth = HUtil.daysBetween(lmpda, date) / 30.0f;
             }
             double v = pwMonitorEntity.getCurrentWeight();
-            lmpMonth = Math.max(1, lmpMonth);
+            lmpMonth = Math.max(0.1f, lmpMonth);
             values2.add(new Entry(lmpMonth, (float) v));
 
         }
@@ -512,10 +524,10 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 continue;
             Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
             if (date != null) {
-                int lmpMonth = HUtil.daysBetween(dob, date) / 30;
-                lmpMonth = Math.max(1, lmpMonth);
+                double lmpMonth = HUtil.daysBetween(dob, date) / 30.0;
+                lmpMonth = Math.max(0.1, lmpMonth);
                 double childWeight1 = childWeight;
-                values2.add(new Entry(lmpMonth, (float) childWeight1));
+                values2.add(new Entry((float) lmpMonth, (float) childWeight1));
             }
 
         }
@@ -536,10 +548,10 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
                 continue;
             Date date = AppDateTimeUtils.convertServerTimeStampDate(lmMonitorEntity.getCreatedAt());
             if (date != null) {
-                int lmpMonth = HUtil.daysBetween(dob, date) / 30;
-                lmpMonth = Math.max(1, lmpMonth);
+                double lmpMonth = HUtil.daysBetween(dob, date) / 30.0;
+                lmpMonth = Math.max(0.1, lmpMonth);
                 double height1 = height;
-                values2.add(new Entry(lmpMonth, (float) height1));
+                values2.add(new Entry((float) lmpMonth, (float) height1));
             }
 
         }
@@ -563,7 +575,7 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             float B2 = wei;
             Entry e = new Entry(entry.getX(), ((B3 - B2) / B2) * 100);
             entries.add(e);
-            Log.i(TAG, "getGainPercentageValueWithMonth: "+B3 +"---"+B2+"----"+e);
+            Log.i(TAG, "getGainPercentageValueWithMonth: " + B3 + "---" + B2 + "----" + e);
             wei = entry.getY();
 
         }

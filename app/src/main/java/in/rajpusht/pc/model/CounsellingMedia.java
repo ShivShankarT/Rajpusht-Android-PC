@@ -64,7 +64,9 @@ public class CounsellingMedia implements Parcelable {
 
     public static List<CounsellingMedia> counsellingMediaData(String subStage) {
         List<CounsellingMedia> counsellingMedia = new ArrayList<>();
-
+        counsellingMedia.add(new CounsellingMedia(9, Arrays.asList("file:///android_asset/img/General message/Gfx09_t.webp", "file:///android_asset/img/General message/Gfx09.webp")));
+        counsellingMedia.add(new CounsellingMedia(3, CounsellingMedia.GRAPH_MEDIA));
+        counsellingMedia.add(new CounsellingMedia(3, CounsellingMedia.GRAPH_HEIGHT_MEDIA));
         if (subStage.equals("PW1")) {
             counsellingMedia.addAll(pmmvy());
 

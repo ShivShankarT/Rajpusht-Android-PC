@@ -204,4 +204,31 @@ public class PWMonitorEntity {
     public void setUuid(String uuid) {
         this.uuid = uuid;
     }
+
+    @Override
+    public String toString() {
+        return "PWMonitorEntity{" +
+                "id=" + id +
+                ", pregnancyId=" + pregnancyId +
+                ", beneficiaryId=" + beneficiaryId +
+                ", stage='" + stage + '\'' +
+                ", subStage='" + subStage + '\'' +
+                ", ancCount=" + ancCount +
+                ", lastAnc=" + lastAnc +
+                ", lastWeightInMamta=" + lastWeightInMamta +
+                ", lastWeightCheckDate=" + lastWeightCheckDate +
+                ", currentWeight=" + currentWeight +
+                ", pmmvyInstallment=" + pmmvyInstallment +
+                ", igmpyInstallment=" + igmpyInstallment +
+                ", jsyInstallment=" + jsyInstallment +
+                ", rajshriInstallment=" + rajshriInstallment +
+                ", dataStatus=" + dataStatus +
+                ", available=" + available +
+                ", naReason='" + naReason + '\'' +
+                ", createdBy=" + createdBy +
+                ", createdAt='" + createdAt + '\'' +
+                ", updatedAt='" + updatedAt + '\'' +
+                ", uuid='" + uuid + '\'' +
+                '}';
+    }
 }
