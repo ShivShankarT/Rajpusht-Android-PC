@@ -45,6 +45,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import timber.log.Timber;
 
 public class DataRepository {
 
@@ -243,6 +244,7 @@ public class DataRepository {
             public void accept(ApiResponse<JsonObject> jsonObjectApiResponse) throws Exception {
                 putPrefString(AppPreferencesHelper.PREF_LAST_SYNC, AppDateTimeUtils.convertLocalDateTime(new Date()));
                 EventBusLiveData.postMessage(MessageEvent.getMessageEvent(MessageEvent.MessageEventType.SYNC_SUCCESS));
+                Timber.i("Sync upload Success");
 
             }
         }).flatMap(new Function<ApiResponse<JsonObject>, SingleSource<? extends ApiResponse<JsonObject>>>() {
@@ -333,6 +335,11 @@ public class DataRepository {
 
     public String getString(@StringRes int stringId) {
         return appPreferencesHelper.getStringRes(stringId);
+    }
+
+    @SuppressWarnings("rawtypes")
+    public Single<ApiResponse<JsonElement>> logoutApiReq() {
+        return appApiHelper.logout();
     }
 
     public void logout() {

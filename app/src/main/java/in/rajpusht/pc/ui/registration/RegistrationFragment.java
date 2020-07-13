@@ -2,8 +2,9 @@ package in.rajpusht.pc.ui.registration;
 
 import android.location.Location;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
-import android.util.Log;
 import android.util.Pair;
 import android.view.View;
 
@@ -12,8 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.widget.Toolbar;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-
-import com.google.gson.Gson;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -266,6 +265,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         });
 
 
+
+        HUtil.addEditTextFilter( viewDataBinding.benfBhamashaId.getEditText(),HUtil.alphnumaricFilter());
         viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
@@ -609,6 +610,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
         Set<Integer> data = vb.benfRegisteredProgramme.selectedIds();
 
+        //todo set all null
         if (data.contains(0)) {
             beneficiaryEntity.setPmmvyInstallment(instalmentValConvt(vb.benfPmmvvyCount.getSelectedData()));
         }
@@ -893,8 +895,6 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
 
     private void beneficiaryEntityUiUpdate(BeneficiaryWithChild tuple) {
 
-        Log.i("ss", "beneficiaryEntityUiUpdate: " + new Gson().toJson(tuple));
-
         BeneficiaryEntity beneficiaryEntity = tuple.getBeneficiaryEntity();
         List<ChildEntity> childEntities = tuple.getChildEntities();
         PregnantEntity pregnantEntity = tuple.getPregnantEntity();
@@ -918,7 +918,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (!childEntities.isEmpty()) {
             ChildEntity childEntity = childEntities.get(0);
             vh.benfChildDob.setDate(childEntity.getDob());
-            vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace() + "");//todo fetch  from db
+            if (childEntity.getDeliveryPlace() != null)
+                vh.benfChildDeliveryPlace.setSectionByData(childEntity.getDeliveryPlace() + "");//todo fetch  from db
             if (childEntity.getDeliveryPlaceType() != null) {
                 vh.benfChildDeliveryPlaceType.setSection(childEntity.getDeliveryPlaceType());
                 vh.benfChildDeliveryPlaceType.sendChangedListenerValue();
@@ -929,7 +930,8 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
             if (childEntities.size() >= 2) {
                 ChildEntity secondChild = childEntities.get(1);
                 vh.benfChild2Dob.setDate(secondChild.getDob());
-                vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace() + "");////todo fetch  from db
+                if (secondChild.getDeliveryPlace() != null)
+                    vh.benfChild2DeliveryPlace.setSectionByData(secondChild.getDeliveryPlace() + "");////todo fetch  from db
                 vh.benfChild2Sex.setSection(FormDataConstant.childSex.indexOf(secondChild.getChildSex()));
                 if (secondChild.getDeliveryPlaceType() != null) {
                     vh.benfChild2DeliveryPlaceType.setSection(secondChild.getDeliveryPlaceType());

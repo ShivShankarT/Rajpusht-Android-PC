@@ -6,7 +6,6 @@ import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
-
 import com.google.firebase.crashlytics.FirebaseCrashlytics;
 
 import java.io.File;
@@ -15,8 +14,13 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import javax.inject.Inject;
+
 import in.rajpusht.pc.BuildConfig;
 import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
+import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import io.reactivex.Completable;
+import io.reactivex.functions.Action;
 import timber.log.Timber;
 
 //import timber.log.BuildConfig;
@@ -24,6 +28,14 @@ import timber.log.Timber;
 public class FileLoggingTree extends Timber.DebugTree {
 
     private static final String LOG_TAG = FileLoggingTree.class.getSimpleName();
+
+
+    SchedulerProvider schedulerProvider;
+
+    @Inject
+    public FileLoggingTree(SchedulerProvider schedulerProvider) {
+        this.schedulerProvider = schedulerProvider;
+    }
 
     /*  Helper method to create file*/
     @Nullable
@@ -70,6 +82,20 @@ public class FileLoggingTree extends Timber.DebugTree {
 
     @Override
     protected void log(int priority, String tag, String message, Throwable t) {
+
+        Completable.fromAction(new Action() {
+            @Override
+            public void run() throws Exception {
+                writeFileLog(priority, tag, message);
+            }
+        }).subscribeOn(schedulerProvider.io())
+                .observeOn(schedulerProvider.io())
+                .subscribe();
+
+
+    }
+
+    private void writeFileLog(int priority, String tag, String message) {
         String color = "lightgray";
         String priorityStr;
 
@@ -115,7 +141,7 @@ public class FileLoggingTree extends Timber.DebugTree {
                 boolean isFileExists = file.exists();
                 FileWriter writer = new FileWriter(file, true);
                 if (!isFileExists) {
-                   String userId= String.valueOf(AppPreferencesHelper.getAppPreferencesHelper().getCurrentUserId());
+                    String userId = String.valueOf(AppPreferencesHelper.getAppPreferencesHelper().getCurrentUserId());
                     writer.append("<h1>");
                     writer.append("UserId:");
                     writer.append(userId);
@@ -140,7 +166,6 @@ public class FileLoggingTree extends Timber.DebugTree {
             e.printStackTrace();
             FirebaseCrashlytics.getInstance().recordException(e);
         }
-
     }
 
     @Override

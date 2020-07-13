@@ -2,10 +2,13 @@ package in.rajpusht.pc.custom.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -22,11 +25,13 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.nio.charset.StandardCharsets;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
@@ -311,6 +316,26 @@ public class HUtil {
         }
 
         return null;
+    }
+
+    public static InputFilter  alphnumaricFilter(){
+        return (src, start, end, dst, dstart, dend) -> {
+            if (src.equals("")) { // for backspace
+                return src;
+            }
+            if (src.toString().matches("[a-zA-Z 0-9]+")) {
+                return src;
+            }
+            return "";
+        };
+    }
+
+    public  static  void addEditTextFilter(EditText editText, InputFilter inputFilter){
+        InputFilter[] inputFilters = editText.getFilters();
+        List<InputFilter> inputFilters1 = new ArrayList<InputFilter>(Arrays.asList(inputFilters));
+        inputFilters1.add(inputFilter);
+        editText.setFilters(inputFilters1.toArray(new InputFilter[0]));
+
     }
 
 

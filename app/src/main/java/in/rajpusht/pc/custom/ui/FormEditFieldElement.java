@@ -247,4 +247,8 @@ public class FormEditFieldElement extends FrameLayout {
         }
 
     }
+
+    public EditText getEditText() {
+        return edf_text;
+    }
 }

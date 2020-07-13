@@ -17,6 +17,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -43,6 +44,7 @@ import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.LocationLiveData;
@@ -50,6 +52,7 @@ import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
+import timber.log.Timber;
 
 import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
 
@@ -139,6 +142,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             }
         });
 
+        HUtil.addEditTextFilter(viewDataBinding.benfBhamashaId.getEditText(), HUtil.alphnumaricFilter());
         viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
         viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 12, getResources().getString(R.string.invalid_bhamasha_id)));
 
@@ -344,6 +348,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
             getViewDataBinding().benfRegisteredProgramme.changeEleVisible(new Pair<>(3, true));//todo always IGMPY
 
         int days = HUtil.daysBetween(childEntity.getDob(), new Date());//106.458 ==3.5 month
+        CounsellingMedia.counsellingChildIAgeInDay = days;
         LmMonitoringFragmentBinding vb = getViewDataBinding();
         vb.benfChildImmune.setVisibility(days >= 106 ? View.VISIBLE : View.GONE);
         boolean is182Day = days >= 182;
@@ -421,6 +426,25 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         }
 
+        Date createdAt = AppDateTimeUtils.convertDateFromServer(beneficiaryEntity.getCreatedAt());
+        if (createdAt != null) {
+            Calendar created2DaysAtCal = Calendar.getInstance();
+            created2DaysAtCal.setTime(createdAt);
+            created2DaysAtCal.add(Calendar.DATE, 2);
+            if (created2DaysAtCal.getTime().after(new Date())) {
+                vb.benfBhamashaId.setRequired(false);
+                vb.benfPctsid.setRequired(false);
+                vb.benfPctsChildId.setRequired(false);
+            } else {
+                vb.benfBhamashaId.setRequired(true);
+                vb.benfPctsid.setRequired(true);
+                if (childEntity.getDeliveryPlaceType() != null && childEntity.getDeliveryPlaceType() == 0)
+                    vb.benfPctsChildId.setRequired(true);
+                else
+                    vb.benfPctsChildId.setRequired(false);
+            }
+        }
+
 
     }
 
@@ -439,7 +463,8 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         }
 
         if (!TextUtils.isEmpty(childEntity.getPctsChildId())) {
-            vb.benfPctsChildId.setText(childEntity.getPctsChildId());
+            String pctsChildId = childEntity.getPctsChildId().replace(beneficiaryJoin.getBeneficiaryEntity().getPctsId(), "");
+            vb.benfPctsChildId.setText(pctsChildId);
             if (isDisableChildEdit)
                 vb.benfPctsChildId.setEnableChild(false);
         }
@@ -453,8 +478,13 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
         if (!TextUtils.isEmpty(childEntity.getIsFirstImmunizationComplete())) {
             vb.benfChildImmune.setSectionByData(childEntity.getIsFirstImmunizationComplete());
-            if (isDisableChildEdit)
+            //todo Immune will done laty
+            if (vb.benfChildImmune.getSelectedPos() == 0) {
                 vb.benfChildImmune.setEnableChild(false);
+            } else {
+                vb.benfChildImmune.setEnableChild(true);
+            }
+
         }
 
         if (childEntity.getOpdipd() != null) {
@@ -701,6 +731,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
 
             });
         });
+        Timber.i(getString(R.string.beneficiary_child_report_saved));
 
     }
 
@@ -722,6 +753,7 @@ public class LMMonitoringFragment extends BaseFragment<LmMonitoringFragmentBindi
         CounsellingMedia.counsellingSubstage = subStage;
         CounsellingMedia.counsellingChildId = childId;
         CounsellingMedia.counsellingFormId = lmFormId;
+        CounsellingMedia.isPmmvyReg = beneficiaryJoin.getBeneficiaryEntity().getPmmvyInstallment() != null;
 
         requireActivity().getSupportFragmentManager()
                 .beginTransaction()

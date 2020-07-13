@@ -28,12 +28,12 @@
     <string name="error_username">Invalid UserName</string>
     <string name="error_phoneno">Invalid Phone Number</string>
     <string name="no_active_benef">No Active Beneficiary</string>
-    <string name="no_of_children">How many living children Do you having ?</string>
+    <string name="no_of_children">How many children do you have?</string>
     <string name="are_you">Are you</string>
     <string name="child_age">Age of Child</string>
     <string name="register_in">Are you registered in</string>
     <string name="number_installment_received">How many installments have you received?</string>
-    <string name="pmmvvy">PMMVVY</string>
+    <string name="pmmvy">PMMVY</string>
     <string name="igmpy">IGMPY</string>
     <string name="rajshri">RAJSHRI</string>
     <string name="jsy">JSY</string>
@@ -45,7 +45,7 @@
     <string name="mobile_number">Beneficiary Mobile Number</string>
     <string name="self_mobile">Self Mobile</string>
     <string name="husband_mobile">Husband\'s Mobile Number</string>
-    <string name="caste">CASTE</string>
+    <string name="caste">Caste</string>
     <string name="economic_status">Economic Status</string>
     <string name="benef_pcts_id">Enter the PCTS ID</string>
     <string name="bahamashah_id">Enter the Bhamashah ID/ACK NO</string>
@@ -61,14 +61,15 @@
     <string name="current_weight_child">Current Weight of child</string>
     <string name="are_you_register_in">Are you registered in</string>
     <string name="child_current_height">Current Height of child</string>
-    <string name="installment_received">How many installments have you received?</string>
+    <string name="installment_received">How many instalments have you received?</string>
+    <string name="installment_received_till">How many instalments have you received?</string>
     <string name="number_anc_completed">How Many ANCs Completed</string>
     <string name="last_anc_date">Enter Last ANC Date</string>
     <string name="last_pregnancy_weight">Last recorded pregnancy weight (As in MAMTA Card)</string>
     <string name="date_recorded_pregnancy_weight">Date of last recorded pregnancy weight (As in Mamta Card)</string>
     <string name="current_preg_weight">Current pregnancy weight</string>
     <string name="you_register_in">Are you registered in</string>
-    <string name="installment_received_till">How many installments have you received?</string>
+
     <string name="set_location">Select AWC</string>
     <string name="set_language">Select Language</string>
     <string name="pw_na1">Miscarriage/ abortion</string>
@@ -79,7 +80,7 @@
     <string name="change_awc">Change AWC</string>
     <string name="sync">Sync</string>
     <string name="change_password">Change Password</string>
-    <string name="save">save</string>
+    <string name="save">Save</string>
     <string name="add_self_mobile_val_mes">Please Add Self Mobile Number</string>
     <string name="add_husb_mobile_val_mes">Please Add Husband’s Mobile Number</string>
     <string name="add_self_husb_mobile_val_mes">Please Add Self and Husband’s Mobile Number</string>
@@ -279,7 +280,7 @@
 
 
     <string-array name="benf_registered_in">
-        <item>@string/pmmvvy</item>
+        <item>@string/pmmvy</item>
         <item>@string/igmpy</item>
         <item>@string/jsy</item>
         <item>@string/rajshri</item>
@@ -303,7 +304,7 @@
     <string-array name="benf_econ">
         <item>Blue/ Green (APL)</item>
         <item>Dark Pink (BPL)</item>
-        <item>Yellow (Antodyaya/ Poorest)</item>
+        <item>Yellow (Antyodaya/ Poorest)</item>
     </string-array>
 
     <string-array name="YES">

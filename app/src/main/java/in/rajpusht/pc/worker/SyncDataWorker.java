@@ -21,6 +21,7 @@ import in.rajpusht.pc.utils.AppDateTimeUtils;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
+import timber.log.Timber;
 
 public class SyncDataWorker extends RxWorker {
 
@@ -37,8 +38,9 @@ public class SyncDataWorker extends RxWorker {
 
 
     private Single<Result> syncData() {
+        Timber.i("Auto sync init");
         DataRepository dataManager = dataRepository;
-        dataManager.putPrefString(""+ AppDateTimeUtils.convertLocalDateTime(new Date()),"---");
+        dataManager.putPrefString("" + AppDateTimeUtils.convertLocalDateTime(new Date()), "---");
         return dataManager.uploadDataToServer()
                 .flatMap((Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>) jsonObjectApiResponse -> {
                     Log.i(TAG, "syncData: " + jsonObjectApiResponse.toString());
@@ -49,14 +51,19 @@ public class SyncDataWorker extends RxWorker {
                     } else
                         return Single.just(jsonObjectApiResponse);
                 }).map(jsonObjectApiResponse -> {
-                    if (jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC)
+                    if (jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC) {
+                        Timber.i("Auto Sync no data to sync");
                         return Result.success();
-                    else if (jsonObjectApiResponse.isInternalError())
+                    } else if (jsonObjectApiResponse.isInternalError()) {
+                        Timber.i("Auto Sync Failed; no nw ");
                         return Result.retry();
-                    else if (jsonObjectApiResponse.isStatus())
+                    } else if (jsonObjectApiResponse.isStatus()) {
+                        Timber.i("Auto Success");
                         return Result.success();
-                    else
+                    } else {
+                        Timber.d("Auto Sync Failed" + jsonObjectApiResponse.getMessage());
                         return Result.failure();
+                    }
                 });
     }
 

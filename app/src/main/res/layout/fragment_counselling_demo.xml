@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
@@ -21,81 +22,115 @@
             layout="@layout/toolbar_ly"
             tools:viewBindingIgnore="true" />
 
-        <LinearLayout
-            android:paddingLeft="20dp"
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:orientation="vertical">
+            android:layout_height="match_parent">
 
 
-            <Button
-                android:id="@+id/pw1Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="PW1" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:paddingLeft="20dp">
 
-            <Button
-                android:id="@+id/pw2Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="PW2" />
+                <in.rajpusht.pc.custom.ui.FormEditFieldElement
+                    android:id="@+id/age"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="0"
+                    app:ff_input_type="number"
+                    app:ff_label="Child Age in day" />
 
-            <Button
-                android:id="@+id/pw3Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="PW3" />
-
-            <Button
-                android:id="@+id/pw4Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="PW4" />
+                <in.rajpusht.pc.custom.ui.FormSegmentedGroupElement
+                    android:id="@+id/pmmvy_registered"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:text="0"
+                    app:ff_input_type="number"
+                    app:ff_label="Is pmmvy registered"
+                    app:ff_selections="@array/YES_NO" />
 
 
-            <Button
-                android:id="@+id/lmBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="LM" />
+                <Button
+                    android:id="@+id/pw1Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="PW1" />
 
-            <Button
-                android:id="@+id/my1Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="MY1" />
+                <Button
+                    android:id="@+id/pw2Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="PW2" />
 
-            <Button
-                android:id="@+id/my2Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="MY2" />
-            <Button
-                android:id="@+id/my3Btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="MY3" />
+                <Button
+                    android:id="@+id/pw3Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="PW3" />
 
-            <Button
-                android:id="@+id/allBtn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="5dp"
-                android:text="ALL" />
+                <Button
+                    android:id="@+id/pw4Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="PW4" />
 
-            <TextView
-                android:id="@+id/note_tv"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
-        </LinearLayout>
+
+                <Button
+                    android:id="@+id/lm1Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="LM1" />
+
+                <Button
+                    android:id="@+id/lm2Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="LM2" />
+
+                <Button
+                    android:id="@+id/my1Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="MY1" />
+
+                <Button
+                    android:id="@+id/my2Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="MY2" />
+
+                <Button
+                    android:id="@+id/my3Btn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="MY3" />
+
+                <Button
+                    android:id="@+id/allBtn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="5dp"
+                    android:text="ALL" />
+
+                <TextView
+                    android:id="@+id/note_tv"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </androidx.core.widget.NestedScrollView>
+
     </LinearLayout>
 
 </layout>

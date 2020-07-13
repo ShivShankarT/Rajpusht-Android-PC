@@ -52,7 +52,7 @@ public class RajpushtApp extends DaggerApplication {
         else {
             Timber.plant(new ReleaseTree());
         }
-        Timber.plant(new FileLoggingTree());
+        Timber.plant(applicationInjector.getFileLoggingTree());
         ContextWrapper.setLocale(this);
     }
 

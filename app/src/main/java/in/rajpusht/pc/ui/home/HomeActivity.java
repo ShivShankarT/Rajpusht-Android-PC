@@ -1,9 +1,13 @@
 package in.rajpusht.pc.ui.home;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.res.Configuration;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.Settings;
 import android.text.TextUtils;
 import android.util.Pair;
@@ -15,6 +19,7 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.core.view.GravityCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.work.Constraints;
 import androidx.work.ExistingPeriodicWorkPolicy;
@@ -43,6 +48,7 @@ import in.rajpusht.pc.ui.counselling.CounsellingDemoFragment;
 import in.rajpusht.pc.ui.other_women.OtherWomenFragment;
 import in.rajpusht.pc.ui.profile.ProfileFragment;
 import in.rajpusht.pc.ui.sync.SyncFragment;
+import in.rajpusht.pc.utils.AppLogUtils;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import in.rajpusht.pc.worker.SyncDataWorker;
@@ -59,10 +65,19 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     DataRepository dataRepository;
     @Inject
     SchedulerProvider schedulerProvider;
-    boolean isGpsDialog;
+    AlertDialog alertDialog;
     private HomeViewModel mViewModel;
     private TextView awcName;
     private TextView name;
+    private BroadcastReceiver gpsReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if (LocationManager.PROVIDERS_CHANGED_ACTION.equals(intent.getAction())) {
+                //Do your stuff on GPS status
+                checkGpsOnAndLocPermission();
+            }
+        }
+    };
 
     @Override
     public int getBindingVariable() {
@@ -124,6 +139,8 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                 FragmentUtils.replaceFragment(this, new CounsellingDemoFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
             } else if (item.getItemId() == R.id.nav_Logout) {
                 syncData(true);
+            } else if (item.getItemId() == R.id.nav_send_log) {
+                new AppLogUtils(this).dialogSubmitReason();
             } else if (item.getItemId() == R.id.nav_download) {
                 dataRepository.profileAndBulkDownload().subscribeOn(schedulerProvider.io()).subscribe(new Action() {
                     @Override
@@ -162,6 +179,15 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
     protected void onResume() {
         super.onResume();
         checkGpsOnAndLocPermission();
+        registerReceiver(gpsReceiver, new IntentFilter(LocationManager.PROVIDERS_CHANGED_ACTION));
+
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        unregisterReceiver(gpsReceiver);
+
     }
 
     public void setNavUiData() {
@@ -199,21 +225,21 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
 
     public void checkGpsOnAndLocPermission() {
         try {
+            if (alertDialog != null && alertDialog.isShowing())
+                alertDialog.dismiss();
+
             LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
             boolean isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
             if (!isGPSEnabled) {
-                if (!isGpsDialog) {
-                    showSettingsAlert();
-                    isGpsDialog = true;
-                }
+                showSettingsAlert();
+
             }
-        } catch (SecurityException e) {
+        } catch (Exception e) {
             e.printStackTrace();
 
         }
 
     }
-
 
     public void showSettingsAlert() {
         MaterialAlertDialogBuilder materialAlertDialogBuilder = new MaterialAlertDialogBuilder(this)
@@ -225,11 +251,13 @@ public class HomeActivity extends BaseActivity<ActivityHomeBinding, HomeViewMode
                     dialog.dismiss();
                     Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
                     startActivity(intent);
-                    isGpsDialog = false;
                 });
-        AlertDialog alertDialog = materialAlertDialogBuilder.show();
+        alertDialog = materialAlertDialogBuilder.show();
 
     }
+
+
+
 
 
 }

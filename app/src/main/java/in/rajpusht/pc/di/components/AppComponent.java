@@ -13,8 +13,8 @@ import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.di.builder.ActivityBuilderModule;
 import in.rajpusht.pc.di.builder.WorkerBindingModule;
 import in.rajpusht.pc.di.module.AppModule;
-import in.rajpusht.pc.utils.rx.AppSchedulerProvider;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
+import in.rajpusht.pc.utils.timber.FileLoggingTree;
 
 @Singleton
 @Component(modules = {
@@ -25,7 +25,10 @@ public interface AppComponent extends AndroidInjector<RajpushtApp> {
 
     DataRepository getDataRepository();
 
-    SchedulerProvider  getSchedulerProvider();
+    SchedulerProvider getSchedulerProvider();
+
+    FileLoggingTree getFileLoggingTree();
+
 
     @Component.Builder
     interface Builder {
@@ -34,6 +37,7 @@ public interface AppComponent extends AndroidInjector<RajpushtApp> {
 
         AppComponent build();
     }
+
 
    /* @Component.Builder
     abstract class Builder extends AndroidInjector.Builder<RajpushtApp> {}*/

@@ -4,6 +4,7 @@ import android.annotation.SuppressLint;
 import android.location.Location;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.text.method.DigitsKeyListener;
 import android.util.Pair;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import androidx.lifecycle.ViewModelProvider;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -45,6 +47,7 @@ import in.rajpusht.pc.model.DataStatus;
 import in.rajpusht.pc.ui.animation.CounsellingAnimationFragment;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.registration.RegistrationFragment;
+import in.rajpusht.pc.utils.AppDateTimeUtils;
 import in.rajpusht.pc.utils.FormDataConstant;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.LocationLiveData;
@@ -53,6 +56,7 @@ import io.reactivex.Completable;
 import io.reactivex.Single;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.BiConsumer;
+import timber.log.Timber;
 
 import static in.rajpusht.pc.utils.FormDataConstant.ANC_NOT_COMPLETED;
 import static in.rajpusht.pc.utils.FormDataConstant.instalmentValConvt;
@@ -173,8 +177,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                 }
             }
         });
-
-        viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
+        HUtil.addEditTextFilter( viewDataBinding.benfBhamashaId.getEditText(),HUtil.alphnumaricFilter());        viewDataBinding.benfPctsid.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(12, 26, getResources().getString(R.string.invalid_pcts)));
         viewDataBinding.benfBhamashaId.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(5, 12, getResources().getString(R.string.invalid_bhamasha_id)));
         viewDataBinding.benfCurrentWeight.sethValidatorListener(FormValidatorUtils.valueBwValidator(30.0, 99.0,
                 getString(R.string.incorrect_pw_weight)));
@@ -302,6 +305,12 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
 
         fetchFormUiData();
+        LocationLiveData.getInstance(requireContext()).observe(getViewLifecycleOwner(), new Observer<Location>() {
+            @Override
+            public void onChanged(Location location) {
+                mLocation = location;
+            }
+        });
     }
 
     private void setupUiData() {
@@ -397,7 +406,19 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
 
         }
 
-
+        Date createdAt = AppDateTimeUtils.convertDateFromServer(beneficiaryEntity.getCreatedAt());
+        if (createdAt != null) {
+            Calendar created2DaysAtCal = Calendar.getInstance();
+            created2DaysAtCal.setTime(createdAt);
+            created2DaysAtCal.add(Calendar.DATE, 2);
+            if (created2DaysAtCal.getTime().after(new Date())) {
+                vb.benfBhamashaId.setRequired(false);
+                vb.benfPctsid.setRequired(false);
+            } else {
+                vb.benfBhamashaId.setRequired(true);
+                vb.benfPctsid.setRequired(true);
+            }
+        }
        /*
         todo feature use
         if (beneficiaryEntity.getPmmvyInstallment() == null)
@@ -460,7 +481,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         vb.weightIv.setVisibility(View.VISIBLE);
 
         if (pwMonitorEntity.getAvailable()) {
-            vb.benfAncCount.setSection(pwMonitorEntity.getAncCount());
+            vb.benfAncCount.setSectionByData("" + pwMonitorEntity.getAncCount());//todo ce
             vb.benfAncDate.setDate(pwMonitorEntity.getLastAnc());
             vb.benfMamtaCdWeight.setText(pwMonitorEntity.getLastWeightInMamta());
             vb.benfLastcheckupdate.setDate(pwMonitorEntity.getLastWeightCheckDate());
@@ -661,6 +682,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         if (locationEntity.getGpsLocation() != null || locationEntity.getNetworkParam() != null)
             completableSources.add(dataRepository.insertBeneficiaryLocation(locationEntity).ignoreElement());
 
+        Timber.i(getString(R.string.beneficiary_report_save));
         Disposable disposable = Completable.concat(completableSources)
                 .subscribeOn(schedulerProvider.io())
                 .observeOn(schedulerProvider.ui())
@@ -676,12 +698,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
                         }
                     });
                 });
-        LocationLiveData.getInstance(requireContext()).observe(getViewLifecycleOwner(), new Observer<Location>() {
-            @Override
-            public void onChanged(Location location) {
-                mLocation = location;
-            }
-        });
+        Timber.i(getString(R.string.beneficiary_report_save));
 
     }
 
@@ -703,6 +720,7 @@ public class PWMonitoringFragment extends BaseFragment<PwMonitoringFragmentBindi
         CounsellingMedia.counsellingFormId = pwFormId;
         CounsellingMedia.counsellingPregId = pregnancyId;
         CounsellingMedia.counsellingPregLmp = pregnantEntity.getLmpDate();
+        CounsellingMedia.isPmmvyReg = beneficiaryJoin.getBeneficiaryEntity().getPmmvyInstallment() != null;
         FragmentUtils.replaceFragment(requireActivity(),
                 CounsellingAnimationFragment.newInstance(0), R.id.fragment_container,
                 true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);

@@ -88,6 +88,8 @@ public class JsonParser {
                     String is_active = getString(object, "is_active");
                     String uuid = getString(object, "uuid");
                     Integer counseling_sms = getInt(object, "counseling_sms");
+                    String mobile_created_at = getString(object, "mobile_created_at");
+                    String mobile_updated_at = getString(object, "mobile_updated_at");
 
 
                     Long created_by = getLong(object, "created_by");
@@ -112,6 +114,8 @@ public class JsonParser {
                     bmodel.setBahamashahId(bahamashah_id);
                     bmodel.setCounselingSms(counseling_sms);
                     bmodel.setCreatedBy(created_by);
+                    bmodel.setCreatedAt(mobile_created_at);
+                    bmodel.setUpdatedAt(mobile_updated_at);
                     bmodel.setIsActive(is_active);
                     bmodel.setDataStatus(DataStatus.OLD);
                     bmodel.setUuid(uuid);
@@ -130,12 +134,17 @@ public class JsonParser {
                     long pregnancy_id = getLong(object, "id");
                     String is_active = getString(object, "is_active");
                     String uuid = getString(object, "uuid");
+                    String mobile_created_at = getString(object, "mobile_created_at");
+                    String mobile_updated_at = getString(object, "mobile_updated_at");
+
                     pmodel.setPregnancyId(pregnancy_id);
                     pmodel.setLmpDate(AppDateTimeUtils.convertDateFromServer(lmp_date));
                     pmodel.setBeneficiaryId(beneficiary_id);
                     pmodel.setIsActive(is_active);
                     pmodel.setDataStatus(DataStatus.OLD);
                     pmodel.setUuid(uuid);
+                    pmodel.setCreatedAt(mobile_created_at);
+                    pmodel.setUpdatedAt(mobile_updated_at);
                     pregnantModels.add(pmodel);
                     pregnantBenfId.put(pmodel.getPregnancyId(), pmodel.getBeneficiaryId());
 
@@ -162,6 +171,8 @@ public class JsonParser {
                     String is_available = getString(object, "is_available");
                     String na_reason = getString(object, "na_reason");
                     String uuid = getString(object, "uuid");
+                    String mobile_created_at = getString(object, "mobile_created_at");
+                    String mobile_updated_at = getString(object, "mobile_updated_at");
 
 
                     pwmodel.setId(id);
@@ -183,6 +194,8 @@ public class JsonParser {
                     pwmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
                     pwmodel.setBeneficiaryId(pregnantBenfId.get(pregnancy_id, 0L));
                     pwmodel.setUuid(uuid);
+                    pwmodel.setCreatedAt(mobile_created_at);
+                    pwmodel.setUpdatedAt(mobile_updated_at);
                     pwMonitorModels.add(pwmodel);
 
 
@@ -208,6 +221,8 @@ public class JsonParser {
                     Long opd_ipd = getLong(object, "opd_ipd");
                     Double birth_weight = getDouble(object, "birth_weight");
                     String uuid = getString(object, "uuid");
+                    String mobile_created_at = getString(object, "mobile_created_at");
+                    String mobile_updated_at = getString(object, "mobile_updated_at");
 
 
                     cmodel.setChildId(child_id);
@@ -229,6 +244,8 @@ public class JsonParser {
                     cmodel.setBirthWeightSource(birth_weight_source);
                     cmodel.setOpdipd(opd_ipd);
                     cmodel.setUuid(uuid);
+                    cmodel.setCreatedAt(mobile_created_at);
+                    cmodel.setUpdatedAt(mobile_updated_at);
                     childModel.add(cmodel);
                     childMotherId.put(cmodel.getChildId(), cmodel.getMotherId());
 
@@ -258,6 +275,7 @@ public class JsonParser {
                     String is_available = getString(object, "is_available");
                     String na_reason = getString(object, "na_reason");
                     String uuid = getString(object, "uuid");
+                    String mobile_updated_at = getString(object, "mobile_updated_at");
 
 
                     LMMonitorEntity lmmodel = new LMMonitorEntity();
@@ -278,6 +296,7 @@ public class JsonParser {
                     lmmodel.setDataStatus(DataStatus.OLD);
                     lmmodel.setNaReason(na_reason);
                     lmmodel.setCreatedAt(mobile_created_at);
+                    lmmodel.setUpdatedAt(mobile_updated_at);
                     lmmodel.setMotherId(childMotherId.get(lmmodel.getChildId(), 0L));
                     lmmodel.setAvailable(is_available == null ? null : is_available.equalsIgnoreCase("Y"));
                     lmmodel.setUuid(uuid);

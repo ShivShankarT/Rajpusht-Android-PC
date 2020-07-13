@@ -41,6 +41,10 @@ public class CounsellingDemoFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
 
         View.OnClickListener onClickListener = v -> {
+
+            if (!vb.age.getText().isEmpty())
+                CounsellingMedia.counsellingChildIAgeInDay = Long.parseLong(vb.age.getText());
+            CounsellingMedia.isPmmvyReg = vb.pmmvyRegistered.getSelectedPos() == 0;
             CounsellingMedia.isTesting = true;
             CounsellingMedia.counsellingPregId = 0;
             CounsellingMedia.counsellingPregLmp = null;
@@ -53,7 +57,9 @@ public class CounsellingDemoFragment extends Fragment {
                 CounsellingMedia.counsellingSubstage = "PW3";
             } else if (v == vb.pw4Btn) {
                 CounsellingMedia.counsellingSubstage = "PW4";
-            } else if (v == vb.lmBtn) {
+            } else if (v == vb.lm1Btn) {
+                CounsellingMedia.counsellingSubstage = "LM1";
+            } else if (v == vb.lm2Btn) {
                 CounsellingMedia.counsellingSubstage = "LM1";
             } else if (v == vb.my1Btn) {
                 CounsellingMedia.counsellingSubstage = "MY1";
@@ -61,7 +67,7 @@ public class CounsellingDemoFragment extends Fragment {
                 CounsellingMedia.counsellingSubstage = "MY2";
             } else if (v == vb.my3Btn) {
                 CounsellingMedia.counsellingSubstage = "MY3";
-            }else if (v == vb.allBtn) {
+            } else if (v == vb.allBtn) {
                 CounsellingMedia.counsellingSubstage = "all";
             }
 
@@ -77,7 +83,8 @@ public class CounsellingDemoFragment extends Fragment {
         vb.pw4Btn.setOnClickListener(onClickListener);
 
 
-        vb.lmBtn.setOnClickListener(onClickListener);
+        vb.lm1Btn.setOnClickListener(onClickListener);
+        vb.lm2Btn.setOnClickListener(onClickListener);
         vb.my1Btn.setOnClickListener(onClickListener);
         vb.my2Btn.setOnClickListener(onClickListener);
         vb.my3Btn.setOnClickListener(onClickListener);

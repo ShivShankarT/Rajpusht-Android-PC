@@ -40,7 +40,7 @@ public class AppDateTimeUtils {
         if (date != null) {
             try {
                 return serverDf.parse(date);
-            } catch (ParseException e) {
+            } catch (Exception e) {
                 e.printStackTrace();
             }
         }

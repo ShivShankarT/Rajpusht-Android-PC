@@ -62,7 +62,7 @@ public interface ApiService {
 
 
     @POST("logout")
-    Single<ApiResponse<JsonObject>> logout();
+    Single<ApiResponse<JsonElement>> logout();
 
     @GET("bulkDownload")
     Single<ApiResponse<JsonObject>> bulkDownload();

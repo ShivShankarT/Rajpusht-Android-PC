@@ -246,7 +246,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="7dp"
-                    app:ff_label="@string/pmmvvy"
+                    app:ff_label="@string/pmmvy"
                     app:ff_label_text_appearance="@style/FormTextSmall"
                     app:ff_required="true"
                     app:ff_selections="@array/count_0_3_dot"

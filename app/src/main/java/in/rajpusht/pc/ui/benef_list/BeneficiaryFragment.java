@@ -10,8 +10,10 @@ import android.view.View;
 import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.databinding.library.baseAdapters.BR;
+import androidx.fragment.app.FragmentActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.lifecycle.LiveData;
-import androidx.lifecycle.Observer;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -21,14 +23,9 @@ import java.util.List;
 import javax.inject.Inject;
 
 import in.rajpusht.pc.R;
-import in.rajpusht.pc.custom.utils.HUtil;
 import in.rajpusht.pc.data.DataRepository;
-import in.rajpusht.pc.data.local.db.entity.BeneficiaryEntity;
-import in.rajpusht.pc.data.local.db.entity.ChildEntity;
-import in.rajpusht.pc.data.local.db.entity.PregnantEntity;
 import in.rajpusht.pc.databinding.FragmentBeneficiaryBinding;
 import in.rajpusht.pc.model.BefModel;
-import in.rajpusht.pc.model.Tuple;
 import in.rajpusht.pc.ui.base.BaseFragment;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.lm_monitoring.LMMonitoringFragment;
@@ -38,8 +35,6 @@ import in.rajpusht.pc.ui.registration.RegistrationFragment;
 import in.rajpusht.pc.utils.BottomDialogFragment;
 import in.rajpusht.pc.utils.FragmentUtils;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
-import io.reactivex.functions.Action;
-import io.reactivex.functions.Consumer;
 
 
 public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding, BeneficiaryViewModel> implements BeneficiaryAdapter.OnListFragmentInteractionListener {
@@ -111,13 +106,11 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
             if (befModels.isEmpty()) {
                 getViewDataBinding().noData.setVisibility(View.VISIBLE);
                 adapter.setValues(befModels);
-            }
-            else {
+            } else {
                 adapter.setValues(befModels);
                 getViewDataBinding().noData.setVisibility(View.GONE);
             }
         });
-
 
 
         recyclerView.setAdapter(adapter);
@@ -129,23 +122,17 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
             }
         });
         if (TextUtils.isEmpty(dataRepository.getSelectedAwcCode())) {
-            FragmentUtils.replaceFragment(requireActivity(), new ProfileFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_NONE);
+            FragmentActivity activity = requireActivity();
+            FragmentManager fragmentManager = activity.getSupportFragmentManager();
+            FragmentTransaction transaction = fragmentManager.beginTransaction();
+            transaction.add(R.id.fragment_container, new BeneficiaryFragment(), "BeneficiaryFragment");
+            transaction.replace(R.id.fragment_container, new ProfileFragment(), "ProfileFragment")
+                    .addToBackStack(null).commit();
+
+            //FragmentUtils.replaceFragment(requireActivity(), new ProfileFragment(), R.id.fragment_container, false, true, FragmentUtils.TRANSITION_NONE);
 
         }
 
-        if (false)
-            dataRepository.profileAndBulkDownload()
-                    .subscribeOn(schedulerProvider.io()).subscribe(new Action() {
-                @Override
-                public void run() throws Exception {
-
-                }
-            }, new Consumer<Throwable>() {
-                @Override
-                public void accept(Throwable throwable) throws Exception {
-
-                }
-            });
     }
 
     private void showColorInfo() {
@@ -155,7 +142,7 @@ public class BeneficiaryFragment extends BaseFragment<FragmentBeneficiaryBinding
 
     @Override
     public void onListFragmentInteraction(BefModel item) {
-        Log.i("ddddd", "onListFragmentInteraction: "+item);
+        Log.i("ddddd", "onListFragmentInteraction: " + item);
         if (item.getCurrentSubStage().contains("PW")) {
             FragmentUtils.replaceFragment(requireActivity(), PWMonitoringFragment.newInstance(item.getBeneficiaryId(), item.getPregnancyId(), item.getCurrentSubStage(), item.getPwFormId()), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_NONE);
 

@@ -15,6 +15,7 @@ import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Function;
+import timber.log.Timber;
 
 public class HomeViewModel extends BaseViewModel {
 
@@ -34,6 +35,14 @@ public class HomeViewModel extends BaseViewModel {
                         return getDataManager().profileAndBulkDownload().toSingleDefault(completionValue);
                     } else
                         return Single.just(jsonObjectApiResponse);
+                }).flatMap(new Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>() {
+                    @Override
+                    public SingleSource<ApiResponse<JsonObject>> apply(ApiResponse<JsonObject> jsonObjectApiResponse) throws Exception {
+                        if (isLogOut && (jsonObjectApiResponse.isStatus() || jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC)){
+                            return getDataManager().logoutApiReq().map((Function<ApiResponse, ApiResponse<JsonObject>>) apiResponse -> apiResponse);
+                        } else
+                            return Single.just(jsonObjectApiResponse);
+                    }
                 })
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui()).subscribe((jsonObjectApiResponse, throwable) -> {
@@ -41,12 +50,16 @@ public class HomeViewModel extends BaseViewModel {
                         throwable.printStackTrace();
                     if (jsonObjectApiResponse != null) {
 
-                        if (isLogOut && (jsonObjectApiResponse.isStatus() || jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC))
+                        if (isLogOut && (jsonObjectApiResponse.isStatus() || jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC)) {
                             getDataManager().logout();
+                            Timber.i("Logout Success");
+                        }
 
                         if (jsonObjectApiResponse.isStatus()) {
+                            Timber.i("Sync & Download Success");
                             progressLive.postValue(Event.data(new Pair<>(false, getString(R.string.sync_successfully))));
                         } else {
+                            Timber.d("Sync Failed" + jsonObjectApiResponse.getMessage());
                             progressLive.postValue(Event.data(new Pair<>(false, jsonObjectApiResponse.getMessage())));
                         }
                     } else {

@@ -49,7 +49,7 @@ public class AppApiHelper {
                     jsonObjectApiResponse.setMessage(message);
                     return jsonObjectApiResponse;
                 }
-                if (throwable != null)
+                if (throwable != null)//todo check exp
                     throwable.printStackTrace();
                 ApiResponse apiResponse = new ApiResponse();
                 apiResponse.setStatus(false);
@@ -101,7 +101,7 @@ public class AppApiHelper {
     }
 
 
-    public Single<ApiResponse<JsonObject>> logout() {
+    public Single<ApiResponse<JsonElement>> logout() {
         return networkErrorWrapper(apiService.logout());
     }
 

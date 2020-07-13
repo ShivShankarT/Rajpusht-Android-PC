@@ -4,15 +4,11 @@ package in.rajpusht.pc.di.module;
 import android.app.Application;
 import android.content.Context;
 
-import androidx.annotation.NonNull;
 import androidx.room.Room;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
-import org.jetbrains.annotations.NotNull;
-
-import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 
 import javax.inject.Singleton;
@@ -29,9 +25,7 @@ import in.rajpusht.pc.di.DatabaseInfo;
 import in.rajpusht.pc.di.PreferenceInfo;
 import in.rajpusht.pc.utils.rx.AppSchedulerProvider;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
-import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
-import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -43,6 +37,7 @@ public class AppModule {
 
 
     @Provides
+    @Singleton
     SchedulerProvider appSchedulerProvider() {
         return new AppSchedulerProvider();
     }
@@ -50,7 +45,7 @@ public class AppModule {
     @Provides
     @DatabaseInfo
     String dbName() {
-        return "pc-testv11.db";
+        return "pc-testv12.db";
     }
 
 

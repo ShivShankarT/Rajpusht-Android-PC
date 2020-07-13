@@ -17,7 +17,7 @@ public class FormDataConstant {
     static {
         economic.add("APL");
         economic.add("BPL");
-        economic.add("ANTODAYA");
+        economic.add("ANTYODAYA");
 
         caste.add("SC");
         caste.add("ST");

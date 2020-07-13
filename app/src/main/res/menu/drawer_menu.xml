@@ -39,6 +39,11 @@
             android:visible="false" />
 
         <item
+            android:id="@+id/nav_send_log"
+            android:icon="@drawable/ic_baseline_send"
+            android:title="Send Log" />
+
+        <item
             android:id="@+id/nav_changePassword"
             android:icon="@drawable/ic_changepassword_black_24dp"
             android:title="@string/change_password" />
