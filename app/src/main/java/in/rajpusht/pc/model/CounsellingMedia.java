@@ -300,12 +300,12 @@ public class CounsellingMedia implements Parcelable {
         counsellingMedia.add(new CounsellingMedia(43, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx01_t.webp", "file:///android_asset/img/preparing for birth/Gfx01.webp")));
         counsellingMedia.add(new CounsellingMedia(44, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx02_t.webp", "file:///android_asset/img/preparing for birth/Gfx02.webp")));
         counsellingMedia.add(new CounsellingMedia(46, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx04_t.webp", "file:///android_asset/img/preparing for birth/Gfx04.webp")));
-        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx03_t.webp", "file:///android_asset/img/preparing for birth/gfx03_low.webp")));
+        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx02_GFX 01_t1.webp", "file:///android_asset/img/preparing for birth/Gfx02_GFX 01.webp")));
 
-        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/gfx01GFX 01_low.webp",
-                "file:///android_asset/img/preparing for birth/gfx01GFX 01_low.webp")));
+        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx01_GFX 01_t1.webp",
+                "file:///android_asset/img/preparing for birth/Gfx01_GFX 01.webp")));
 
-        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx03_t.webp", "file:///android_asset/img/preparing for birth/gfx03_low.webp")));
+        counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx02_GFX 01_t1.webp", "file:///android_asset/img/preparing for birth/Gfx02_GFX 01.webp")));
 
 
         counsellingMedia.add(new CounsellingMedia(45, Arrays.asList("file:///android_asset/img/preparing for birth/Gfx03_GFX 01_t1.webp",

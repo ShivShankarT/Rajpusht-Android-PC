@@ -2,8 +2,6 @@ package in.rajpusht.pc.ui.registration;
 
 import android.location.Location;
 import android.os.Bundle;
-import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
@@ -265,8 +263,7 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         });
 
 
-
-        HUtil.addEditTextFilter( viewDataBinding.benfBhamashaId.getEditText(),HUtil.alphnumaricFilter());
+        HUtil.addEditTextFilter(viewDataBinding.benfBhamashaId.getEditText(), HUtil.alphnumaricFilter());
         viewDataBinding.benfHusMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfSelfMobile.sethValidatorListener(FormValidatorUtils.textEqualValidator(10, getResources().getString(R.string.error_invalid_mobile_no)));
         viewDataBinding.benfName.sethValidatorListener(FormValidatorUtils.textLengthBwValidator(3, 100, getResources().getString(R.string.error_invalid_name)));
@@ -815,9 +812,12 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (hasSecondChild) {
             validateElement.add(vb.benfChild2Sex.validateWthView());
             validateElement.add(vb.benfChild2Dob.validateWthView());
-            validateElement.add(vb.benfChild2InstitutionalType.validateWthView());
-            validateElement.add(vb.benfChild2DeliveryPlaceType.validateWthView());
-            validateElement.add(vb.benfChild2DeliveryPlace.validateWthView());
+            if (vb.benfChild2InstitutionalType.isVisibleAndEnable())
+                validateElement.add(vb.benfChild2InstitutionalType.validateWthView());
+            if (vb.benfChild2DeliveryPlaceType.isVisibleAndEnable())
+                validateElement.add(vb.benfChild2DeliveryPlaceType.validateWthView());
+            if (vb.benfChild2DeliveryPlace.isVisibleAndEnable())
+                validateElement.add(vb.benfChild2DeliveryPlace.validateWthView());
         }
 
 

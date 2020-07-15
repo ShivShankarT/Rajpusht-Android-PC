@@ -14,7 +14,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 
 import androidx.core.content.FileProvider;
 
@@ -29,6 +28,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.Objects;
 
 import in.rajpusht.pc.BuildConfig;
 import in.rajpusht.pc.R;
@@ -171,8 +171,12 @@ public class AppLogUtils {
                 File opt = new File(context.getExternalCacheDir(), "Rajpusht" + dateStr + ".zip");
                 ZipUsingJavaUtil.zipFiles(logFiles, opt.getAbsolutePath());
 
-                Uri uri = FileProvider.getUriForFile(context,
-                        context.getApplicationContext().getPackageName() + ".provider", opt);
+//                Uri uri = FileProvider.getUriForFile(context,
+//                        context.getApplicationContext().getPackageName() + ".provider", opt);
+
+                Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(context),
+                        BuildConfig.APPLICATION_ID + ".provider", opt);
+
                 for (ResolveInfo ri : resolvedInfoActivities) {
                     context.grantUriPermission(ri.activityInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
@@ -207,29 +211,34 @@ public class AppLogUtils {
     }
 
     private ArrayList<File> getLastLogfileAndDelete() {
-        ArrayList<File> files = new ArrayList<>();
-        File rootDir = FileLoggingTree.logFileRootDir();
-        File[] listFiles = rootDir.listFiles();
-        Calendar befourCal = Calendar.getInstance();
-        befourCal.add(Calendar.DAY_OF_YEAR, -30);
-        Date befour7days = befourCal.getTime();
-        for (File listFile : listFiles) {
-            String fileName = listFile.getName();
-            String date = fileName.split("\\.")[0];
-            try {
-                Date fileNameTimeStamp = new SimpleDateFormat("dd-MM-yyyy",
-                        Locale.UK).parse(date);
-                if (fileNameTimeStamp.after(befour7days)) {
-                    files.add(listFile);
-                } else {
+        ArrayList<File> files = null;
+        try {
+            files = new ArrayList<>();
+            File rootDir = FileLoggingTree.logFileRootDir();
+            File[] listFiles = rootDir.listFiles();
+            Calendar befourCal = Calendar.getInstance();
+            befourCal.add(Calendar.DAY_OF_YEAR, -30);
+            Date befour7days = befourCal.getTime();
+            for (File listFile : listFiles) {
+                String fileName = listFile.getName();
+                String date = fileName.split("\\.")[0];
+                try {
+                    Date fileNameTimeStamp = new SimpleDateFormat("dd-MM-yyyy",
+                            Locale.UK).parse(date);
+                    if (fileNameTimeStamp.after(befour7days)) {
+                        files.add(listFile);
+                    } else {
+                        listFile.delete();
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Timber.e(e);
                     listFile.delete();
                 }
-            } catch (Exception e) {
-                e.printStackTrace();
-                Timber.e(e);
-                listFile.delete();
-            }
 
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
         return files;
