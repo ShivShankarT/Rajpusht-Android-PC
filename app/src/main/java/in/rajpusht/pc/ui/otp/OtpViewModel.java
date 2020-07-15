@@ -6,6 +6,7 @@ import androidx.lifecycle.MutableLiveData;
 
 import java.util.List;
 
+import in.rajpusht.pc.R;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.data.local.db.entity.InstitutionPlaceEntity;
 import in.rajpusht.pc.model.ApiResponse;
@@ -24,6 +25,10 @@ public class OtpViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
 
     public void verifyOtp(String opt) {
+        if (opt.length() < 4) {
+            _navigateToHome.setValue(new Event<>(new Pair<>(false, getDataManager().getString(R.string.invalid_otp))));
+            return;
+        }
         getCompositeDisposable().add(getDataManager().verifyOtp(opt)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui()).subscribe((jsonObjectApiResponse, throwable) -> {

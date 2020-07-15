@@ -3,6 +3,7 @@ package in.rajpusht.pc.ui.splash;
 import android.Manifest;
 import android.app.TaskStackBuilder;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.LocationManager;
@@ -11,6 +12,8 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.provider.Settings;
+import android.text.TextUtils;
+import android.util.Log;
 import android.util.SparseIntArray;
 import android.view.View;
 
@@ -23,6 +26,8 @@ import androidx.lifecycle.ViewModelProvider;
 import com.google.android.material.dialog.MaterialAlertDialogBuilder;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.Date;
+
 import javax.inject.Inject;
 
 import in.rajpusht.pc.BR;
@@ -30,19 +35,22 @@ import in.rajpusht.pc.BuildConfig;
 import in.rajpusht.pc.R;
 import in.rajpusht.pc.ViewModelProviderFactory;
 import in.rajpusht.pc.data.DataRepository;
+import in.rajpusht.pc.data.local.pref.AppPreferencesHelper;
 import in.rajpusht.pc.databinding.ActivitySplashScreenBinding;
 import in.rajpusht.pc.ui.base.BaseActivity;
 import in.rajpusht.pc.ui.home.HomeActivity;
 import in.rajpusht.pc.ui.login.LoginActivity;
 import timber.log.Timber;
 
-public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBinding, SplashScreenViewModel> {
+public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBinding, SplashScreenViewModel> implements SplashNav {
 
     private static final int REQUEST_PERMISSIONS = 1211;
     @Inject
     ViewModelProviderFactory factory;
     @Inject
     DataRepository dataRepository;
+    boolean isAppFetch = false;
+    boolean isGpsChecked = false;
     private SplashScreenViewModel screenViewModel;
     private SparseIntArray mErrorString = new SparseIntArray();
     private boolean isGpsDialog;
@@ -68,6 +76,7 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     @Override
     public SplashScreenViewModel getViewModel() {
         screenViewModel = new ViewModelProvider(this, factory).get(SplashScreenViewModel.class);
+        screenViewModel.setNavigator(this);
         return screenViewModel;
     }
 
@@ -84,6 +93,22 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
                 }
             });
             return;
+        }
+        String time = dataRepository.getPrefString(AppPreferencesHelper.PREF_LAST_APPCONFIG_FTIME);
+        boolean callApi = true;
+        if (!TextUtils.isEmpty(time)) {
+            long l = Long.parseLong(time);
+            long dif = new Date().getTime() - l;
+            if (dif > 3 * 60 * 60 * 1000) {
+                callApi = true;
+            } else {
+                callApi = false;
+            }
+        }
+        isAppFetch = !callApi;
+        if (callApi) {
+            screenViewModel.appConfigVersion();
+
         }
 
 
@@ -110,6 +135,7 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
                     isGpsDialog = true;
                 }
             } else {
+                isGpsChecked = true;
                 launchLogin();
             }
         } catch (SecurityException e) {
@@ -126,18 +152,24 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     }
 
     public void launchLogin() {
-        new Handler().postDelayed(() -> {
-            if (dataRepository.getLogin()) {
-                Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
-                startActivity(intent);
-            } else {
-                Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                startActivity(intent);
+        Log.i("launchLogin", "launchLogin: " + isGpsChecked + " " + isAppFetch);
 
-            }
-            finish();
+        if (!checkAppVersion()) {
+            return;
+        }
+        if (isGpsChecked && isAppFetch)
+            new Handler().postDelayed(() -> {
+                if (dataRepository.getLogin()) {
+                    Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
+                    startActivity(intent);
+                } else {
+                    Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+                    startActivity(intent);
 
-        }, 1000);
+                }
+                finish();
+
+            }, 1000);
     }
 
 
@@ -156,6 +188,7 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
                 }).setNegativeButton("Cancel", (dialog, which) -> {
                     dialog.dismiss();
                     isGpsDialog = false;
+                    isGpsChecked = true;
                     launchLogin();
                 });
         AlertDialog alertDialog = materialAlertDialogBuilder.show();
@@ -224,4 +257,52 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     }
 
 
+    @Override
+    public void appConfigFetch(boolean isSuccess) {
+        isAppFetch = true;
+        if (!isFinishing())
+            launchLogin();
+
+    }
+
+    boolean checkAppVersion() {
+
+        int min = dataRepository.getPrefInt(AppPreferencesHelper.PREF_MIN_VERSION);
+        int currentAppver = dataRepository.getPrefInt(AppPreferencesHelper.PREF_CURRENT_VERSION);
+        String url = dataRepository.getPrefString(AppPreferencesHelper.PREF_DRIVE_URL);
+        int appVersion = BuildConfig.VERSION_CODE;
+
+
+        if (min == -1)
+            return true;
+        boolean isForceUpdate;
+        if (appVersion < min) {
+            isForceUpdate = true;
+        } else if (appVersion < currentAppver) {
+            isForceUpdate = false;
+        } else {
+            return true;
+        }
+
+        MaterialAlertDialogBuilder dialogBuilder = new MaterialAlertDialogBuilder(this)
+                .setTitle(R.string.alert)
+                .setMessage("Please Update App");
+        if (!isForceUpdate)
+            dialogBuilder.setNegativeButton(R.string.Cancel, null);
+
+        dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                Intent view = new Intent();
+                view.setAction(Intent.ACTION_VIEW);
+                String uriString = TextUtils.isEmpty(url) ? "https://play.google.com/store/apps/details?id=" + BuildConfig.APPLICATION_ID : url;
+                view.setData(Uri.parse(uriString));
+                startActivity(view);
+
+            }
+        });
+        dialogBuilder.show();
+
+        return false;
+    }
 }

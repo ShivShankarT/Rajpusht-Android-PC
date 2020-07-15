@@ -29,7 +29,7 @@ import in.rajpusht.pc.utils.MyProgressDialogFragment;
 
 public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseViewModel> extends Fragment {
 
-   protected boolean forceExit=true;
+    protected boolean forceExit = true;
     private BaseActivity mActivity;
     private View mRootView;
     private T mViewDataBinding;
@@ -158,11 +158,11 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
         new MaterialAlertDialogBuilder(requireContext())
                 .setTitle(R.string.alert)
                 .setMessage(R.string.alert_exit_form)
-                .setPositiveButton(R.string.Cancel, null)
-                .setNegativeButton(R.string.Exit, new DialogInterface.OnClickListener() {
+                .setNegativeButton(R.string.Cancel, null)
+                .setPositiveButton(R.string.Exit, new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        forceExit=true;
+                        forceExit = true;
                         requireActivity().onBackPressed();
                     }
                 }).show();

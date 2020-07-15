@@ -39,7 +39,9 @@ public class ZipUsingJavaUtil {
             // close the ZipOutputStream
             zos.close();
 
-        } finally {
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
 
         }
 

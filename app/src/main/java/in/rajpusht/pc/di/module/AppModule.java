@@ -45,7 +45,7 @@ public class AppModule {
     @Provides
     @DatabaseInfo
     String dbName() {
-        return "pc-testv12.db";
+        return "pc-testv13.db";
     }
 
 

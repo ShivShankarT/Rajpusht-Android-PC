@@ -204,6 +204,7 @@
     <string name="Id">Id</string>
     <string name="runtime_permissions_txt">allow pe</string>
     <string name="MY_Monitoring">MY Monitoring</string>
+    <string name="invalid_otp">Invalid Otp</string>
 
     <string-array name="benf_currently">
         <item>गर्भवती</item>

@@ -2,6 +2,7 @@ package in.rajpusht.pc.ui.otp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Pair;
 import android.view.View;
 
@@ -52,22 +53,25 @@ public class OtpFragment extends BaseFragment<OtpFragmentBinding, OtpViewModel> 
         super.onViewCreated(view, savedInstanceState);
         getViewDataBinding().optEt.setText(appPreferencesHelper.getString("otp"));
         getViewModel()._navigateToHome.observe(getViewLifecycleOwner(), (d) -> {
+            getViewDataBinding().otpTxtly.setError(null);
             Pair<Boolean, String> contentIfNotHandled = d.getContentIfNotHandled();
             if (contentIfNotHandled != null) {
-                if(contentIfNotHandled.first) {
+                if (contentIfNotHandled.first) {
                     requireActivity().finish();
                     startActivity(new Intent(requireContext(), HomeActivity.class));
                 }
                 showMessage(contentIfNotHandled.second);
+                if (!TextUtils.isEmpty(contentIfNotHandled.second))
+                    getViewDataBinding().otpTxtly.setError(contentIfNotHandled.second);
 
             }
         });
 
-        getViewModel().progressDialog.observe(getViewLifecycleOwner(),d->{
+        getViewModel().progressDialog.observe(getViewLifecycleOwner(), d -> {
             Boolean progress = d.getContentIfNotHandled();
-            if (progress!=null&&progress){
+            if (progress != null && progress) {
                 showProgressDialog();
-            }else {
+            } else {
                 dismissProgressDialog();
             }
         });

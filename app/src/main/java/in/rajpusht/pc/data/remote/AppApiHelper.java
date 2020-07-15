@@ -1,5 +1,7 @@
 package in.rajpusht.pc.data.remote;
 
+import android.util.Log;
+
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
@@ -16,6 +18,7 @@ import in.rajpusht.pc.model.ApiResponse;
 import in.rajpusht.pc.model.ProfileDetail;
 import io.reactivex.Single;
 import io.reactivex.functions.Function;
+import kotlin.Triple;
 import okhttp3.ResponseBody;
 import retrofit2.HttpException;
 
@@ -116,6 +119,19 @@ public class AppApiHelper {
 
     public Single<ApiResponse<JsonObject>> bulkUpload(JsonArray jsonArray) {
         return networkErrorWrapper(apiService.bulkUpload(jsonArray));
+    }
+
+    public Single<Triple<Integer, Integer, String>> appConfigVersion() {
+        return networkErrorWrapper(apiService.appConfigVersion()).map(jsonObjectApiResponse -> {
+            JsonObject data = jsonObjectApiResponse.getData();
+            data = data.getAsJsonObject("pc");
+            Triple<Integer, Integer, String> triple = new Triple<>(data.get("min_version").getAsInt(),
+                    data.get("current_version").getAsInt(),
+                    data.get("url").getAsString()
+            );
+            Log.i("integerIntegeiple", "integerIntegerStringTriple: triple " + triple.toString());
+            return triple;
+        });
     }
 
 

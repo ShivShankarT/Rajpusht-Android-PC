@@ -8,6 +8,7 @@
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
+        android:requestLegacyExternalStorage="true"
         android:name=".RajpushtApp"
         android:allowBackup="false"
         android:allowClearUserData="true"
@@ -20,11 +21,13 @@
         android:theme="@style/AppTheme.NoActionBar"
         tools:replace="android:allowBackup">
         <activity
-            android:launchMode="singleTop"
             android:name=".ui.login.LoginActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
-        <activity android:name=".ui.splash.SplashScreenActivity">
+        <activity
+            android:name=".ui.splash.SplashScreenActivity"
+            android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -34,6 +37,7 @@
         <activity
             android:name=".ui.home.HomeActivity"
             android:configChanges="keyboardHidden|orientation|screenSize"
+            android:launchMode="singleTop"
             android:screenOrientation="portrait" />
 
         <activity
@@ -45,6 +49,7 @@
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
         <provider
             android:name="androidx.work.impl.WorkManagerInitializer"
             android:authorities="${applicationId}.workmanager-init"

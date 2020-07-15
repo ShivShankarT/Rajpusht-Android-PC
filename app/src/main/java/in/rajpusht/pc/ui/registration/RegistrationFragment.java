@@ -1019,9 +1019,12 @@ public class RegistrationFragment extends BaseFragment<RegistrationFragmentBindi
         if (forceExit) {
             return super.onBackPressed();
         } else {
-            showEditDialog();
-            return false;
+            if (beneficiaryId == 0) {
+                showEditDialog();
+                return false;
+            }
         }
+        return super.onBackPressed();
 
     }
 }

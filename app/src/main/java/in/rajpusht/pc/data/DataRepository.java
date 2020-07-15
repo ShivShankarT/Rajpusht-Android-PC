@@ -1,5 +1,7 @@
 package in.rajpusht.pc.data;
 
+import android.util.Log;
+
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
@@ -45,6 +47,7 @@ import io.reactivex.Single;
 import io.reactivex.SingleSource;
 import io.reactivex.functions.Consumer;
 import io.reactivex.functions.Function;
+import kotlin.Triple;
 import timber.log.Timber;
 
 public class DataRepository {
@@ -278,6 +281,23 @@ public class DataRepository {
         return appDbHelper.awcViceSyncData();
     }
 
+    public Single<Triple<Integer, Integer, String>> appConfigVersion() {
+        return appApiHelper.appConfigVersion().doOnSuccess(new Consumer<Triple<Integer, Integer, String>>() {
+            @Override
+            public void accept(Triple<Integer, Integer, String> integerIntegerStringTriple) throws Exception {
+                Log.i("integerIntegeiple", "integerIntegerStringTriple: "+integerIntegerStringTriple.toString());
+                if (integerIntegerStringTriple != null) {
+                    appPreferencesHelper.putInt(AppPreferencesHelper.PREF_MIN_VERSION, integerIntegerStringTriple.getFirst());
+                    appPreferencesHelper.putInt(AppPreferencesHelper.PREF_CURRENT_VERSION, integerIntegerStringTriple.getSecond());
+                    appPreferencesHelper.putString(AppPreferencesHelper.PREF_DRIVE_URL, integerIntegerStringTriple.getThird());
+                    appPreferencesHelper.putString(AppPreferencesHelper.PREF_LAST_APPCONFIG_FTIME, String.valueOf(new Date().getTime()));
+                }
+
+
+            }
+        });
+    }
+
 
     public Single<ApiResponse<ProfileDetail>> profileDetail() {
         return appApiHelper.profileDetail();
@@ -354,6 +374,10 @@ public class DataRepository {
     public String getPrefString(String key) {
 
         return appPreferencesHelper.getString(key);
+    }
+    public int getPrefInt(String key) {
+
+        return appPreferencesHelper.getInt(key);
     }
 
 }

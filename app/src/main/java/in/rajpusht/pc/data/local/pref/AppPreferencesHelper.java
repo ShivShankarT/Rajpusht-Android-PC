@@ -34,17 +34,22 @@ import in.rajpusht.pc.ui.login.LoginActivity;
  */
 
 public class AppPreferencesHelper {
-    public static final String PREF_NAME = "app-prefv12";
+    public static final String PREF_NAME = "app-prefv13";
 
     public static final long NULL_INDEX = -1L;
     public static final String PREF_FIRST_NAME = "first_name";
     public static final String PREF_LAST_NAME = "last_name";
+    public static final String PREF_LAST_SYNC = "last_sync";
+    public static final String PREF_CURRENT_VERSION = "current_vers";
+    public static final String PREF_MIN_VERSION = "min_vers";
+    public static final String PREF_DRIVE_URL = "g_app_url";
+    public static final String PREF_LAST_APPCONFIG_FTIME = "last_app_config";
+
     private static final String PREF_LOGIN = "login";
     private static final String PREF_KEY_ACCESS_TOKEN = "PREF_KEY_ACCESS_TOKEN";
     private static final String PREF_KEY_CURRENT_USER_EMAIL = "PREF_KEY_CURRENT_USER_EMAIL";
     private static final String PREF_KEY_CURRENT_USER_ID = "PREF_KEY_CURRENT_USER_ID";
     private static final String PREF_KEY_CURRENT_USER_NAME = "PREF_KEY_CURRENT_USER_NAME";
-    public static final String PREF_LAST_SYNC = "last_sync";
     @SuppressLint("StaticFieldLeak")//application context
     private static AppPreferencesHelper appPreferencesHelper;
     private final SharedPreferences mPrefs;
@@ -131,9 +136,18 @@ public class AppPreferencesHelper {
         mPrefs.edit().putString(key, value).apply();
     }
 
+    public void putInt(String key, int value) {
+        mPrefs.edit().putInt(key, value).apply();
+    }
+
     public String getString(String key) {
         return mPrefs.getString(key, null);
     }
+
+    public int getInt(String key) {
+        return mPrefs.getInt(key, -1);
+    }
+
 
     public void logout() {
         mPrefs.edit().clear().apply();
@@ -148,6 +162,7 @@ public class AppPreferencesHelper {
     public String getStringRes(int stringId) {
         return context.getString(stringId);
     }
+
 
     public String readStringFromAsset(String file) throws IOException {
         return HUtil.readStringFromAsset(context, file);

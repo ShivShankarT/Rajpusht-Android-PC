@@ -210,6 +210,7 @@
     <string name="runtime_permissions_txt">Allow Permission for accessing location and storage</string>
 
     <string name="MY_Monitoring">MY Monitoring</string>
+    <string name="invalid_otp">Invalid Otp</string>
 
     <string-array name="child_count">
         <item>0</item>

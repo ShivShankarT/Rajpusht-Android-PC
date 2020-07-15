@@ -73,5 +73,8 @@ public interface ApiService {
     @POST("bulkUpload")
     Single<ApiResponse<JsonObject>> bulkUpload(@Body JsonArray jsonArray);
 
+    @GET("appConfig")
+    Single<ApiResponse<JsonObject>> appConfigVersion();
+
 
 }

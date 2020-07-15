@@ -28,7 +28,6 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
-import java.util.Objects;
 
 import in.rajpusht.pc.BuildConfig;
 import in.rajpusht.pc.R;
@@ -163,33 +162,29 @@ public class AppLogUtils {
             ArrayList<File> logFiles = getLastLogfileAndDelete();
             File appLogfile = new File(Environment.getExternalStorageDirectory(), "/Rajpusht Log/RajpushtSysLog.txt");
             logFiles.add(0, appLogfile);
-            ArrayList<Uri> logFilesUri = new ArrayList<>(logFiles.size());
             List<ResolveInfo> resolvedInfoActivities = context.getPackageManager().queryIntentActivities(emailIntent, PackageManager.MATCH_DEFAULT_ONLY);
             try {
                 SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy hh:mm:ss", Locale.ENGLISH);
                 String dateStr = date.format(new Date());
-                File opt = new File(context.getExternalCacheDir(), "Rajpusht" + dateStr + ".zip");
+                File opt = new File(context.getExternalCacheDir(), "RajpushtPcLogs" + dateStr + ".zip");
                 ZipUsingJavaUtil.zipFiles(logFiles, opt.getAbsolutePath());
 
-//                Uri uri = FileProvider.getUriForFile(context,
-//                        context.getApplicationContext().getPackageName() + ".provider", opt);
-
-                Uri uri = FileProvider.getUriForFile(Objects.requireNonNull(context),
-                        BuildConfig.APPLICATION_ID + ".provider", opt);
-
+                Uri uri = FileProvider.getUriForFile(context,
+                        context.getApplicationContext().getPackageName() + ".provider", opt);
                 for (ResolveInfo ri : resolvedInfoActivities) {
                     context.grantUriPermission(ri.activityInfo.packageName, uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
                 }
-                logFilesUri.add(uri);
+                ArrayList<Uri> es = new ArrayList<>();
+                es.add(uri);
+                emailIntent.putExtra(Intent.EXTRA_STREAM, es);
             } catch (IOException e) {
                 Timber.e(e);
                 e.printStackTrace();
             }
 
-            emailIntent.putParcelableArrayListExtra(Intent.EXTRA_STREAM, logFilesUri);
-            emailIntent.setType("text/plain");
-            emailIntent.putExtra(Intent.EXTRA_TEXT,
-                    "Device type:" + device_type + " \n" + "App version:" + BuildConfig.VERSION_NAME + " \n" + "Reason :" + emaal_text);
+            emailIntent.setType("vnd.android.cursor.dir/email");
+            String value = "Device type:" + device_type + " \n" + "App version:" + BuildConfig.VERSION_NAME + " \n" + "Reason :" + emaal_text;
+            emailIntent.putExtra(Intent.EXTRA_TEXT, value);
             Intent send_mail = Intent.createChooser(emailIntent, "Send mail");
 
 
