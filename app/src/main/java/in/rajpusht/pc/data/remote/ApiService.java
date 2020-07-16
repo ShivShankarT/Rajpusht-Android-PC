@@ -48,7 +48,6 @@ public interface ApiService {
 
 
     @POST("resendOtp")
-    @FormUrlEncoded
     Single<ApiResponse<JsonObject>> resendOtp();
 
 

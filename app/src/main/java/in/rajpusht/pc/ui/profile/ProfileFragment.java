@@ -92,9 +92,6 @@ public class ProfileFragment extends BaseFragment<FragmentProfileBinding, Profil
         recyclerView.setLayoutManager(new LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false));
         recyclerView.setAdapter(awcLocationAdapter);
 
-        view.findViewById(R.id.edit_btn).setOnClickListener(v -> {
-            FragmentUtils.replaceFragment(requireActivity(), new ProfileEditFragment(), R.id.fragment_container, true, false, FragmentUtils.TRANSITION_SLIDE_LEFT_RIGHT);
-        });
 
         profileViewModel.assignedLocation.observe(getViewLifecycleOwner(), new Observer<List<AssignedLocationEntity>>() {
             @Override

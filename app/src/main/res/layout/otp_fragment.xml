@@ -3,18 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
             name="viewModel"
             type="in.rajpusht.pc.ui.otp.OtpViewModel" />
     </data>
 
     <LinearLayout
-        android:clickable="true"
-        android:focusable="true"
         android:id="@+id/otpfragment"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="#fff"
+        android:clickable="true"
+        android:focusable="true"
         android:orientation="vertical"
         tools:context=".ui.otp.OtpFragment">
 
@@ -26,33 +27,65 @@
             android:layout_margin="30dp"
             android:src="@mipmap/ic_launcher" />
 
+        <TextView
+            style="@style/FormTextMini"
+            android:gravity="center"
+            android:text="Enter Your OTP"
+            android:textSize="22sp" />
 
-        <com.google.android.material.textfield.TextInputLayout
-            android:id="@+id/otp_txtly"
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        <TextView
+            style="@style/FormTextMini"
+            android:gravity="center"
+            android:text="OTP has been sent to you on your mobile number. please enter it below."
+            android:textColor="@color/colorPrevText"
+            android:textSize="16sp" />
+
+
+        <in.rajpusht.pc.utils.ui.PinEntryEditText
+            android:id="@+id/optEt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="20dp">
+            android:layout_marginRight="20dp"
+            android:hint="@string/enter_otp"
+            android:imeOptions="actionDone"
+            android:inputType="text"
+            android:maxLength="6" />
 
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/optEt"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="@string/enter_otp"
-                android:inputType="text" />
-        </com.google.android.material.textfield.TextInputLayout>
-
-        <Button
-            android:onClick="@{() -> viewModel.verifyOtp(optEt.getText().toString())}"
-            android:id="@+id/submitOTP"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:text="@string/submit_otp"
-            android:textSize="14dp" />
+            android:gravity="center">
+
+
+            <Button
+                android:id="@+id/resendOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:enabled="false"
+                android:onClick="@{() -> viewModel.resend()}"
+                android:text="RESENTD OTP"
+                android:textSize="14dp" />
+
+            <View
+                android:layout_width="40dp"
+                android:layout_height="1dp" />
+
+            <Button
+                android:id="@+id/submitOTP"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                android:onClick="@{() -> viewModel.verifyOtp(optEt.getText().toString())}"
+                android:text="@string/submit_otp"
+                android:textSize="14dp" />
+
+
+        </LinearLayout>
+
 
     </LinearLayout>
 </layout>

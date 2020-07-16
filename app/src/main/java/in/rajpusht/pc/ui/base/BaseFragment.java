@@ -1,13 +1,16 @@
 package in.rajpusht.pc.ui.base;
 
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.TextView;
 
 import androidx.annotation.CallSuper;
@@ -58,6 +61,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     public abstract V getViewModel();
 
     @Override
+    @CallSuper
     public void onAttach(Context context) {
         super.onAttach(context);
         if (context instanceof BaseActivity) {
@@ -67,6 +71,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     @Override
+    @CallSuper
     public void onCreate(@Nullable Bundle savedInstanceState) {
         performDependencyInjection();
         super.onCreate(savedInstanceState);
@@ -75,6 +80,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     @Override
+    @CallSuper
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         mViewDataBinding = DataBindingUtil.inflate(inflater, getLayoutId(), container, false);
         mRootView = mViewDataBinding.getRoot();
@@ -82,6 +88,7 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     @Override
+    @CallSuper
     public void onDetach() {
         mActivity = null;
         super.onDetach();
@@ -105,8 +112,15 @@ public abstract class BaseFragment<T extends ViewDataBinding, V extends BaseView
     }
 
     public void hideKeyboard() {
-        if (mActivity != null) {
-            mActivity.hideKeyboard();
+        Activity activity=getActivity();
+        if (activity != null) {
+            View view = activity.getCurrentFocus();
+            if (view != null) {
+                InputMethodManager imm = (InputMethodManager)activity. getSystemService(Context.INPUT_METHOD_SERVICE);
+                if (imm != null) {
+                    imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+                }
+            }
         }
     }
 

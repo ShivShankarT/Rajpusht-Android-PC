@@ -67,7 +67,7 @@ public class ForgotPasswordViewModel extends BaseViewModel {
 
         if (otp.isEmpty()) {
             statusLiveData.setValue(Event.data(new Pair<>(ERROR_OTP, getDataManager().getString(R.string.please_enter_OTP))));
-        } else if (otp.length() < 4) {
+        } else if (otp.length() != 6) {
             statusLiveData.setValue(Event.data(new Pair<>(ERROR_OTP, getDataManager().getString(R.string.InvalidOTP))));
         } else if (newPassword.isEmpty()) {
             statusLiveData.setValue(Event.data(new Pair<>(ERROR_NEW_PASSWORD, getDataManager().getString(R.string.please_new_password))));

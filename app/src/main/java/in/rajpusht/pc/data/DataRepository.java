@@ -1,7 +1,5 @@
 package in.rajpusht.pc.data;
 
-import android.util.Log;
-
 import androidx.annotation.Nullable;
 import androidx.annotation.StringRes;
 import androidx.lifecycle.LiveData;
@@ -219,6 +217,10 @@ public class DataRepository {
         return appApiHelper.verifyOtp(otp);
     }
 
+    public Single<ApiResponse<JsonObject>> resendOtp() {
+        return appApiHelper.resendOtp();
+    }
+
     public Single<ApiResponse<JsonElement>> changePassword(String oldPassword,
                                                            String newPassword) {
         return appApiHelper.changePassword(oldPassword, newPassword);
@@ -285,7 +287,6 @@ public class DataRepository {
         return appApiHelper.appConfigVersion().doOnSuccess(new Consumer<Triple<Integer, Integer, String>>() {
             @Override
             public void accept(Triple<Integer, Integer, String> integerIntegerStringTriple) throws Exception {
-                Log.i("integerIntegeiple", "integerIntegerStringTriple: "+integerIntegerStringTriple.toString());
                 if (integerIntegerStringTriple != null) {
                     appPreferencesHelper.putInt(AppPreferencesHelper.PREF_MIN_VERSION, integerIntegerStringTriple.getFirst());
                     appPreferencesHelper.putInt(AppPreferencesHelper.PREF_CURRENT_VERSION, integerIntegerStringTriple.getSecond());
@@ -375,6 +376,7 @@ public class DataRepository {
 
         return appPreferencesHelper.getString(key);
     }
+
     public int getPrefInt(String key) {
 
         return appPreferencesHelper.getInt(key);

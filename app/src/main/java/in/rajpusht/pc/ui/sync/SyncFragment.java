@@ -75,10 +75,8 @@ public class SyncFragment extends BaseFragment<SyncFragmentBinding, SyncViewMode
             if (awcSyncCounts.isEmpty()) {
                 list.setVisibility(View.GONE);
                 getViewDataBinding().noData.setVisibility(View.VISIBLE);
-                getViewDataBinding().uploadBtn.setVisibility(View.GONE);
             } else {
                 list.setVisibility(View.VISIBLE);
-                getViewDataBinding().uploadBtn.setVisibility(View.VISIBLE);
                 getViewDataBinding().noData.setVisibility(View.GONE);
 
             }

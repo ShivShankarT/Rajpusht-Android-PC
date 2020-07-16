@@ -454,10 +454,8 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
 
             float percentage = v.getY();
             float dif = v.getX() - entry.getX();
-            Log.i(TAG, "getFutueValue: "+dif +"dddd"+percentage);
             if(dif<=3) {
                 percentage = (percentage/3)*(dif);
-                Log.i(TAG, "getFutueValue: per:"+percentage);
             }
             if (v.getX() > entry.getX()) {
                 double v1 = lastW + ((lastW * percentage) / 100);
@@ -575,7 +573,6 @@ public class PregnancyGraphFragment extends BaseFragment<PregnancyGraphFragmentB
             float B2 = wei;
             Entry e = new Entry(entry.getX(), ((B3 - B2) / B2) * 100);
             entries.add(e);
-            Log.i(TAG, "getGainPercentageValueWithMonth: " + B3 + "---" + B2 + "----" + e);
             wei = entry.getY();
 
         }

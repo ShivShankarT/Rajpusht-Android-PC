@@ -40,33 +40,12 @@
                         android:layout_height="wrap_content"
                         android:gravity="center">
 
-                        <Button
-                            android:id="@+id/edit_btn"
-                            style="@style/Widget.MaterialComponents.Button.TextButton"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentRight="true"
-                            android:layout_marginTop="5dp"
-                            android:minHeight="5dp"
-                            android:padding="3dp"
-                            android:text="@string/edit"
-                            android:textAllCaps="false"
-                            android:textColor="@color/colorTextGray"
-                            android:textSize="13sp" />
-
-
-                        <ImageView
-                            android:id="@+id/profile_Photo_profile"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
-                            android:layout_centerHorizontal="true"
-                            app:srcCompat="@drawable/ic_account" />
 
                         <TextView
                             android:id="@+id/profile_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_below="@+id/profile_Photo_profile"
+                            android:layout_marginTop="25dp"
                             android:gravity="center"
                             android:textColor="@color/black"
                             tools:text="Full Name" />
@@ -76,7 +55,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/profile_name"
-                            android:layout_marginTop="3dp"
+                            android:layout_marginTop="5dp"
                             android:gravity="center"
                             android:textColor="@color/black"
                             tools:text="Email@gmail.com" />
@@ -111,12 +90,12 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/list"
-            android:clipToPadding="false"
-            android:paddingBottom="150dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_above="@+id/layoutLanguage"
             android:layout_alignParentTop="true"
+            android:clipToPadding="false"
+            android:paddingBottom="150dp"
             app:layout_behavior="@string/appbar_scrolling_view_behavior"
             tools:listitem="@layout/assigned_location_awc_list_item" />
 

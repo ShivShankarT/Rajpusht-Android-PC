@@ -49,5 +49,6 @@ public class MessageEvent {
 
     public interface MessageEventType {
         int SYNC_SUCCESS = 0;
+        int OTP_REC_SUCCESS = 1;
     }
 }

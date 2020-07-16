@@ -1,10 +1,9 @@
 package in.rajpusht.pc.data.remote;
 
-import android.util.Log;
-
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
 
 import org.json.JSONObject;
 
@@ -41,15 +40,25 @@ public class AppApiHelper {
                     ResponseBody json = httpException.response().errorBody();
                     boolean status = false;
                     String message = httpException.code() + " " + httpException.message();
+                    JsonElement jsonDateObject = null;
                     if (httpException.code() == 422) {
                         JSONObject jsonObject = new JSONObject(json.string());
                         status = jsonObject.optBoolean("status", false);
                         message = jsonObject.optString("message", httpException.message());
+                    } else if (httpException.code() == 429) {
+                        JSONObject jsonObject = new JSONObject(json.string());
+                        status = jsonObject.optBoolean("status", false);
+                        message = jsonObject.optString("message", httpException.message());
+                        JSONObject dataObj = jsonObject.optJSONObject("data");
+                        if (dataObj != null) {
+                            JsonParser jsonParser = new JsonParser();
+                            jsonDateObject = jsonParser.parse(dataObj.toString());
+                        }
                     }
-
                     ApiResponse jsonObjectApiResponse = new ApiResponse();
                     jsonObjectApiResponse.setStatus(status);
                     jsonObjectApiResponse.setMessage(message);
+                    jsonObjectApiResponse.setData(jsonDateObject);
                     return jsonObjectApiResponse;
                 }
                 if (throwable != null)//todo check exp
@@ -129,7 +138,6 @@ public class AppApiHelper {
                     data.get("current_version").getAsInt(),
                     data.get("url").getAsString()
             );
-            Log.i("integerIntegeiple", "integerIntegerStringTriple: triple " + triple.toString());
             return triple;
         });
     }

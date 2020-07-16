@@ -16,8 +16,15 @@ import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import io.reactivex.functions.Consumer;
 
 public class OtpViewModel extends BaseViewModel {
-    public MutableLiveData<Event<Pair<Boolean, String>>> _navigateToHome = new MutableLiveData<>();
+
+    public static final int LAUNCH_HOME = 1;
+    public static final int LIMIT_REACHED = 2;
+    public static final int ERROR = 3;
+
+
+    public MutableLiveData<Event<Pair<Integer, String>>> _navigateToHome = new MutableLiveData<>();
     public MutableLiveData<Event<Boolean>> progressDialog = new MutableLiveData<>();
+    public MutableLiveData<Event<Boolean>> resendOtp = new MutableLiveData<>();
 
     public OtpViewModel(DataRepository dataManager, SchedulerProvider schedulerProvider) {
         super(dataManager, schedulerProvider);
@@ -25,24 +32,45 @@ public class OtpViewModel extends BaseViewModel {
     // TODO: Implement the ViewModel
 
     public void verifyOtp(String opt) {
-        if (opt.length() < 4) {
-            _navigateToHome.setValue(new Event<>(new Pair<>(false, getDataManager().getString(R.string.invalid_otp))));
+        if (opt.length() != 6) {
+            _navigateToHome.setValue(new Event<>(new Pair<>(ERROR, getDataManager().getString(R.string.invalid_otp))));
             return;
         }
+        progressDialog.setValue(Event.data(true));
         getCompositeDisposable().add(getDataManager().verifyOtp(opt)
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui()).subscribe((jsonObjectApiResponse, throwable) -> {
                     if (jsonObjectApiResponse.isStatus()) {
                         download();
-                        // _navigateToHome.setValue(new Event<>(new Pair<>(true, jsonObjectApiResponse.getMessage())));
                     } else {
-                        _navigateToHome.setValue(new Event<>(new Pair<>(false, jsonObjectApiResponse.getMessage())));
+
+                        if (jsonObjectApiResponse.getData()!=null&&
+                                jsonObjectApiResponse.getData().getAsJsonObject().get("isLimitReached") != null &&
+                                jsonObjectApiResponse.getData().getAsJsonObject().get("isLimitReached").getAsBoolean()) {
+                            _navigateToHome.setValue(new Event<>(new Pair<>(LIMIT_REACHED, jsonObjectApiResponse.getMessage())));
+                        } else
+                            _navigateToHome.setValue(new Event<>(new Pair<>(ERROR, jsonObjectApiResponse.getMessage())));
                     }
                 }));
     }
 
-    public void download() {
+    public void resend() {
         progressDialog.setValue(Event.data(true));
+        getCompositeDisposable().add(getDataManager().resendOtp()
+                .subscribeOn(getSchedulerProvider().io())
+                .observeOn(getSchedulerProvider().ui()).subscribe((jsonObjectApiResponse, throwable) -> {
+                    resendOtp.setValue(Event.data(true));
+                    if (jsonObjectApiResponse.isStatus()) {
+
+                    } else {
+                        _navigateToHome.setValue(new Event<>(new Pair<>(ERROR, jsonObjectApiResponse.getMessage())));
+                    }
+                    progressDialog.setValue(Event.data(false));
+
+                }));
+    }
+
+    public void download() {
         getCompositeDisposable().add(getDataManager().profileAndBulkDownload().andThen(getDataManager().fetchInsertFacilityData())
                 .subscribeOn(getSchedulerProvider().io())
                 .observeOn(getSchedulerProvider().ui())
@@ -50,14 +78,14 @@ public class OtpViewModel extends BaseViewModel {
                     @Override
                     public void accept(ApiResponse<List<InstitutionPlaceEntity>> listApiResponse) throws Exception {
                         getDataManager().setLogin(true);
-                        _navigateToHome.setValue(new Event<>(new Pair<>(true, "")));
+                        _navigateToHome.setValue(new Event<>(new Pair<>(LAUNCH_HOME, "")));
                         progressDialog.setValue(Event.data(false));
                     }
                 }, new Consumer<Throwable>() {
                     @Override
                     public void accept(Throwable throwable) throws Exception {
                         throwable.printStackTrace();
-                        _navigateToHome.setValue(new Event<>(new Pair<>(false, "sync failed")));
+                        _navigateToHome.setValue(new Event<>(new Pair<>(ERROR, "sync failed")));
                         progressDialog.setValue(Event.data(false));
                     }
                 }));

@@ -29,7 +29,7 @@ public class HomeViewModel extends BaseViewModel {
         progressLive.postValue(Event.data(new Pair<>(true, "")));
         getCompositeDisposable().add(getDataManager().uploadDataToServer()
                 .flatMap((Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>) jsonObjectApiResponse -> {
-                    if (jsonObjectApiResponse.isStatus() && !isLogOut) {
+                    if ((jsonObjectApiResponse.isStatus() || jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC) && !isLogOut) {
                         ApiResponse<JsonObject> completionValue = new ApiResponse<>();
                         completionValue.setStatus(true);
                         return getDataManager().profileAndBulkDownload().toSingleDefault(completionValue);
@@ -38,7 +38,7 @@ public class HomeViewModel extends BaseViewModel {
                 }).flatMap(new Function<ApiResponse<JsonObject>, SingleSource<ApiResponse<JsonObject>>>() {
                     @Override
                     public SingleSource<ApiResponse<JsonObject>> apply(ApiResponse<JsonObject> jsonObjectApiResponse) throws Exception {
-                        if (isLogOut && (jsonObjectApiResponse.isStatus() || jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC)){
+                        if (isLogOut && (jsonObjectApiResponse.isStatus() || jsonObjectApiResponse.getInternalErrorCode() == ApiResponse.NO_DATA_SYNC)) {
                             return getDataManager().logoutApiReq().map((Function<ApiResponse, ApiResponse<JsonObject>>) apiResponse -> apiResponse);
                         } else
                             return Single.just(jsonObjectApiResponse);

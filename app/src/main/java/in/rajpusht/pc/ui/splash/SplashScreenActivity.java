@@ -112,6 +112,11 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
         }
 
 
+        String message = "<#> Hello POSHAN Champion, 567673 is your OTP for mobile verification on RajPusht PC App. NXjWbXQqwib";
+        String otp = message.replace("<#> Hello POSHAN Champion, ", "");
+        otp = otp.substring(0, 6);
+        Log.i("onCreateonCreate", "onCreate: "+otp);
+
     }
 
     @Override
@@ -152,24 +157,27 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
     }
 
     public void launchLogin() {
-        Log.i("launchLogin", "launchLogin: " + isGpsChecked + " " + isAppFetch);
 
         if (!checkAppVersion()) {
             return;
         }
         if (isGpsChecked && isAppFetch)
             new Handler().postDelayed(() -> {
-                if (dataRepository.getLogin()) {
-                    Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
-                    startActivity(intent);
-                } else {
-                    Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
-                    startActivity(intent);
-
-                }
+                checkAndLaunchSc();
                 finish();
 
             }, 1000);
+    }
+
+    private void checkAndLaunchSc() {
+        if (dataRepository.getLogin()) {
+            Intent intent = new Intent(SplashScreenActivity.this, HomeActivity.class);
+            startActivity(intent);
+        } else {
+            Intent intent = new Intent(SplashScreenActivity.this, LoginActivity.class);
+            startActivity(intent);
+
+        }
     }
 
 
@@ -288,7 +296,12 @@ public class SplashScreenActivity extends BaseActivity<ActivitySplashScreenBindi
                 .setTitle(R.string.alert)
                 .setMessage("Please Update App");
         if (!isForceUpdate)
-            dialogBuilder.setNegativeButton(R.string.Cancel, null);
+            dialogBuilder.setNegativeButton(R.string.Cancel, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    checkAndLaunchSc();
+                }
+            });
 
         dialogBuilder.setPositiveButton("Update", new DialogInterface.OnClickListener() {
             @Override

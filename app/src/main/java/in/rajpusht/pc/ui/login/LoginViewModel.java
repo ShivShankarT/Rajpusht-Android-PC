@@ -39,7 +39,7 @@ public class LoginViewModel extends BaseViewModel {
         } else if (!HUtil.isEmail(email)) {
             errorEmail.setValue(getDataManager().getString(R.string.error_email));
         } else if (password.length() < 8) {
-            errorEmail.setValue(getDataManager().getString(R.string.invalid_password));
+            errorPassword.setValue(getDataManager().getString(R.string.invalid_password));
         } else {
             progressDialog.setValue(Event.data(true));
             getCompositeDisposable().add(getDataManager().login(email, password)

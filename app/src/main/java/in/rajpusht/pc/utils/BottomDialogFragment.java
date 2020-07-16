@@ -25,6 +25,13 @@ public class BottomDialogFragment extends BottomSheetDialogFragment {
 
         View view = inflater.inflate(R.layout.dialog_color_info, container,
                 false);
+        view.findViewById(R.id.dialogCancel).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dismiss();
+            }
+        });
+
 
         return view;
 

@@ -1,9 +1,12 @@
 package in.rajpusht.pc;
 
 import android.content.Context;
+import android.util.Log;
 
 import androidx.work.Configuration;
 import androidx.work.WorkManager;
+
+import java.util.ArrayList;
 
 import javax.inject.Inject;
 
@@ -12,6 +15,7 @@ import dagger.android.DaggerApplication;
 import in.rajpusht.pc.data.DataRepository;
 import in.rajpusht.pc.di.components.AppComponent;
 import in.rajpusht.pc.di.components.DaggerAppComponent;
+import in.rajpusht.pc.utils.AppSignatureHelper;
 import in.rajpusht.pc.utils.ContextWrapper;
 import in.rajpusht.pc.utils.rx.SchedulerProvider;
 import in.rajpusht.pc.utils.timber.DebugLogTree;
@@ -54,6 +58,7 @@ public class RajpushtApp extends DaggerApplication {
         }
         Timber.plant(applicationInjector.getFileLoggingTree());
         ContextWrapper.setLocale(this);
+
     }
 
     @Override

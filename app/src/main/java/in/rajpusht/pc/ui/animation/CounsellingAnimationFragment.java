@@ -50,7 +50,7 @@ public class CounsellingAnimationFragment extends Fragment {
     private static int finalHeight = Target.SIZE_ORIGINAL;
     private static int finalWidth = Target.SIZE_ORIGINAL;
     private static CounselingTrackingEntity mCounselingTrackingEntity;
-    private final int delayMillis = CounsellingMedia.isTesting ? 500 : 2000;
+    private final int delayMillis = CounsellingMedia.isTesting ? 1000 : 2000;
     private List<CounsellingMedia> counsellingMediaArrayList = new ArrayList<>();
     private Handler handler = new Handler();
     private CounsellingMedia counsellingMedia;

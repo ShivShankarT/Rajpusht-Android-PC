@@ -22,6 +22,14 @@ android {
             }
         }
     }
+    signingConfigs {
+        release {
+            keyAlias 'pc_app'
+            keyPassword 'RajpuhstPc@1234'
+            storePassword 'Rajpuhst@1234'
+            storeFile file('../KeyStore/keystore.jks')
+        }
+    }
 
     buildTypes {
 
@@ -31,13 +39,15 @@ android {
             resValue 'string', "app_name", "Rajpusht PC Test"
             buildConfigField 'boolean', 'PRODUCTION_SERVER', 'false'
             debuggable true
+            signingConfig signingConfigs.release
+
         }
         debugProductionServer {
             resValue 'string', "app_name", "RajPusht PC.debug"
             buildConfigField 'boolean', 'PRODUCTION_SERVER', 'true'
             matchingFallbacks = ['debug']
             debuggable true
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
         }
 
         release {
@@ -47,6 +57,7 @@ android {
             minifyEnabled false
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            signingConfig signingConfigs.release
         }
         releaseTestServer {
             versionNameSuffix "-testing-" +defaultConfig.versionCode+"-" + getDate()
@@ -58,7 +69,7 @@ android {
             shrinkResources false
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             matchingFallbacks = ['release']
-            signingConfig signingConfigs.debug
+            signingConfig signingConfigs.release
 
 
         }
@@ -173,6 +184,9 @@ dependencies {
     implementation "androidx.work:work-runtime:$work_version"
     // optional - RxJava2 support
     implementation "androidx.work:work-rxjava2:$work_version"
+    // lib for SMS verification (Phone Auth)
+    implementation 'com.google.android.gms:play-services-auth:18.0.0'
+    implementation 'com.google.android.gms:play-services-auth-api-phone:17.4.0'
 
 
 
